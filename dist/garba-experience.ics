@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Garba Experience//Invitation//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:20261009-garba-experience-ahmedabad
+DTSTAMP:20260921T090000Z
+DTSTART:20261009T140000Z
+SUMMARY:The Garba Experience - Live ft. Kinjal Dave
+LOCATION:Vivenza by Gopi Farm\, S.P. Ring Road\, Ahmedabad
+DESCRIPTION:7:30 pm IST onwards. Invitation guests: carry your physical
+  elephant pass. District guests: follow your ticket entry instructions.
+END:VEVENT
+END:VCALENDAR
