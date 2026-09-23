@@ -1,24 +1,25 @@
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));const smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
 const scenes=[...document.querySelectorAll('[data-scene]')];let bounds=[],scheduled=false;
+let invitationOpened=false,openingStart=null,selfieStart=null,aartiActive=false,danceRequested=false;
 let musicDancing=false,danceTime=0,lastDanceFrame=0;
 let ticketProgress=null,ticketFrame=0;
 function setMusicDancing(value){musicDancing=value;lastDanceFrame=0;document.querySelector('.dance-floor').dataset.dancing=String(value);schedule()}
 const $=s=>document.querySelector(s);const thought=(id,text)=>{const e=$(`#${id} span`);if(e.textContent!==text)e.textContent=text};
 function measure(){bounds=scenes.map(el=>({el,top:el.offsetTop,height:el.offsetHeight}));schedule()}
 function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(render)}}
-function render(now){scheduled=false;renderOpening();const danceVisible=bounds.some(b=>b.el.dataset.scene==='dance'&&scrollY+innerHeight>b.top&&scrollY<b.top+b.height);if(musicDancing&&!reduced.matches&&!document.hidden&&danceVisible){if(lastDanceFrame)danceTime+=Math.min((now-lastDanceFrame)/1000,.05);lastDanceFrame=now}else lastDanceFrame=0;const mobile=innerWidth<801;for(const b of bounds){if(scrollY+innerHeight<b.top||scrollY>b.top+b.height)continue;const p=reduced.matches?.5:clamp((scrollY-b.top)/Math.max(1,b.height-innerHeight));const name=b.el.dataset.scene;b.el.dataset.progress=p.toFixed(3);
+function render(now){scheduled=false;renderOpening();const danceVisible=bounds.some(b=>b.el.dataset.scene==='dance'&&scrollY+innerHeight>b.top&&scrollY<b.top+b.height);if(danceRequested&&!reduced.matches&&!document.hidden&&danceVisible){if(lastDanceFrame)danceTime+=Math.min((now-lastDanceFrame)/1000,.05);lastDanceFrame=now}else lastDanceFrame=0;const mobile=innerWidth<801;for(const b of bounds){if(scrollY+innerHeight<b.top||scrollY>b.top+b.height)continue;let p=reduced.matches?.5:clamp((scrollY-b.top)/Math.max(1,b.height-innerHeight));const name=b.el.dataset.scene;b.el.dataset.progress=p.toFixed(3);
 if(name==='selfie'){
- const enter=smooth((p-.08)/.30),snap=smooth((p-.59)/.11),pose=p>.38;
+ const enter=smooth((p-.08)/.30),snap=selfieStart===null?0:(reduced.matches?1:smooth((now-selfieStart)/650)),pose=p>.38;
  const world=b.el.querySelector('.selfie-world'),photo=b.el.querySelector('.selfie-print');
  world.style.filter=`blur(${snap*12}px)`;world.style.opacity=String(1-snap*.45);
  for(const [selector,offset] of [['.selfie-man',-1],['.selfie-woman',1]]){const el=b.el.querySelector(selector);el.dataset.pose=pose?'think':'walk';el.style.transform=`translateX(${offset*(1-enter)*(mobile?95:190)}px) translateY(${!pose?Math.sin(enter*Math.PI*8)*4:0}px)`;}
  b.el.querySelector('.selfie-phone').style.opacity=String(smooth((p-.39)/.06));
  b.el.querySelector('.selfie-phone').style.transform=`translateY(${(1-smooth((p-.38)/.08))*55}px) rotate(-12deg)`;
  thought('selfie-thought',p<.32?'“A selfie booth! Let’s take one together.”':p<.48?'“Come closer. This one is for us!”':'“Ready? Three… two… one!”');
- b.el.querySelector('#selfie-thought').style.opacity=String(1-smooth((p-.54)/.04));
- b.el.querySelector('.selfie-flash').style.opacity=String(reduced.matches?0:Math.max(0,1-Math.abs(p-.59)/.025)*.7);
- const reveal=reduced.matches?1:snap;photo.style.opacity=String(reveal);photo.style.transform=`translate(-50%,-50%) translateY(${(1-reveal)*90}px) rotate(${-6*reveal}deg) scale(${.65+reveal*.35})`;
+ b.el.querySelector('#selfie-thought').style.opacity=String(1-snap);
+ b.el.querySelector('.selfie-flash').style.opacity=String(reduced.matches||selfieStart===null?0:Math.max(0,1-(now-selfieStart)/200)*.55);
+ const reveal=snap;photo.style.opacity=String(reveal);photo.style.transform=`translate(-50%,-50%) translateY(${(1-reveal)*90}px) rotate(${-6*reveal}deg) scale(${.65+reveal*.35})`;
  b.el.querySelector('.selfie-continue').style.opacity=String(reveal);
 }
 if(name==='friends'){
@@ -31,7 +32,8 @@ if(name==='friends'){
  $('#friends-caption').textContent=p<.27?'He’s searching for a night to remember.':p<.68?'She introduces The Garba Experience, featuring Kinjal Dave.':'Two friends. One wonderful plan. And an invitation to open.';
 }
 if(name==='handover'){
- const pass=reduced.matches?1:smooth((p-.12)/.28),open=reduced.matches?1:smooth((p-.52)/.16),lift=reduced.matches?0:smooth((p-.68)/.27);
+ p=invitationOpened?(openingStart===null?p:Math.min(1,.5+(now-openingStart)/3600)):Math.min(p,.5);
+ const pass=reduced.matches?1:smooth((p-.12)/.28),open=invitationOpened?(reduced.matches?1:smooth((p-.52)/.16)):0,lift=invitationOpened?(reduced.matches?0:smooth((p-.68)/.27)):0;
  const prop=$('.invitation-prop'),stage=$('.handover-stage'),man=$('.receiving-man'),woman=$('.giving-woman');
  const approach=pass*(mobile?12:35);
  man.dataset.pose=p<.4?'accept':p<.52?'hold':p<.68?'open':'read';
@@ -102,8 +104,8 @@ if(name==='shrine'){$('.praying-man').style.transform=`translateY(${(1-smooth(p/
 if(name==='dance'){
  const floor=$('.dance-floor'),w=floor.clientWidth;
  const join=Math.max(smooth((p-.08)/.35),smooth(danceTime/1.2));
- const dancing=musicDancing||p>.43;
- const rhythm=(musicDancing?danceTime:p*12)*Math.PI*2/1.8;
+ const dancing=danceRequested;
+ const rhythm=danceTime*Math.PI*2/1.8;
  [$('.joining-man'),$('.joining-woman')].forEach((person,i)=>{
   person.dataset.pose=dancing?'dance':'walk';
   const beat=dancing?Math.sin(rhythm+i*.6):0;
@@ -111,11 +113,15 @@ if(name==='dance'){
   person.style.transform=`translate3d(${entry+beat*7}px,${-Math.abs(beat)*4}px,0) rotate(${beat*(i?-3:3)}deg)`;
  });
  thought('dance-thought',dancing?'“This is exactly the night we hoped for!”':'“Come on, let’s join the circle!”');
+ document.querySelectorAll('.living-circle .traveller').forEach((el,i)=>{const a=i*Math.PI/3+(dancing?danceTime*.4:0);el.style.transform=`translate(${Math.cos(a)*100}px,${Math.sin(a)*25}px) scale(${.7+Math.sin(a)*.12})`;});
+ $('.living-circle').classList.toggle('playing',dancing);
  $('.ground-photo').style.transform=`scale(${1+smooth(p)*.035})`;
 
 }}
+if(openingStart!==null&&now-openingStart<1800)schedule();
+if(selfieStart!==null&&now-selfieStart<750)schedule();
 if(ready&&active?.startsWith('garba')&&musicDancing){const volume=arrivalVolume();if(player.getVolume()!==volume)player.setVolume(volume)}
-if(musicDancing&&!reduced.matches&&!document.hidden&&danceVisible)schedule();
+if(danceRequested&&!reduced.matches&&!document.hidden&&danceVisible)schedule();
 }
 addEventListener('visibilitychange',()=>{lastDanceFrame=0;schedule()});
 addEventListener('scroll',schedule,{passive:true});addEventListener('resize',measure);addEventListener('load',measure);document.fonts?.ready.then(measure);reduced.addEventListener('change',measure);measure();
@@ -125,7 +131,8 @@ const buttons=[...document.querySelectorAll('[data-audio]')];
 function report(message,state='loading'){
  status.textContent=message;dock.dataset.playback=state;
  setMusicDancing(state==='playing'&&Boolean(active?.startsWith('garba')));
- buttons.forEach(b=>{const selected=b.dataset.audio===active;b.setAttribute('aria-pressed',String(selected));b.textContent=(selected?'■ Close · ':'▶ ')+(tracks[b.dataset.audio]?.title||'Play music')});
+ if(['paused','ended','stopped','error'].includes(state)){danceRequested=false;aartiActive=false;$('#durga-mata').classList.remove('aarti-active');}
+ buttons.forEach(b=>{const selected=b.dataset.audio===active;b.setAttribute('aria-pressed',String(selected));b.textContent=(selected?'■ Close · ':'▶ ')+(b.dataset.label||tracks[b.dataset.audio]?.title||'Play music')});
 }
 function loadAPI(){
  if(window.YT?.Player)return Promise.resolve();
@@ -186,9 +193,14 @@ function stopMusic(returnFocus=false){
 }
 buttons.forEach(b=>b.disabled=true);
 fetch('story-audio.json').then(r=>{if(!r.ok)throw Error('Music configuration');return r.json()}).then(config=>{
- tracks=config;buttons.forEach(b=>{const t=tracks[b.dataset.audio];b.disabled=!t?.youtube;b.textContent='▶ '+(t?.title||'Music unavailable')})
+ tracks=config;buttons.forEach(b=>{const t=tracks[b.dataset.audio];b.disabled=!t?.youtube;b.textContent='▶ '+(b.dataset.label||t?.title||'Music unavailable')})
 }).catch(()=>document.querySelectorAll('.audio-note').forEach(n=>n.textContent='Music could not load. Please refresh and try again.'));
-buttons.forEach(b=>b.addEventListener('click',()=>{if(active===b.dataset.audio)stopMusic();else chooseMusic(b.dataset.audio,b)}));
+buttons.forEach(b=>b.addEventListener('click',()=>{
+ if(active===b.dataset.audio){stopMusic();return}
+ danceRequested=b.closest('#join-the-circle')!==null;
+ aartiActive=b.dataset.audio==='aarti';$('#durga-mata').classList.toggle('aarti-active',aartiActive);
+ chooseMusic(b.dataset.audio,b);schedule();
+}));
 soundButton.addEventListener('click',playAudibly);
 $('#close-music').addEventListener('click',()=>stopMusic(true));
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!dock.hidden)stopMusic(true)});
@@ -227,3 +239,21 @@ function arrivalVolume(){
  if(rect.top>0||rect.bottom<innerHeight)return 85;
  return Math.round(38+47*smooth(clamp(-rect.top/Math.max(1,gate.offsetHeight-innerHeight))));
 }
+
+// Five deliberate, optional story moments.
+$('#open-invitation').addEventListener('click',()=>{
+ if(invitationOpened)return;
+ invitationOpened=true;openingStart=performance.now();
+ document.body.classList.remove('invitation-locked');
+ $('#open-invitation').disabled=true;$('#open-invitation').textContent='Opening your evening…';
+ measure();dispatchEvent(new Event('resize'));schedule();
+ setTimeout(()=>{openingStart=null;$('#beginning').scrollIntoView({behavior:reduced.matches?'instant':'smooth'});$('#open-invitation').textContent='Invitation opened';},reduced.matches?0:1800);
+});
+$('#take-selfie').addEventListener('click',()=>{selfieStart=selfieStart===null?performance.now():null;$('#take-selfie').textContent=selfieStart===null?'Take a selfie':'Back to the booth';$('#take-selfie').setAttribute('aria-pressed',String(selfieStart!==null));schedule();});
+let showerTimer;
+$('#flower-shower').addEventListener('click',()=>{
+ clearTimeout(showerTimer);const layer=$('.flower-petals');layer.replaceChildren();
+ for(let i=0;i<48;i++){const petal=document.createElement('i');petal.style.cssText=`left:${8+(i*37)%84}%;--drift:${(i%7-3)*18}px;--delay:${(i%10)*.06}s;--fall:${1.5+(i%5)*.15}s;--petal:${i%2?'#f3ae30':'#e15877'}`;layer.append(petal);}
+ $('#flower-shower').textContent='Showering flowers…';$('#flower-shower').disabled=true;
+ showerTimer=setTimeout(()=>{layer.replaceChildren();$('#flower-shower').textContent='Flower Shower';$('#flower-shower').disabled=false;},3000);
+});
