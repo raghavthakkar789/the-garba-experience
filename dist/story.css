@@ -493,3 +493,25 @@
 #durga-mata .shared-aarti{left:14%;right:auto;width:min(235px,23%);bottom:5%}
 #durga-mata .flower-petals{left:auto;right:0;width:55%}
 @media(max-width:800px){#durga-mata .shared-aarti{left:3%;width:45%;bottom:8%}#durga-mata .flower-petals{width:100%}}
+
+/* Responsive lead-character scale: Arrival (6) and Circle (8). */
+#at-the-ground .gate-person{width:60%;height:42%}
+#at-the-ground .arriving-man,#at-the-ground .arriving-woman{width:clamp(250px,24vw,380px);height:clamp(270px,26vw,410px);bottom:0}
+#at-the-ground .arriving-man{left:0}
+#at-the-ground .arriving-woman{left:36%}
+#at-the-ground .gate-person .thought{top:-16%}
+#join-the-circle .joining-man,#join-the-circle .joining-woman{width:clamp(260px,25vw,390px);height:clamp(260px,25vw,390px)}
+#join-the-circle .joining-man{left:0}
+#join-the-circle .joining-woman{left:45%}
+@media(max-width:800px){
+ #at-the-ground .gate-person{width:100%;height:30%;bottom:10%}
+ #at-the-ground .arriving-man,#at-the-ground .arriving-woman{width:clamp(185px,51vw,280px);height:clamp(210px,58vw,315px)}
+ #at-the-ground .arriving-man{left:-3%}
+ #at-the-ground .arriving-woman{left:33%}
+ #at-the-ground .gate-person .thought,#at-the-ground .gate-person .thought[data-voice=her]{left:24%;top:-30%;max-width:65%;width:230px}
+ #at-the-ground .voice-credit{bottom:4%}
+ #join-the-circle .joining-man,#join-the-circle .joining-woman{width:clamp(190px,53vw,290px);height:clamp(190px,53vw,290px)}
+ #join-the-circle .joining-man{left:-4%}
+ #join-the-circle .joining-woman{left:44%}
+ #join-the-circle .dance-floor{top:44%;bottom:28%}
+}
