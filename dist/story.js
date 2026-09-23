@@ -8,6 +8,19 @@ const $=s=>document.querySelector(s);const thought=(id,text)=>{const e=$(`#${id}
 function measure(){bounds=scenes.map(el=>({el,top:el.offsetTop,height:el.offsetHeight}));schedule()}
 function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(render)}}
 function render(now){scheduled=false;renderOpening();const danceVisible=bounds.some(b=>b.el.dataset.scene==='dance'&&scrollY+innerHeight>b.top&&scrollY<b.top+b.height);if(musicDancing&&!reduced.matches&&!document.hidden&&danceVisible){if(lastDanceFrame)danceTime+=Math.min((now-lastDanceFrame)/1000,.05);lastDanceFrame=now}else lastDanceFrame=0;const mobile=innerWidth<801;for(const b of bounds){if(scrollY+innerHeight<b.top||scrollY>b.top+b.height)continue;const p=reduced.matches?.5:clamp((scrollY-b.top)/Math.max(1,b.height-innerHeight));const name=b.el.dataset.scene;b.el.dataset.progress=p.toFixed(3);
+if(name==='selfie'){
+ const enter=smooth((p-.08)/.30),snap=smooth((p-.59)/.11),pose=p>.38;
+ const world=b.el.querySelector('.selfie-world'),photo=b.el.querySelector('.selfie-print');
+ world.style.filter=`blur(${snap*12}px)`;world.style.opacity=String(1-snap*.45);
+ for(const [selector,offset] of [['.selfie-man',-1],['.selfie-woman',1]]){const el=b.el.querySelector(selector);el.dataset.pose=pose?'think':'walk';el.style.transform=`translateX(${offset*(1-enter)*(mobile?95:190)}px) translateY(${!pose?Math.sin(enter*Math.PI*8)*4:0}px)`;}
+ b.el.querySelector('.selfie-phone').style.opacity=String(smooth((p-.39)/.06));
+ b.el.querySelector('.selfie-phone').style.transform=`translateY(${(1-smooth((p-.38)/.08))*55}px) rotate(-12deg)`;
+ thought('selfie-thought',p<.32?'“A selfie booth! Let’s take one together.”':p<.48?'“Come closer. This one is for us!”':'“Ready? Three… two… one!”');
+ b.el.querySelector('#selfie-thought').style.opacity=String(1-smooth((p-.54)/.04));
+ b.el.querySelector('.selfie-flash').style.opacity=String(reduced.matches?0:Math.max(0,1-Math.abs(p-.59)/.025)*.7);
+ const reveal=reduced.matches?1:snap;photo.style.opacity=String(reveal);photo.style.transform=`translate(-50%,-50%) translateY(${(1-reveal)*90}px) rotate(${-6*reveal}deg) scale(${.65+reveal*.35})`;
+ b.el.querySelector('.selfie-continue').style.opacity=String(reveal);
+}
 if(name==='friends'){
  const friend=$('.recommending-woman'),arrive=reduced.matches?1:smooth((p-.1)/.18);
  friend.style.transform=`translateX(${(1-arrive)*innerWidth*.65}px)`;friend.style.opacity=String(arrive);
