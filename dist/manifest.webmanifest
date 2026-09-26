@@ -3,8 +3,8 @@
   "short_name": "Garba",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#420807",
-  "theme_color": "#420807",
+  "background_color": "#183b31",
+  "theme_color": "#183b31",
   "icons": [
     {
       "src": "assets/icon-192.png",

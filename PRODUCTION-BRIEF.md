@@ -1,39 +1,48 @@
-# The Garba Experience — a traveller’s evening
+# The Garba Experience — an evening to belong
 
-Preserve the approved opening, textured deep red foundation, green accents, gold identity and closing invitation. The rest is one continuous linear scroll story, with no drag, tilt, swipe games or page switching.
+## Creative direction
 
-## Story sequence
+A personal Gujarati invitation in forest green, maroon, warm ivory and antique gold. Fine elephant and lotus details come from the supplied hamper. Cormorant Garamond provides expressive display typography; Manrope keeps details clear. Fonts and all opening artwork are served locally.
 
-1. Original opening invitation, unchanged.
-2. An adult Gujarati chibi traveller, in a realistic embroidered green kediyu, thinks about going to Garba. His ivory car arrives, pauses, he walks towards it, disappears behind the car as he boards, and the car departs.
-3. Inside-car view of an imagined festive Ahmedabad old-city street. The view pans with scroll; the traveller’s thought changes. The previously approved birds/chabutra animation remains.
-4. He reaches the imagined ground, sees the event identity and feels the approaching rhythm. Kinjal Dave’s official portrait identifies the evening’s performer.
-5. He enters and pauses before a respectfully rendered Durga Mata statue, hands in namaste. The approved diya animation accompanies an aarti button.
-6. Realistically rendered foreground Garba couples move around an elliptical circle with scroll. The traveller enters, changes to his dancing pose and joins the rhythm. Two music selections are available.
-7. “His story could be yours” leads into the existing final invitation and booking link.
+## Visitor journey
 
-## Motion and artwork
+1. **Open the hamper.** A clean cover based on the supplied physical front sits on the supplied pale paper texture. Two independently hinged doors open reversibly with scrolling, revealing a maroon invitation inside. The logo sits over the central seal. A direct invitation link avoids any mandatory interaction.
+2. **Read the invitation.** The untouched original printed card keeps every organizer logo and original line; a readable HTML companion carries the principal wording, Gujarati verse, performer, date and venue. Clicking the printed card opens its full resolution.
+3. **Feel the anticipation.** “Are you excited for it?” is a brief, expressive maroon typographic interlude.
+4. **Arrive together.** Two proportionately rendered adult friends enter a lantern-lit evening. The extended car/boarding/ticket-counter sequence and comic speech bubbles are removed.
+5. **Pause, then celebrate.** A quiet Durga Mata illustration and optional aarti lead into an expansive Garba scene and Kinjal Dave credit. Music is always opt-in. A small optional photo keepsake replaces the full selfie chapter.
+6. **Make the evening yours.** The final card has the date, time, venue, District booking link, calendar download, directions search, sharing and the distinction between physical invitation passes and District tickets.
 
-The new character, Ahmedabad scene, Durga shrine, imagined ground and dancer cutouts are AI-generated artwork. They are not documentary images of the actual event or venue. Character animation uses four consistent sprite poses and scroll-driven movement; foreground dancers use 2.5D orbit, depth and rhythmic sway. These are not fully rigged 3D models or generated dance videos. All movement reverses with scrolling and respects reduced-motion preferences.
+## Active files and motion
 
-Original generated PNGs are preserved outside the site in generated-assets/story; optimized WebP assets are served by the site. The earlier first-draft commit remains in Git history.
+`dist/index.html`, `dist/experience.css` and `dist/experience.js` form the active implementation. Legacy styles and scripts remain inactive for reference. There is no build step.
 
-## Music
+The three main motion treatments are the reversible 3D door opening, a subtle arrival image movement and the celebration reveal. Normal page scrolling is retained. Reduced-motion visitors and short viewports receive a complete static opening, followed by all invitation content. Text does not depend on motion to become available; without JavaScript, the full page remains readable. A skip link leads directly to event details.
 
-Click-to-play official YouTube embeds. No recordings are downloaded, extracted, rehosted or autoplayed before user action. Only one player exists at a time. Close, Escape or switching selection stops the previous player. The player remains visible and includes the original source link. Embedded playback depends on YouTube/browser/region availability; preview playback was not confirmed.
+Artwork is illustrative. The new hamper cover is a generated recreation, not original production vector artwork. The arrival, shrine and concert scenes are imagined and do not document the actual venue. Optimized WebP delivery images are used; the supplied original invitation remains intact.
+
+## Music and keepsakes
+
+Music uses one visible YouTube player, created only after a user clicks a selection. Switching tracks replaces the player; close and Escape remove it. Direct official source links remain available. No recordings are downloaded or rehosted.
 
 - Jai Aadhyashakti — T-Series Gujarati: https://www.youtube.com/watch?v=alCtB1c2czU
 - Navrangi 2.0 — Kinjal Dave / KD Digital: https://www.youtube.com/watch?v=BPbbBR0X2GY
 - Navrat — Kinjal Dave / Zee Music Gujarati: https://www.youtube.com/watch?v=W05ABD6ilbo
 
-Track configuration: dist/story-audio.json. Preferred user recordings can replace these selections in a subsequent revision.
+Configuration: `dist/story-audio.json`. External playback remains dependent on YouTube, browser and regional availability.
+
+The optional memory dialog accepts a local JPG, PNG or WebP up to 20 MB and exports a framed PNG using canvas. It does not request camera access, upload photos or persist them. Native dialogs provide focus containment and keyboard closing. Files that cannot be decoded receive a retry message.
 
 ## Confirmed event details
 
 The Garba Experience featuring Kinjal Dave. Friday, 9 October 2026, 7:30 pm onwards. Vivenza by Gopi Farm, S.P. Ring Road, Ahmedabad. End time unannounced.
 
-“Grab your passes” links exactly to https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets . The URL’s 1970 is not the event year. Invitation guests carry their elephant-shaped physical pass; District guests follow their ticket instructions.
+Booking URL remains exactly https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets . The URL's 1970 is not the event year. Invitation guests carry their elephant-shaped physical pass; District guests follow their ticket instructions. Directions use a venue-name Maps search, not an unverified coordinate pin. The calendar file preserves 19:30 IST.
 
-## Verification
+## Verification of this redesign
 
-Original opening compared byte-for-byte against the prior revision. Local image references checked, JavaScript syntax checked, desktop and 390-pixel mobile layouts visually reviewed. No missing images or horizontal overflow in the mobile check. Browser console showed no application errors. Player opens and closes; external video playback could not be confirmed in the in-app preview browser.
+Passed: JavaScript syntax, CSS parsing, duplicate IDs, internal anchors and all referenced local files. DOM-level interaction checks passed for no unsolicited music, door opening and reversal, reduced-motion switching, single-player track changes, close cleanup, invitation sharing, memory-dialog controls and invalid/oversized photo validation. These checks use a DOM test harness, not a rendering engine.
+
+Browser visual verification and end-to-end image export remain unconfirmed: the available preview browser blocks the local server with ERR_BLOCKED_BY_CLIENT; the local browser package download was invalid. No claim of pixel-level or mobile-device verification is made. Before publishing, review the opening, all chapter layouts, dialog keyboard behavior, photo export and YouTube playback on desktop and phone.
+
+Publishing is currently blocked: the configured Sites project `appgprj_6ab0f411cd608191b92795e769008c0e` returns “Sites project not found.” The ID and site audience have not been changed. GitHub source changes do not by themselves update the live Sites publication.
