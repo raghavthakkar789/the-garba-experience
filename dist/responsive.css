@@ -138,8 +138,8 @@ button:focus-visible,a:focus-visible{outline:3px solid #fff4d2;outline-offset:5p
 #open-invitation{min-width:240px;animation:invitation-beacon 2s ease-in-out infinite}
 #open-invitation:disabled{animation:none}
 @keyframes invitation-beacon{0%,100%{box-shadow:0 0 0 0 #f5d68d33,0 5px 25px #0006}50%{box-shadow:0 0 0 9px #f5d68d12,0 0 35px #ecca8766}}
-.invitation-locked #details,.invitation-locked footer{display:none!important}
-.invitation-locked .invitation-handover{height:180svh}
+
+
 .invitation-handover .keep-scrolling{display:none}
 .selfie-scene .selfie-action{bottom:30px}
 #at-the-ground .arrival-music{top:auto;bottom:80px;width:440px;padding:12px 18px;border-radius:22px;background:#230b14d9;backdrop-filter:blur(12px)}
