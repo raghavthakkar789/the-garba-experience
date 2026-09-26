@@ -1,11 +1,11 @@
 # The Garba Experience — a traveller’s evening
 
-Preserve the approved opening, textured deep red foundation, green accents, gold identity and closing invitation. The rest is one continuous linear scroll story, with no drag, tilt, swipe games or page switching.
+The opening follows the physical personalized hamper: its dark green arched front appears against the supplied pale paper texture, scrolling reveals the original maroon printed invitation, and an animated “Are you excited for it?” leads into the existing linear story. Preserve the green, gold and deep red identity and closing invitation. There are no drag, tilt, swipe games or page switching.
 
 ## Story sequence
 
-1. Original opening invitation, unchanged.
-2. An adult Gujarati chibi traveller, in a realistic embroidered green kediyu, thinks about going to Garba. His ivory car arrives, pauses, he walks towards it, disappears behind the car as he boards, and the car departs.
+1. Physical hamper front, printed invitation reveal and excitement message. The prior friend recommendation, handover and decorative hero opening have been removed from the active page.
+2. Two friends dressed for Garba set out together. Their ivory car arrives, pauses, they walk towards it, board, and the car departs.
 3. Inside-car view of an imagined festive Ahmedabad old-city street. The view pans with scroll; the traveller’s thought changes. The previously approved birds/chabutra animation remains.
 4. He reaches the imagined ground, sees the event identity and feels the approaching rhythm. Kinjal Dave’s official portrait identifies the evening’s performer.
 5. He enters and pauses before a respectfully rendered Durga Mata statue, hands in namaste. The approved diya animation accompanies an aarti button.
@@ -16,7 +16,7 @@ Preserve the approved opening, textured deep red foundation, green accents, gold
 
 The new character, Ahmedabad scene, Durga shrine, imagined ground and dancer cutouts are AI-generated artwork. They are not documentary images of the actual event or venue. Character animation uses four consistent sprite poses and scroll-driven movement; foreground dancers use 2.5D orbit, depth and rhythmic sway. These are not fully rigged 3D models or generated dance videos. All movement reverses with scrolling and respects reduced-motion preferences.
 
-Original generated PNGs are preserved outside the site in generated-assets/story; optimized WebP assets are served by the site. The earlier first-draft commit remains in Git history.
+The hamper front photograph and pale texture are supplied references; the printed invitation is served from assets/invitation.jpg. Original generated PNGs are preserved outside the site in generated-assets/story; optimized WebP assets are served by the site. The earlier first-draft commit remains in Git history.
 
 ## Music
 
@@ -36,4 +36,4 @@ The Garba Experience featuring Kinjal Dave. Friday, 9 October 2026, 7:30 pm onwa
 
 ## Verification
 
-Original opening compared byte-for-byte against the prior revision. Local image references checked, JavaScript syntax checked, desktop and 390-pixel mobile layouts visually reviewed. No missing images or horizontal overflow in the mobile check. Browser console showed no application errors. Player opens and closes; external video playback could not be confirmed in the in-app preview browser.
+The previous verification applied to the earlier opening. For the hamper revision, local image references and JavaScript syntax were checked. Browser layout and external playback still need verification before publishing.

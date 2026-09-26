@@ -1,14 +1,14 @@
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));const smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
 const scenes=[...document.querySelectorAll('[data-scene]')];let bounds=[],scheduled=false;
-let invitationOpened=false,openingStart=null,selfieStart=null,aartiActive=false,danceRequested=false;
+let selfieStart=null,aartiActive=false,danceRequested=false;
 let musicDancing=false,danceTime=0,lastDanceFrame=0;
 let ticketProgress=null,ticketFrame=0;
 function setMusicDancing(value){musicDancing=value;lastDanceFrame=0;document.querySelector('.dance-floor').dataset.dancing=String(value);schedule()}
 const $=s=>document.querySelector(s);const thought=(id,text)=>{const e=$(`#${id} span`);if(e.textContent!==text)e.textContent=text};
 function measure(){bounds=scenes.map(el=>({el,top:el.offsetTop,height:el.offsetHeight}));schedule()}
 function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(render)}}
-function render(now){scheduled=false;renderOpening();const danceVisible=bounds.some(b=>b.el.dataset.scene==='dance'&&scrollY+innerHeight>b.top&&scrollY<b.top+b.height);if(danceRequested&&!reduced.matches&&!document.hidden&&danceVisible){if(lastDanceFrame)danceTime+=Math.min((now-lastDanceFrame)/1000,.05);lastDanceFrame=now}else lastDanceFrame=0;const mobile=innerWidth<801;for(const b of bounds){if(scrollY+innerHeight<b.top||scrollY>b.top+b.height)continue;let p=reduced.matches?.5:clamp((scrollY-b.top)/Math.max(1,b.height-innerHeight));const name=b.el.dataset.scene;b.el.dataset.progress=p.toFixed(3);
+function render(now){scheduled=false;const danceVisible=bounds.some(b=>b.el.dataset.scene==='dance'&&scrollY+innerHeight>b.top&&scrollY<b.top+b.height);if(danceRequested&&!reduced.matches&&!document.hidden&&danceVisible){if(lastDanceFrame)danceTime+=Math.min((now-lastDanceFrame)/1000,.05);lastDanceFrame=now}else lastDanceFrame=0;const mobile=innerWidth<801;for(const b of bounds){if(scrollY+innerHeight<b.top||scrollY>b.top+b.height)continue;let p=reduced.matches?.5:clamp((scrollY-b.top)/Math.max(1,b.height-innerHeight));const name=b.el.dataset.scene;b.el.dataset.progress=p.toFixed(3);
 if(name==='selfie'){
  const enter=smooth((p-.08)/.30),snap=selfieStart===null?0:(reduced.matches?1:smooth((now-selfieStart)/650)),pose=p>.38;
  const world=b.el.querySelector('.selfie-world'),photo=b.el.querySelector('.selfie-print');
@@ -22,39 +22,7 @@ if(name==='selfie'){
  const reveal=snap;photo.style.opacity=String(reveal);photo.style.transform=`translate(-50%,-50%) translateY(${(1-reveal)*90}px) rotate(${-6*reveal}deg) scale(${.65+reveal*.35})`;
  b.el.querySelector('.selfie-continue').style.opacity=String(reveal);
 }
-if(name==='friends'){
- const friend=$('.recommending-woman'),arrive=reduced.matches?1:smooth((p-.1)/.18);
- friend.style.transform=`translateX(${(1-arrive)*innerWidth*.65}px)`;friend.style.opacity=String(arrive);
- const show=reduced.matches?1:smooth((p-.32)/.15);
- $('.recommendation-artist').style.opacity=String(show);$('.recommendation-artist').style.transform=`translateY(${(1-show)*35}px) scale(${.9+show*.1})`;
- $('#friends-thought').dataset.voice=p<.27?'thinking':p<.68?'her':'him';
- thought('friends-thought',p<.27?'“Where can I find an amazing Garba night?”':p<.68?'“The Garba Experience! Kinjal Dave will be singing Garba live. Let’s go together!”':'“Kinjal Dave live? That sounds amazing. Let’s go together!”');
- $('#friends-caption').textContent=p<.27?'He’s searching for a night to remember.':p<.68?'She introduces The Garba Experience, featuring Kinjal Dave.':'Two friends. One wonderful plan. And an invitation to open.';
-}
-if(name==='handover'){
- p=invitationOpened?(openingStart===null?p:Math.min(1,.5+(now-openingStart)/3600)):Math.min(p,.5);
- const pass=reduced.matches?1:smooth((p-.12)/.28),open=invitationOpened?(reduced.matches?1:smooth((p-.52)/.16)):0,lift=invitationOpened?(reduced.matches?0:smooth((p-.68)/.27)):0;
- const prop=$('.invitation-prop'),stage=$('.handover-stage'),man=$('.receiving-man'),woman=$('.giving-woman');
- const approach=pass*(mobile?12:35);
- man.dataset.pose=p<.4?'accept':p<.52?'hold':p<.68?'open':'read';
- man.style.transform=`translateX(${approach}px)`;
- woman.style.transform=`translateX(${-approach}px)`;
- const startX=woman.offsetLeft+woman.offsetWidth*.25-approach,startY=stage.clientHeight-woman.offsetHeight*.68;
- const settle=reduced.matches?1:smooth((p-.4)/.1);
- const endX=man.offsetLeft+man.offsetWidth*(.84-settle*.32)+approach,endY=stage.clientHeight-man.offsetHeight*(.57-settle*.06);
- const handX=startX+(endX-startX)*pass,handY=startY+(endY-startY)*pass-Math.sin(pass*Math.PI)*12;
- const x=handX+(stage.clientWidth*.5-handX)*lift,y=handY+(stage.clientHeight*.38-handY)*lift;
- prop.style.left='0';prop.style.top='0';
- prop.style.transform=`translate(${x-prop.offsetWidth/2}px,${y-prop.offsetHeight/2}px) rotate(${(1-pass)*-8}deg) scale(${(mobile?.4:.36)+lift*(mobile?.8:.94)})`;
- prop.dataset.phase=p<.12?'held-by-her':p<.4?'handover':p<.52?'received':p<.68?'opening':'opened';
- $('.envelope-flap').style.transform=`rotateY(${-open*115}deg)`;
- $('.envelope-flap').style.zIndex='4';
- $('.invitation-letter').style.transform=`translateY(${-lift*55}%)`;
- stage.style.opacity='1';
- $('.invitation-handover .story-heading').style.opacity=String(1-lift);
- $('#handover-caption').textContent=p<.12?'A little invitation. A wonderful evening ahead.':p<.4?'She places the invitation in his hands.':p<.52?'He holds it for a moment.':p<.68?'Now, he carefully opens the invitation.':'The invitation opens into The Garba Experience.';
-}
-if(name==='boarding'){const car=$('.pickup-car'),man=$('.boarding-man'),door=$('.car-door');const arrive=smooth((p-.1)/.23),board=smooth((p-.46)/.13),depart=smooth((p-.72)/.26);car.style.transform=`translateX(${(-1+arrive)*innerWidth*1.15+depart*innerWidth*1.3}px)`;man.style.transform=`translate(${board*innerWidth*(mobile?.29:.34)}px,${board*-12+Math.sin(board*Math.PI*6)*3}px) scale(${1-board*.27})`;man.style.opacity=String(1-smooth((p-.58)/.055));man.dataset.pose=p>.43?'walk':'think';const friend=$('.boarding-woman');friend.style.transform=man.style.transform;friend.style.opacity=man.style.opacity;friend.dataset.pose=man.dataset.pose;door.style.opacity=p>.4&&p<.68?'1':'0';door.style.transform=`perspective(400px) rotateY(${-55*Math.sin(clamp((p-.4)/.28)*Math.PI)}deg)`;$('#plan-thought').style.opacity=p>.62?'0':'1';thought('plan-thought',p<.3?'“The Garba Experience it is. We’re going together!”':p<.46?'“Our ride is here. Let’s go!”':'“Next stop: an unforgettable evening.”');$('#boarding-caption').textContent=p<.12?'Their plan is made. Now for the ride.':p<.34?'An ivory car pulls up outside.':p<.46?'The car waits. They are ready.':p<.68?'They walk over and take their seats.':'And just like that, the evening is on its way.';}
+if(name==='boarding'){const car=$('.pickup-car'),man=$('.boarding-man'),door=$('.car-door');const arrive=smooth((p-.1)/.23),board=smooth((p-.46)/.13),depart=smooth((p-.72)/.26);car.style.transform=`translateX(${(-1+arrive)*innerWidth*1.15+depart*innerWidth*1.3}px)`;man.style.transform=`translate(${board*innerWidth*(mobile?.29:.34)}px,${board*-12+Math.sin(board*Math.PI*6)*3}px) scale(${1-board*.27})`;man.style.opacity=String(1-smooth((p-.58)/.055));man.dataset.pose=p>.43?'walk':'think';const friend=$('.boarding-woman');friend.style.transform=man.style.transform;friend.style.opacity=man.style.opacity;friend.dataset.pose=man.dataset.pose;door.style.opacity=p>.4&&p<.68?'1':'0';door.style.transform=`perspective(400px) rotateY(${-55*Math.sin(clamp((p-.4)/.28)*Math.PI)}deg)`;$('#plan-thought').style.opacity=p>.62?'0':'1';thought('plan-thought',p<.3?'“The Garba Experience it is. We’re going together!”':p<.46?'“Our ride is here. Let’s go!”':'“Next stop: an unforgettable evening.”');$('#boarding-caption').textContent=p<.12?'Their invitation is open. Now for the ride.':p<.34?'An ivory car pulls up outside.':p<.46?'The car waits. They are ready.':p<.68?'They walk over and take their seats.':'And just like that, the evening is on its way.';}
 if(name==='tickets'){
  // Time-based damping absorbs wheel/touch jumps without changing the other scenes.
  const target=reduced.matches?1:p,dt=ticketFrame?Math.min((now-ticketFrame)/1000,.05):1/60;
@@ -118,7 +86,6 @@ if(name==='dance'){
  $('.ground-photo').style.transform=`scale(${1+smooth(p)*.035})`;
 
 }}
-if(openingStart!==null&&now-openingStart<1800)schedule();
 if(selfieStart!==null&&now-selfieStart<750)schedule();
 if(ready&&active?.startsWith('garba')&&musicDancing){const volume=arrivalVolume();if(player.getVolume()!==volume)player.setVolume(volume)}
 if(danceRequested&&!reduced.matches&&!document.hidden&&danceVisible)schedule();
@@ -206,22 +173,6 @@ $('#close-music').addEventListener('click',()=>stopMusic(true));
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!dock.hidden)stopMusic(true)});
 $('#music-choice').addEventListener('change',e=>chooseMusic(e.target.value));
 
-function renderOpening(){
- const opening=$('.opening-journey');
- const p=reduced.matches?.5:clamp((scrollY-opening.offsetTop)/Math.max(1,opening.offsetHeight-innerHeight));
- document.querySelectorAll('.opening-layer').forEach(el=>{
-  const enter=+el.dataset.enter;
-  const reveal=reduced.matches?1:smooth((p*.55-enter)/.13);
-  const offset=(1-reveal)*110;
-  const direction=el.dataset.direction;
-  el.style.transform=direction==='top'?`translateY(${-offset}%)`:direction==='bottom'?`translateY(${offset}%)`:`translateX(${direction==='left'?-offset:offset}%)`;
-  el.style.opacity=String(reveal);
- });
- opening.dataset.phase=p<.86?'enter':'complete';
- $('.opening-timeline i').style.transform=`scaleX(${p})`;
- $('#opening-cue').textContent=p<.86?'SCROLL TO REVEAL THE CELEBRATION ↓':'CONTINUE INTO THE STORY ↓';
-}
-
 // Scoped atmosphere and staggered copy only after the first three scenes.
 const paintedChapters=document.querySelectorAll('.painted-chapter');
 const paintedObserver=new IntersectionObserver(entries=>{for(const entry of entries)entry.target.classList.toggle('chapter-visible',entry.isIntersecting)},{threshold:0,rootMargin:'0px'});
@@ -241,14 +192,6 @@ function arrivalVolume(){
 }
 
 // Five deliberate, optional story moments.
-$('#open-invitation').addEventListener('click',()=>{
- if(invitationOpened)return;
- invitationOpened=true;openingStart=performance.now();
- document.body.classList.remove('invitation-locked');
- $('#open-invitation').disabled=true;$('#open-invitation').textContent='Opening your evening…';
- measure();dispatchEvent(new Event('resize'));schedule();
- setTimeout(()=>{openingStart=null;$('#beginning').scrollIntoView({behavior:reduced.matches?'instant':'smooth'});$('#open-invitation').textContent='Invitation opened';},reduced.matches?0:1800);
-});
 $('#take-selfie').addEventListener('click',()=>{selfieStart=selfieStart===null?performance.now():null;$('#take-selfie').textContent=selfieStart===null?'Take a selfie':'Back to the booth';$('#take-selfie').setAttribute('aria-pressed',String(selfieStart!==null));schedule();});
 let showerTimer;
 $('#flower-shower').addEventListener('click',()=>{
