@@ -22,11 +22,7 @@ if(name==='selfie'){
  const reveal=snap;photo.style.opacity=String(reveal);photo.style.transform=`translate(-50%,-50%) translateY(${(1-reveal)*90}px) rotate(${-6*reveal}deg) scale(${.65+reveal*.35})`;
  b.el.querySelector('.selfie-continue').style.opacity=String(reveal);
 }
-<<<<<<< HEAD
-if(name==='boarding'){const car=$('.pickup-car'),man=$('.boarding-man'),door=$('.car-door');const arrive=smooth((p-.1)/.23),board=smooth((p-.46)/.13),depart=smooth((p-.72)/.26);car.style.transform=`translateX(${(-1+arrive)*innerWidth*1.15+depart*innerWidth*1.3}px)`;man.style.transform=`translate(${board*innerWidth*(mobile?.29:.34)}px,${board*-12+Math.sin(board*Math.PI*6)*3}px) scale(${1-board*.27})`;man.style.opacity=String(1-smooth((p-.58)/.055));man.dataset.pose=p>.43?'walk':'think';const friend=$('.boarding-woman');friend.style.transform=man.style.transform;friend.style.opacity=man.style.opacity;friend.dataset.pose=man.dataset.pose;door.style.opacity=p>.4&&p<.68?'1':'0';door.style.transform=`perspective(400px) rotateY(${-55*Math.sin(clamp((p-.4)/.28)*Math.PI)}deg)`;$('#plan-thought').style.opacity=p>.62?'0':'1';thought('plan-thought',p<.3?'“The Garba Experience it is. We’re going together!”':p<.46?'“Our ride is here. Let’s go!”':'“Next stop: an unforgettable evening.”');$('#boarding-caption').textContent=p<.12?'Their plan is made. Now for the ride.':p<.34?'An ivory car pulls up outside.':p<.46?'The car waits. They are ready.':p<.68?'They walk over and take their seats.':'And just like that, the evening is on its way.';}
-=======
 if(name==='boarding'){const car=$('.pickup-car'),man=$('.boarding-man'),door=$('.car-door');const arrive=smooth((p-.1)/.23),board=smooth((p-.46)/.13),depart=smooth((p-.72)/.26);car.style.transform=`translateX(${(-1+arrive)*innerWidth*1.15+depart*innerWidth*1.3}px)`;man.style.transform=`translate(${board*innerWidth*(mobile?.29:.34)}px,${board*-12+Math.sin(board*Math.PI*6)*3}px) scale(${1-board*.27})`;man.style.opacity=String(1-smooth((p-.58)/.055));man.dataset.pose=p>.43?'walk':'think';const friend=$('.boarding-woman');friend.style.transform=man.style.transform;friend.style.opacity=man.style.opacity;friend.dataset.pose=man.dataset.pose;door.style.opacity=p>.4&&p<.68?'1':'0';door.style.transform=`perspective(400px) rotateY(${-55*Math.sin(clamp((p-.4)/.28)*Math.PI)}deg)`;$('#plan-thought').style.opacity=p>.62?'0':'1';thought('plan-thought',p<.3?'“The Garba Experience it is. We’re going together!”':p<.46?'“Our ride is here. Let’s go!”':'“Next stop: an unforgettable evening.”');$('#boarding-caption').textContent=p<.12?'Their invitation is open. Now for the ride.':p<.34?'An ivory car pulls up outside.':p<.46?'The car waits. They are ready.':p<.68?'They walk over and take their seats.':'And just like that, the evening is on its way.';}
->>>>>>> 86f4b47dd982a60ac36c2664763074ffcec386f4
 if(name==='tickets'){
  // Time-based damping absorbs wheel/touch jumps without changing the other scenes.
  const target=reduced.matches?1:p,dt=ticketFrame?Math.min((now-ticketFrame)/1000,.05):1/60;
@@ -195,11 +191,7 @@ function arrivalVolume(){
  return Math.round(38+47*smooth(clamp(-rect.top/Math.max(1,gate.offsetHeight-innerHeight))));
 }
 
-<<<<<<< HEAD
-// Optional selfie and aarti moments.
-=======
 // Five deliberate, optional story moments.
->>>>>>> 86f4b47dd982a60ac36c2664763074ffcec386f4
 $('#take-selfie').addEventListener('click',()=>{selfieStart=selfieStart===null?performance.now():null;$('#take-selfie').textContent=selfieStart===null?'Take a selfie':'Back to the booth';$('#take-selfie').setAttribute('aria-pressed',String(selfieStart!==null));schedule();});
 let showerTimer;
 $('#flower-shower').addEventListener('click',()=>{
