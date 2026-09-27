@@ -170,18 +170,23 @@ const scroll = (cursor) => {
     d.querySelector("#open-invitation").getAttribute("aria-expanded"),
     "false",
   );
-  d.querySelector(".box-hit-area").click();
+  assert.equal(d.querySelectorAll(".box-hit-area").length, 1);
+  assert(d.querySelector("#invitation-seal img"), "logo is inside the opening button");
+  d.querySelector("#invitation-seal").focus();
+  d.querySelector("#invitation-seal").click();
   frame();
   assert.equal(
     d.querySelector("#open-invitation").getAttribute("aria-expanded"),
     "true",
-    "box itself opens on click",
+    "centre logo opens the box",
   );
   assert.equal(
     d.querySelector(".scene.is-active").id,
     "invitation",
     "opening reveals the card before the friends",
   );
+  assert(d.querySelector("#invitation-seal").hidden, "opened seal leaves tab order");
+  assert.equal(d.activeElement.id, "open-invitation", "focus moves to the story control");
   d.querySelector("#open-invitation").click();
   frame();
   assert.equal(

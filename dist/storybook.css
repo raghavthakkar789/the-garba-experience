@@ -929,14 +929,63 @@ html:not(.cinematic) .story-selfie[data-photo="false"] .story-cast {
   font: 600 clamp(7px, 0.7vw, 10px)/1.5 var(--sans);
   color: #e6c274;
 }
-.box-hit-area {
-  position: absolute;
-  inset: 0;
+.opening-scene .box-hit-area {
   z-index: 6;
-  width: 100%;
-  height: 100%;
+  pointer-events: auto;
   background: transparent;
   padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: visible;
+}
+.opening-scene .box-hit-area[hidden] {
+  display: none;
+}
+.box-hit-area:focus-visible {
+  outline: 2px solid #ffe3a5;
+  outline-offset: 6px;
+}
+.seal-prompt {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: max-content;
+  color: #ffe8b8;
+  font: 500 11px/1.4 var(--sans);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 8px #071f19;
+}
+.seal-prompt > span {
+  padding: 7px 12px;
+  border: 1px solid #dfbd7866;
+  border-radius: 20px;
+  background: #0b281fee;
+}
+.seal-hand {
+  width: 26px;
+  height: 33px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 2px 3px #0008);
+}
+@media (hover: hover) and (pointer: fine) {
+  .box-hit-area:hover .seal-prompt > span {
+    background: #244b37;
+    border-color: #ffe3a5;
+  }
+}
+/* The logo opens the box; the lower control continues once it is open. */
+.opening-scene:not([data-open="true"]) #open-invitation {
+  visibility: hidden;
+  pointer-events: none;
 }
 .opening-actions {
   text-align: center;

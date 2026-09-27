@@ -43,6 +43,9 @@
   const openingButtons = [
     ...document.querySelectorAll("[data-open-invitation]"),
   ];
+  const sealButton = document.querySelector("#invitation-seal");
+  const continueButton = document.querySelector("#open-invitation");
+  let focusContinueOnOpen = false;
   let readingBoxOpen = false;
   let focusStoryOnArrival = false;
   function updateOpening(open) {
@@ -51,14 +54,18 @@
     const revealed = open >= 0.95;
     opening.dataset.open = String(revealed);
     openingButtons.forEach((button) => {
-      button.hidden = false;
+      button.hidden = button === sealButton && open >= 0.25;
       button.setAttribute("aria-expanded", String(revealed));
       button.setAttribute(
         "aria-label",
         revealed ? "Follow their story" : "Open your invitation",
       );
     });
-    document.querySelector("#open-invitation").textContent = revealed
+    if (revealed && focusContinueOnOpen) {
+      continueButton.focus({ preventScroll: true });
+      focusContinueOnOpen = false;
+    }
+    continueButton.textContent = revealed
       ? "Follow their story ↓"
       : "Open your invitation ↗";
     opening.querySelector(".opening-hint").textContent = revealed
@@ -384,6 +391,7 @@
   );
   openingButtons.forEach((button) =>
     button.addEventListener("click", () => {
+      if (button === sealButton) focusContinueOnOpen = true;
       if (opening.dataset.open === "true") {
         focusStoryOnArrival = cinematic;
         scrollToScene(document.querySelector("#beginning"));
@@ -804,6 +812,7 @@
       }
     });
   function resetReloadState() {
+    focusContinueOnOpen = false;
     stopAmbient();
     stopMusic();
     document

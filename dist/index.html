@@ -32,7 +32,7 @@
       crossorigin=""
     />
     <link rel="stylesheet" href="experience.css?v=6" />
-    <script defer="" src="experience.js?v=8"></script>
+    <script defer="" src="experience.js?v=9"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -64,7 +64,7 @@
         "url": "https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets"
       }
     </script>
-    <link rel="stylesheet" href="storybook.css?v=9" />
+    <link rel="stylesheet" href="storybook.css?v=10" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
     <script defer src="button-motion.js?v=1"></script>
   </head>
@@ -107,7 +107,7 @@
               </div>
               <div class="hamper-area">
                 <div class="hamper">
-                  <div class="hamper-interior" aria-hidden="true">
+                  <div class="hamper-interior" id="invitation-card" aria-hidden="true">
                     <img
                       src="assets/invitation.jpg"
                       alt=""
@@ -117,19 +117,25 @@
                   </div>
                   <div class="door door-left" aria-hidden="true"></div>
                   <div class="door door-right" aria-hidden="true"></div>
-                  <div class="hamper-seal" aria-hidden="true">
-                    <img src="assets/logo.webp" alt="" /><small
-                      >9 OCTOBER</small
-                    >
-                  </div>
                   <button
-                    class="box-hit-area"
+                    class="hamper-seal box-hit-area"
+                    id="invitation-seal"
                     type="button"
                     data-open-invitation
                     aria-label="Open your invitation"
+                    aria-controls="invitation-card"
                     aria-expanded="false"
                     hidden
-                  ></button>
+                  >
+                    <img src="assets/logo.webp" alt="" />
+                    <small>9 OCTOBER</small>
+                    <span class="seal-prompt" aria-hidden="true">
+                      <svg class="seal-hand" viewBox="0 0 32 40" fill="none">
+                        <path d="M12 22V5a3 3 0 0 1 6 0v13-3a3 3 0 0 1 6 0v3a3 3 0 0 1 6 0v10c0 5-4 9-9 9h-3c-3 0-5-1-7-4L4 24a3 3 0 0 1 4-4l4 4" />
+                      </svg>
+                      <span>Click here to open</span>
+                    </span>
+                  </button>
                 </div>
               </div>
               <div class="opening-actions">
