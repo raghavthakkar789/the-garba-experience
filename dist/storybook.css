@@ -1015,3 +1015,173 @@ html:not(.cinematic) .opening-scene .hamper-seal {
   font-family: "Noto Serif Gujarati", serif;
   font-size: 0.9em;
 }
+
+/* Invitation typography: clear navigation and quiet gold chapter ornaments. */
+.masthead {
+  padding: 14px var(--gutter);
+  align-items: center;
+  background: linear-gradient(180deg, #0a241df5, #0a241de0);
+  border-bottom: 1px solid #d4b67b30;
+}
+.wordmark {
+  width: 80px;
+}
+.header-date {
+  color: #dbc69d;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+}
+.header-actions {
+  gap: 22px;
+}
+.header-link {
+  padding: 9px 17px;
+  border: 1px solid #d4b67b70;
+  font-size: 12px;
+  background: #d4b67b0a;
+}
+#motion-toggle {
+  border: 0;
+  color: #d0d6c8;
+  font-size: 12px;
+}
+.header-link:hover,
+.header-link:focus-visible {
+  background: #d4b67b20;
+}
+.opening-title h1 {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 13px;
+  font-size: clamp(50px, 5vw, 64px);
+  line-height: 1;
+}
+.heading-lead {
+  font: 500 12px/1.5 var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #eee2cb;
+}
+.opening-title h1 em,
+.illustrated-scene .story-title h2 em {
+  color: #edd09a;
+  font-weight: 400;
+}
+.opening-title:after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 1px;
+  margin: 13px auto 0;
+  background: linear-gradient(90deg, transparent, #d4b67b, transparent);
+}
+.illustrated-scene .story-title h2 {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  padding: 7px 26px 14px;
+  font-size: clamp(32px, 3.2vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: #fff5e2;
+  text-wrap: balance;
+  text-shadow: 0 2px 14px #061711;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #0a241dc9 20%,
+    #0a241dc9 80%,
+    transparent
+  );
+}
+.illustrated-scene .story-title h2:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4b67bb3, transparent);
+}
+.illustrated-scene .story-title h2:before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: calc(50% - 2px);
+  width: 5px;
+  height: 5px;
+  background: #d4b67b;
+  transform: rotate(45deg);
+}
+@media (max-width: 650px) {
+  .masthead {
+    padding: 8px 20px;
+    gap: 12px;
+  }
+  .wordmark {
+    width: 64px;
+  }
+  .header-actions {
+    gap: 0;
+  }
+  .header-link {
+    min-height: 40px;
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+  #motion-toggle {
+    min-height: 32px;
+    font-size: 10px;
+  }
+  .opening-title h1 {
+    font-size: 52px;
+    gap: 10px;
+  }
+  .heading-lead {
+    font-size: 10px;
+  }
+  .illustrated-scene .story-title h2 {
+    padding: 5px 12px 10px;
+    font-size: 29px;
+    line-height: 1.12;
+  }
+}
+@media (max-height: 760px) and (max-width: 650px) {
+  .opening-title h1 {
+    font-size: 44px;
+  }
+  .cinematic .illustrated-scene .story-title {
+    top: 102px;
+  }
+  .illustrated-scene .story-title h2 {
+    font-size: 24px;
+    padding-top: 3px;
+    padding-bottom: 8px;
+  }
+}
+/* Keep the larger invitation title clear of the box on short screens. */
+.cinematic .opening-scene .hamper {
+  max-width: calc((100svh - 400px) * 0.8138);
+}
+@media (max-height: 760px) and (min-width: 651px) {
+  .cinematic .illustrated-scene .story-title {
+    top: 96px;
+  }
+  .illustrated-scene .story-title h2 {
+    font-size: 32px;
+    padding: 4px 18px 9px;
+  }
+  .opening-title h1 {
+    font-size: 48px;
+  }
+}
+@media (max-height: 680px) and (max-width: 650px) {
+  .cinematic .illustrated-scene .story-title {
+    top: 94px;
+  }
+  .cinematic .illustrated-scene .story-title h2 {
+    font-size: 22px;
+    padding: 2px 12px 6px;
+  }
+}
