@@ -352,7 +352,7 @@ input:focus-visible {
 .hamper-interior {
   position: absolute;
   inset: 1.5% 2%;
-  background: #632a2e url(assets/red-texture.webp) center/cover;
+  background: #123c32 url(assets/green-texture.webp) center/cover;
   color: #f0dcab;
   text-align: center;
   padding: 12% 8%;
@@ -390,15 +390,16 @@ input:focus-visible {
   opacity: 0.45;
 }
 .scene-invitation {
-  background: #411a24;
+  background: #102f28;
 }
 .invitation-texture {
   position: absolute;
   inset: 0;
   z-index: -3;
   background:
-    linear-gradient(90deg, #391923bd, #511b2399),
-    url(assets/red-texture.webp) center/cover;
+    radial-gradient(ellipse at 50% 60%, #4c795445, transparent 65%),
+    linear-gradient(135deg, #09241ee6, #245240c9),
+    url(assets/green-texture.webp) center/cover;
 }
 .scene-invitation .scene-copy {
   width: 51%;
