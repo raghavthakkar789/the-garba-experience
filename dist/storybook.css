@@ -182,6 +182,15 @@
 .story-invite {
   background: #102f28;
 }
+.story-invite .story-shade {
+  background: linear-gradient(
+    180deg,
+    #061e1acc,
+    #061e1a20 35%,
+    #061e1a12 65%,
+    #061e1ae6
+  );
+}
 .story-invite .original-invitation {
   width: min(29vw, 315px, 43svh);
   top: auto;

@@ -64,7 +64,7 @@
         "url": "https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets"
       }
     </script>
-    <link rel="stylesheet" href="storybook.css?v=12" />
+    <link rel="stylesheet" href="storybook.css?v=13" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
     <script defer src="button-motion.js?v=1"></script>
   </head>
@@ -190,7 +190,16 @@
             data-sound="invitation"
             aria-labelledby="the-invitation-title"
           >
-            <div class="invitation-texture" aria-hidden="true"></div>
+            <picture class="scene-art invitation-art">
+              <source media="(max-width:650px)" srcset="assets/story/locations/invitation-veranda-mobile.webp" />
+              <img
+                src="assets/story/locations/invitation-veranda.webp"
+                alt="A painted Gujarati veranda with carved arches, glowing lanterns, marigolds and jasmine"
+                width="1536"
+                height="1024"
+                loading="lazy"
+              />
+            </picture>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
               <h2 id="the-invitation-title">She has <em>just the plan.</em></h2>
