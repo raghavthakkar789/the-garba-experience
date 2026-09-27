@@ -6,7 +6,7 @@ Original generated painted environments, optimized to 1536×1024 WebP. These are
 | --------------------- | ------------------------------------------------------- |
 | courtyard.webp        | Friends meet at home and exchange the invitation        |
 | pickup.webp           | Their car collects them outside the home                |
-| drive.webp            | A clear lantern-lit road viewed through the windscreen  |
+| drive-navratri.webp            | A lantern-lit road with Navratri celebrants along the sides, viewed through the windscreen  |
 | selfie-corner.webp    | Floral photo alcove inside the venue                    |
 | shrine-courtyard.webp | Aarti in a devotional courtyard before the Garba circle |
 
