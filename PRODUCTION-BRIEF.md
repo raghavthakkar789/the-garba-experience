@@ -4,7 +4,7 @@
 
 Restore the original narrative as a connected scroll experience, improve visual continuity and touch use, and provide optional sound without interrupting the journey. Preserve the event details, printed invitation, existing bookings and keepsake capability.
 
-Base: GitHub `main` at `18dc83e94fe894334adae39ababecbf5eb616e67` (the previous continuous-scroll revision). Changes are isolated in this checkout; prior work was not overwritten.
+Base: GitHub `main` at `c1d33df111c1dfb894c8866c2e507573e0053e7f` (the restored illustrated story). This correction matches the environments to each story action while retaining the cast, dialogue and continuous scroll.
 
 ## Story and presentation
 
@@ -23,7 +23,7 @@ The user's preferred original illustrated characters and painted scenes are rest
 
 The same original green-kediyu and pink-chaniya-choli characters persist throughout. Pose changes, walking, boarding, the venue approach and the photo reveal are scroll-driven. One sticky stage connects every scene with reversible dissolves. No scroll snapping, intercepted wheel/touch events or pagination is used. The original invitation opens at full resolution.
 
-Original artwork is reused as optimized WebP delivery assets, approximately 4.2 MB in total, with separate phone artwork for the entrance and car interior. The painted scenes are artistic impressions, not actual venue photography. Fonts remain self-hosted.
+Original cast, entrance, concert and Garba-circle artwork remain optimized WebP assets, with separate phone artwork for the entrance and car interior. Five new 1536×1024 painted location backgrounds total 2.34 MB. The meeting and gift exchange share a home courtyard; pickup takes place on the street outside; the drive follows a clear forward-facing road; the selfie has its own floral alcove; aarti takes place in a full courtyard around the shrine. The old city collage, duplicated entrance at the selfie scene and isolated shrine portrait are no longer loaded. Forward road movement stays aligned to its vanishing point. Phone dialogue placement leaves the shrine visible. These environments are artistic impressions, not verified depictions of the actual venue. Fonts remain self-hosted.
 
 Reduced motion, short screens and reading mode show all conversations in normal document flow. Hidden cinematic scenes are inert. No-JavaScript visitors can read the complete story. Existing event details, original invitation, booking links, sound choices and local photo keepsakes are preserved.
 
@@ -45,7 +45,7 @@ District URL stays exactly `https://www.district.in/events/the-garba-experience-
 
 Passed JavaScript syntax and the behavioral suite `tests/verify-experience.cjs`: local asset references, CSS parsing, internal anchors, ten-scene traversal forwards/backwards, brief dialogue switching and reversal, character pose changes, car boarding/departure, hand-in-hand entry, automatic/manual selfie reveal, overlapping dissolves, reversible hamper, reading and reduced-motion switches, no unsolicited audio, opt-in ambience/mute, nonmodal official music, single-player switching, source exclusivity, Escape and background cleanup, share URL, keepsake controls and invalid/oversized image handling, event metadata and booking URL.
 
-The suite uses jsdom and postcss from the existing validation environment, with audio and layout boundaries modeled. It does not establish rendered layout quality, actual sound quality, third-party playback or complete canvas export. Browser installation failed because its download was invalid, and this buildless site has no compatible managed browser preview. Desktop/phone visual review, a listening check and real-browser keepsake export remain unverified.
+The suite uses jsdom and postcss from the existing validation environment, with audio and layout boundaries modeled. A local Chromium render also checked the illustrated scenes at 1440×900, 390×844 and 320×700: scene selection matched the scroll position, all visible images loaded, no page exceptions occurred, and no horizontal overflow appeared. Screenshots were reviewed for background composition, ground placement, driving perspective, the selfie location and shrine framing. Phone reading mode kept all ten scenes visible without overflow. Actual sound quality, third-party playback and complete canvas export remain unverified.
 
 ## Publication status
 

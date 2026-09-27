@@ -16,7 +16,8 @@ Open http://localhost:8765. The site is static: no build or production dependenc
 - `dist/experience.css`: shared cinematic stage, event details, sound controls and keepsake layout.
 - `dist/storybook.css`: illustrated scenes, character poses, speech bubbles, mobile compositions and a complete unpinned reading layout.
 - `dist/experience.js`: native scroll progress, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, original Web Audio ambience, official music selection, sharing and photo export.
-- `dist/assets/story/scroll/`: optimized WebP copies of the original illustrated characters and painted scenes. The later realistic artwork is no longer loaded.
+- `dist/assets/story/scroll/`: optimized original illustrated characters, entrance, concert and Garba-circle artwork.
+- `dist/assets/story/locations/`: five painted environments matched to the action: home courtyard, pickup street, driving road, selfie corner and shrine courtyard. The later realistic story backgrounds and city collage are no longer loaded.
 - `dist/story-audio.json`: existing official YouTube selections. Official recordings are not downloaded or rehosted.
 
 The story does not use pagination, scroll snapping, intercepted wheel/touch events or next-page buttons. Mouse wheel, trackpad, touch and keyboard all use the browser's native scroll. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
@@ -31,6 +32,6 @@ Photo keepsakes remain entirely in the visitor's browser, with no upload or pers
 
 `node --check dist/experience.js`
 
-`tests/verify-experience.cjs` requires `jsdom` and `postcss` in the Node module search path. It checks scene traversal and reversal, dissolves, hamper opening, reading/reduced-motion modes, silent defaults, audio controls, player cleanup, asset references, sharing, keepsake validation and event details. These are DOM-level tests, not a rendering engine or an audio-quality assessment.
+`tests/verify-experience.cjs` requires `jsdom` and `postcss` in the Node module search path. It checks scene traversal and reversal, dissolves, hamper opening, reading/reduced-motion modes, silent defaults, audio controls, player cleanup, asset references, sharing, keepsake validation and event details. These are DOM-level tests. The background correction was also rendered in Chromium at 1440×900, 390×844 and 320×700, with image loading, scroll scene selection, overflow and screenshot checks. This does not establish audio quality or third-party playback.
 
 See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existing Sites project ID is preserved. Pushing source changes does not publish the live Sites website.

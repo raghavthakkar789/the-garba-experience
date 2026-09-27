@@ -119,7 +119,7 @@
       );
     }
     if (scene.id === "the-drive")
-      scene.style.setProperty("--town-x", `${-progress * w * 0.2}px`);
+      scene.style.setProperty("--road-zoom", (1 + progress * 0.16).toFixed(3));
     if (scene.id === "arrival") {
       const park = ease(progress / 0.17),
         step = ease((progress - 0.22) / 0.1);
@@ -212,7 +212,7 @@
         "--together-opacity",
         "--together-scale",
         "--together-y",
-        "--town-x",
+        "--road-zoom",
         "--prayer-tilt",
         "--dialogue-opacity",
       ].forEach((prop) => scene.style.removeProperty(prop));

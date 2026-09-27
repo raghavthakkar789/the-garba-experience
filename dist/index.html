@@ -17,7 +17,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link
       rel="preload"
-      href="assets/story/scroll/town.webp"
+      href="assets/story/locations/courtyard.webp"
       as="image"
       fetchpriority="high"
     />
@@ -28,8 +28,8 @@
       type="font/woff"
       crossorigin=""
     />
-    <link rel="stylesheet" href="experience.css?v=4" />
-    <script defer="" src="experience.js?v=4"></script>
+    <link rel="stylesheet" href="experience.css?v=5" />
+    <script defer="" src="experience.js?v=5"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -61,7 +61,7 @@
         "url": "https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets"
       }
     </script>
-    <link rel="stylesheet" href="storybook.css?v=4" />
+    <link rel="stylesheet" href="storybook.css?v=5" />
   </head>
   <body>
     <a class="skip-link" href="#details">Skip to event details</a>
@@ -95,14 +95,15 @@
             data-sound="welcome"
             aria-labelledby="beginning-title"
           >
-            <div class="painted-town" aria-hidden="true">
+            <picture class="scene-art">
               <img
-                src="assets/story/scroll/town.webp"
-                alt=""
+                src="assets/story/locations/courtyard.webp"
+                alt="The friends meet in a quiet Gujarati home courtyard at dusk"
                 width="1536"
                 height="1024"
+                fetchpriority="high"
               />
-            </div>
+            </picture>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
               <h1 id="beginning-title">A night to remember.</h1>
@@ -131,14 +132,15 @@
             data-sound="invitation"
             aria-labelledby="invitation-title"
           >
-            <div class="painted-town" aria-hidden="true">
+            <picture class="scene-art">
               <img
-                src="assets/story/scroll/town.webp"
-                alt=""
+                src="assets/story/locations/courtyard.webp"
+                alt="The same lantern-lit courtyard where she gives him the invitation"
                 width="1536"
                 height="1024"
+                loading="lazy"
               />
-            </div>
+            </picture>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
               <h2 id="invitation-title">She has a little surprise.</h2>
@@ -238,14 +240,15 @@
             data-sound="journey"
             aria-labelledby="the-plan-title"
           >
-            <div class="painted-town" aria-hidden="true">
+            <picture class="scene-art">
               <img
-                src="assets/story/scroll/town.webp"
-                alt=""
+                src="assets/story/locations/pickup.webp"
+                alt="A clear street outside the home, ready for their ride"
                 width="1536"
                 height="1024"
+                loading="lazy"
               />
-            </div>
+            </picture>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
               <h2 id="the-plan-title">Their ride is here.</h2>
@@ -280,14 +283,15 @@
             data-sound="journey"
             aria-labelledby="the-drive-title"
           >
-            <div class="painted-town" aria-hidden="true">
+            <picture class="scene-art">
               <img
-                src="assets/story/scroll/town.webp"
-                alt=""
+                src="assets/story/locations/drive.webp"
+                alt="A lantern-lit Ahmedabad road stretching ahead towards the celebration"
                 width="1536"
                 height="1024"
+                loading="lazy"
               />
-            </div>
+            </picture>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
               <h2 id="the-drive-title">Through Ahmedabad.</h2>
@@ -377,8 +381,8 @@
           >
             <picture class="scene-art"
               ><img
-                src="assets/story/scroll/entrance.webp"
-                alt="Warm lanterns and flowers at the Garba entrance"
+                src="assets/story/locations/selfie-corner.webp"
+                alt="A floral photo arch inside the venue, with marigolds and warm lanterns"
                 loading="lazy"
             /></picture>
             <div class="story-shade"></div>
@@ -471,8 +475,8 @@
           >
             <picture class="scene-art"
               ><img
-                src="assets/story/scroll/shrine.webp"
-                alt="An illustrated shrine to Durga Mata, with marigolds and diyas"
+                src="assets/story/locations/shrine-courtyard.webp"
+                alt="A quiet courtyard inside the venue, with a Durga Mata shrine and glowing diyas"
                 loading="lazy"
             /></picture>
             <div class="story-shade"></div>
