@@ -122,7 +122,7 @@ const scroll = (cursor) => {
   const ids = [...d.querySelectorAll("[id]")].map((e) => e.id);
   assert.equal(new Set(ids).size, ids.length, "unique IDs");
   assert.equal(d.querySelectorAll("h1").length, 1);
-  assert.equal(scenes.length, 9, "complete nine-scene storyline");
+  assert.equal(scenes.length, 10, "complete ten-scene storyline");
   for (const el of d.querySelectorAll("[src],link[href],a[href]")) {
     const value = el.getAttribute("src") || el.getAttribute("href");
     if (value.startsWith("#"))
@@ -133,7 +133,11 @@ const scroll = (cursor) => {
         `asset ${value}`,
       );
   }
-  for (const file of ["experience.css", "assets/fonts/fonts.css"]) {
+  for (const file of [
+    "experience.css",
+    "storybook.css",
+    "assets/fonts/fonts.css",
+  ]) {
     const css = fs.readFileSync(path.join(base, file), "utf8");
     postcss.parse(css);
     for (const match of css.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))
@@ -151,8 +155,8 @@ const scroll = (cursor) => {
   assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
   // Enter every scene forwards and backwards using native scroll progress.
   for (const sequence of [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8],
-    [8, 7, 6, 5, 4, 3, 2, 1, 0],
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
   ]) {
     for (const i of sequence) {
       scroll(i + 0.25);
@@ -168,6 +172,84 @@ const scroll = (cursor) => {
       );
     }
   }
+  for (const line of d.querySelectorAll(".dialogue-beat q")) {
+    assert(
+      line.textContent.trim().split(/\s+/).length <= 12,
+      "dialogue stays brief",
+    );
+  }
+  assert(
+    !d.querySelector(".scene-description"),
+    "no blocks of narrative explanation",
+  );
+  assert(
+    !d.querySelector('img[src^="assets/journey/"]'),
+    "photorealistic replacements are inactive",
+  );
+  scroll(0.1);
+  assert.equal(
+    d.querySelector("#beginning .is-speaking").dataset.speaker,
+    "him",
+  );
+  scroll(0.3);
+  assert.equal(
+    d.querySelector("#beginning .is-speaking").dataset.speaker,
+    "her",
+  );
+  assert.equal(d.querySelectorAll("#beginning .is-speaking").length, 1);
+  scroll(0.1);
+  assert.equal(
+    d.querySelector("#beginning .is-speaking").dataset.speaker,
+    "him",
+    "dialogue reverses",
+  );
+  scroll(3.26);
+  const parked = parseFloat(
+    d.querySelector("#the-plan").style.getPropertyValue("--car-x"),
+  );
+  assert(Math.abs(parked) < 1, "ride parks for boarding");
+  scroll(3.66);
+  assert(
+    parseFloat(d.querySelector("#the-plan").style.getPropertyValue("--car-x")) >
+      100,
+    "ride departs",
+  );
+  assert.equal(
+    d
+      .querySelector("#the-plan .man")
+      .style.getPropertyValue("--person-opacity"),
+    "0.000",
+    "both friends board",
+  );
+  scroll(5.6);
+  assert.equal(
+    d.querySelector("#arrival").style.getPropertyValue("--together-opacity"),
+    "1.000",
+    "friends enter together",
+  );
+  scroll(6.6);
+  assert.equal(
+    d.querySelector("#take-story-photo").getAttribute("aria-pressed"),
+    "true",
+    "selfie appears with scroll",
+  );
+  d.querySelector("#take-story-photo").click();
+  frame();
+  assert.equal(
+    d.querySelector("#take-story-photo").getAttribute("aria-pressed"),
+    "false",
+    "photo retake",
+  );
+  d.querySelector("#take-story-photo").click();
+  frame();
+  assert.equal(
+    d.querySelector("#take-story-photo").getAttribute("aria-pressed"),
+    "true",
+    "manual snapshot",
+  );
+  scroll(9.5);
+  assert.equal(d.querySelector("#celebration .man").dataset.pose, "dance");
+  assert.equal(d.querySelector("#celebration .woman").dataset.pose, "dance");
   scroll(1.6);
   assert.equal(
     d.querySelector("#invitation").style.getPropertyValue("--open"),
@@ -189,6 +271,12 @@ const scroll = (cursor) => {
   assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
   d.querySelector("#motion-toggle").click();
   assert(!cinematic(), "reading mode");
+  assert(
+    [...d.querySelectorAll(".dialogue-beat")].every(
+      (line) => !line.hasAttribute("aria-hidden"),
+    ),
+    "full conversations available in reading mode",
+  );
   assert(
     scenes.every((s) => !s.inert && !s.hasAttribute("aria-hidden")),
     "all story accessible without motion",
@@ -215,7 +303,7 @@ const scroll = (cursor) => {
     "false",
     "mute",
   );
-  scroll(6.2);
+  scroll(8.2);
   d.querySelector("#devotion [data-track]").click();
   await tick();
   assert(!d.querySelector("#music-panel").hidden);
@@ -262,7 +350,7 @@ const scroll = (cursor) => {
   d.querySelector("#share-invitation").click();
   await tick();
   assert.equal(copied, "https://garba.example/");
-  scroll(5.2);
+  scroll(6.2);
   d.querySelector("#make-memory").click();
   assert(d.querySelector("#memory-dialog").open);
   d.querySelector("#memory-dialog [data-close]").click();
@@ -290,7 +378,7 @@ const scroll = (cursor) => {
     ),
   );
   console.log(
-    "PASS: local assets/CSS/anchors; nine-scene forward and reverse scrolling; continuous dissolves; reversible hamper; reading/reduced-motion modes; opt-in ambient sound and mute; single nonmodal official player; sound-source exclusivity; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
+    "PASS: local assets/CSS/anchors; ten-scene forward and reverse scrolling; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; opt-in ambient sound and mute; single nonmodal official player; sound-source exclusivity; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
   );
   console.log(
     "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",

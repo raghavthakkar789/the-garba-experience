@@ -1,6 +1,6 @@
 # The Garba Experience
 
-A continuous, scroll-driven Gujarati invitation with a cinematic story: two friends share an invitation, open the hamper, travel through Ahmedabad, arrive together, make a photo memory, pause for a prayer, hear Kinjal Dave and join the Garba circle.
+A continuous, scroll-driven Gujarati invitation with the original illustrated friends and short conversations. They meet, decide on a Garba night, open the invitation, catch their ride, travel through Ahmedabad, enter the venue, take a selfie, hear Kinjal Dave, share a prayer and join the circle.
 
 ## Run locally
 
@@ -12,10 +12,11 @@ Open http://localhost:8765. The site is static: no build or production dependenc
 
 ## Current implementation
 
-- `dist/index.html`: nine ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
-- `dist/experience.css`: one sticky cinematic stage, overlapping scene dissolves, full-bleed imagery, mobile compositions and a complete unpinned reading layout.
-- `dist/experience.js`: native scroll progress, reversible hamper doors, scene transitions, reading mode, original Web Audio ambience, official music selection, sharing and photo export.
-- `dist/assets/journey/`: three optimized cinematic illustrations for the invitation exchange, drive and photo moment. Illustrations are imagined, not photographs of the actual venue.
+- `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
+- `dist/experience.css`: shared cinematic stage, event details, sound controls and keepsake layout.
+- `dist/storybook.css`: illustrated scenes, character poses, speech bubbles, mobile compositions and a complete unpinned reading layout.
+- `dist/experience.js`: native scroll progress, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, original Web Audio ambience, official music selection, sharing and photo export.
+- `dist/assets/story/scroll/`: optimized WebP copies of the original illustrated characters and painted scenes. The later realistic artwork is no longer loaded.
 - `dist/story-audio.json`: existing official YouTube selections. Official recordings are not downloaded or rehosted.
 
 The story does not use pagination, scroll snapping, intercepted wheel/touch events or next-page buttons. Mouse wheel, trackpad, touch and keyboard all use the browser's native scroll. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.

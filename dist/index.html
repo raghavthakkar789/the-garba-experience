@@ -17,7 +17,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link
       rel="preload"
-      href="assets/journey/invitation-moment.webp"
+      href="assets/story/scroll/town.webp"
       as="image"
       fetchpriority="high"
     />
@@ -26,10 +26,10 @@
       href="assets/fonts/cormorant-regular.woff"
       as="font"
       type="font/woff"
-      crossorigin
+      crossorigin=""
     />
-    <link rel="stylesheet" href="experience.css?v=3" />
-    <script defer src="experience.js?v=3"></script>
+    <link rel="stylesheet" href="experience.css?v=4" />
+    <script defer="" src="experience.js?v=4"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -61,6 +61,7 @@
         "url": "https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets"
       }
     </script>
+    <link rel="stylesheet" href="storybook.css?v=4" />
   </head>
   <body>
     <a class="skip-link" href="#details">Skip to event details</a>
@@ -75,9 +76,9 @@
           width="96"
           height="66"
       /></a>
-      <p class="header-date">AHMEDABAD <span>✦</span> 09 OCT 2026</p>
+      <p class="header-date">9 OCTOBER · AHMEDABAD</p>
       <div class="header-actions">
-        <button type="button" id="motion-toggle" hidden aria-pressed="false">
+        <button type="button" id="motion-toggle" hidden="" aria-pressed="false">
           Read without animation</button
         ><a class="header-link" href="#details"
           >Your invitation <span aria-hidden="true">↗</span></a
@@ -88,62 +89,75 @@
       <div class="journey" id="journey">
         <div class="journey-stage">
           <section
-            class="scene scene-prologue"
+            class="scene illustrated-scene story-meet"
             id="beginning"
-            data-label="A night worth finding"
+            data-label="A night to remember."
             data-sound="welcome"
-            aria-labelledby="prologue-title"
+            aria-labelledby="beginning-title"
           >
-            <picture class="scene-art"
-              ><img
-                src="assets/journey/invitation-moment.webp"
-                alt="Two friends in traditional Gujarati dress share a forest-green invitation in a lantern-lit courtyard"
+            <div class="painted-town" aria-hidden="true">
+              <img
+                src="assets/story/scroll/town.webp"
+                alt=""
                 width="1536"
                 height="1024"
-                fetchpriority="high"
-            /></picture>
-            <div class="scene-shade"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">Every unforgettable night starts somewhere</p>
-              <h1 id="prologue-title">
-                It starts with<br /><em>“Come with me.”</em>
-              </h1>
-              <div class="story-conversation">
-                <p>“Where are we going for Garba?”</p>
-                <p>She smiles. “I have something for you.”</p>
-              </div>
-              <p class="scene-description">
-                Two friends. One invitation.<br />An evening waiting to unfold.
-              </p>
-              <a class="journey-link" href="#invitation"
-                >Scroll into their story <span aria-hidden="true">↓</span></a
-              >
+              />
             </div>
-            <p class="art-caption">An illustrated journey into the evening</p>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h1 id="beginning-title">A night to remember.</h1>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="him" data-at="0.00">
+                <span class="speaker">He</span
+                ><q>Let’s do something amazing for Garba.</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="her" data-at="0.24">
+                <span class="speaker">She</span><q>I know just the place.</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="him" data-at="0.48">
+                <span class="speaker">He</span><q>Really? Tell me!</q>
+              </p>
+            </div>
+            <div class="story-cast" aria-hidden="true">
+              <div class="story-person man" data-pose="think"><i></i></div>
+              <div class="story-person woman" data-pose="think"><i></i></div>
+            </div>
           </section>
-
           <section
-            class="scene scene-hamper"
+            class="scene illustrated-scene story-handover"
             id="invitation"
-            data-label="An invitation, just for you"
+            data-label="She has a little surprise."
             data-sound="invitation"
-            aria-labelledby="hamper-title"
+            aria-labelledby="invitation-title"
           >
-            <div class="paper-field" aria-hidden="true"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">
-                A little anticipation. A personal invitation.
+            <div class="painted-town" aria-hidden="true">
+              <img
+                src="assets/story/scroll/town.webp"
+                alt=""
+                width="1536"
+                height="1024"
+              />
+            </div>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="invitation-title">She has a little surprise.</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
+                <span class="speaker">She</span><q>This is for you. Open it!</q>
               </p>
-              <h2 id="hamper-title">
-                Some evenings<br />stay with you.<br /><em>This is yours.</em>
-              </h2>
-              <p class="scene-description">
-                She places it in his hands.<br />He opens the doors to a
-                beautiful evening.
+              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
+                <span class="speaker">He</span><q>The Garba Experience?</q>
               </p>
-              <p class="quiet-prompt">
-                Keep scrolling to open your invitation.
+              <p class="dialogue-beat" data-speaker="her" data-at="0.48">
+                <span class="speaker">She</span
+                ><q>With Kinjal Dave. We’re going together!</q>
               </p>
+            </div>
+            <div class="story-cast" aria-hidden="true">
+              <div class="story-person man gift" data-pose="think"><i></i></div>
+              <div class="story-person woman" data-pose="think"><i></i></div>
             </div>
             <div class="hamper-area">
               <div
@@ -170,30 +184,26 @@
               </div>
             </div>
           </section>
-
           <section
-            class="scene scene-invitation"
+            class="scene illustrated-scene story-invite"
             id="the-invitation"
-            data-label="The evening is calling"
+            data-label="You’re invited, too."
             data-sound="invitation"
-            aria-labelledby="invitation-title"
+            aria-labelledby="the-invitation-title"
           >
             <div class="invitation-texture" aria-hidden="true"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">We request the pleasure of your presence at</p>
-              <h2 id="invitation-title">The Garba<br /><em>Experience</em></h2>
-              <p class="artist-line">
-                Featuring the sensational <strong>Kinjal Dave</strong>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="the-invitation-title">You’re invited, too.</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="him" data-at="0.00">
+                <span class="speaker">He</span
+                ><q>Now that sounds like a night!</q>
               </p>
-              <p class="gujarati" lang="gu">
-                માતાજીની આરાધના એ સંસ્કૃતિ આપણી,<br />મન મૂકી ગરબે ઘૂમવું એ
-                લાગણી આપણી.
-              </p>
-              <p class="invitation-date">
-                FRIDAY, 9 OCTOBER 2026 · 7:30 PM ONWARDS
-              </p>
-              <p class="scene-description">
-                Vivenza by Gopi Farm<br />S.P. Ring Road, Ahmedabad
+              <p class="dialogue-beat" data-speaker="her" data-at="0.24">
+                <span class="speaker">She</span
+                ><q>9 October. Don’t make me wait!</q>
               </p>
             </div>
             <figure class="original-invitation">
@@ -213,218 +223,332 @@
                 The original invitation <span aria-hidden="true">↗</span>
               </figcaption>
             </figure>
+            <a
+              class="original-link"
+              href="assets/invitation.jpg"
+              target="_blank"
+              rel="noopener"
+              >Read the original invitation ↗</a
+            >
           </section>
-
           <section
-            class="scene scene-journey"
+            class="scene illustrated-scene story-boarding"
             id="the-plan"
-            data-label="Through the city, together"
+            data-label="Their ride is here."
             data-sound="journey"
-            aria-labelledby="plan-title"
+            aria-labelledby="the-plan-title"
           >
-            <picture class="scene-art"
-              ><img
-                src="assets/journey/evening-drive.webp"
-                alt="The two friends set off through lantern-lit Ahmedabad, seen from inside their car"
+            <div class="painted-town" aria-hidden="true">
+              <img
+                src="assets/story/scroll/town.webp"
+                alt=""
+                width="1536"
+                height="1024"
+              />
+            </div>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="the-plan-title">Their ride is here.</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
+                <span class="speaker">She</span
+                ><q>Kediyu? Check. Passes? Check.</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
+                <span class="speaker">He</span
+                ><q>And my best Garba moves. Let’s go!</q>
+              </p>
+            </div>
+            <div class="story-cast" aria-hidden="true">
+              <div class="story-person man" data-pose="think"><i></i></div>
+              <div class="story-person woman" data-pose="think"><i></i></div>
+            </div>
+            <div class="story-car" aria-hidden="true">
+              <img
+                src="assets/arrival-car.webp"
+                alt=""
+                width="1502"
+                height="481"
+              />
+            </div>
+          </section>
+          <section
+            class="scene illustrated-scene story-drive"
+            id="the-drive"
+            data-label="Through Ahmedabad."
+            data-sound="journey"
+            aria-labelledby="the-drive-title"
+          >
+            <div class="painted-town" aria-hidden="true">
+              <img
+                src="assets/story/scroll/town.webp"
+                alt=""
+                width="1536"
+                height="1024"
+              />
+            </div>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="the-drive-title">Through Ahmedabad.</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
+                <span class="speaker">She</span><q>Look at the city tonight!</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
+                <span class="speaker">He</span
+                ><q>Even the streets are celebrating.</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="her" data-at="0.48">
+                <span class="speaker">She</span
+                ><q>Wait until you see the venue.</q>
+              </p>
+            </div>
+            <picture class="drive-cockpit" aria-hidden="true"
+              ><source
+                media="(max-width:650px)"
+                srcset="assets/story/scroll/cockpit-mobile.webp" />
+              <img
+                src="assets/story/scroll/cockpit.webp"
+                alt=""
                 width="1536"
                 height="1024"
                 loading="lazy"
             /></picture>
-            <div class="scene-shade"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">The invitation becomes a plan</p>
-              <h2 id="plan-title">Are you<br /><em>excited for it?</em></h2>
-              <p class="scene-description">
-                His kediyu. Her chaniya choli.<br />Their ride arrives, and they
-                set off together.
-              </p>
-              <div class="story-conversation">
-                <p>“The Garba Experience?”</p>
-                <p>“With Kinjal Dave. Just wait until we get there.”</p>
-              </div>
-              <p class="quiet-prompt">
-                Outside, Ahmedabad glows. Inside, the anticipation grows.
-              </p>
-            </div>
           </section>
-
           <section
-            class="scene scene-arrival"
+            class="scene illustrated-scene story-arrival"
             id="arrival"
-            data-label="Their evening begins"
+            data-label="We’re here."
             data-sound="arrival"
             aria-labelledby="arrival-title"
           >
             <picture class="scene-art"
-              ><img
-                src="assets/arrival-evening.webp"
-                alt="The friends walk together towards a Gujarati entrance glowing with lanterns"
-                width="1536"
-                height="1024"
+              ><source
+                media="(max-width:650px)"
+                srcset="assets/story/scroll/entrance-mobile.webp" />
+              <img
+                src="assets/story/scroll/entrance.webp"
+                alt="An illustrated Gujarati venue entrance glowing with lanterns"
                 loading="lazy"
             /></picture>
-            <div class="scene-shade"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">The car stops. The world opens.</p>
-              <h2 id="arrival-title">
-                Follow the lights.<br /><em>Feel the welcome.</em>
-              </h2>
-              <p class="scene-description">
-                Their passes ready, they step out of the car.<br />Hand in hand,
-                they walk through the entrance.<br />Somewhere ahead, a familiar
-                rhythm is calling.
-              </p>
-              <p class="spoken-line">“Come on. Our evening is waiting.”</p>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="arrival-title">We’re here.</h2>
             </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="him" data-at="0.00">
+                <span class="speaker">He</span><q>Passes ready?</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="her" data-at="0.24">
+                <span class="speaker">She</span><q>Right here. Come on!</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="him" data-at="0.48">
+                <span class="speaker">He</span
+                ><q>This already feels special.</q>
+              </p>
+            </div>
+            <div class="story-cast" aria-hidden="true">
+              <div class="story-person man" data-pose="think"><i></i></div>
+              <div class="story-person woman" data-pose="think"><i></i></div>
+            </div>
+            <div class="story-car" aria-hidden="true">
+              <img
+                src="assets/arrival-car.webp"
+                alt=""
+                width="1502"
+                height="481"
+              />
+            </div>
+            <img
+              class="together-art"
+              src="assets/story/scroll/together.webp"
+              alt="The two friends walk hand in hand towards the entrance"
+              loading="lazy"
+            />
           </section>
-
           <section
-            class="scene scene-memory"
+            class="scene illustrated-scene story-selfie"
             id="a-memory"
-            data-label="One for the memories"
+            data-label="One for the memories."
             data-sound="memory"
-            aria-labelledby="moment-title"
+            aria-labelledby="a-memory-title"
           >
             <picture class="scene-art"
               ><img
-                src="assets/journey/selfie-moment.webp"
-                alt="The two friends join other guests for a selfie beneath marigolds and warm lanterns"
-                width="1536"
-                height="1024"
+                src="assets/story/scroll/entrance.webp"
+                alt="Warm lanterns and flowers at the Garba entrance"
                 loading="lazy"
             /></picture>
-            <div class="scene-shade"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">Before the first dance</p>
-              <h2 id="moment-title">
-                A little picture.<br /><em>A big memory.</em>
-              </h2>
-              <p class="scene-description">
-                A glowing photo corner catches her eye.<br />New friends lean
-                into the frame beside them.<br />Already, their circle is
-                growing.
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="a-memory-title">One for the memories.</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
+                <span class="speaker">She</span
+                ><q>A selfie booth! One together?</q>
               </p>
-              <p class="spoken-line">
-                “One together. Before we forget everything else.”
+              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
+                <span class="speaker">He</span
+                ><q>Only if you get my good side.</q>
               </p>
-              <button class="outline-button" type="button" id="make-memory">
-                Make your own keepsake <span aria-hidden="true">↗</span>
+              <p class="dialogue-beat" data-speaker="her" data-at="0.48">
+                <span class="speaker">She</span><q>Three… two… one!</q>
+              </p>
+            </div>
+            <div class="story-cast" aria-hidden="true">
+              <div class="story-person man" data-pose="think"><i></i></div>
+              <div class="story-person woman" data-pose="think"><i></i></div>
+            </div>
+            <figure class="selfie-print">
+              <img
+                src="assets/story/scroll/selfie.webp"
+                alt="The same two illustrated friends smiling together in their selfie"
+                loading="lazy"
+              />
+              <figcaption>Us. This night. This feeling.</figcaption>
+            </figure>
+            <div class="scene-actions">
+              <button
+                class="outline-button"
+                id="take-story-photo"
+                type="button"
+                aria-pressed="false"
+              >
+                Take their photo</button
+              ><button class="text-button" type="button" id="make-memory">
+                Make your own keepsake
               </button>
             </div>
           </section>
-
           <section
-            class="scene scene-devotion"
+            class="scene illustrated-scene story-stage"
+            id="the-stage"
+            data-label="Hear that?"
+            data-sound="stage"
+            aria-labelledby="the-stage-title"
+          >
+            <picture class="scene-art"
+              ><img
+                src="assets/story/scroll/concert.webp"
+                alt="A hand-painted Garba concert with Gujarati decorations and golden lights"
+                loading="lazy"
+            /></picture>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="the-stage-title">Hear that?</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="him" data-at="0.00">
+                <span class="speaker">He</span
+                ><q>Those lights… and that sound!</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="her" data-at="0.24">
+                <span class="speaker">She</span
+                ><q>That’s Kinjal Dave. We made it!</q>
+              </p>
+            </div>
+            <img
+              class="together-art"
+              src="assets/story/scroll/together.webp"
+              alt="The friends look towards the glowing stage"
+              loading="lazy"
+            />
+            <div class="scene-actions">
+              <button class="outline-button" type="button" data-track="garba1">
+                ▷ Play Kinjal Dave
+              </button>
+            </div>
+          </section>
+          <section
+            class="scene illustrated-scene story-prayer"
             id="devotion"
-            data-label="A moment of devotion"
+            data-label="First, a little gratitude."
             data-sound="devotion"
             aria-labelledby="devotion-title"
           >
-            <div class="devotion-glow" aria-hidden="true"></div>
-            <figure class="devotion-art">
-              <img
-                src="assets/devotion.webp"
-                alt="Durga Mata surrounded by marigolds and glowing diyas"
-                width="950"
-                height="1187"
-                loading="lazy"
-              />
-            </figure>
-            <div class="scene-copy">
-              <p class="eyebrow">Before the music carries them away</p>
-              <h2 id="devotion-title">
-                A quiet heart.<br />A glowing diya.<br /><em>Jai Mataji.</em>
-              </h2>
-              <p class="scene-description">
-                They pause together before Durga Mata.<br />Hands joined. A
-                prayer shared.<br />Every beautiful beginning has its blessing.
-              </p>
-              <p class="gujarati" lang="gu">જય માતાજી</p>
-              <button class="outline-button" type="button" data-track="aarti">
-                <span aria-hidden="true">▷</span> Listen to the aarti
-              </button>
-            </div>
-          </section>
-
-          <section
-            class="scene scene-stage"
-            id="the-stage"
-            data-label="The voice of the evening"
-            data-sound="stage"
-            aria-labelledby="stage-title"
-          >
             <picture class="scene-art"
               ><img
-                src="assets/celebration.webp"
-                alt="A sweeping artistic impression of the Garba ground with dancers and a brightly illuminated stage"
-                width="1672"
-                height="941"
+                src="assets/story/scroll/shrine.webp"
+                alt="An illustrated shrine to Durga Mata, with marigolds and diyas"
                 loading="lazy"
             /></picture>
-            <div class="scene-shade"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">And then, that familiar voice</p>
-              <h2 id="stage-title">
-                The lights.<br />The first beat.<br /><em>Kinjal Dave.</em>
-              </h2>
-              <p class="scene-description">
-                They follow the sound towards the stage.<br />The night comes
-                alive around them.<br />This is the feeling they came for.
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="devotion-title">First, a little gratitude.</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
+                <span class="speaker">She</span
+                ><q>Before we dance… a prayer?</q>
               </p>
-              <button class="outline-button" type="button" data-track="garba1">
-                <span aria-hidden="true">▷</span> Play Navrangi 2.0
+              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
+                <span class="speaker">He</span><q>Of course. Jai Mataji.</q>
+              </p>
+            </div>
+            <img
+              class="aarti-art"
+              src="assets/story/scroll/aarti.webp"
+              alt="The two illustrated friends hold a lit aarti dish together"
+              loading="lazy"
+            />
+            <div class="scene-actions">
+              <button class="outline-button" type="button" data-track="aarti">
+                ▷ Listen to the aarti
               </button>
             </div>
-            <div class="artist-credit">
-              <img
-                src="assets/kinjal.webp"
-                alt="Kinjal Dave"
-                width="84"
-                height="100"
-                loading="lazy"
-              />
-              <div>
-                <span>LIVE IN AHMEDABAD</span><strong>Kinjal Dave</strong
-                ><span>9 October 2026</span>
-              </div>
-            </div>
           </section>
-
           <section
-            class="scene scene-circle"
+            class="scene illustrated-scene story-dance"
             id="celebration"
-            data-label="There’s a place for you in the circle"
+            data-label="Their circle is waiting."
             data-sound="celebration"
             aria-labelledby="celebration-title"
           >
             <picture class="scene-art"
               ><img
-                src="assets/celebration.webp"
-                alt="Dancers come together in the Garba circle beneath a sky of golden lights"
-                width="1672"
-                height="941"
+                src="assets/story/scroll/circle.webp"
+                alt="An illustrated Garba circle with dancers in colorful traditional clothes"
                 loading="lazy"
             /></picture>
-            <div class="scene-shade"></div>
-            <div class="scene-copy">
-              <p class="eyebrow">One clap. One turn. One familiar song.</p>
-              <h2 id="celebration-title">
-                They came together.<br /><em>They found<br />their circle.</em>
-              </h2>
-              <p class="scene-description">
-                A space opens. They step in.<br />The rhythm becomes theirs.<br />And
-                for a while, nothing else exists.
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="celebration-title">Their circle is waiting.</h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
+                <span class="speaker">She</span
+                ><q>Come on. There’s room for us!</q>
               </p>
-              <p class="spoken-line">Now imagine yourself here.</p>
-              <a class="journey-link" href="#details"
-                >Make it your evening <span aria-hidden="true">↓</span></a
+              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
+                <span class="speaker">He</span
+                ><q>This is exactly the night I wanted.</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="her" data-at="0.48">
+                <span class="speaker">She</span
+                ><q>And we’re only just getting started!</q>
+              </p>
+            </div>
+            <div class="story-cast" aria-hidden="true">
+              <div class="story-person man" data-pose="think"><i></i></div>
+              <div class="story-person woman" data-pose="think"><i></i></div>
+            </div>
+            <div class="scene-actions">
+              <button class="outline-button" type="button" data-track="garba1">
+                ▷ Play Garba</button
+              ><a class="text-button" href="#details"
+                >Join them on 9 October ↓</a
               >
             </div>
           </section>
           <div class="ambient-dust" aria-hidden="true"></div>
           <div class="journey-caption" aria-hidden="true">
-            <span id="current-chapter">A night worth finding</span
-            ><span class="scroll-cue">SCROLL TO UNFOLD <span>↓</span></span>
+            <span id="current-chapter">A night to remember.</span
+            ><span class="scroll-cue"
+              >SCROLL TO FOLLOW THEM <span>↓</span></span
+            >
           </div>
         </div>
       </div>
@@ -434,8 +558,8 @@
         aria-labelledby="details-title"
       >
         <div class="finale-heading">
-          <p class="eyebrow">The story continues with you</p>
-          <h2 id="details-title">Your place<br /><em>in the circle.</em></h2>
+          <p class="eyebrow">Come and find your circle</p>
+          <h2 id="details-title">Your night<br /><em>starts here.</em></h2>
           <p lang="gu" class="gujarati">
             એક સાંજ, એક અનુભૂતિ,<br />અને ગરબાની એક નવી શરૂઆત.
           </p>
@@ -473,7 +597,7 @@
           >
           <p class="booking-note">Bookings through District</p>
           <nav class="event-links" aria-label="Plan your evening">
-            <a href="garba-experience.ics" download>Save the date</a
+            <a href="garba-experience.ics" download="">Save the date</a
             ><a
               href="https://www.google.com/maps/search/?api=1&amp;query=Vivenza+by+Gopi+Farm+SP+Ring+Road+Ahmedabad"
               target="_blank"
@@ -504,7 +628,11 @@
       <p>Story scenes are artistic impressions of the evening.</p>
     </footer>
     <div class="progress-line" aria-hidden="true"></div>
-    <div class="sound-controls" title="Optional original ambient score" hidden>
+    <div
+      class="sound-controls"
+      title="Optional original ambient score"
+      hidden=""
+    >
       <button
         type="button"
         id="sound-toggle"
@@ -528,7 +656,7 @@
       id="music-panel"
       class="music-panel"
       aria-labelledby="music-title"
-      hidden
+      hidden=""
     >
       <div class="music-heading">
         <h2 id="music-title">The evening’s music</h2>
@@ -572,7 +700,11 @@
           <p class="eyebrow">Your evening, in a frame</p>
           <h2 id="memory-title">A memory to keep.</h2>
         </div>
-        <button class="close-button" data-close aria-label="Close memory maker">
+        <button
+          class="close-button"
+          data-close=""
+          aria-label="Close memory maker"
+        >
           ×
         </button>
       </div>
@@ -595,7 +727,7 @@
         class="book-button"
         id="download-memory"
         download="my-garba-memory.png"
-        hidden
+        hidden=""
         >Save your keepsake ↓</a
       >
       <p class="sound-note" id="memory-status" role="status">

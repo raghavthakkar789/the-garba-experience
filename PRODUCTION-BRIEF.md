@@ -4,25 +4,28 @@
 
 Restore the original narrative as a connected scroll experience, improve visual continuity and touch use, and provide optional sound without interrupting the journey. Preserve the event details, printed invitation, existing bookings and keepsake capability.
 
-Base: GitHub `main` at `fdce57db570cbc1627d22a5fec0d214e0bc69ae3` (the completed merge-conflict repair). Changes are isolated in this checkout; prior work was not overwritten.
+Base: GitHub `main` at `18dc83e94fe894334adae39ababecbf5eb616e67` (the previous continuous-scroll revision). Changes are isolated in this checkout; prior work was not overwritten.
 
 ## Story and presentation
 
-1. A friend asks where to go for Garba; she brings an invitation.
-2. The forest-green hamper opens reversibly through scrolling.
-3. The original invitation and its Gujarati wording reveal the evening.
-4. The friends dress up, board their ride and travel through Ahmedabad.
-5. Passes ready, they arrive and walk into the venue together.
-6. They join other friends for a photo; visitors can make a local keepsake.
-7. They pause together for Durga Mata and aarti.
-8. The lights and Kinjal Dave's music draw them towards the stage.
-9. The circle welcomes them, then invites the visitor to join.
+The user's preferred original illustrated characters and painted scenes are restored. The later realistic scenes and long narration are no longer loaded. Each scene has a small title and two or three short dialogue beats; only one speech bubble is shown at a time during animated scrolling. Dialogue lines contain at most 12 words.
 
-A single sticky stage holds the entire animated story. Scenes overlap during dissolves; no pagination, snapping or scroll interception is used. All transitions and the hamper opening reverse when scrolling upward. The original invitation opens at full resolution. Native-flow event details follow the last scene.
+1. The friends meet and decide they want an amazing Garba night.
+2. She gives him the invitation; the hamper opens with the scroll.
+3. The original printed invitation appears.
+4. Their car arrives, both friends board, and it leaves.
+5. They travel through an illustrated Ahmedabad seen through the windscreen.
+6. The car parks; they step out, take each other's hand and enter.
+7. They pose for a selfie. Scrolling or tapping reveals their photo.
+8. They walk towards the stage and hear Kinjal Dave.
+9. They pause together for aarti before Durga Mata.
+10. They join the circle and dance; the invitation details follow.
 
-The palette stays forest green, maroon and antique gold. Three new 1536×1024 cinematic scene assets depict the invitation, drive and photo moment; their optimized WebP files total approximately 1.1 MB. Existing arrival, shrine and Garba artwork is reused. Artwork is illustrative, not documentation of the venue. Fonts remain self-hosted.
+The same original green-kediyu and pink-chaniya-choli characters persist throughout. Pose changes, walking, boarding, the venue approach and the photo reveal are scroll-driven. One sticky stage connects every scene with reversible dissolves. No scroll snapping, intercepted wheel/touch events or pagination is used. The original invitation opens at full resolution.
 
-Reduced motion, short screens and oversized text use an unpinned reading layout. A persistent reading-mode control is available. Hidden cinematic scenes are inert, preventing invisible controls from receiving keyboard focus. Without JavaScript, every scene is in the document flow.
+Original artwork is reused as optimized WebP delivery assets, approximately 4.2 MB in total, with separate phone artwork for the entrance and car interior. The painted scenes are artistic impressions, not actual venue photography. Fonts remain self-hosted.
+
+Reduced motion, short screens and reading mode show all conversations in normal document flow. Hidden cinematic scenes are inert. No-JavaScript visitors can read the complete story. Existing event details, original invitation, booking links, sound choices and local photo keepsakes are preserved.
 
 ## Sound and touch
 
@@ -40,7 +43,7 @@ District URL stays exactly `https://www.district.in/events/the-garba-experience-
 
 ## Fresh evidence
 
-Passed JavaScript syntax and the behavioral suite `tests/verify-experience.cjs`: local asset references, CSS parsing, internal anchors, nine-scene traversal forwards/backwards, overlapping dissolves, reversible hamper, reading and reduced-motion switches, no unsolicited audio, opt-in ambience/mute, nonmodal official music, single-player switching, source exclusivity, Escape and background cleanup, share URL, keepsake controls and invalid/oversized image handling, event metadata and booking URL.
+Passed JavaScript syntax and the behavioral suite `tests/verify-experience.cjs`: local asset references, CSS parsing, internal anchors, ten-scene traversal forwards/backwards, brief dialogue switching and reversal, character pose changes, car boarding/departure, hand-in-hand entry, automatic/manual selfie reveal, overlapping dissolves, reversible hamper, reading and reduced-motion switches, no unsolicited audio, opt-in ambience/mute, nonmodal official music, single-player switching, source exclusivity, Escape and background cleanup, share URL, keepsake controls and invalid/oversized image handling, event metadata and booking URL.
 
 The suite uses jsdom and postcss from the existing validation environment, with audio and layout boundaries modeled. It does not establish rendered layout quality, actual sound quality, third-party playback or complete canvas export. Browser installation failed because its download was invalid, and this buildless site has no compatible managed browser preview. Desktop/phone visual review, a listening check and real-browser keepsake export remain unverified.
 

@@ -31,11 +31,191 @@
   let lastWidth = innerWidth;
   let lastHeight = innerHeight;
   let soundScene = "welcome";
+  // Dialogue beats and the original illustrated cast advance with native scroll.
+  function animateStory(scene, progress) {
+    const beats = [...scene.querySelectorAll(".dialogue-beat")];
+    let spoken = 0;
+    beats.forEach((line, i) => {
+      if (progress >= Number(line.dataset.at)) spoken = i;
+    });
+    beats.forEach((line, i) => {
+      line.classList.toggle("is-speaking", i === spoken);
+      line.setAttribute("aria-hidden", String(i !== spoken));
+    });
+    scene.dataset.speaker = beats[spoken]?.dataset.speaker || "him";
+    const w = innerWidth,
+      h = stageHeight;
+    const person = (
+      who,
+      x = 0,
+      y = 0,
+      opacity = 1,
+      scale = 1,
+      pose = "think",
+      tilt = 0,
+    ) => {
+      const el = scene.querySelector(`.story-person.${who}`);
+      if (!el) return;
+      el.style.setProperty("--person-x", `${x.toFixed(2)}px`);
+      el.style.setProperty("--person-y", `${y.toFixed(2)}px`);
+      el.style.setProperty("--person-opacity", opacity.toFixed(3));
+      el.style.setProperty("--person-scale", scale.toFixed(3));
+      el.style.setProperty("--person-tilt", `${tilt.toFixed(2)}deg`);
+      el.dataset.pose = pose;
+    };
+    const car = (x) => scene.style.setProperty("--car-x", `${x.toFixed(2)}px`);
+    const together = (opacity, scale, y) => {
+      scene.style.setProperty("--together-opacity", opacity.toFixed(3));
+      scene.style.setProperty("--together-scale", scale.toFixed(3));
+      scene.style.setProperty("--together-y", `${y.toFixed(2)}px`);
+    };
+    if (scene.id === "beginning") {
+      const meet = ease(progress / 0.22);
+      person("man", 0, 0, 1, 1, "think");
+      person(
+        "woman",
+        (1 - meet) * w * 0.52,
+        Math.sin(meet * Math.PI * 6) * 3,
+        1,
+        1,
+        meet < 0.98 ? "walk" : "think",
+      );
+    }
+    if (scene.id === "invitation") {
+      const open = ease((progress - 0.05) / 0.52);
+      person(
+        "man",
+        0,
+        0,
+        1 - open * 0.82,
+        1,
+        progress > 0.24 ? "walk" : "think",
+      );
+      person("woman", 0, 0, 1 - open * 0.82);
+    }
+    if (scene.id === "the-invitation")
+      scene.style.setProperty("--card-turn", `${progress * 5}deg`);
+    if (scene.id === "the-plan") {
+      const arrive = ease((progress - 0.02) / 0.18),
+        board = ease((progress - 0.25) / 0.18);
+      const leave = ease((progress - 0.51) / 0.19),
+        fade = 1 - ease((progress - 0.41) / 0.07);
+      car((1 - arrive) * -w * 1.25 + leave * w * 1.25);
+      person(
+        "man",
+        board * w * 0.2,
+        Math.sin(board * Math.PI * 6) * 3,
+        fade,
+        1 - board * 0.14,
+        board > 0 ? "walk" : "think",
+      );
+      person(
+        "woman",
+        board * w * 0.05,
+        Math.sin(board * Math.PI * 6 + 0.4) * 3,
+        fade,
+        1 - board * 0.14,
+        board > 0 ? "walk" : "think",
+      );
+    }
+    if (scene.id === "the-drive")
+      scene.style.setProperty("--town-x", `${-progress * w * 0.2}px`);
+    if (scene.id === "arrival") {
+      const park = ease(progress / 0.17),
+        step = ease((progress - 0.22) / 0.1);
+      const joined = ease((progress - 0.34) / 0.07),
+        walk = ease((progress - 0.42) / 0.26);
+      const leave = ease((progress - 0.48) / 0.21);
+      car((1 - park) * -w * 1.2 + leave * w * 1.3);
+      person("man", 0, -step * 25, step * (1 - joined), 0.8, "walk");
+      person("woman", 0, -step * 25, step * (1 - joined), 0.8, "walk");
+      together(
+        joined,
+        0.8 - walk * 0.49,
+        -walk * h * 0.2 + Math.sin(walk * Math.PI * 10) * 2,
+      );
+    }
+    if (scene.id === "a-memory") {
+      const gather = ease(progress / 0.22);
+      const showPhoto = scene.dataset.photo
+        ? scene.dataset.photo === "true"
+        : progress > 0.54;
+      const photo = showPhoto ? 1 : 0;
+      scene.style.setProperty("--photo-opacity", photo);
+      scene.style.setProperty("--photo-scale", showPhoto ? 1 : 0.85);
+      scene.style.setProperty("--dialogue-opacity", 1 - photo);
+      person(
+        "man",
+        (1 - gather) * -w * 0.1,
+        0,
+        1 - photo,
+        1,
+        gather < 1 ? "walk" : "think",
+      );
+      person(
+        "woman",
+        (1 - gather) * w * 0.1,
+        0,
+        1 - photo,
+        1,
+        gather < 1 ? "walk" : "think",
+      );
+      const button = scene.querySelector("#take-story-photo");
+      button.setAttribute("aria-pressed", String(showPhoto));
+      button.textContent = showPhoto
+        ? "Back to the moment"
+        : "Take their photo";
+    }
+    if (scene.id === "the-stage")
+      together(1, 1 - progress * 0.2, -progress * h * 0.06);
+    if (scene.id === "devotion")
+      scene.style.setProperty(
+        "--prayer-tilt",
+        `${Math.sin(progress * Math.PI * 3) * 1.4}deg`,
+      );
+    if (scene.id === "celebration") {
+      const join = ease(progress / 0.23);
+      const stride = Math.sin(progress * Math.PI * 12);
+      person(
+        "man",
+        (1 - join) * -w * 0.2,
+        -Math.abs(stride) * 4,
+        1,
+        1,
+        join < 0.9 ? "walk" : "dance",
+        stride * 2,
+      );
+      person(
+        "woman",
+        (1 - join) * w * 0.2,
+        -Math.abs(stride) * 4,
+        1,
+        1,
+        join < 0.9 ? "walk" : "dance",
+        -stride * 2,
+      );
+    }
+  }
   function clearSceneState() {
     for (const scene of scenes) {
       scene.classList.remove("is-visible", "is-active");
       scene.inert = false;
       scene.removeAttribute("aria-hidden");
+      scene
+        .querySelectorAll(".dialogue-beat")
+        .forEach((line) => line.removeAttribute("aria-hidden"));
+      scene
+        .querySelectorAll(".story-person")
+        .forEach((person) => person.removeAttribute("style"));
+      [
+        "--car-x",
+        "--together-opacity",
+        "--together-scale",
+        "--together-y",
+        "--town-x",
+        "--prayer-tilt",
+        "--dialogue-opacity",
+      ].forEach((prop) => scene.style.removeProperty(prop));
     }
   }
   function measure() {
@@ -129,10 +309,13 @@
         });
       if (!visible) return;
       const progress = isBase ? local : 0;
+      animateStory(scene, progress);
       scene.style.setProperty("--scene-opacity", isBase ? 1 : blend.toFixed(4));
       scene.style.setProperty(
         "--copy-opacity",
-        isBase ? (1 - blend).toFixed(4) : 1,
+        isBase
+          ? (1 - ease(blend * 2)).toFixed(4)
+          : ease((blend - 0.45) / 0.55).toFixed(4),
       );
       scene.style.setProperty(
         "--copy-y",
@@ -150,6 +333,8 @@
         );
       }
     });
+    const photoButton = document.querySelector("#take-story-photo");
+    if (photoButton) photoButton.disabled = false;
     activeIndex = selected;
     soundScene = scenes[selected].dataset.sound;
     document.querySelector("#current-chapter").textContent =
@@ -210,6 +395,17 @@
     const target = scenes.find((s) => `#${s.id}` === location.hash);
     if (target) scrollToScene(target, "instant");
   });
+  document
+    .querySelector("#take-story-photo")
+    .addEventListener("click", (event) => {
+      const button = event.currentTarget;
+      const photoScene = document.querySelector("#a-memory");
+      const show = button.getAttribute("aria-pressed") !== "true";
+      photoScene.dataset.photo = String(show);
+      button.setAttribute("aria-pressed", String(show));
+      button.textContent = show ? "Back to the moment" : "Take their photo";
+      schedule();
+    });
   // Warm original ambient sound. No recording, network request or audio starts on page load.
   const soundToggle = document.querySelector("#sound-toggle");
   const soundLabel = document.querySelector("#sound-label");

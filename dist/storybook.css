@@ -1,0 +1,934 @@
+/* The original illustrated friends lead the story; one conversation at a time. */
+.illustrated-scene {
+  display: block;
+  background: #1b372d;
+  padding: 0;
+  min-height: 900px;
+  min-height: 100svh;
+}
+.illustrated-scene .scene-art {
+  z-index: -4;
+}
+.illustrated-scene .scene-art img {
+  object-position: center;
+  filter: saturate(1.08);
+}
+.story-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    #0b211acf,
+    transparent 36%,
+    transparent 67%,
+    #0b211a
+  );
+}
+.painted-town {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  overflow: hidden;
+  background: #b19b63;
+}
+.painted-town img {
+  position: absolute;
+  width: 200%;
+  max-width: none;
+  height: 200%;
+  object-fit: cover;
+  object-position: 0 0;
+  left: 0;
+  top: 0;
+  transform: translate3d(var(--town-x, 0px), 0, 0)
+    scale(var(--town-scale, 1.03));
+  transform-origin: 22% 22%;
+}
+.illustrated-scene .story-title {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: auto;
+  max-width: none;
+  padding: 132px var(--gutter) 0;
+  z-index: 5;
+  pointer-events: none;
+  text-align: center;
+}
+.illustrated-scene .story-title h1 {
+  font-size: clamp(38px, 4vw, 62px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+.illustrated-scene .story-title h2 {
+  font-size: clamp(29px, 3vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.dialogue-track {
+  position: relative;
+  z-index: 7;
+  margin: 30px auto 0;
+  width: min(560px, 82%);
+  display: grid;
+  gap: 18px;
+}
+.dialogue-beat {
+  position: relative;
+  border: 1px solid #dfc397;
+  background: #fff3d9;
+  color: #253d30;
+  padding: 20px 29px 24px;
+  border-radius: 22px 22px 22px 5px;
+  box-shadow: 0 12px 32px #24150d35;
+  font: 500 29px/1.26 var(--serif);
+}
+.dialogue-beat .speaker {
+  font: 600 10px/1.5 var(--sans);
+  display: block;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6f7354;
+  margin-bottom: 6px;
+}
+.dialogue-beat q {
+  quotes: none;
+}
+.dialogue-beat q:before,
+.dialogue-beat q:after {
+  content: none;
+}
+.dialogue-beat:after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 24%;
+  width: 24px;
+  height: 25px;
+  background: #fff3d9;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+.dialogue-beat[data-speaker="her"] {
+  border-radius: 22px 22px 5px 22px;
+  background: #ffe5df;
+  border-color: #dab1a4;
+}
+.dialogue-beat[data-speaker="her"]:after {
+  left: auto;
+  right: 24%;
+  background: #ffe5df;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+.dialogue-beat[data-speaker="her"] .speaker {
+  color: #8a554f;
+}
+.story-cast {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+.story-person {
+  position: absolute;
+  bottom: 17%;
+  width: min(32vw, 355px, 43svh);
+  aspect-ratio: 1;
+  left: 34%;
+  transform: translateX(-50%)
+    translate3d(var(--person-x, 0px), var(--person-y, 0px), 0)
+    scale(var(--person-scale, 1)) rotate(var(--person-tilt, 0deg));
+  transform-origin: 50% 85%;
+  opacity: var(--person-opacity, 1);
+  filter: drop-shadow(0 15px 10px #25140550);
+}
+.story-person.woman {
+  left: 65%;
+}
+.story-person i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(assets/story/character.webp) left top/200% 200% no-repeat;
+}
+.story-person.woman i {
+  background-image: url(assets/story/scroll/woman.webp);
+}
+.story-person.gift i {
+  background-image: url(assets/story/scroll/invitation-poses.webp);
+}
+.story-person[data-pose="walk"] i {
+  background-position: 100% 0;
+}
+.story-person[data-pose="pray"] i {
+  background-position: 0 100%;
+}
+.story-person[data-pose="dance"] i {
+  background-position: 100% 100%;
+}
+.story-car {
+  position: absolute;
+  left: 50%;
+  bottom: 15%;
+  width: min(67vw, 900px);
+  z-index: 5;
+  pointer-events: none;
+  transform: translateX(-50%) translate3d(var(--car-x, 0px), 0, 0);
+}
+.story-car img {
+  width: 100%;
+  filter: drop-shadow(0 15px 12px #111b);
+}
+.story-handover .story-person {
+  width: min(23vw, 265px, 30svh);
+  left: 23%;
+}
+.story-handover .woman {
+  left: 77%;
+}
+.story-handover .hamper-area {
+  top: auto;
+  bottom: 16%;
+  left: 0;
+  width: 100%;
+  transform: none;
+  z-index: 5;
+  pointer-events: none;
+}
+.story-handover .hamper {
+  width: min(27vw, 310px, 38svh);
+}
+.story-invite {
+  background: #461a24;
+}
+.story-invite .original-invitation {
+  width: min(29vw, 315px, 43svh);
+  top: auto;
+  bottom: 14%;
+  left: 50%;
+  transform: translateX(-50%) rotate(calc(-3deg + var(--card-turn, 0deg)));
+  z-index: 4;
+}
+.story-invite .original-invitation figcaption {
+  display: none;
+}
+.original-link {
+  position: absolute;
+  z-index: 8;
+  bottom: 9%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  white-space: nowrap;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ebc48777;
+}
+.story-boarding .story-person {
+  left: 27%;
+  bottom: 22%;
+  --person-scale: 0.9;
+}
+.story-boarding .woman {
+  left: 48%;
+}
+.story-boarding .story-car {
+  bottom: 17%;
+  z-index: 5;
+}
+.drive-cockpit {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  transform: scale(1.04);
+}
+.drive-cockpit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.story-drive .painted-town img {
+  transform: translate3d(var(--town-x, 0px), 0, 0) scale(1.18);
+  transform-origin: 25% 25%;
+}
+.story-drive .story-title {
+  z-index: 5;
+}
+.story-drive .story-shade {
+  z-index: 4;
+  background: linear-gradient(
+    #0b211abb,
+    transparent 30%,
+    transparent 70%,
+    #0b211a
+  );
+}
+.story-arrival .scene-art img {
+  object-position: center;
+}
+.story-arrival .story-car {
+  bottom: 15%;
+  width: min(62vw, 820px);
+  z-index: 5;
+}
+.story-arrival .story-person {
+  bottom: 20%;
+  left: 42%;
+  width: min(22vw, 260px, 32svh);
+  z-index: 3;
+}
+.story-arrival .woman {
+  left: 57%;
+}
+.together-art {
+  position: absolute;
+  bottom: 14%;
+  left: 50%;
+  height: min(40svh, 380px);
+  width: auto;
+  z-index: 4;
+  transform: translateX(-50%) translate3d(0, var(--together-y, 0px), 0)
+    scale(var(--together-scale, 1));
+  transform-origin: 50% 95%;
+  opacity: var(--together-opacity, 1);
+  filter: drop-shadow(0 12px 12px #0005);
+}
+.story-arrival .together-art {
+  bottom: 18%;
+}
+.story-stage .together-art {
+  height: min(45svh, 400px);
+  bottom: 12%;
+}
+.story-stage .scene-art img {
+  object-position: 60% center;
+}
+.scene-actions {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: max-content;
+  max-width: calc(100% - 40px);
+}
+.scene-actions .outline-button {
+  margin: 0;
+  background: #17372be6;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.text-button {
+  min-height: 44px;
+  padding: 8px 0;
+  background: transparent;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.story-selfie .scene-art img {
+  filter: blur(3px) saturate(0.9);
+}
+.story-selfie .story-person {
+  bottom: 21%;
+  left: 42%;
+  width: min(29vw, 320px, 37svh);
+}
+.story-selfie .woman {
+  left: 60%;
+}
+.selfie-print {
+  position: absolute;
+  z-index: 6;
+  bottom: 19%;
+  left: 50%;
+  width: min(34vw, 360px, 41svh);
+  padding: 12px 12px 18px;
+  background: #fff2d8;
+  color: #5a392c;
+  box-shadow: 0 18px 65px #0007;
+  transform: translateX(-50%) rotate(-5deg) scale(var(--photo-scale, 0.8));
+  opacity: var(--photo-opacity, 0);
+  pointer-events: none;
+}
+.selfie-print img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.selfie-print figcaption {
+  font: italic 23px/1.3 var(--serif);
+  text-align: center;
+  padding-top: 13px;
+}
+.story-selfie[data-photo="true"] .selfie-print {
+  --photo-opacity: 1 !important;
+  --photo-scale: 1 !important;
+}
+.story-selfie[data-photo="true"] .story-cast {
+  opacity: 0;
+}
+.cinematic .story-selfie[data-photo="true"] .dialogue-track {
+  opacity: 0;
+}
+.story-prayer {
+  background: #242820;
+}
+.story-prayer .scene-art {
+  inset: 8% 25% 11%;
+}
+.story-prayer .scene-art img {
+  object-fit: contain;
+  object-position: 50% 30%;
+  opacity: 0.92;
+}
+.story-prayer .story-shade {
+  background: linear-gradient(
+    #0b211ac9,
+    transparent 34%,
+    transparent 65%,
+    #0b211a
+  );
+}
+.aarti-art {
+  position: absolute;
+  bottom: 15%;
+  left: 66%;
+  height: min(37svh, 320px);
+  width: auto;
+  z-index: 4;
+  transform: translateX(-50%) rotate(var(--prayer-tilt, 0deg));
+  transform-origin: 50% 85%;
+  filter: drop-shadow(0 10px 12px #0007);
+}
+.story-prayer .dialogue-track {
+  margin-left: 9%;
+  max-width: 430px;
+  width: 38%;
+}
+.story-dance .story-person {
+  bottom: 20%;
+  left: 40%;
+  width: min(27vw, 310px, 36svh);
+}
+.story-dance .woman {
+  left: 62%;
+}
+.story-dance .scene-art img {
+  object-position: center;
+}
+.story-dance .story-title {
+  color: #fff3d8;
+}
+/* The same cinematic controller now directs the cast as well as the scene dissolves. */
+.cinematic .illustrated-scene {
+  padding: 0;
+}
+.cinematic .illustrated-scene .story-title {
+  position: absolute;
+  inset: 115px 0 auto;
+  padding: 0 24px;
+  opacity: var(--copy-opacity, 1);
+  transform: none;
+}
+.cinematic .illustrated-scene .dialogue-track {
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  width: min(520px, 74%);
+  opacity: var(--copy-opacity, 1);
+}
+.cinematic .dialogue-beat:not(.is-speaking) {
+  display: none;
+}
+.cinematic .dialogue-beat {
+  min-height: 100px;
+}
+.cinematic .story-invite .dialogue-track {
+  top: 22%;
+  width: min(430px, 70%);
+}
+.cinematic .story-invite .original-invitation {
+  width: min(25vw, 290px, 37svh);
+  bottom: 14%;
+}
+.cinematic .story-handover .dialogue-track {
+  top: 23%;
+  width: min(510px, 76%);
+}
+.cinematic .story-prayer .dialogue-track {
+  left: 24%;
+  top: 27%;
+  width: 35%;
+  max-width: 420px;
+}
+.cinematic .story-selfie[data-photo="true"] .dialogue-track {
+  opacity: 0;
+}
+.cinematic .scene-actions {
+  opacity: var(--copy-opacity, 1);
+}
+.cinematic .story-selfie.is-active .selfie-print {
+  transition:
+    opacity 0.35s,
+    transform 0.35s;
+}
+.cinematic .story-arrival .story-person {
+  opacity: var(--person-opacity, 0);
+}
+.cinematic .illustrated-scene.is-visible .story-person,
+.cinematic .illustrated-scene.is-visible .story-car {
+  will-change: transform;
+}
+.cinematic .story-dance.is-active .story-person i {
+  animation: garba-sway 1.5s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+.cinematic .story-dance.is-active .woman i {
+  animation-delay: -0.3s;
+}
+@keyframes garba-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg) translateY(0);
+  }
+  50% {
+    transform: rotate(3deg) translateY(-5px);
+  }
+}
+/* Reading/no-JavaScript layouts show the complete conversation, not hidden beats. */
+html:not(.cinematic) .illustrated-scene {
+  min-height: 1050px;
+  padding-bottom: 570px;
+}
+html:not(.cinematic) .illustrated-scene .story-title {
+  padding-top: 125px;
+}
+html:not(.cinematic) .dialogue-track {
+  width: min(540px, 82%);
+}
+html:not(.cinematic) .dialogue-beat {
+  font-size: 24px;
+  padding: 16px 24px;
+}
+html:not(.cinematic) .story-person {
+  bottom: 13%;
+  width: 290px;
+  max-width: 40vw;
+}
+html:not(.cinematic) .story-car {
+  bottom: 11%;
+}
+html:not(.cinematic) .story-boarding .story-cast {
+  z-index: 6;
+}
+html:not(.cinematic) .story-boarding .story-person {
+  bottom: 20%;
+  left: 25%;
+}
+html:not(.cinematic) .story-boarding .woman {
+  left: 48%;
+}
+html:not(.cinematic) .story-arrival .story-cast,
+html:not(.cinematic) .story-arrival .story-car {
+  display: none;
+}
+html:not(.cinematic) .story-arrival .together-art {
+  height: 350px;
+  max-height: 35%;
+  bottom: 12%;
+}
+html:not(.cinematic) .story-selfie .selfie-print {
+  --photo-opacity: 1;
+  --photo-scale: 1;
+  bottom: 15%;
+  width: 300px;
+  max-width: 65vw;
+}
+html:not(.cinematic) .story-selfie .story-cast {
+  display: none;
+}
+html:not(.cinematic) .story-prayer .dialogue-track {
+  margin: 30px auto 0;
+  max-width: 540px;
+  width: 82%;
+}
+html:not(.cinematic) .story-prayer .scene-art {
+  inset: 32% 22% 12%;
+}
+html:not(.cinematic) .scene-actions {
+  bottom: 6%;
+}
+html:not(.cinematic) .story-handover .story-person {
+  max-width: 25vw;
+  left: 18%;
+}
+html:not(.cinematic) .story-handover .woman {
+  left: 82%;
+}
+html:not(.cinematic) .story-handover .hamper-area {
+  bottom: 13%;
+}
+html:not(.cinematic) .story-handover .hamper {
+  width: min(31vw, 310px);
+}
+html:not(.cinematic) .story-invite .original-invitation {
+  bottom: 12%;
+  width: min(40vw, 315px);
+}
+html:not(.cinematic) .story-invite .original-link {
+  bottom: 6%;
+}
+@media (max-width: 650px) {
+  .illustrated-scene .story-title h1 {
+    font-size: 37px;
+  }
+  .illustrated-scene .story-title h2 {
+    font-size: 30px;
+  }
+  .cinematic .illustrated-scene .story-title {
+    inset: 121px 12px auto;
+  }
+  .cinematic .illustrated-scene .dialogue-track {
+    top: 26%;
+    width: calc(100% - 48px);
+    max-width: 370px;
+    left: 50%;
+  }
+  .dialogue-beat {
+    font-size: 25px;
+    padding: 18px 23px 21px;
+    line-height: 1.3;
+  }
+  .dialogue-beat .speaker {
+    font-size: 10px;
+  }
+  .cinematic .dialogue-beat {
+    min-height: 112px;
+  }
+  .story-person {
+    width: min(56vw, 270px, 35svh);
+    left: 28%;
+    bottom: 23%;
+  }
+  .story-person.woman {
+    left: 71%;
+  }
+  .story-shade {
+    background: linear-gradient(
+      #0b211add,
+      transparent 40%,
+      transparent 65%,
+      #0b211a
+    );
+  }
+  .painted-town img {
+    width: 280%;
+    height: 200%;
+    left: -32%;
+    object-fit: cover;
+  }
+  .story-handover .story-person {
+    width: 45vw;
+    left: 16%;
+    bottom: 21%;
+  }
+  .story-handover .woman {
+    left: 84%;
+  }
+  .story-handover .hamper-area {
+    bottom: 20%;
+  }
+  .story-handover .hamper {
+    width: min(44vw, 29svh);
+  }
+  .cinematic .story-handover .dialogue-track {
+    top: 24%;
+  }
+  .cinematic .story-invite .original-invitation {
+    width: min(48vw, 28svh);
+    bottom: 20%;
+  }
+  .story-invite .original-link {
+    bottom: 14%;
+    font-size: 11px;
+  }
+  .cinematic .story-invite .dialogue-track {
+    top: 23%;
+  }
+  .story-car {
+    width: 96vw;
+    bottom: 23%;
+  }
+  .story-boarding .story-car {
+    bottom: 23%;
+  }
+  .story-boarding .story-person {
+    width: 45vw;
+    left: 23%;
+    bottom: 24%;
+  }
+  .story-boarding .woman {
+    left: 50%;
+  }
+  .story-drive .painted-town img {
+    width: 340%;
+    height: 200%;
+    left: -80%;
+  }
+  .drive-cockpit img {
+    object-position: center;
+  }
+  .story-arrival .story-car {
+    width: 97vw;
+    bottom: 22%;
+  }
+  .story-arrival .story-person {
+    width: 40vw;
+    bottom: 25%;
+    left: 37%;
+  }
+  .story-arrival .woman {
+    left: 59%;
+  }
+  .story-arrival .together-art {
+    height: 31svh;
+    bottom: 23%;
+  }
+  .story-stage .together-art {
+    height: 34svh;
+    bottom: 22%;
+  }
+  .scene-actions {
+    bottom: 15%;
+    gap: 8px;
+    flex-direction: column;
+    width: calc(100% - 48px);
+  }
+  .scene-actions .outline-button {
+    font-size: 12px;
+    min-height: 44px;
+    padding: 9px 18px;
+  }
+  .text-button {
+    font-size: 11px;
+    min-height: 38px;
+  }
+  .story-stage .scene-actions,
+  .story-prayer .scene-actions {
+    bottom: 15%;
+  }
+  .story-selfie .story-person {
+    width: 50vw;
+    left: 35%;
+    bottom: 28%;
+  }
+  .story-selfie .woman {
+    left: 64%;
+  }
+  .selfie-print {
+    width: min(56vw, 30svh);
+    bottom: 27%;
+    padding: 9px 9px 14px;
+  }
+  .selfie-print figcaption {
+    font-size: 19px;
+    padding-top: 9px;
+  }
+  .story-selfie .scene-actions {
+    bottom: 14%;
+    gap: 0;
+  }
+  .story-prayer .scene-art {
+    inset: 12% 0 18%;
+  }
+  .story-prayer .scene-art img {
+    object-position: 50% 40%;
+    opacity: 0.75;
+  }
+  .cinematic .story-prayer .dialogue-track {
+    top: 25%;
+    left: 50%;
+    width: calc(100% - 48px);
+    max-width: 370px;
+  }
+  .aarti-art {
+    left: 65%;
+    height: 30svh;
+    bottom: 22%;
+  }
+  .story-prayer .story-shade {
+    background: linear-gradient(
+      #0b211ae6,
+      transparent 38%,
+      transparent 62%,
+      #0b211a
+    );
+  }
+  .story-dance .story-person {
+    width: 51vw;
+    left: 32%;
+    bottom: 28%;
+  }
+  .story-dance .woman {
+    left: 69%;
+  }
+  .story-dance .scene-actions {
+    bottom: 14%;
+    gap: 0;
+  }
+  html:not(.cinematic) .illustrated-scene {
+    min-height: 1000px;
+    padding-bottom: 470px;
+  }
+  html:not(.cinematic) .dialogue-beat {
+    font-size: 23px;
+    padding: 16px 20px;
+  }
+  html:not(.cinematic) .story-handover .story-cast {
+    display: none;
+  }
+  html:not(.cinematic) .story-handover .hamper {
+    width: 52vw;
+    max-width: 270px;
+  }
+  html:not(.cinematic) .story-invite .original-invitation {
+    width: min(60vw, 290px);
+  }
+  html:not(.cinematic) .story-person {
+    width: 55vw;
+    max-width: 55vw;
+    bottom: 12%;
+  }
+  html:not(.cinematic) .story-prayer .scene-art {
+    inset: 42% 0 10%;
+  }
+  html:not(.cinematic) .aarti-art {
+    height: 29%;
+    bottom: 15%;
+  }
+  html:not(.cinematic) .story-selfie .selfie-print {
+    bottom: 16%;
+    max-width: 60vw;
+  }
+}
+@media (max-height: 760px) and (max-width: 650px) {
+  .cinematic .illustrated-scene .story-title {
+    top: 108px;
+  }
+  .illustrated-scene .story-title h1 {
+    font-size: 32px;
+  }
+  .illustrated-scene .story-title h2 {
+    font-size: 26px;
+  }
+  .cinematic .illustrated-scene .dialogue-track {
+    top: 25%;
+    width: calc(100% - 48px);
+  }
+  .dialogue-beat {
+    font-size: 23px;
+    padding: 14px 20px 18px;
+  }
+  .cinematic .dialogue-beat {
+    min-height: 98px;
+  }
+  .story-person {
+    width: 47vw;
+    bottom: 23%;
+  }
+  .story-handover .hamper {
+    width: min(40vw, 26svh);
+  }
+  .cinematic .story-invite .original-invitation {
+    width: 24svh;
+    bottom: 21%;
+  }
+  .story-selfie .selfie-print {
+    width: 26svh;
+    bottom: 28%;
+  }
+  .story-handover .story-person {
+    width: 34vw;
+    bottom: 23%;
+  }
+  .story-arrival .together-art {
+    height: 27svh;
+  }
+  .story-stage .together-art {
+    height: 29svh;
+    bottom: 23%;
+  }
+  .aarti-art {
+    height: 25svh;
+  }
+  .story-dance .story-person {
+    width: 43vw;
+    bottom: 28%;
+  }
+  .cinematic .journey-caption {
+    bottom: 79px;
+  }
+  .scene-actions .outline-button {
+    min-height: 44px;
+  }
+  .text-button {
+    min-height: 30px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-person,
+  .together-art,
+  .aarti-art,
+  .painted-town img,
+  .story-car {
+    transform: none;
+  }
+  .story-person {
+    translate: -50% 0;
+  }
+  .together-art,
+  .aarti-art {
+    translate: -50% 0;
+  }
+  .story-car {
+    translate: -50% 0;
+  }
+  .dialogue-beat {
+    transition: none;
+  }
+  .selfie-print {
+    transition: none;
+  }
+  .story-dance .story-person i {
+    animation: none !important;
+  }
+}
+.cinematic .illustrated-scene .dialogue-track {
+  opacity: calc(var(--copy-opacity, 1) * var(--dialogue-opacity, 1));
+}
+html:not(.cinematic) .story-selfie[data-photo="false"] .selfie-print {
+  --photo-opacity: 0;
+  --photo-scale: 0.85;
+}
+html:not(.cinematic) .story-selfie[data-photo="false"] .story-cast {
+  display: block;
+}
+
+/* Keep the atlas seams outside the view while the town passes the windscreen. */
+.painted-town img {
+  clip-path: inset(0 50% 50% 0);
+}
+.story-drive .painted-town img {
+  transform: translate3d(var(--town-x, 0px), 0, 0) scale(1.3);
+  transform-origin: 0 0;
+}
