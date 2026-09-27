@@ -1002,3 +1002,16 @@ html:not(.cinematic) .opening-scene .hamper-seal {
     transition: none;
   }
 }
+
+/* Gujarati applies only to the characters' spoken dialogue. */
+@font-face {
+  font-family: "Noto Serif Gujarati";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/noto-serif-gujarati.woff2") format("woff2");
+}
+.dialogue-beat q[lang="gu"] {
+  font-family: "Noto Serif Gujarati", serif;
+  font-size: 0.9em;
+}
