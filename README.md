@@ -1,6 +1,6 @@
 # The Garba Experience
 
-A responsive, continuous-scroll invitation for Kinjal Dave's evening in Ahmedabad on 9 October 2026. A forest-green hamper opens into the invitation, followed by anticipation, two friends' arrival, a devotional pause and the Garba celebration.
+A continuous, scroll-driven Gujarati invitation with a cinematic story: two friends share an invitation, open the hamper, travel through Ahmedabad, arrive together, make a photo memory, pause for a prayer, hear Kinjal Dave and join the Garba circle.
 
 ## Run locally
 
@@ -8,24 +8,28 @@ A responsive, continuous-scroll invitation for Kinjal Dave's evening in Ahmedaba
 python3 -m http.server 8765 --directory dist
 ```
 
-Open http://localhost:8765. No build step or production dependencies are required.
+Open http://localhost:8765. The site is static: no build or production dependencies.
 
-## Active implementation
+## Current implementation
 
-- `dist/index.html`: semantic journey, original invitation, event details and native dialogs.
-- `dist/experience.css`: green, maroon, ivory and gold design; dedicated phone layouts; reduced-motion fallback.
-- `dist/experience.js`: reversible hinged doors, lightweight scroll effects, opt-in music, sharing and local photo keepsakes.
-- `dist/story-audio.json`: official YouTube selections. Playback begins only after a user clicks; closing the dialog removes the player.
-- `dist/assets/hamper-doors.webp`: recreated cover inspired by the supplied physical hamper, with the supplied logo overlaid in HTML.
-- `dist/assets/arrival-evening.webp`, `devotion.webp`, `celebration.webp`: optimized imagined scenes, not actual venue photography.
-- `dist/assets/invitation-paper.webp`: optimized supplied paper texture.
-- `dist/assets/invitation.jpg`: unchanged original invitation with its wording and organizer logos.
-- `dist/assets/fonts`: self-hosted Cormorant Garamond and Manrope, with OFL licenses.
+- `dist/index.html`: nine ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
+- `dist/experience.css`: one sticky cinematic stage, overlapping scene dissolves, full-bleed imagery, mobile compositions and a complete unpinned reading layout.
+- `dist/experience.js`: native scroll progress, reversible hamper doors, scene transitions, reading mode, original Web Audio ambience, official music selection, sharing and photo export.
+- `dist/assets/journey/`: three optimized cinematic illustrations for the invitation exchange, drive and photo moment. Illustrations are imagined, not photographs of the actual venue.
+- `dist/story-audio.json`: existing official YouTube selections. Official recordings are not downloaded or rehosted.
 
-Earlier scripts, styles and artwork remain in the repository for reference, but are not loaded by the active page. No ticket-counter, boarding sequence, cartoon sprites or separate selfie chapter remains in the current journey.
+The story does not use pagination, scroll snapping, intercepted wheel/touch events or next-page buttons. Mouse wheel, trackpad, touch and keyboard all use the browser's native scroll. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
 
-Photo keepsakes are drawn and exported entirely in the visitor's browser. Photos are not uploaded or persisted. Music requires YouTube connectivity; the player provides an official source link if embedding is unavailable.
+“Read without animation” exposes all scenes in normal document flow. Reduced-motion preferences, short viewports and oversized text use the reading layout automatically. All story content is available without JavaScript.
 
-## Publishing and validation
+Sound is silent until explicitly enabled. “Sound on” starts an original ambient score generated locally with Web Audio; its instrumentation follows the story. Aarti and Garba selections use a visible, nonmodal official YouTube player so visitors can continue scrolling. Switching between ambience and official music stops the other source. Closing the player, pressing Escape, hiding the tab or leaving the page stops playback. YouTube playback depends on network, browser and regional availability.
 
-Use the existing project ID in `.openai/hosting.json` and the `dist` static directory. Preserve the current site audience. See `PRODUCTION-BRIEF.md` for verification results and outstanding hosting/browser limitations.
+Photo keepsakes remain entirely in the visitor's browser, with no upload or persistence. Calendar, District booking, venue directions, the original invitation and entry-pass wording are preserved.
+
+## Verification
+
+`node --check dist/experience.js`
+
+`tests/verify-experience.cjs` requires `jsdom` and `postcss` in the Node module search path. It checks scene traversal and reversal, dissolves, hamper opening, reading/reduced-motion modes, silent defaults, audio controls, player cleanup, asset references, sharing, keepsake validation and event details. These are DOM-level tests, not a rendering engine or an audio-quality assessment.
+
+See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existing Sites project ID is preserved. Pushing source changes does not publish the live Sites website.

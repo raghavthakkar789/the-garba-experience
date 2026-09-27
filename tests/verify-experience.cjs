@@ -1,0 +1,303 @@
+// Behavioral checks. Run with jsdom and postcss available on NODE_PATH.
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const { JSDOM } = require("jsdom");
+const postcss = require("postcss");
+const base = path.resolve(__dirname, "../dist");
+const html = fs.readFileSync(path.join(base, "index.html"), "utf8");
+const script = fs.readFileSync(path.join(base, "experience.js"), "utf8");
+const tracks = JSON.parse(fs.readFileSync(path.join(base, "story-audio.json")));
+const dom = new JSDOM(html, {
+  url: "https://garba.example/",
+  runScripts: "outside-only",
+  pretendToBeVisual: true,
+});
+const w = dom.window,
+  d = w.document;
+let frame,
+  reducedHandler,
+  fetches = 0,
+  copied,
+  contexts = 0,
+  fetchFail = false,
+  resolveFetch;
+let gateFetch = false,
+  hidden = false;
+const reduced = {
+  matches: false,
+  addEventListener: (_, cb) => {
+    reducedHandler = cb;
+  },
+};
+w.innerHeight = 900;
+w.innerWidth = 1440;
+w.scrollY = 0;
+w.matchMedia = () => reduced;
+w.requestAnimationFrame = (cb) => {
+  frame = cb;
+  return 1;
+};
+w.scrollTo = ({ top }) => {
+  w.scrollY = top;
+  w.dispatchEvent(new w.Event("scroll"));
+};
+Object.defineProperty(d, "hidden", { get: () => hidden });
+Object.defineProperty(d.documentElement, "scrollHeight", { get: () => 13200 });
+const journey = d.querySelector(".journey"),
+  stage = d.querySelector(".journey-stage");
+const scenes = [...d.querySelectorAll(".scene")];
+const cinematic = () => d.documentElement.classList.contains("cinematic");
+Object.defineProperty(stage, "clientHeight", { get: () => 900 });
+Object.defineProperty(journey, "offsetHeight", {
+  get: () => (cinematic() ? 10692 : 8100),
+});
+journey.getBoundingClientRect = () => ({ top: -w.scrollY });
+scenes.forEach((s, i) => {
+  s.getBoundingClientRect = () => ({ top: i * 900 - w.scrollY });
+});
+w.HTMLCanvasElement.prototype.getContext = () => ({});
+w.HTMLDialogElement.prototype.showModal = function () {
+  this.open = true;
+};
+w.HTMLDialogElement.prototype.close = function () {
+  this.open = false;
+  this.dispatchEvent(new w.Event("close"));
+};
+w.fetch = async () => {
+  fetches++;
+  if (gateFetch)
+    await new Promise((r) => {
+      resolveFetch = r;
+    });
+  return { ok: !fetchFail, json: async () => tracks };
+};
+Object.defineProperty(w.navigator, "clipboard", {
+  value: {
+    writeText: async (s) => {
+      copied = s;
+    },
+  },
+});
+const param = () => ({
+  value: 0,
+  setValueAtTime() {},
+  exponentialRampToValueAtTime() {},
+  setTargetAtTime() {},
+  cancelScheduledValues() {},
+});
+w.AudioContext = class {
+  constructor() {
+    contexts++;
+    this.currentTime = 0;
+    this.state = "suspended";
+    this.destination = {};
+  }
+  createGain() {
+    return { gain: param(), connect() {}, disconnect() {} };
+  }
+  createOscillator() {
+    return {
+      frequency: param(),
+      connect() {},
+      disconnect() {},
+      start() {},
+      stop() {},
+    };
+  }
+  async resume() {
+    this.state = "running";
+  }
+  async suspend() {
+    this.state = "suspended";
+  }
+};
+const tick = () => new Promise((r) => setImmediate(r));
+const scroll = (cursor) => {
+  w.scrollY = (cursor / scenes.length) * 9792;
+  w.dispatchEvent(new w.Event("scroll"));
+  frame?.();
+};
+(async () => {
+  const ids = [...d.querySelectorAll("[id]")].map((e) => e.id);
+  assert.equal(new Set(ids).size, ids.length, "unique IDs");
+  assert.equal(d.querySelectorAll("h1").length, 1);
+  assert.equal(scenes.length, 9, "complete nine-scene storyline");
+  for (const el of d.querySelectorAll("[src],link[href],a[href]")) {
+    const value = el.getAttribute("src") || el.getAttribute("href");
+    if (value.startsWith("#"))
+      assert(d.querySelector(value), `anchor ${value}`);
+    else if (!/^(https?:|data:)/.test(value))
+      assert(
+        fs.existsSync(path.join(base, value.split("?")[0])),
+        `asset ${value}`,
+      );
+  }
+  for (const file of ["experience.css", "assets/fonts/fonts.css"]) {
+    const css = fs.readFileSync(path.join(base, file), "utf8");
+    postcss.parse(css);
+    for (const match of css.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))
+      assert(
+        fs.existsSync(path.join(base, path.dirname(file), match[1])),
+        `CSS asset ${match[1]}`,
+      );
+    assert(!/scroll-snap-type/.test(css), "no pagination-like snapping");
+  }
+  w.eval(script);
+  assert.equal(fetches, 0, "no unsolicited network audio");
+  assert.equal(contexts, 0, "no unsolicited generated audio");
+  assert.equal(d.querySelectorAll("iframe").length, 0);
+  assert(cinematic());
+  assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
+  // Enter every scene forwards and backwards using native scroll progress.
+  for (const sequence of [
+    [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    [8, 7, 6, 5, 4, 3, 2, 1, 0],
+  ]) {
+    for (const i of sequence) {
+      scroll(i + 0.25);
+      assert.equal(
+        d.querySelector(".scene.is-active").id,
+        scenes[i].id,
+        `scene ${i} reachable`,
+      );
+      assert.equal(
+        scenes.filter((s) => !s.inert).length,
+        1,
+        "only visible scene interactive",
+      );
+    }
+  }
+  scroll(1.6);
+  assert.equal(
+    d.querySelector("#invitation").style.getPropertyValue("--open"),
+    "1.0000",
+    "hamper opens",
+  );
+  scroll(1.01);
+  assert.equal(
+    d.querySelector("#invitation").style.getPropertyValue("--open"),
+    "0.0000",
+    "hamper closes on reverse",
+  );
+  scroll(4.85);
+  assert.equal(
+    d.querySelectorAll(".scene.is-visible").length,
+    2,
+    "overlapping dissolve",
+  );
+  assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
+  d.querySelector("#motion-toggle").click();
+  assert(!cinematic(), "reading mode");
+  assert(
+    scenes.every((s) => !s.inert && !s.hasAttribute("aria-hidden")),
+    "all story accessible without motion",
+  );
+  d.querySelector("#motion-toggle").click();
+  assert(cinematic(), "motion restored");
+  reduced.matches = true;
+  reducedHandler();
+  assert(!cinematic(), "system reduced motion");
+  assert(scenes.every((s) => !s.inert));
+  reduced.matches = false;
+  reducedHandler();
+  assert(cinematic());
+  d.querySelector("#sound-toggle").click();
+  await tick();
+  assert.equal(contexts, 1);
+  assert.equal(
+    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
+    "true",
+  );
+  d.querySelector("#sound-toggle").click();
+  assert.equal(
+    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
+    "false",
+    "mute",
+  );
+  scroll(6.2);
+  d.querySelector("#devotion [data-track]").click();
+  await tick();
+  assert(!d.querySelector("#music-panel").hidden);
+  assert.equal(d.querySelectorAll("iframe").length, 1);
+  assert(!d.querySelector("dialog[open]"), "music does not block scrolling");
+  assert(d.querySelector("iframe").src.includes(tracks.aarti.youtube));
+  scroll(7.3);
+  assert.equal(
+    d.querySelector(".scene.is-active").id,
+    "the-stage",
+    "scroll continues during playback",
+  );
+  d.querySelector('.music-tabs [data-track="garba2"]').click();
+  await tick();
+  assert.equal(d.querySelectorAll("iframe").length, 1, "one player only");
+  assert(d.querySelector("iframe").src.includes(tracks.garba2.youtube));
+  d.querySelector("#sound-toggle").click();
+  await tick();
+  assert.equal(
+    d.querySelectorAll("iframe").length,
+    0,
+    "ambient replaces official music",
+  );
+  assert(d.querySelector("#music-panel").hidden);
+  d.querySelector("#the-stage [data-track]").click();
+  await tick();
+  assert.equal(
+    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
+    "false",
+    "official music replaces ambience",
+  );
+  d.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape" }));
+  assert.equal(d.querySelectorAll("iframe").length, 0, "Escape stops music");
+  d.querySelector("#sound-toggle").click();
+  await tick();
+  hidden = true;
+  d.dispatchEvent(new w.Event("visibilitychange"));
+  assert.equal(
+    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
+    "false",
+    "hidden tabs are silent",
+  );
+  hidden = false;
+  d.querySelector("#share-invitation").click();
+  await tick();
+  assert.equal(copied, "https://garba.example/");
+  scroll(5.2);
+  d.querySelector("#make-memory").click();
+  assert(d.querySelector("#memory-dialog").open);
+  d.querySelector("#memory-dialog [data-close]").click();
+  assert(!d.querySelector("#memory-dialog").open);
+  const input = d.querySelector("#memory-photo");
+  for (const [file, message] of [
+    [{ type: "image/heic", size: 100 }, "JPG"],
+    [{ type: "image/jpeg", size: 21 * 1024 * 1024 }, "20 MB"],
+  ]) {
+    Object.defineProperty(input, "files", {
+      value: [file],
+      configurable: true,
+    });
+    input.dispatchEvent(new w.Event("change"));
+    await tick();
+    assert(d.querySelector("#memory-status").textContent.includes(message));
+  }
+  const metadata = JSON.parse(
+    d.querySelector('script[type="application/ld+json"]').textContent,
+  );
+  assert.equal(metadata.startDate, "2026-10-09T19:30:00+05:30");
+  assert(
+    html.includes(
+      "https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets",
+    ),
+  );
+  console.log(
+    "PASS: local assets/CSS/anchors; nine-scene forward and reverse scrolling; continuous dissolves; reversible hamper; reading/reduced-motion modes; opt-in ambient sound and mute; single nonmodal official player; sound-source exclusivity; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
+  );
+  console.log(
+    "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",
+  );
+  w.close();
+})().catch((error) => {
+  console.error(error);
+  w.close();
+  process.exitCode = 1;
+});
