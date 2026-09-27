@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(base, "index.html"), "utf8");
 const script = fs.readFileSync(path.join(base, "experience.js"), "utf8");
 const tracks = JSON.parse(fs.readFileSync(path.join(base, "story-audio.json")));
 const dom = new JSDOM(html, {
-  url: "https://garba.example/",
+  url: "https://garba.example/?source=invitation#celebration",
   runScripts: "outside-only",
   pretendToBeVisual: true,
 });
@@ -32,7 +32,8 @@ const reduced = {
 };
 w.innerHeight = 900;
 w.innerWidth = 1440;
-w.scrollY = 0;
+w.scrollY = 8000;
+w.performance.getEntriesByType = () => [{ type: "reload" }];
 w.matchMedia = () => reduced;
 w.requestAnimationFrame = (cb) => {
   frame = cb;
@@ -148,6 +149,14 @@ const scroll = (cursor) => {
     assert(!/scroll-snap-type/.test(css), "no pagination-like snapping");
   }
   w.eval(script);
+  await tick(); // Let the initial pageshow restoration finish before interacting.
+  assert.equal(w.scrollY, 0, "reload starts at the top");
+  assert.equal(w.location.hash, "", "reload ignores the old scene anchor");
+  assert.equal(
+    w.location.search,
+    "?source=invitation",
+    "reload retains URL parameters",
+  );
   assert.equal(fetches, 0, "no unsolicited network audio");
   assert.equal(contexts, 0, "no unsolicited generated audio");
   assert.equal(d.querySelectorAll("iframe").length, 0);
@@ -411,6 +420,37 @@ const scroll = (cursor) => {
     await tick();
     assert(d.querySelector("#memory-status").textContent.includes(message));
   }
+  // A restored reload must clear every expanded control before showing the box.
+  scroll(6.6);
+  d.querySelector("#a-memory").dataset.photo = "true";
+  d.querySelector("#make-memory").click();
+  d.querySelector("#the-stage [data-track]").click();
+  await tick();
+  d.querySelector("#motion-toggle").click();
+  d.querySelector("#open-invitation").click();
+  d.querySelector(".toast").classList.add("visible");
+  w.dispatchEvent(new w.PageTransitionEvent("pageshow", { persisted: false }));
+  assert.equal(w.scrollY, 0);
+  assert(cinematic(), "reload resets manual reading choice");
+  assert.equal(d.querySelector(".scene.is-active").id, "invitation");
+  assert.equal(
+    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    "false",
+  );
+  assert(!d.querySelector("dialog[open]"), "reload closes dialogs");
+  assert(d.querySelector("#music-panel").hidden, "reload closes music");
+  assert.equal(d.querySelectorAll("iframe").length, 0);
+  assert.equal(
+    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
+    "false",
+  );
+  assert.equal(
+    d.querySelector("#take-story-photo").getAttribute("aria-pressed"),
+    "false",
+  );
+  assert(!d.querySelector("#a-memory").hasAttribute("data-photo"));
+  assert(d.querySelector("#download-memory").hidden);
+  assert(!d.querySelector(".toast").classList.contains("visible"));
   const metadata = JSON.parse(
     d.querySelector('script[type="application/ld+json"]').textContent,
   );

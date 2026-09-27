@@ -22,6 +22,8 @@ Open http://localhost:8765. The site is static: no build or production dependenc
 
 The story does not use pagination, scroll snapping, intercepted wheel/touch events or next-page buttons. Mouse wheel, trackpad, touch and keyboard all use the browser's native scroll. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
 
+Reloading returns to the top of the closed invitation box and clears open music, dialogs, the selfie reveal and the local keepsake. A scene anchor is removed on reload; fresh direct links still work. Reduced-motion preferences remain respected.
+
 “Read without animation” exposes all scenes in normal document flow. Reduced-motion preferences, short viewports and oversized text use the reading layout automatically. All story content is available without JavaScript.
 
 Sound is silent until explicitly enabled. “Sound on” starts an original ambient score generated locally with Web Audio; its instrumentation follows the story. Aarti and Garba selections use a visible, nonmodal official YouTube player so visitors can continue scrolling. Switching between ambience and official music stops the other source. Closing the player, pressing Escape, hiding the tab or leaving the page stops playback. YouTube playback depends on network, browser and regional availability.

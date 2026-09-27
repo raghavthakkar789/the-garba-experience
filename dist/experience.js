@@ -1,6 +1,14 @@
 /* A continuous, native-scroll film. Every scene remains readable without JavaScript. */
 (() => {
   "use strict";
+  const isReload =
+    performance.getEntriesByType?.("navigation")?.[0]?.type === "reload";
+  if (isReload && location.hash)
+    history.replaceState(
+      history.state,
+      "",
+      location.pathname + location.search,
+    );
   const root = document.documentElement;
   const journey = document.querySelector(".journey");
   const stage = document.querySelector(".journey-stage");
@@ -712,6 +720,7 @@
   const context = canvas.getContext("2d");
   const download = document.querySelector("#download-memory");
   const status = document.querySelector("#memory-status");
+  const initialMemoryStatus = status.textContent;
   let photoVersion = 0;
   let downloadUrl;
   document
@@ -794,6 +803,49 @@
         photo?.close();
       }
     });
+  function resetReloadState() {
+    stopAmbient();
+    stopMusic();
+    document
+      .querySelectorAll("dialog[open]")
+      .forEach((dialog) => dialog.close());
+    document.querySelectorAll("details[open]").forEach((details) => {
+      details.open = false;
+    });
+    document.activeElement?.blur();
+    clearTimeout(toastTimer);
+    toast.classList.remove("visible");
+    manualRead = false;
+    readingBoxOpen = false;
+    focusStoryOnArrival = false;
+    const photoScene = document.querySelector("#a-memory");
+    delete photoScene.dataset.photo;
+    photoScene.style.setProperty("--photo-opacity", "0");
+    photoScene.style.setProperty("--photo-scale", "0.85");
+    photoScene.style.setProperty("--dialogue-opacity", "1");
+    const photoButton = document.querySelector("#take-story-photo");
+    photoButton.setAttribute("aria-pressed", "false");
+    photoButton.textContent = "Take their photo";
+    ++photoVersion; // Ignore any photo processing that was still pending.
+    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+    downloadUrl = undefined;
+    download.removeAttribute("href");
+    download.hidden = true;
+    document.querySelector("#memory-photo").value = "";
+    canvas.classList.remove("has-photo");
+    canvas.width = canvas.width;
+    status.textContent = initialMemoryStatus;
+    volume.value = volume.defaultValue;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    setMotion();
+    updateOpening(0);
+  }
+  // Reset immediately, then again after the browser restores form/page state.
+  if (isReload) resetReloadState();
+  addEventListener("pageshow", (event) => {
+    if (isReload && !event.persisted) resetReloadState();
+  });
+
   // Retire older cache-first versions without caching personal photos.
   if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("sw.js").catch(() => {});
