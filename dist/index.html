@@ -17,7 +17,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link
       rel="preload"
-      href="assets/story/locations/courtyard.webp"
+      href="assets/hamper-doors.webp"
       as="image"
       fetchpriority="high"
     />
@@ -28,8 +28,8 @@
       type="font/woff"
       crossorigin=""
     />
-    <link rel="stylesheet" href="experience.css?v=5" />
-    <script defer="" src="experience.js?v=5"></script>
+    <link rel="stylesheet" href="experience.css?v=6" />
+    <script defer="" src="experience.js?v=6"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -61,15 +61,15 @@
         "url": "https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets"
       }
     </script>
-    <link rel="stylesheet" href="storybook.css?v=5" />
+    <link rel="stylesheet" href="storybook.css?v=6" />
   </head>
   <body>
     <a class="skip-link" href="#details">Skip to event details</a>
     <header class="masthead">
       <a
         class="wordmark"
-        href="#beginning"
-        aria-label="The Garba Experience, beginning"
+        href="#invitation"
+        aria-label="The Garba Experience, invitation box"
         ><img
           src="assets/logo.webp"
           alt="The Garba Experience"
@@ -89,6 +89,63 @@
       <div class="journey" id="journey">
         <div class="journey-stage">
           <section
+            class="scene opening-scene"
+            id="invitation"
+            data-label="Your invitation awaits."
+            data-sound="invitation"
+            aria-labelledby="invitation-title"
+          >
+            <div class="paper-field" aria-hidden="true"></div>
+            <div class="opening-layout">
+              <div class="scene-copy opening-title">
+                <h1 id="invitation-title">You’re invited.</h1>
+              </div>
+              <div class="hamper-area">
+                <div class="hamper">
+                  <div class="hamper-interior" aria-hidden="true">
+                    <img
+                      src="assets/invitation.jpg"
+                      alt=""
+                      width="1297"
+                      height="1600"
+                    />
+                  </div>
+                  <div class="door door-left" aria-hidden="true"></div>
+                  <div class="door door-right" aria-hidden="true"></div>
+                  <div class="hamper-seal" aria-hidden="true">
+                    <img src="assets/logo.webp" alt="" /><small
+                      >9 OCTOBER</small
+                    >
+                  </div>
+                  <button
+                    class="box-hit-area"
+                    type="button"
+                    data-open-invitation
+                    aria-label="Open your invitation"
+                    aria-expanded="false"
+                    hidden
+                  ></button>
+                </div>
+              </div>
+              <div class="opening-actions">
+                <button
+                  class="outline-button"
+                  id="open-invitation"
+                  type="button"
+                  data-open-invitation
+                  aria-expanded="false"
+                  hidden
+                >
+                  Open your invitation <span aria-hidden="true">↗</span>
+                </button>
+                <a class="opening-fallback outline-button" href="#beginning"
+                  >Follow their story ↓</a
+                >
+                <p class="opening-hint">Scroll to meet the friends</p>
+              </div>
+            </div>
+          </section>
+          <section
             class="scene illustrated-scene story-meet"
             id="beginning"
             data-label="A night to remember."
@@ -101,12 +158,12 @@
                 alt="The friends meet in a quiet Gujarati home courtyard at dusk"
                 width="1536"
                 height="1024"
-                fetchpriority="high"
+                loading="lazy"
               />
             </picture>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
-              <h1 id="beginning-title">A night to remember.</h1>
+              <h2 id="beginning-title" tabindex="-1">A night to remember.</h2>
             </div>
             <div class="dialogue-track">
               <p class="dialogue-beat" data-speaker="him" data-at="0.00">
@@ -126,84 +183,27 @@
             </div>
           </section>
           <section
-            class="scene illustrated-scene story-handover"
-            id="invitation"
-            data-label="She has a little surprise."
-            data-sound="invitation"
-            aria-labelledby="invitation-title"
-          >
-            <picture class="scene-art">
-              <img
-                src="assets/story/locations/courtyard.webp"
-                alt="The same lantern-lit courtyard where she gives him the invitation"
-                width="1536"
-                height="1024"
-                loading="lazy"
-              />
-            </picture>
-            <div class="story-shade"></div>
-            <div class="scene-copy story-title">
-              <h2 id="invitation-title">She has a little surprise.</h2>
-            </div>
-            <div class="dialogue-track">
-              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
-                <span class="speaker">She</span><q>This is for you. Open it!</q>
-              </p>
-              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
-                <span class="speaker">He</span><q>The Garba Experience?</q>
-              </p>
-              <p class="dialogue-beat" data-speaker="her" data-at="0.48">
-                <span class="speaker">She</span
-                ><q>With Kinjal Dave. We’re going together!</q>
-              </p>
-            </div>
-            <div class="story-cast" aria-hidden="true">
-              <div class="story-person man gift" data-pose="think"><i></i></div>
-              <div class="story-person woman" data-pose="think"><i></i></div>
-            </div>
-            <div class="hamper-area">
-              <div
-                class="hamper"
-                role="img"
-                aria-label="A green and gold hamper opens to reveal a maroon invitation"
-              >
-                <div class="hamper-interior" aria-hidden="true">
-                  <img src="assets/logo.webp" alt="" class="inner-logo" />
-                  <p>We request the pleasure<br />of your presence</p>
-                  <strong>The Garba<br /><em>Experience</em></strong
-                  ><span>KINJAL DAVE<br /><small>09 OCTOBER 2026</small></span
-                  ><img
-                    src="assets/lotus-open.webp"
-                    alt=""
-                    class="inner-lotus"
-                  />
-                </div>
-                <div class="door door-left" aria-hidden="true"></div>
-                <div class="door door-right" aria-hidden="true"></div>
-                <div class="hamper-seal" aria-hidden="true">
-                  <img src="assets/logo.webp" alt="" />
-                </div>
-              </div>
-            </div>
-          </section>
-          <section
             class="scene illustrated-scene story-invite"
             id="the-invitation"
-            data-label="You’re invited, too."
+            data-label="She has just the plan."
             data-sound="invitation"
             aria-labelledby="the-invitation-title"
           >
             <div class="invitation-texture" aria-hidden="true"></div>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
-              <h2 id="the-invitation-title">You’re invited, too.</h2>
+              <h2 id="the-invitation-title">She has just the plan.</h2>
             </div>
             <div class="dialogue-track">
-              <p class="dialogue-beat" data-speaker="him" data-at="0.00">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.00">
+                <span class="speaker">She</span
+                ><q>The Garba Experience. With Kinjal Dave!</q>
+              </p>
+              <p class="dialogue-beat" data-speaker="him" data-at="0.24">
                 <span class="speaker">He</span
                 ><q>Now that sounds like a night!</q>
               </p>
-              <p class="dialogue-beat" data-speaker="her" data-at="0.24">
+              <p class="dialogue-beat" data-speaker="her" data-at="0.48">
                 <span class="speaker">She</span
                 ><q>9 October. Don’t make me wait!</q>
               </p>

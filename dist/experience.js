@@ -31,6 +31,33 @@
   let lastWidth = innerWidth;
   let lastHeight = innerHeight;
   let soundScene = "welcome";
+  const opening = document.querySelector(".opening-scene");
+  const openingButtons = [
+    ...document.querySelectorAll("[data-open-invitation]"),
+  ];
+  let readingBoxOpen = false;
+  let focusStoryOnArrival = false;
+  function updateOpening(open) {
+    opening.style.setProperty("--open", open.toFixed(4));
+    opening.style.setProperty("--seal", (1 - clamp(open * 4)).toFixed(4));
+    const revealed = open >= 0.95;
+    opening.dataset.open = String(revealed);
+    openingButtons.forEach((button) => {
+      button.hidden = false;
+      button.setAttribute("aria-expanded", String(revealed));
+      button.setAttribute(
+        "aria-label",
+        revealed ? "Follow their story" : "Open your invitation",
+      );
+    });
+    document.querySelector("#open-invitation").textContent = revealed
+      ? "Follow their story ↓"
+      : "Open your invitation ↗";
+    opening.querySelector(".opening-hint").textContent = revealed
+      ? "Keep scrolling. Two friends are waiting."
+      : "Scroll to unwrap the night";
+  }
+
   // Dialogue beats and the original illustrated cast advance with native scroll.
   function animateStory(scene, progress) {
     const beats = [...scene.querySelectorAll(".dialogue-beat")];
@@ -80,18 +107,6 @@
         1,
         meet < 0.98 ? "walk" : "think",
       );
-    }
-    if (scene.id === "invitation") {
-      const open = ease((progress - 0.05) / 0.52);
-      person(
-        "man",
-        0,
-        0,
-        1 - open * 0.82,
-        1,
-        progress > 0.24 ? "walk" : "think",
-      );
-      person("woman", 0, 0, 1 - open * 0.82);
     }
     if (scene.id === "the-invitation")
       scene.style.setProperty("--card-turn", `${progress * 5}deg`);
@@ -238,6 +253,7 @@
       `${scenes.length * innerHeight * 1.32}px`,
     );
     clearSceneState();
+    if (!cinematic) updateOpening(readingBoxOpen ? 1 : 0);
     measure();
     if (
       cinematic &&
@@ -249,6 +265,7 @@
       cinematic = false; // Enlarged text is more important than pinned animation.
       root.classList.remove("cinematic");
       root.classList.add("read-mode");
+      updateOpening(readingBoxOpen ? 1 : 0);
       measure();
     }
     motionButton.hidden = false;
@@ -323,18 +340,14 @@
       );
       scene.style.setProperty("--zoom", (1.035 + progress * 0.045).toFixed(4));
       scene.style.setProperty("--pan", `${(progress * -10).toFixed(2)}px`);
-      if (scene.id === "invitation") {
-        const open = ease((progress - 0.05) / 0.52);
-        scene.style.setProperty("--open", open.toFixed(4));
-        scene.style.setProperty("--seal", (1 - clamp(open * 4)).toFixed(4));
-        scene.style.setProperty(
-          "--hamper-scale",
-          (1 + progress * 0.025).toFixed(4),
-        );
-      }
+      if (scene === opening) updateOpening(ease((progress - 0.12) / 0.43));
     });
     const photoButton = document.querySelector("#take-story-photo");
     if (photoButton) photoButton.disabled = false;
+    if (focusStoryOnArrival && scenes[selected].id === "beginning") {
+      focusStoryOnArrival = false;
+      document.querySelector("#beginning-title").focus({ preventScroll: true });
+    }
     activeIndex = selected;
     soundScene = scenes[selected].dataset.sound;
     document.querySelector("#current-chapter").textContent =
@@ -359,6 +372,26 @@
       if (!scene) return;
       event.preventDefault();
       scrollToScene(scene);
+    }),
+  );
+  openingButtons.forEach((button) =>
+    button.addEventListener("click", () => {
+      if (opening.dataset.open === "true") {
+        focusStoryOnArrival = cinematic;
+        scrollToScene(document.querySelector("#beginning"));
+        if (!cinematic)
+          document
+            .querySelector("#beginning-title")
+            .focus({ preventScroll: true });
+      } else if (cinematic) {
+        window.scrollTo({
+          top: journeyTop + (0.6 / scenes.length) * travel,
+          behavior: "smooth",
+        });
+      } else {
+        readingBoxOpen = true;
+        updateOpening(1);
+      }
     }),
   );
   motionButton.addEventListener("click", () => {

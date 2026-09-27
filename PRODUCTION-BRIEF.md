@@ -4,15 +4,15 @@
 
 Restore the original narrative as a connected scroll experience, improve visual continuity and touch use, and provide optional sound without interrupting the journey. Preserve the event details, printed invitation, existing bookings and keepsake capability.
 
-Base: GitHub `main` at `c1d33df111c1dfb894c8866c2e507573e0053e7f` (the restored illustrated story). This correction matches the environments to each story action while retaining the cast, dialogue and continuous scroll.
+Base: GitHub `main` at `6718b601c6a302ba58e56ba39ba072c2f459372e` (the matching-background revision). The opening now presents the complete closed invitation box before the illustrated storyline.
 
 ## Story and presentation
 
 The user's preferred original illustrated characters and painted scenes are restored. The later realistic scenes and long narration are no longer loaded. Each scene has a small title and two or three short dialogue beats; only one speech bubble is shown at a time during animated scrolling. Dialogue lines contain at most 12 words.
 
-1. The friends meet and decide they want an amazing Garba night.
-2. She gives him the invitation; the hamper opens with the scroll.
-3. The original printed invitation appears.
+1. The complete green and gold box fronts the site. Clicking the box or opening control, or scrolling, opens both doors to reveal the original printed invitation. The next scroll dissolves into the story; the follow-story control also continues there.
+2. The friends meet and decide they want an amazing Garba night.
+3. She introduces The Garba Experience with Kinjal Dave and shows the invitation.
 4. Their car arrives, both friends board, and it leaves.
 5. They travel through an illustrated Ahmedabad seen through the windscreen.
 6. The car parks; they step out, take each other's hand and enter.
@@ -23,7 +23,7 @@ The user's preferred original illustrated characters and painted scenes are rest
 
 The same original green-kediyu and pink-chaniya-choli characters persist throughout. Pose changes, walking, boarding, the venue approach and the photo reveal are scroll-driven. One sticky stage connects every scene with reversible dissolves. No scroll snapping, intercepted wheel/touch events or pagination is used. The original invitation opens at full resolution.
 
-Original cast, entrance, concert and Garba-circle artwork remain optimized WebP assets, with separate phone artwork for the entrance and car interior. Five new 1536×1024 painted location backgrounds total 2.34 MB. The meeting and gift exchange share a home courtyard; pickup takes place on the street outside; the drive follows a clear forward-facing road; the selfie has its own floral alcove; aarti takes place in a full courtyard around the shrine. The old city collage, duplicated entrance at the selfie scene and isolated shrine portrait are no longer loaded. Forward road movement stays aligned to its vanishing point. Phone dialogue placement leaves the shrine visible. These environments are artistic impressions, not verified depictions of the actual venue. Fonts remain self-hosted.
+Original cast, entrance, concert and Garba-circle artwork remain optimized WebP assets, with separate phone artwork for the entrance and car interior. Five new 1536×1024 painted location backgrounds total 2.34 MB. The friends meet in a home courtyard; pickup takes place on the street outside; the drive follows a clear forward-facing road; the selfie has its own floral alcove; aarti takes place in a full courtyard around the shrine. The old city collage, duplicated entrance at the selfie scene and isolated shrine portrait are no longer loaded. Forward road movement stays aligned to its vanishing point. Phone dialogue placement leaves the shrine visible. These environments are artistic impressions, not verified depictions of the actual venue. Fonts remain self-hosted.
 
 Reduced motion, short screens and reading mode show all conversations in normal document flow. Hidden cinematic scenes are inert. No-JavaScript visitors can read the complete story. Existing event details, original invitation, booking links, sound choices and local photo keepsakes are preserved.
 
@@ -45,7 +45,7 @@ District URL stays exactly `https://www.district.in/events/the-garba-experience-
 
 Passed JavaScript syntax and the behavioral suite `tests/verify-experience.cjs`: local asset references, CSS parsing, internal anchors, ten-scene traversal forwards/backwards, brief dialogue switching and reversal, character pose changes, car boarding/departure, hand-in-hand entry, automatic/manual selfie reveal, overlapping dissolves, reversible hamper, reading and reduced-motion switches, no unsolicited audio, opt-in ambience/mute, nonmodal official music, single-player switching, source exclusivity, Escape and background cleanup, share URL, keepsake controls and invalid/oversized image handling, event metadata and booking URL.
 
-The suite uses jsdom and postcss from the existing validation environment, with audio and layout boundaries modeled. A local Chromium render also checked the illustrated scenes at 1440×900, 390×844 and 320×700: scene selection matched the scroll position, all visible images loaded, no page exceptions occurred, and no horizontal overflow appeared. Screenshots were reviewed for background composition, ground placement, driving perspective, the selfie location and shrine framing. Phone reading mode kept all ten scenes visible without overflow. Actual sound quality, third-party playback and complete canvas export remain unverified.
+The suite uses jsdom and postcss from the existing validation environment, with audio and layout boundaries modeled. A local Chromium render also checked the illustrated scenes at 1440×900, 390×844 and 320×700: scene selection matched the scroll position, all visible images loaded, no page exceptions occurred, and no horizontal overflow appeared. Screenshots were reviewed for background composition, ground placement, driving perspective, the selfie location and shrine framing. The opening was additionally rendered at all three sizes: the complete closed front fits, both click targets work, the original card appears before the story, continuing reaches the friends, and reverse scrolling closes the doors. Keyboard continuation transfers focus to the story heading. Phone reading mode kept all ten scenes visible without overflow, and the box opens in place. Reduced motion disables the opening transition; without JavaScript a direct story link remains available. Actual sound quality, third-party playback and complete canvas export remain unverified.
 
 ## Publication status
 

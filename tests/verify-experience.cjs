@@ -153,6 +153,38 @@ const scroll = (cursor) => {
   assert.equal(d.querySelectorAll("iframe").length, 0);
   assert(cinematic());
   assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
+  assert.equal(scenes[0].id, "invitation", "box comes before the storyline");
+  assert.equal(scenes[1].id, "beginning", "friends meet after the box opens");
+  assert.equal(d.querySelector(".scene.is-active").id, "invitation");
+  assert.equal(
+    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    "false",
+  );
+  d.querySelector(".box-hit-area").click();
+  frame();
+  assert.equal(
+    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    "true",
+    "box itself opens on click",
+  );
+  assert.equal(
+    d.querySelector(".scene.is-active").id,
+    "invitation",
+    "opening reveals the card before the friends",
+  );
+  d.querySelector("#open-invitation").click();
+  frame();
+  assert.equal(
+    d.querySelector(".scene.is-active").id,
+    "beginning",
+    "continue enters storyline",
+  );
+
+  assert.equal(
+    d.activeElement.id,
+    "beginning-title",
+    "continue transfers keyboard focus into story",
+  );
   // Enter every scene forwards and backwards using native scroll progress.
   for (const sequence of [
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -186,18 +218,18 @@ const scroll = (cursor) => {
     !d.querySelector('img[src^="assets/journey/"]'),
     "photorealistic replacements are inactive",
   );
-  scroll(0.1);
+  scroll(1.1);
   assert.equal(
     d.querySelector("#beginning .is-speaking").dataset.speaker,
     "him",
   );
-  scroll(0.3);
+  scroll(1.3);
   assert.equal(
     d.querySelector("#beginning .is-speaking").dataset.speaker,
     "her",
   );
   assert.equal(d.querySelectorAll("#beginning .is-speaking").length, 1);
-  scroll(0.1);
+  scroll(1.1);
   assert.equal(
     d.querySelector("#beginning .is-speaking").dataset.speaker,
     "him",
@@ -250,13 +282,13 @@ const scroll = (cursor) => {
   scroll(9.5);
   assert.equal(d.querySelector("#celebration .man").dataset.pose, "dance");
   assert.equal(d.querySelector("#celebration .woman").dataset.pose, "dance");
-  scroll(1.6);
+  scroll(0.6);
   assert.equal(
     d.querySelector("#invitation").style.getPropertyValue("--open"),
     "1.0000",
     "hamper opens",
   );
-  scroll(1.01);
+  scroll(0.01);
   assert.equal(
     d.querySelector("#invitation").style.getPropertyValue("--open"),
     "0.0000",
@@ -271,6 +303,17 @@ const scroll = (cursor) => {
   assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
   d.querySelector("#motion-toggle").click();
   assert(!cinematic(), "reading mode");
+  assert.equal(
+    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    "false",
+  );
+  d.querySelector("#open-invitation").click();
+  assert.equal(
+    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    "true",
+    "reading mode opens box without scrolling",
+  );
+
   assert(
     [...d.querySelectorAll(".dialogue-beat")].every(
       (line) => !line.hasAttribute("aria-hidden"),

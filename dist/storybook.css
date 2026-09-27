@@ -871,3 +871,134 @@ html:not(.cinematic) .story-selfie[data-photo="false"] .selfie-print {
 html:not(.cinematic) .story-selfie[data-photo="false"] .story-cast {
   display: block;
 }
+
+/* The physical box is the opening scene, before the illustrated friends. */
+.opening-scene {
+  padding: 0;
+  min-height: 700px;
+  min-height: 100svh;
+}
+.opening-layout {
+  position: absolute;
+  inset: 112px 0 116px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.opening-title {
+  position: relative;
+  text-align: center;
+  max-width: none;
+  padding: 0 24px;
+}
+.opening-title h1 {
+  font-size: clamp(30px, 3.2vw, 46px);
+}
+.opening-scene .hamper-area {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  transform: none;
+  flex: 1;
+  align-items: center;
+  min-height: 0;
+}
+.opening-scene .hamper {
+  width: min(80vw, 43svh, 480px);
+  flex: none;
+}
+.opening-scene .hamper-interior {
+  inset: 0;
+  padding: 0;
+  border: 2px solid #b99862;
+}
+.opening-scene .hamper-interior > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.opening-scene .hamper-seal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+.opening-scene .hamper-seal small {
+  font: 600 clamp(7px, 0.7vw, 10px)/1.5 var(--sans);
+  color: #e6c274;
+}
+.box-hit-area {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  padding: 0;
+}
+.opening-actions {
+  text-align: center;
+  z-index: 7;
+}
+.opening-actions .outline-button {
+  margin: 0;
+  min-height: 48px;
+  background: #173c30cc;
+  padding: 10px 24px;
+}
+.opening-hint {
+  margin-top: 9px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.cinematic .opening-fallback,
+.read-mode .opening-fallback {
+  display: none;
+}
+.cinematic .opening-title,
+.cinematic .opening-actions {
+  opacity: var(--copy-opacity, 1);
+  transform: none;
+}
+html:not(.cinematic) .opening-scene {
+  height: max(100svh, 700px);
+}
+html:not(.cinematic) .opening-scene .door {
+  transition: transform 0.85s ease;
+}
+html:not(.cinematic) .opening-scene .hamper-seal {
+  transition: opacity 0.3s ease;
+}
+@media (max-width: 650px) {
+  .opening-layout {
+    inset: 112px 0 140px;
+    gap: 16px;
+  }
+  .opening-scene .hamper {
+    width: min(80vw, 40svh);
+  }
+  .opening-title h1 {
+    font-size: 30px;
+  }
+}
+@media (max-height: 760px) and (max-width: 650px) {
+  .opening-layout {
+    inset: 106px 0 125px;
+    gap: 12px;
+  }
+  .opening-scene .hamper {
+    width: min(76vw, 36svh);
+  }
+  .opening-title h1 {
+    font-size: 27px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not(.cinematic) .opening-scene .door,
+  html:not(.cinematic) .opening-scene .hamper-seal {
+    transition: none;
+  }
+}
