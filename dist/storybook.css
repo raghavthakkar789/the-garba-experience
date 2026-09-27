@@ -880,12 +880,12 @@ html:not(.cinematic) .story-selfie[data-photo="false"] .story-cast {
 }
 .opening-layout {
   position: absolute;
-  inset: 112px 0 116px;
+  inset: 104px 0 108px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 14px;
 }
 .opening-title {
   position: relative;
@@ -906,7 +906,7 @@ html:not(.cinematic) .story-selfie[data-photo="false"] .story-cast {
   min-height: 0;
 }
 .opening-scene .hamper {
-  width: min(80vw, 43svh, 480px);
+  width: min(88vw, calc((100svh - 350px) * 0.8138), 570px);
   flex: none;
 }
 .opening-scene .hamper-interior {
@@ -917,7 +917,8 @@ html:not(.cinematic) .story-selfie[data-photo="false"] .story-cast {
 .opening-scene .hamper-interior > img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  filter: saturate(1.08);
 }
 .opening-scene .hamper-seal {
   display: flex;
@@ -982,11 +983,6 @@ html:not(.cinematic) .story-selfie[data-photo="false"] .story-cast {
     border-color: #ffe3a5;
   }
 }
-/* The logo opens the box; the lower control continues once it is open. */
-.opening-scene:not([data-open="true"]) #open-invitation {
-  visibility: hidden;
-  pointer-events: none;
-}
 .opening-actions {
   text-align: center;
   z-index: 7;
@@ -1023,11 +1019,11 @@ html:not(.cinematic) .opening-scene .hamper-seal {
 }
 @media (max-width: 650px) {
   .opening-layout {
-    inset: 112px 0 140px;
+    inset: 108px 0 142px;
     gap: 16px;
   }
   .opening-scene .hamper {
-    width: min(80vw, 40svh);
+    width: min(88vw, calc((100svh - 350px) * 0.8138));
   }
   .opening-title h1 {
     font-size: 30px;
@@ -1035,11 +1031,11 @@ html:not(.cinematic) .opening-scene .hamper-seal {
 }
 @media (max-height: 760px) and (max-width: 650px) {
   .opening-layout {
-    inset: 106px 0 125px;
+    inset: 104px 0 125px;
     gap: 12px;
   }
   .opening-scene .hamper {
-    width: min(76vw, 36svh);
+    width: min(86vw, calc((100svh - 350px) * 0.8138));
   }
   .opening-title h1 {
     font-size: 27px;
@@ -1209,9 +1205,32 @@ html:not(.cinematic) .opening-scene .hamper-seal {
     padding-bottom: 8px;
   }
 }
-/* Keep the larger invitation title clear of the box on short screens. */
+/* Scroll opens the doors, then carries the visitor through the courtyard. */
 .cinematic .opening-scene .hamper {
-  max-width: calc((100svh - 400px) * 0.8138);
+  transform: scale(calc(1 + var(--enter, 0) * 3.5));
+  transform-origin: center;
+}
+.cinematic .opening-scene.is-visible .hamper {
+  will-change: transform;
+}
+.cinematic .opening-title,
+.cinematic .opening-actions {
+  opacity: calc(var(--copy-opacity, 1) * var(--entry-copy, 1));
+}
+.cinematic .opening-scene .hamper-interior {
+  box-shadow: inset 0 0 30px #071f1966;
+}
+.cinematic .opening-scene .hamper-interior > img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100vw;
+  height: 100svh;
+  max-width: none;
+  transform: translate(-50%, -50%) scale(var(--portal-inverse, 1.08));
+}
+html:not(.cinematic) .opening-scene .hamper {
+  width: min(86vw, 420px);
 }
 @media (max-height: 760px) and (min-width: 651px) {
   .cinematic .illustrated-scene .story-title {

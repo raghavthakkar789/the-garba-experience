@@ -167,7 +167,7 @@ const scroll = (cursor) => {
   assert.equal(scenes[1].id, "beginning", "friends meet after the box opens");
   assert.equal(d.querySelector(".scene.is-active").id, "invitation");
   assert.equal(
-    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    d.querySelector("#invitation-seal").getAttribute("aria-expanded"),
     "false",
   );
   assert.equal(d.querySelectorAll(".box-hit-area").length, 1);
@@ -176,30 +176,15 @@ const scroll = (cursor) => {
   d.querySelector("#invitation-seal").click();
   frame();
   assert.equal(
-    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
-    "true",
-    "centre logo opens the box",
-  );
-  assert.equal(
-    d.querySelector(".scene.is-active").id,
-    "invitation",
-    "opening reveals the card before the friends",
-  );
-  assert(d.querySelector("#invitation-seal").hidden, "opened seal leaves tab order");
-  assert.equal(d.activeElement.id, "open-invitation", "focus moves to the story control");
-  d.querySelector("#open-invitation").click();
-  frame();
-  assert.equal(
     d.querySelector(".scene.is-active").id,
     "beginning",
-    "continue enters storyline",
+    "one logo click goes directly to the storyline",
   );
-
-  assert.equal(
-    d.activeElement.id,
-    "beginning-title",
-    "continue transfers keyboard focus into story",
-  );
+  assert.equal(d.activeElement.id, "beginning-title", "logo activation transfers focus into story");
+  assert.equal(d.querySelector("#invitation .hamper-interior img").getAttribute("src"),
+    d.querySelector("#beginning .scene-art img").getAttribute("src"),
+    "box interior leads into the first story scene");
+  assert(!d.querySelector("#open-invitation"), "no second continue button");
   // Enter every scene forwards and backwards using native scroll progress.
   for (const sequence of [
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -303,12 +288,14 @@ const scroll = (cursor) => {
     "1.0000",
     "hamper opens",
   );
+  assert(Number(d.querySelector("#invitation").style.getPropertyValue("--enter")) > 0, "opening zoom advances with scroll");
   scroll(0.01);
   assert.equal(
     d.querySelector("#invitation").style.getPropertyValue("--open"),
     "0.0000",
     "hamper closes on reverse",
   );
+  assert.equal(d.querySelector("#invitation").style.getPropertyValue("--enter"), "0.0000", "entry zoom reverses");
   scroll(4.85);
   assert.equal(
     d.querySelectorAll(".scene.is-visible").length,
@@ -319,14 +306,14 @@ const scroll = (cursor) => {
   d.querySelector("#motion-toggle").click();
   assert(!cinematic(), "reading mode");
   assert.equal(
-    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    d.querySelector("#invitation-seal").getAttribute("aria-expanded"),
     "false",
   );
-  d.querySelector("#open-invitation").click();
+  d.querySelector("#invitation-seal").click();
   assert.equal(
-    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    d.querySelector("#invitation-seal").getAttribute("aria-expanded"),
     "true",
-    "reading mode opens box without scrolling",
+    "reading mode opens the box",
   );
 
   assert(
@@ -433,14 +420,14 @@ const scroll = (cursor) => {
   d.querySelector("#the-stage [data-track]").click();
   await tick();
   d.querySelector("#motion-toggle").click();
-  d.querySelector("#open-invitation").click();
+  d.querySelector("#invitation-seal").click();
   d.querySelector(".toast").classList.add("visible");
   w.dispatchEvent(new w.PageTransitionEvent("pageshow", { persisted: false }));
   assert.equal(w.scrollY, 0);
   assert(cinematic(), "reload resets manual reading choice");
   assert.equal(d.querySelector(".scene.is-active").id, "invitation");
   assert.equal(
-    d.querySelector("#open-invitation").getAttribute("aria-expanded"),
+    d.querySelector("#invitation-seal").getAttribute("aria-expanded"),
     "false",
   );
   assert(!d.querySelector("dialog[open]"), "reload closes dialogs");

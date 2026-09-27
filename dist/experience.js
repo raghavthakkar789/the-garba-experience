@@ -44,11 +44,16 @@
     ...document.querySelectorAll("[data-open-invitation]"),
   ];
   const sealButton = document.querySelector("#invitation-seal");
-  const continueButton = document.querySelector("#open-invitation");
-  let focusContinueOnOpen = false;
   let readingBoxOpen = false;
   let focusStoryOnArrival = false;
-  function updateOpening(open) {
+  function updateOpening(open, enter = 0) {
+    opening.style.setProperty("--enter", enter.toFixed(4));
+    // Counter-scale the courtyard to keep it sharp as the box aperture expands.
+    opening.style.setProperty(
+      "--portal-inverse",
+      (1.08 / (1 + enter * 3.5)).toFixed(4),
+    );
+    opening.style.setProperty("--entry-copy", (1 - clamp(open * 2)).toFixed(4));
     opening.style.setProperty("--open", open.toFixed(4));
     opening.style.setProperty("--seal", (1 - clamp(open * 4)).toFixed(4));
     const revealed = open >= 0.95;
@@ -61,16 +66,6 @@
         revealed ? "Follow their story" : "Open your invitation",
       );
     });
-    if (revealed && focusContinueOnOpen) {
-      continueButton.focus({ preventScroll: true });
-      focusContinueOnOpen = false;
-    }
-    continueButton.textContent = revealed
-      ? "Follow their story ↓"
-      : "Open your invitation ↗";
-    opening.querySelector(".opening-hint").textContent = revealed
-      ? "Keep scrolling. Two friends are waiting."
-      : "Scroll to unwrap the night";
   }
 
   // Dialogue beats and the original illustrated cast advance with native scroll.
@@ -355,7 +350,11 @@
       );
       scene.style.setProperty("--zoom", (1.035 + progress * 0.045).toFixed(4));
       scene.style.setProperty("--pan", `${(progress * -10).toFixed(2)}px`);
-      if (scene === opening) updateOpening(ease((progress - 0.12) / 0.43));
+      if (scene === opening)
+        updateOpening(
+          ease((progress - 0.05) / 0.4),
+          ease((progress - 0.24) / 0.6),
+        );
     });
     const photoButton = document.querySelector("#take-story-photo");
     if (photoButton) photoButton.disabled = false;
@@ -391,23 +390,17 @@
   );
   openingButtons.forEach((button) =>
     button.addEventListener("click", () => {
-      if (button === sealButton) focusContinueOnOpen = true;
-      if (opening.dataset.open === "true") {
-        focusStoryOnArrival = cinematic;
-        scrollToScene(document.querySelector("#beginning"));
-        if (!cinematic)
-          document
-            .querySelector("#beginning-title")
-            .focus({ preventScroll: true });
-      } else if (cinematic) {
-        window.scrollTo({
-          top: journeyTop + (0.6 / scenes.length) * travel,
-          behavior: "smooth",
-        });
-      } else {
+      focusStoryOnArrival = cinematic;
+      if (!cinematic) {
         readingBoxOpen = true;
         updateOpening(1);
       }
+      scrollToScene(
+        document.querySelector("#beginning"),
+        cinematic ? "smooth" : "instant",
+      );
+      if (!cinematic)
+        document.querySelector("#beginning-title").focus({ preventScroll: true });
     }),
   );
   motionButton.addEventListener("click", () => {
@@ -812,7 +805,6 @@
       }
     });
   function resetReloadState() {
-    focusContinueOnOpen = false;
     stopAmbient();
     stopMusic();
     document
