@@ -1,0 +1,125 @@
+/* Interaction feedback is limited to buttons and button-like links. */
+.button-motion {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transform: none;
+  transition:
+    translate 180ms ease,
+    scale 120ms ease,
+    rotate 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+.button-motion::before,
+.button-motion::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+.button-motion::before {
+  inset: -100% -50%;
+  background: linear-gradient(
+    110deg,
+    transparent 38%,
+    #ffe6af45 50%,
+    transparent 62%
+  );
+  translate: -80% 0;
+}
+.button-motion::after {
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--press-x, 50%) var(--press-y, 50%),
+    #ffe0a685,
+    transparent 65%
+  );
+  transform-origin: var(--press-x, 50%) var(--press-y, 50%);
+}
+.button-motion[aria-pressed="true"],
+.button-motion[aria-expanded="true"] {
+  border-color: #edcf98;
+  box-shadow: inset 0 0 0 1px #edcf9838;
+}
+.button-motion:disabled,
+.button-motion[aria-disabled="true"] {
+  cursor: default;
+  opacity: 0.55;
+}
+html:not(.read-mode) .button-motion:focus-visible {
+  box-shadow: 0 0 0 4px #dfbc7926;
+}
+html:not(.read-mode)
+  .button-motion:active:not(:disabled):not([aria-disabled="true"]) {
+  translate: 0 1px;
+  scale: 0.97;
+}
+html:not(.read-mode) .button-motion.button-pressed::after {
+  animation: control-ripple 520ms ease-out both;
+}
+@media (hover: hover) and (pointer: fine) {
+  html:not(.read-mode)
+    .button-motion:hover:not(:disabled):not([aria-disabled="true"]) {
+    translate: 0 -2px;
+    border-color: #edcf98;
+    box-shadow:
+      0 6px 18px #0004,
+      0 0 16px #e4bd7912;
+  }
+  html:not(.read-mode)
+    .button-motion:hover:not(:disabled):not([aria-disabled="true"])::before {
+    animation: control-sheen 580ms ease-out both;
+  }
+  html:not(.read-mode)
+    .button-motion:active:not(:disabled):not([aria-disabled="true"]) {
+    translate: 0 1px;
+    scale: 0.97;
+  }
+  html:not(.read-mode) :is(.close-button, #close-music).button-motion:hover {
+    rotate: 90deg;
+  }
+}
+@keyframes control-sheen {
+  0% {
+    translate: -80% 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    translate: 80% 0;
+    opacity: 0;
+  }
+}
+@keyframes control-ripple {
+  0% {
+    scale: 0.35;
+    opacity: 0.8;
+  }
+  100% {
+    scale: 2.2;
+    opacity: 0;
+  }
+}
+.read-mode .button-motion,
+.read-mode .button-motion::before,
+.read-mode .button-motion::after {
+  transition: none;
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .button-motion,
+  .button-motion:hover,
+  .button-motion:active,
+  .button-motion::before,
+  .button-motion::after {
+    translate: none !important;
+    scale: none !important;
+    rotate: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

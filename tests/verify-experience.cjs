@@ -137,6 +137,7 @@ const scroll = (cursor) => {
   for (const file of [
     "experience.css",
     "storybook.css",
+    "button-motion.css",
     "assets/fonts/fonts.css",
   ]) {
     const css = fs.readFileSync(path.join(base, file), "utf8");
