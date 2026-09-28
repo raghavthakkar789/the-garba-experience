@@ -136,6 +136,11 @@ const scroll = (cursor) => {
   assert.equal(road.previousElementSibling.id, 'celebration', 'Garba flows into the walk home');
   assert.equal(d.querySelector('main').lastElementChild.id, 'details', 'original static details remain the ending');
   assert.equal(road.querySelectorAll('.partner-shop').length, 16, 'every confirmed sponsor remains');
+  assert(!d.querySelector('#the-invitation .original-invitation'), 'early invitation scene no longer shows the poster');
+  assert(d.querySelector('#the-invitation .invitation-handoff img').getAttribute('src').includes('elephant-invitation-handoff'), 'she hands him the elephant-shaped invitation');
+  assert(d.querySelector('#the-invitation').textContent.includes('એક હાથીથી બે જણની એન્ટ્રી'), 'one elephant admits both friends');
+  assert.equal(d.querySelector('#the-invitation q [lang="en"]').textContent, '9 October', 'date stays in English');
+  assert(d.querySelector('#details .entry-note').textContent.includes('admits two people'), 'the final entry note repeats the same admission rule');
   for (const el of d.querySelectorAll("[src],link[href],a[href]")) {
     const value = el.getAttribute("src") || el.getAttribute("href");
     if (value.startsWith("#"))

@@ -39,7 +39,7 @@ Primary touch controls are at least 44 px high. Native scrolling, keyboard navig
 
 The Garba Experience featuring Kinjal Dave. Friday, 9 October 2026, 7:30 pm onwards. Vivenza by Gopi Farm, S.P. Ring Road, Ahmedabad. End time unannounced.
 
-District URL stays exactly `https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets`; 1970 in the URL is not the event year. Invitation guests carry the elephant-shaped pass; District guests follow their ticket instructions. The calendar retains 19:30 IST. Maps uses the venue-name search.
+District URL stays exactly `https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets`; 1970 in the URL is not the event year. One elephant-shaped invitation admits two people; invitation guests bring that elephant pass; District guests follow their ticket instructions. The calendar retains 19:30 IST. Maps uses the venue-name search.
 
 ## Fresh evidence
 

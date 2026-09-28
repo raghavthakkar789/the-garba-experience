@@ -241,8 +241,6 @@
         meet < 0.98 ? "walk" : "think",
       );
     }
-    if (scene.id === "the-invitation")
-      scene.style.setProperty("--card-turn", `${progress * 5}deg`);
     if (scene.id === "the-plan") {
       const arrive = ease((progress - 0.02) / 0.18),
         board = ease((progress - 0.25) / 0.18);

@@ -191,30 +191,6 @@
     #061e1ae6
   );
 }
-.story-invite .original-invitation {
-  width: min(29vw, 315px, 43svh);
-  top: auto;
-  bottom: 14%;
-  left: 50%;
-  transform: translateX(-50%) rotate(calc(-3deg + var(--card-turn, 0deg)));
-  z-index: 4;
-}
-.story-invite .original-invitation figcaption {
-  display: none;
-}
-.original-link {
-  position: absolute;
-  z-index: 8;
-  bottom: 9%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  white-space: nowrap;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #ebc48777;
-}
 .story-boarding .story-person {
   left: 27%;
   bottom: 22%;
@@ -436,10 +412,6 @@
   top: 22%;
   width: min(430px, 70%);
 }
-.cinematic .story-invite .original-invitation {
-  width: min(25vw, 290px, 37svh);
-  bottom: 14%;
-}
 .cinematic .story-handover .dialogue-track {
   top: 23%;
   width: min(510px, 76%);
@@ -557,13 +529,6 @@ html:not(.cinematic) .story-handover .hamper-area {
 html:not(.cinematic) .story-handover .hamper {
   width: min(31vw, 310px);
 }
-html:not(.cinematic) .story-invite .original-invitation {
-  bottom: 12%;
-  width: min(40vw, 315px);
-}
-html:not(.cinematic) .story-invite .original-link {
-  bottom: 6%;
-}
 @media (max-width: 650px) {
   .illustrated-scene .story-title h1 {
     font-size: 37px;
@@ -623,14 +588,6 @@ html:not(.cinematic) .story-invite .original-link {
   }
   .cinematic .story-handover .dialogue-track {
     top: 24%;
-  }
-  .cinematic .story-invite .original-invitation {
-    width: min(48vw, 28svh);
-    bottom: 20%;
-  }
-  .story-invite .original-link {
-    bottom: 14%;
-    font-size: 11px;
   }
   .cinematic .story-invite .dialogue-track {
     top: 23%;
@@ -759,9 +716,6 @@ html:not(.cinematic) .story-invite .original-link {
     width: 52vw;
     max-width: 270px;
   }
-  html:not(.cinematic) .story-invite .original-invitation {
-    width: min(60vw, 290px);
-  }
   html:not(.cinematic) .story-person {
     width: 55vw;
     max-width: 55vw;
@@ -806,10 +760,6 @@ html:not(.cinematic) .story-invite .original-link {
   }
   .story-handover .hamper {
     width: min(40vw, 26svh);
-  }
-  .cinematic .story-invite .original-invitation {
-    width: 24svh;
-    bottom: 21%;
   }
   .story-selfie .selfie-print {
     width: 26svh;
@@ -1286,4 +1236,43 @@ html:not(.cinematic) .opening-scene .hamper {
 }
 @media (max-width: 650px) {
   #opening-sound { bottom: 24px; right: 16px; }
+}
+
+/* The elephant itself is the two-person invitation, shared between the friends. */
+.story-invite .invitation-handoff {
+  position: relative;
+  width: min(92%, 680px);
+  margin: 42px auto 90px;
+  z-index: 4;
+  text-align: center;
+}
+.invitation-handoff img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 12px #18291d66);
+}
+.invitation-handoff figcaption {
+  font: 400 14px/1.5 "Noto Serif Gujarati", serif;
+  color: #fff1ce;
+  margin-top: 12px;
+  text-shadow: 0 2px 8px #10251f;
+}
+.cinematic .story-invite .invitation-handoff {
+  position: absolute;
+  width: min(79vw, 650px, 54svh);
+  left: 50%;
+  bottom: 12%;
+  margin: 0;
+  transform: translateX(-50%);
+}
+@media (max-width: 650px) {
+  .cinematic .story-invite .invitation-handoff {
+    width: min(90vw, 52svh);
+    bottom: 13%;
+  }
+  .invitation-handoff figcaption { font-size: 12px; }
+  .cinematic .journey-stage:has(#the-invitation.is-active) .journey-caption {
+    opacity: 0;
+  }
 }
