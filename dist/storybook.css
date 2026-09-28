@@ -1276,3 +1276,46 @@ html:not(.cinematic) .opening-scene .hamper {
     opacity: 0;
   }
 }
+
+/* Separate arms and pass keep the reveal and transfer physically connected. */
+.handoff-rig { display: none; }
+.cinematic .handoff-still { display: none; }
+.cinematic .handoff-rig {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1100 / 917;
+  isolation: isolate;
+}
+.handoff-rig img {
+  position: absolute;
+  display: block;
+  height: auto;
+  max-width: none;
+  filter: none;
+  pointer-events: none;
+}
+.handoff-rear, .handoff-front { position: absolute; inset: 0; }
+.handoff-rear { opacity: var(--rear, 1); }
+.handoff-front { opacity: var(--front, 0); }
+.handoff-rig .handoff-man { width: 35%; left: 1.8182%; top: 1.0905%; }
+.handoff-rig .handoff-woman { width: 49.6364%; left: 49.0909%; top: 6.5431%; }
+.handoff-rig .handoff-man-arm {
+  width: 19.0909%; left: 25.1364%; top: 31.4613%;
+  transform-origin: 14.0476% 22.9167%;
+  transform: rotate(var(--his-arm, 48deg));
+}
+.handoff-rig .handoff-woman-arm {
+  width: 19.5455%; left: 50.3636%; top: 32.8244%;
+  transform-origin: 83.7209% 25%;
+  transform: rotate(var(--her-arm, -80deg));
+}
+.handoff-rig .handoff-pass {
+  width: 24.5455%;
+  left: 0;
+  top: 0;
+  transform-origin: 80% 97%;
+  transform: translate(var(--pass-x, 240%), var(--pass-y, 110%)) rotate(var(--pass-turn, 18deg));
+  opacity: var(--pass-visible, 0);
+}
+.handoff-shoulder { clip-path: inset(0 0 0 57%); }

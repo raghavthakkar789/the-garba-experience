@@ -460,7 +460,7 @@
       if (!visible) return;
       const progress = isBase ? local : 0;
       animateStory(scene, progress);
-      if (scene.id === "partner-road")
+      if (scene.id === "partner-road" || scene.id === "the-invitation")
         scene.dispatchEvent(new CustomEvent("story-progress", { detail: progress }));
       scene.style.setProperty("--scene-opacity", isBase ? 1 : blend.toFixed(4));
       scene.style.setProperty(

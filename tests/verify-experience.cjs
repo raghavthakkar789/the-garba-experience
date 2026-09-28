@@ -168,6 +168,7 @@ const scroll = (cursor) => {
     assert(!/scroll-snap-type/.test(css), "no pagination-like snapping");
   }
   w.eval(fs.readFileSync(path.join(base, 'partner-road.js'), 'utf8'));
+  w.eval(fs.readFileSync(path.join(base, 'invitation-handoff.js'), 'utf8'));
   w.eval(script);
   await tick(); // Let the initial pageshow restoration finish before interacting.
   assert.equal(w.scrollY, 0, "reload starts at the top");
@@ -228,6 +229,23 @@ const scroll = (cursor) => {
       );
     }
   }
+  const handoff = d.querySelector('.handoff-rig');
+  scroll(2.02);
+  assert.equal(handoff.dataset.handoff, 'concealed', 'invitation starts behind her back');
+  assert.equal(handoff.style.getPropertyValue('--pass-visible'), '0.0000');
+  scroll(2.18);
+  assert.equal(handoff.dataset.handoff, 'revealing', 'her arm reveals the elephant');
+  scroll(2.38);
+  assert.equal(handoff.dataset.handoff, 'offering', 'she offers it as he reaches');
+  const offeredPass = parseFloat(handoff.style.getPropertyValue('--pass-x'));
+  scroll(2.65);
+  assert.equal(handoff.dataset.handoff, 'received', 'he receives the elephant before the next scene');
+  assert(parseFloat(handoff.style.getPropertyValue('--pass-x')) < offeredPass, 'pass transfers toward the man');
+  const receivedPose = handoff.getAttribute('style');
+  scroll(2.02);
+  assert.equal(handoff.style.getPropertyValue('--pass-visible'), '0.0000', 'reverse scroll conceals it again');
+  scroll(2.65);
+  assert.equal(handoff.getAttribute('style'), receivedPose, 'handoff replays without stale state');
   scroll(9.85);
   assert(scenes[9].classList.contains('is-visible') && road.classList.contains('is-visible'), 'celebration dissolves directly into the road');
   const shops = [...road.querySelectorAll('.partner-shop')];
