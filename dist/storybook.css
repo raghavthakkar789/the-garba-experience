@@ -1262,3 +1262,25 @@ html:not(.cinematic) .opening-scene .hamper {
     padding: 2px 12px 6px;
   }
 }
+
+/* A quiet, separate choice for the one-shot box-opening effect. */
+#opening-sound {
+  padding: 8px 12px;
+  min-height: 36px;
+  margin-top: 2px;
+  background: #0b281fdd;
+  border: 1px solid #dfbd7844;
+  border-radius: 20px;
+  color: #e6d2aa;
+  font: 500 10px/1.4 var(--sans);
+}
+#opening-sound {
+  position: absolute;
+  bottom: 100px;
+  right: var(--gutter);
+  z-index: 8;
+  white-space: nowrap;
+}
+@media (max-width: 650px) {
+  #opening-sound { bottom: 24px; right: 16px; }
+}

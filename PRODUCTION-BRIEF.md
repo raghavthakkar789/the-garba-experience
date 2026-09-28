@@ -10,7 +10,7 @@ Base: GitHub `main` at `6718b601c6a302ba58e56ba39ba072c2f459372e` (the matching-
 
 The user's preferred original illustrated characters and painted scenes are restored. The later realistic scenes and long narration are no longer loaded. Each scene has a small title and two or three short dialogue beats; only one speech bubble is shown at a time during animated scrolling. Dialogue lines contain at most 12 words.
 
-1. A larger green and gold box fronts the site. Clicking its centre logo opens the doors and zooms through the courtyard inside directly into the first story scene, with no card stop or second click. Native scrolling drives the same reversible transition.
+1. A larger green and gold box fronts the site. Clicking its centre logo runs a 3.8-second automatic door opening and zoom through the courtyard into the first story scene. A quiet synthesized opening effect starts from that user gesture, with a separate mute control. There is no card stop or second click. Wheel, touch, navigation keys, Escape and leaving the page cancel the automatic entry and sound. Native scrolling drives the same reversible transition.
 2. The friends meet and decide they want an amazing Garba night.
 3. She introduces The Garba Experience with Kinjal Dave and shows the invitation.
 4. Their car arrives, both friends board, and it leaves.

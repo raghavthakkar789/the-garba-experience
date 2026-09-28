@@ -35,9 +35,16 @@ w.innerWidth = 1440;
 w.scrollY = 8000;
 w.performance.getEntriesByType = () => [{ type: "reload" }];
 w.matchMedia = () => reduced;
-w.requestAnimationFrame = (cb) => {
-  frame = cb;
-  return 1;
+let clock = 0, rafId = 0;
+const callbacks = new Map();
+w.performance.now = () => clock;
+w.requestAnimationFrame = (cb) => { callbacks.set(++rafId, cb); return rafId; };
+w.cancelAnimationFrame = (id) => callbacks.delete(id);
+frame = (advance = 16) => {
+  clock += advance;
+  const pending = [...callbacks];
+  callbacks.clear();
+  pending.forEach(([, cb]) => cb(clock));
 };
 w.scrollTo = ({ top }) => {
   w.scrollY = top;
@@ -172,9 +179,14 @@ const scroll = (cursor) => {
   );
   assert.equal(d.querySelectorAll(".box-hit-area").length, 1);
   assert(d.querySelector("#invitation-seal img"), "logo is inside the opening button");
+  d.querySelector("#opening-sound").click(); // Muted entry stays silent; sound synthesis is checked in Chromium.
   d.querySelector("#invitation-seal").focus();
   d.querySelector("#invitation-seal").click();
-  frame();
+  frame(1500);
+  frame(0);
+  assert.equal(d.querySelector(".scene.is-active").id, "invitation", "slow opening remains in the box midway");
+  frame(2300);
+  frame(0);
   assert.equal(
     d.querySelector(".scene.is-active").id,
     "beginning",
