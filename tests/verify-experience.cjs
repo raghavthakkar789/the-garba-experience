@@ -169,6 +169,7 @@ const scroll = (cursor) => {
   }
   w.eval(fs.readFileSync(path.join(base, 'partner-road.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(base, 'invitation-handoff.js'), 'utf8'));
+  w.eval(fs.readFileSync(path.join(base, 'aarti-flowers.js'), 'utf8'));
   w.eval(script);
   await tick(); // Let the initial pageshow restoration finish before interacting.
   assert.equal(w.scrollY, 0, "reload starts at the top");
@@ -265,12 +266,15 @@ const scroll = (cursor) => {
   assert.equal(d.querySelector('#partner-dialog-name').textContent,'Eventzz Planet');
   d.querySelector('#partner-dialog [data-close]').click();
   assert(!d.querySelector('#partner-dialog').open);
-  for (const line of d.querySelectorAll(".dialogue-beat q")) {
-    assert(
-      line.textContent.trim().split(/\s+/).length <= 12,
-      "dialogue stays brief",
-    );
-  }
+  assert.equal(d.querySelectorAll('.dialogue-beat').length, 11, 'fewer exchanges, rather than a word limit');
+  for (const scene of scenes)
+    assert(scene.querySelectorAll('.dialogue-beat').length <= 2, 'at most two lines in a scene');
+  for (const line of d.querySelectorAll('.dialogue-beat q'))
+    assert.equal(line.lang, 'gu', 'character dialogue remains Gujarati');
+  assert(!d.querySelector('#the-plan .dialogue-track, #the-drive .dialogue-track'), 'pickup and drive tell the story visually');
+  assert.equal(d.querySelectorAll('#devotion .flower-petal').length, 36, 'aarti has a bounded flower shower');
+  assert.equal(d.querySelector('#devotion .flower-shower').getAttribute('aria-hidden'), 'true', 'flowers are decorative');
+  assert(d.querySelector('#a-memory .photobooth-art source').srcset.includes('photobooth-mobile'), 'phone has a composed photobooth background');
   assert(
     !d.querySelector(".scene-description"),
     "no blocks of narrative explanation",

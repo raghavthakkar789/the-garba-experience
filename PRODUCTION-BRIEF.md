@@ -8,7 +8,7 @@ Base: GitHub `main` at `6718b601c6a302ba58e56ba39ba072c2f459372e` (the matching-
 
 ## Story and presentation
 
-The user's preferred original illustrated characters and painted scenes are restored. The later realistic scenes and long narration are no longer loaded. Each scene has a small title and two or three short dialogue beats; only one speech bubble is shown at a time during animated scrolling. Dialogue lines contain at most 12 words.
+The user's preferred original illustrated characters and painted scenes are restored. The later realistic scenes and long narration are no longer loaded. The journey now has 11 dialogue lines instead of 24, with at most two in any scene. Pickup and driving are visual interludes. Existing complete lines are retained where useful; the constraint is the number of exchanges, not a word limit. Character dialogue is Gujarati with the date in English, and only one speech bubble is shown at a time during animated scrolling.
 
 1. A larger green and gold box fronts the site. Clicking its centre logo runs a 3.8-second automatic door opening and zoom through the courtyard into the first story scene. A quiet synthesized opening effect starts from that user gesture, with a separate mute control. There is no card stop or second click. Wheel, touch, navigation keys, Escape and leaving the page cancel the automatic entry and sound. Native scrolling drives the same reversible transition.
 2. The friends meet and decide they want an amazing Garba night.
@@ -16,14 +16,14 @@ The user's preferred original illustrated characters and painted scenes are rest
 4. Their car arrives, both friends board, and it leaves.
 5. They travel through an illustrated Ahmedabad seen through the windscreen.
 6. The car parks; they step out, take each other's hand and enter.
-7. They pose for a selfie. Scrolling or tapping reveals their photo.
+7. They pose at a dedicated Navratri photobooth with a floral light frame, embroidered backdrop, camera and ring light. Separate desktop and portrait backgrounds preserve the setup on phones. Scrolling or tapping reveals their photo.
 8. They walk towards the stage and hear Kinjal Dave.
-9. They pause together for aarti before Durga Mata.
+9. They pause together for aarti before Durga Mata, with a gentle shower of marigold, rose and jasmine petals. The 36 decorative petals run only while the scene is visible, pause in background tabs, sit behind the friends and dialogue, and are hidden in reading/reduced-motion modes.
 10. They join the circle and dance; the invitation details follow.
 
 The same original green-kediyu and pink-chaniya-choli characters persist throughout. Pose changes, walking, boarding, the venue approach and the photo reveal are scroll-driven. One sticky stage connects every scene with reversible dissolves. No scroll snapping, intercepted wheel/touch events or pagination is used. The original invitation opens at full resolution.
 
-Original cast, entrance, concert and Garba-circle artwork remain optimized WebP assets, with separate phone artwork for the entrance and car interior. Five new 1536×1024 painted location backgrounds total 2.34 MB. The friends meet in a home courtyard; pickup takes place on the street outside; the drive follows a clear forward-facing road; the selfie has its own floral alcove; aarti takes place in a full courtyard around the shrine. The old city collage, duplicated entrance at the selfie scene and isolated shrine portrait are no longer loaded. Forward road movement stays aligned to its vanishing point. Phone dialogue placement leaves the shrine visible. These environments are artistic impressions, not verified depictions of the actual venue. Fonts remain self-hosted.
+Original cast, entrance, concert and Garba-circle artwork remain optimized WebP assets, with separate phone artwork for the entrance and car interior. Five new 1536×1024 painted location backgrounds total 2.34 MB. The friends meet in a home courtyard; pickup takes place on the street outside; the drive follows a clear forward-facing road; the photo scene has its own dedicated photobooth; aarti takes place in a full courtyard around the shrine. The old city collage, duplicated entrance at the selfie scene and isolated shrine portrait are no longer loaded. Forward road movement stays aligned to its vanishing point. Phone dialogue placement leaves the shrine visible. These environments are artistic impressions, not verified depictions of the actual venue. Fonts remain self-hosted.
 
 Reduced motion, short screens and reading mode show all conversations in normal document flow. Hidden cinematic scenes are inert. No-JavaScript visitors can read the complete story. Existing event details, original invitation, booking links, sound choices and local photo keepsakes are preserved.
 
