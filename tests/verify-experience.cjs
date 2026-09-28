@@ -122,7 +122,7 @@ w.AudioContext = class {
 };
 const tick = () => new Promise((r) => setImmediate(r));
 const scroll = (cursor) => {
-  w.scrollY = (cursor / 18) * 9792;
+  w.scrollY = (cursor / 14) * 9792;
   w.dispatchEvent(new w.Event("scroll"));
   frame?.();
 };
@@ -225,12 +225,23 @@ const scroll = (cursor) => {
   }
   scroll(9.85);
   assert(scenes[9].classList.contains('is-visible') && road.classList.contains('is-visible'), 'celebration dissolves directly into the road');
-  for (let pair = 0; pair < 8; pair++) {
-    scroll(10 + (.04 + pair / 7 * .91) * 8);
-    assert.equal(d.querySelector('.scene.is-active'), road, 'road stays within the shared scene controller');
-    for (const shop of road.querySelectorAll(`[data-road-pair="${pair}"]`))
-      assert.equal(Number(shop.style.opacity), 1, 'each pair gets readable time during the walk');
+  const shops = [...road.querySelectorAll('.partner-shop')];
+  const stillShops = shops.map(shop => shop.getAttribute('style'));
+  scroll(10.1);
+  const startPosition = road.querySelector('.road-friends').getAttribute('style');
+  for (const point of [11,12,13,13.9,10.1]) {
+    scroll(point);
+    assert.equal(d.querySelector('.scene.is-active'), road);
+    assert.deepEqual(shops.map(shop => shop.getAttribute('style')),stillShops,'shops never get scroll transforms or fades');
   }
+  assert.equal(road.querySelector('.road-friends').getAttribute('style'),startPosition,'the friends reverse along the same path');
+  scroll(12);
+  assert.notEqual(road.querySelector('.road-friends').getAttribute('style'),startPosition,'the friends travel across the stationary scene');
+  shops[0].querySelector('button').click();
+  assert(d.querySelector('#partner-dialog').open,'shop boards open readable details');
+  assert.equal(d.querySelector('#partner-dialog-name').textContent,'Eventzz Planet');
+  d.querySelector('#partner-dialog [data-close]').click();
+  assert(!d.querySelector('#partner-dialog').open);
   for (const line of d.querySelectorAll(".dialogue-beat q")) {
     assert(
       line.textContent.trim().split(/\s+/).length <= 12,
@@ -447,7 +458,7 @@ const scroll = (cursor) => {
     ),
   );
   console.log(
-    "PASS: local assets/CSS/anchors; eleven-scene forward and reverse scrolling; connected sponsor walk; original static ending; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
+    "PASS: local assets/CSS/anchors; eleven-scene forward and reverse scrolling; stationary sponsor street; moving friends; board details; original static ending; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
   );
   console.log(
     "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",

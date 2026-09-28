@@ -1,81 +1,390 @@
-/* A native-scroll street, with readable shop signs even without JavaScript. */
+/* One complete stationary market. Only the friends move along its street. */
 .scene.partner-road {
-  position: relative;
   display: block;
   padding: 0;
   min-height: 0;
   isolation: isolate;
-  background: #192e2a;
+  background: #253a2b;
   color: #fff4d8;
-  --road-progress: 0;
 }
-.partner-road-stage { position: relative; overflow: hidden; padding: 70px 0 110px; }
+.partner-road-stage {
+  position: relative;
+  overflow: hidden;
+  padding: 70px 18px 110px;
+}
 .partner-road-art {
-  position: absolute; inset: 0; z-index: -2;
-  background: linear-gradient(#14282188, transparent 30%, #14282166), url('assets/partners/festival-road.webp') center / cover;
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(#102c28bb,transparent 30%),url('assets/partners/market-courtyard.webp') center/cover;
 }
-.partner-road-heading { position: relative; z-index: 5; text-align: center; margin: 0 auto 55px; padding: 0 20px; }
-.partner-road [lang="gu"] { font-family: "Noto Serif Gujarati", serif; }
-.partner-road-heading p { font-size: 11px; letter-spacing: .27em; margin: 0 0 12px; font-weight: 600; }
-.partner-road-heading h2 { font-size: clamp(28px, 3.6vw, 52px); line-height: 1.4; margin: 0 0 8px; font-weight: 500; color: #fff4d8; text-shadow: 0 2px 18px #10271e; }
-.partner-road-heading > span { font-size: 14px; text-shadow: 0 2px 6px #000; }
-.partner-shops { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 65px 20%; max-width: 1100px; margin: auto; padding: 0 24px; }
-.partner-shop { position: relative; min-width: 0; filter: drop-shadow(0 14px 18px #08161177); }
+.partner-road [lang="gu"] {
+  font-family: "Noto Serif Gujarati",serif;
+}
+.partner-road-heading {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  margin: 0 auto 35px;
+  padding: 0 15px;
+  text-shadow: 0 2px 10px #152b21;
+}
+.partner-road-heading p {
+  font-size: 10px;
+  letter-spacing: .24em;
+  margin: 0 0 6px;
+}
+.partner-road-heading h2 {
+  font-size: clamp(26px,3vw,38px);
+  font-weight: 400;
+  line-height: 1.45;
+  margin: 0 0 3px;
+  color: #fff4d8;
+}
+.partner-road-heading>span {
+  font-size: 12px;
+}
+.road-world {
+  position: relative;
+  max-width: 1360px;
+  margin: auto;
+}
+.street-route {
+  display: none;
+}
+.partner-shops {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 30px 20px;
+  max-width: 940px;
+  margin: auto;
+}
+.partner-shop {
+  position: relative;
+  min-width: 0;
+  height: 240px;
+  filter: drop-shadow(0 8px 4px #291e1c77);
+}
+.shop-front {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64%;
+  background: url('assets/partners/painted-shop.webp') center bottom/100% 165% no-repeat;
+}
 .shop-sign {
-  position: relative; min-height: 190px; padding: 17px 15px 14px; text-align: center;
-  background: #fff9e9; color: #23372f;
-  border: 9px solid #704621; outline: 1px solid #b78d45;
-  box-shadow: inset 0 0 0 2px #d8bc7c, inset 0 0 28px #d9b65b26, 0 5px 0 #382617;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  position: absolute;
+  z-index: 1;
+  left: 6%;
+  right: 6%;
+  top: 0;
+  height: 49%;
+  padding: 5px 6px;
+  background: #fff3d5;
+  color: #21392f;
+  border: 5px solid #6e4024;
+  box-shadow: 0 0 0 1px #bf9552,inset 0 0 0 1px #d8b675;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
-.shop-sign::before,.shop-sign::after { content: ''; position: absolute; top: -32px; width: 4px; height: 25px; background: #b48943; box-shadow: 1px 0 #2f2317; }
-.shop-sign::before { left: 15%; } .shop-sign::after { right: 15%; }
-.shop-role { margin: 0 0 10px; text-transform: uppercase; letter-spacing: .13em; font-size: 10px; font-weight: 700; line-height: 1.5; }
-.shop-logo { width: 100%; height: 84px; object-fit: contain; mix-blend-mode: multiply; margin: 0 0 10px; }
-.shop-name { font: 600 17px/1.2 Georgia, serif; margin: 0; color: #203a30; overflow-wrap: anywhere; }
-.shop-lettering { font-size: clamp(25px, 2.7vw, 40px); margin: auto 0; }
-.shop-awning { position: relative; z-index: 1; height: 36px; margin: 4px -7px 0; border-top: 4px solid #b18848; border-bottom: 5px solid #cca95c; border-radius: 0 0 9px 9px; background: repeating-linear-gradient(90deg,#1b4a3a 0 24px,#b39b60 24px 28px,#2d5945 28px 52px); box-shadow: 0 8px 10px #0007; }
-.shop-window { height: 145px; margin: 0 12px; border: 10px solid #493422; border-top: 0; background: linear-gradient(#162f2244,#271d1733),url('assets/partners/festival-road.webp') 2% 58% / 550% auto; box-shadow: inset 0 0 20px #201b11; position: relative; }
-.shop-right .shop-window { background-position: 99% 57%; }
-.shop-window::before { content:''; position:absolute; inset:0; border: 2px solid #b48747; background: linear-gradient(90deg,transparent 48%,#76552c 48% 52%,transparent 52%); }
-.shop-window span { position: absolute; bottom: -12px; left: -22px; right: -22px; height: 13px; background: #b39a68; border-bottom: 5px solid #63472c; }
-.road-friends { position: absolute; bottom: 15px; left: 50%; width: 170px; transform: translateX(-50%); z-index: 40; pointer-events: none; }
-.road-friends::after { content:''; position:absolute; z-index:-1; bottom:0; left:18%; width:66%; height:10%; border-radius:50%; background:#1a1b15aa; filter:blur(7px); }
-.road-friends img { display: block; width: 100%; height: auto; filter: drop-shadow(4px 7px 4px #32271466); }
-.cinematic .partner-road .partner-road-stage { height: 100%; min-height: 0; position: relative; padding: 0; }
-.cinematic .partner-road .partner-road-art { transform: scale(calc(1 + var(--road-progress) * .07)); transform-origin: 50% 52%; }
-.cinematic .partner-road .partner-road-heading { opacity:var(--copy-opacity, 1); position:absolute; top: max(110px, 12%); left:0; right:0; margin:0; }
-.cinematic .partner-road .partner-road-heading::before { content:''; position:absolute; z-index:-1; inset:-70px -20px -35px; background:linear-gradient(#0d231bd9,#112d2266,transparent); }
-.cinematic .partner-road .partner-shops { position: absolute; inset:0; display:block; max-width:none; padding:0; }
-.cinematic .partner-road .partner-shop { position:absolute; width: min(29vw, 380px); left:50%; top:39%; will-change:transform,opacity; }
-.cinematic .partner-road .shop-sign { height: clamp(170px, 24vh, 220px); }
-.cinematic .partner-road .road-friends { transform-origin:50% 100%; width:clamp(200px, 25vw, 350px); bottom:1.5%; transform:translateX(-50%) translateY(var(--walk-bob, 0px)) rotate(var(--walk-sway, 0deg)) scale(var(--walk-depth, 1)); }
-@media(max-width: 650px) {
-  .partner-shops { gap:50px 12%; padding:0 12px; }
-  .shop-sign { min-height:180px; padding:12px 8px; border-width:6px; }
-  .shop-role { font-size:9px; letter-spacing:.07em; }
-  .shop-name { font-size:15px; }
-  .shop-lettering { font-size:23px; }
-  .shop-logo { height:70px; }
-  .shop-window { height:90px; margin:0 4px; border-width:6px; }
-  .shop-awning { height:26px; margin-inline:-3px; }
-  .cinematic .partner-road .partner-road-heading { top:max(108px, 12%); }
-  .cinematic .partner-road .partner-road-heading h2 { font-size:30px; }
-  .cinematic .partner-road .partner-shop { width:43vw; top:35%; }
-  .cinematic .partner-road .shop-sign { height:clamp(160px, 22svh, 185px); min-height:0; }
-  .cinematic .partner-road .shop-logo { height:clamp(45px, 8svh, 70px); }
-  .cinematic .partner-road .shop-window { height:clamp(60px, 10svh, 90px); }
-  .cinematic .partner-road .road-friends { width:min(200px, 24svh); bottom:2%; }
-  .cinematic .partner-road .partner-road-art { background-size:auto 100%; }
+.shop-role {
+  font-size: 9px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin: 0 0 3px;
 }
-@media(prefers-reduced-motion:reduce) {
-  .partner-road { scroll-behavior:auto; }
+.shop-logo {
+  display: block;
+  width: 100%;
+  height: 40px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  margin: 0 0 4px;
+}
+.shop-name {
+  font: 600 16px/1.12 Georgia,serif;
+  color: #233b31;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.shop-lettering {
+  font-size: 22px;
+}
+.shop-open {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+.shop-open:disabled {
+  cursor: default;
+}
+.shop-open:focus-visible {
+  outline: 3px solid #fff2b8;
+  outline-offset: 3px;
+}
+.shop-open:hover {
+  box-shadow: inset 0 0 0 2px #ffe9ad88;
+}
+.road-friends {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 80px;
+  z-index: 40;
+  pointer-events: none;
+  transform: translate(-50%,-80%);
+}
+.road-friends::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: 12%;
+  width: 76%;
+  height: 12%;
+  border-radius: 50%;
+  background: #241b13a6;
+  filter: blur(4px);
+}
+.road-friends img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(2px 4px 2px #33281c55);
+}
+.cinematic .scene.partner-road {
+  position: absolute;
+  padding: 0;
+}
+.cinematic .partner-road .partner-road-stage {
+  height: 100%;
+  padding: 0;
+}
+.cinematic .partner-road .partner-road-heading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 101px;
+  margin: 0;
+  opacity: var(--copy-opacity,1);
+}
+.cinematic .partner-road .partner-road-heading::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -105px -20px -22px;
+  background: linear-gradient(#0c2826e6,#112f2677,transparent);
+}
+.cinematic .partner-road .road-world {
+  position: absolute;
+  inset: 210px 40px 28px;
+}
+.cinematic .partner-road .street-route {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.street-route polyline {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.street-edge {
+  stroke: #5b463388;
+  stroke-width: 46;
+}
+.street-paving {
+  stroke: #d6ad718c;
+  stroke-width: 35;
+}
+.cinematic .partner-road .partner-shops {
+  position: absolute;
+  inset: 0 7%;
+  max-width: none;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-rows: repeat(4,19%);
+  column-gap: 2%;
+  row-gap: 6%;
+}
+.cinematic .partner-road .partner-shop {
+  height: auto;
+}
+.cinematic .partner-road .shop-sign {
+  border-width: 4px;
+  height: 51%;
+  padding: 3px 5px;
+}
+.cinematic .partner-road .shop-role {
+  font-size: clamp(7px,.7vw,10px);
+  margin-bottom: 2px;
+}
+.cinematic .partner-road .shop-logo {
+  height: clamp(14px,2.4vh,26px);
+  margin-bottom: 2px;
+}
+.cinematic .partner-road .shop-name {
+  font-size: clamp(11px,1vw,15px);
+}
+.cinematic .partner-road .shop-lettering {
+  font-size: clamp(14px,1.5vw,21px);
+}
+.cinematic .partner-road .road-friends {
+  width: clamp(58px,5.5vw,84px);
+  left: 5%;
+  top: 23%;
+  transform: translate(-50%,-100%);
+}
+.cinematic .partner-road .road-friends img {
+  transform: translateY(var(--walk-bob,0px)) rotate(var(--walk-sway,0deg)) scaleX(var(--walk-facing,1));
+  transform-origin: 50% 100%;
+}
+.cinematic .journey-stage:has(.partner-road.is-active) .journey-caption {
+  opacity: 0;
+}
+.cinematic .journey-stage:has(.partner-road.is-active) .ambient-dust {
+  display: none;
+}
+.partner-dialog {
+  width: min(420px,calc(100% - 36px));
+  border: 7px solid #77502e;
+  padding: 48px 28px 32px;
+  background: #fff5de;
+  color: #20382c;
+  text-align: center;
+  box-shadow: 0 20px 70px #0009;
+}
+.partner-dialog::backdrop {
+  background: #071e1bd9;
+}
+.partner-dialog-close {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: #244133;
+  font-size: 30px;
+  cursor: pointer;
+}
+#partner-dialog-role {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin: 0 0 20px;
+}
+#partner-dialog-logo {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  margin-bottom: 20px;
+}
+#partner-dialog-name {
+  font: 600 28px/1.2 Georgia,serif;
+  margin: 0;
+  color: #213a2e;
+}
+@media(max-width:650px) {
+  .partner-road-stage {
+    padding-inline: 10px;
+  }
+  .partner-shops {
+    gap: 25px 10px;
+  }
+  .partner-shop {
+    height: 200px;
+  }
+  .shop-sign {
+    padding: 4px;
+    border-width: 4px;
+  }
+  .shop-name {
+    font-size: 13px;
+  }
+  .shop-lettering {
+    font-size: 18px;
+  }
+  .shop-logo {
+    height: 30px;
+  }
+  .cinematic .partner-road .partner-road-heading {
+    top: 99px;
+  }
+  .cinematic .partner-road .partner-road-heading h2 {
+    font-size: 27px;
+  }
+  .cinematic .partner-road .road-world {
+    inset: 197px 16px 23px;
+  }
+  .cinematic .partner-road .partner-shops {
+    column-gap: 1%;
+  }
+  .cinematic .partner-road .shop-sign {
+    left: 2%;
+    right: 2%;
+    border-width: 2px;
+    padding: 2px;
+    height: 54%;
+  }
+  .cinematic .partner-road .shop-role {
+    display: none;
+  }
+  .cinematic .partner-road .shop-logo {
+    height: clamp(12px,2vh,19px);
+    margin-bottom: 2px;
+  }
+  .cinematic .partner-road .shop-name {
+    font-size: 9px;
+    line-height: 1.05;
+  }
+  .cinematic .partner-road .shop-lettering {
+    font-size: 11px;
+  }
+  .cinematic .partner-road .road-friends {
+    width: 54px;
+  }
 }
 @media(max-width:360px) {
-  .shop-name { font-size:13px; }
-  .shop-lettering { font-size:20px; }
+  .cinematic .partner-road .shop-name {
+    font-size: 8px;
+  }
+  .cinematic .partner-road .shop-lettering {
+    font-size: 10px;
+  }
+  .cinematic .partner-road .road-friends {
+    width: 46px;
+  }
 }
-
-/* Shared scene positioning wins over the base story padding at every breakpoint. */
-.cinematic .scene.partner-road { padding:0; position:absolute; }
-.cinematic .journey-stage:has(.partner-road.is-active) .journey-caption { opacity:0; }
+@media(max-width:650px) {
+  .shop-name .name-detail {
+    display: block;
+    font-size: .78em;
+    white-space: nowrap;
+  }
+  .cinematic .partner-road .shop-name {
+    overflow-wrap: normal;
+  }
+}
+html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
+  display: none;
+}

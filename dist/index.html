@@ -32,7 +32,7 @@
       crossorigin=""
     />
     <link rel="stylesheet" href="experience.css?v=8" />
-    <script defer src="partner-road.js?v=2"></script>
+    <script defer src="partner-road.js?v=3"></script>
     <script defer="" src="experience.js?v=13"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
@@ -67,8 +67,8 @@
     </script>
     <link rel="stylesheet" href="storybook.css?v=15" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
-    <link rel="stylesheet" href="partner-road.css?v=2" />
-    <script defer src="button-motion.js?v=1"></script>
+    <link rel="stylesheet" href="partner-road.css?v=3" />
+    <script defer src="button-motion.js?v=2"></script>
   </head>
   <body>
     <a class="skip-link" href="#details">Skip to event details</a>
@@ -560,158 +560,164 @@
               >
             </div>
           </section>
-          <section id="partner-road" class="scene partner-road" data-label="One last walk, together." data-scroll-span="8" aria-labelledby="partner-road-title">
+          <section id="partner-road" class="scene partner-road" data-label="One last walk, together." data-scroll-span="4" aria-labelledby="partner-road-title">
             <div class="partner-road-stage">
               <div class="partner-road-art" aria-hidden="true"></div>
               <header class="partner-road-heading">
                 <p>THE WALK HOME</p>
                 <h2 id="partner-road-title" lang="gu">ઘરે જતાં જતાં…</h2>
-                <span lang="gu">આ રાતના સાથીઓ સાથે.</span>
+                <span lang="gu">દુકાનના બોર્ડ પર ટૅપ કરો.</span>
               </header>
+              <div class="road-world">
+                <svg class="street-route" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
+                  <polyline class="street-edge" points="50,230 920,230 950,260 950,450 920,480 80,480 50,510 50,700 80,730 920,730 950,760 950,950 920,980 50,980" />
+                  <polyline class="street-paving" points="50,230 920,230 950,260 950,450 920,480 80,480 50,510 50,700 80,730 920,730 950,760 950,950 920,980 50,980" />
+                </svg>
               <div class="partner-shops" role="list" aria-label="Event presenters, sponsors and partners">
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="0">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Present</p>
                     <img class="shop-logo" src="assets/partners/eventzz.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">Eventzz Planet</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Eventzz Planet — Present" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="0">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Present</p>
                     <img class="shop-logo" src="assets/partners/saregama.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Saregama Entertainment</h3>
+                    <h3 class="shop-name">Saregama <span class="name-detail">Entertainment</span></h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Saregama Entertainment — Present" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="1">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">In Association With</p>
                     <img class="shop-logo" src="assets/partners/ethereum.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">Ethereum Infracon</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Ethereum Infracon — In Association With" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="1">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Powered by</p>
                     <img class="shop-logo" src="assets/partners/mba.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">MBA Group</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View MBA Group — Powered by" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="2">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Supported by</p>
                     <h3 class="shop-name shop-lettering">Megma</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Megma — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="2">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Supported by</p>
                     <img class="shop-logo" src="assets/partners/vivanta.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">Vivanta Group</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Vivanta Group — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="3">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Supported by</p>
                     <img class="shop-logo" src="assets/partners/hst.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">HST</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View HST — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="3">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Supported by</p>
                     <img class="shop-logo" src="assets/partners/eleven.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">Eleven Infra</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Eleven Infra — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="4">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Supported by</p>
                     <img class="shop-logo" src="assets/partners/vishakha.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">Vishakha</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Vishakha — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="4">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Printing Partner</p>
                     <h3 class="shop-name shop-lettering">Shah Events</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Shah Events — Printing Partner" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="5">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Digital Marketing</p>
                     <h3 class="shop-name shop-lettering">Hungrito</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Hungrito — Digital Marketing" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="5">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Outdoor Marketing</p>
                     <img class="shop-logo" src="assets/partners/krish.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Krish Communication</h3>
+                    <h3 class="shop-name">Krish <span class="name-detail">Communication</span></h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Krish Communication — Outdoor Marketing" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="6">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">University Partner</p>
                     <img class="shop-logo" src="assets/partners/jg.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">JG University</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View JG University — University Partner" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="6">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Venue Partner</p>
                     <img class="shop-logo" src="assets/partners/utsav.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">Utsav Decor</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Utsav Decor — Venue Partner" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-left" role="listitem" data-road-pair="7">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Photo Video Partner</p>
                     <img class="shop-logo" src="assets/partners/shouse.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
                     <h3 class="shop-name">S House</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View S House — Photo Video Partner" aria-haspopup="dialog" disabled></button>
                 </article>
-                <article class="partner-shop shop-right" role="listitem" data-road-pair="7">
+                <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
                     <p class="shop-role">Hospital Partner</p>
                     <h3 class="shop-name shop-lettering">Alpha Hospital</h3>
                   </div>
-                  <div class="shop-awning" aria-hidden="true"></div>
-                  <div class="shop-window" aria-hidden="true"><span></span></div>
+                  <div class="shop-front" aria-hidden="true"></div>
+                  <button class="shop-open" type="button" aria-label="View Alpha Hospital — Hospital Partner" aria-haspopup="dialog" disabled></button>
                 </article>
               </div>
               <div class="road-friends" role="img" aria-label="The two friends walking together down the festive street">
-                <img src="assets/partners/friends-walking.webp" width="790" height="800" alt="" loading="lazy" decoding="async" />
+                <img src="assets/partners/friends-sidewalk.webp" width="380" height="421" alt="" loading="lazy" decoding="async" />
+              </div>
               </div>
             </div>
           </section>
@@ -838,6 +844,12 @@
         sound and photo keepsakes.
       </p></noscript
     >
+    <dialog id="partner-dialog" class="partner-dialog" aria-labelledby="partner-dialog-name">
+      <button type="button" class="partner-dialog-close" data-close aria-label="Close partner details">×</button>
+      <p id="partner-dialog-role"></p>
+      <img id="partner-dialog-logo" alt="" hidden />
+      <h2 id="partner-dialog-name"></h2>
+    </dialog>
     <dialog
       class="memory-dialog"
       id="memory-dialog"

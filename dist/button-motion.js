@@ -3,7 +3,7 @@
   "use strict";
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const controls = document.querySelectorAll(
-    "button:not(.box-hit-area), a.outline-button, a.book-button, a.header-link, a.text-button, .event-links a, .photo-input",
+    "button:not(.box-hit-area):not(.shop-open), a.outline-button, a.book-button, a.header-link, a.text-button, .event-links a, .photo-input",
   );
   const timers = new WeakMap();
   controls.forEach((control) => control.classList.add("button-motion"));
