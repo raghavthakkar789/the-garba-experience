@@ -15,7 +15,7 @@ Open http://localhost:8765. The site is static: no build or production dependenc
 - `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
 - `dist/experience.css`: shared cinematic stage, event details, sound controls and keepsake layout.
 - `dist/storybook.css`: illustrated scenes, character poses, speech bubbles, mobile compositions and a complete unpinned reading layout.
-- `dist/experience.js`: native scroll progress, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, original Web Audio ambience, official music selection, sharing and photo export.
+- `dist/experience.js`: native scroll progress, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, the automatic opening and its sound effect, official music selection, sharing and photo export.
 - `dist/assets/story/scroll/`: optimized original illustrated characters, entrance, concert and Garba-circle artwork.
 - `dist/assets/story/locations/`: five painted environments matched to the action: home courtyard, pickup street, driving road, selfie corner and shrine courtyard. The later realistic story backgrounds and city collage are no longer loaded.
 - `dist/story-audio.json`: existing official YouTube selections. Official recordings are not downloaded or rehosted.
@@ -26,7 +26,7 @@ Reloading returns to the top of the closed invitation box and clears open music,
 
 “Read without animation” exposes all scenes in normal document flow. Reduced-motion preferences, short viewports and oversized text use the reading layout automatically. All story content is available without JavaScript.
 
-Sound is silent until explicitly enabled. “Sound on” starts an original ambient score generated locally with Web Audio; its instrumentation follows the story. Aarti and Garba selections use a visible, nonmodal official YouTube player so visitors can continue scrolling. Switching between ambience and official music stops the other source. Closing the player, pressing Escape, hiding the tab or leaving the page stops playback. YouTube playback depends on network, browser and regional availability.
+The floating ambient sound bar and background score have been removed. The logo-triggered door-opening effect retains its separate mute control. Aarti and Garba selections use a visible, nonmodal official YouTube player so visitors can continue scrolling. Starting official music stops any door effect. Closing the player, pressing Escape, hiding the tab or leaving the page stops playback. YouTube playback depends on network, browser and regional availability.
 
 Photo keepsakes remain entirely in the visitor's browser, with no upload or persistence. Calendar, District booking, venue directions, the original invitation and entry-pass wording are preserved.
 

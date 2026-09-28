@@ -29,9 +29,9 @@ Reduced motion, short screens and reading mode show all conversations in normal 
 
 ## Sound and touch
 
-The original ambient score is synthesized with Web Audio only after a visitor taps Sound on. A quiet tonal bed develops into gentle percussion as the story reaches the celebration. Volume and mute remain available. This is original ambience, not Kinjal Dave music or a recording of aarti.
+The floating ambient sound bar and score have been removed. The logo-triggered door-opening sound and its own mute control remain available.
 
-Existing official aarti/Garba choices open one visible YouTube player in a nonmodal corner panel. Scrolling remains usable. Ambient sound and official playback are mutually exclusive. The official source link remains available when embedding fails. Playback stops when the panel closes, Escape is pressed, the page hides or the visitor leaves.
+Existing official aarti/Garba choices open one visible YouTube player in a nonmodal corner panel. Scrolling remains usable. Starting official playback stops the door-opening sound. The official source link remains available when embedding fails. Playback stops when the panel closes, Escape is pressed, the page hides or the visitor leaves.
 
 Primary touch controls are at least 44 px high. Native scrolling, keyboard navigation, the calendar download, directions, District link and local photo keepsake are preserved.
 
@@ -43,7 +43,7 @@ District URL stays exactly `https://www.district.in/events/the-garba-experience-
 
 ## Fresh evidence
 
-Passed JavaScript syntax and the behavioral suite `tests/verify-experience.cjs`: local asset references, CSS parsing, internal anchors, ten-scene traversal forwards/backwards, brief dialogue switching and reversal, character pose changes, car boarding/departure, hand-in-hand entry, automatic/manual selfie reveal, overlapping dissolves, reversible hamper, reading and reduced-motion switches, no unsolicited audio, opt-in ambience/mute, nonmodal official music, single-player switching, source exclusivity, Escape and background cleanup, share URL, keepsake controls and invalid/oversized image handling, event metadata and booking URL.
+Passed JavaScript syntax and the behavioral suite `tests/verify-experience.cjs`: local asset references, CSS parsing, internal anchors, ten-scene traversal forwards/backwards, brief dialogue switching and reversal, character pose changes, car boarding/departure, hand-in-hand entry, automatic/manual selfie reveal, overlapping dissolves, reversible hamper, reading and reduced-motion switches, no unsolicited audio, absence of the ambient bar, preserved door-sound controls, nonmodal official music, single-player switching, source exclusivity, Escape and background cleanup, share URL, keepsake controls and invalid/oversized image handling, event metadata and booking URL.
 
 The suite uses jsdom and postcss from the existing validation environment, with audio and layout boundaries modeled. A local Chromium render also checked the illustrated scenes at 1440×900, 390×844 and 320×700: scene selection matched the scroll position, all visible images loaded, no page exceptions occurred, and no horizontal overflow appeared. Screenshots were reviewed for background composition, ground placement, driving perspective, the selfie location and shrine framing. The revised opening was checked at 1440×900, 390×844, 360×640 and 320×700: the larger box clears the heading and hint, one logo click reaches the friends with intermediate zoom frames, reverse scrolling closes the doors, and reload returns to the closed box. Keyboard activation transfers focus to the story heading. Reading and reduced-motion modes go directly to the story without the zoom; without JavaScript a direct story link remains available. Actual sound quality, third-party playback and complete canvas export remain unverified.
 

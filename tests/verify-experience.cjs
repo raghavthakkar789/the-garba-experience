@@ -347,19 +347,8 @@ const scroll = (cursor) => {
   reduced.matches = false;
   reducedHandler();
   assert(cinematic());
-  d.querySelector("#sound-toggle").click();
-  await tick();
-  assert.equal(contexts, 1);
-  assert.equal(
-    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
-    "true",
-  );
-  d.querySelector("#sound-toggle").click();
-  assert.equal(
-    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
-    "false",
-    "mute",
-  );
+  assert(!d.querySelector(".sound-controls, #sound-toggle, #sound-volume"), "floating sound bar removed");
+  assert(d.querySelector("#opening-sound"), "door sound control remains");
   scroll(8.2);
   d.querySelector("#devotion [data-track]").click();
   await tick();
@@ -377,32 +366,13 @@ const scroll = (cursor) => {
   await tick();
   assert.equal(d.querySelectorAll("iframe").length, 1, "one player only");
   assert(d.querySelector("iframe").src.includes(tracks.garba2.youtube));
-  d.querySelector("#sound-toggle").click();
-  await tick();
-  assert.equal(
-    d.querySelectorAll("iframe").length,
-    0,
-    "ambient replaces official music",
-  );
-  assert(d.querySelector("#music-panel").hidden);
-  d.querySelector("#the-stage [data-track]").click();
-  await tick();
-  assert.equal(
-    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
-    "false",
-    "official music replaces ambience",
-  );
   d.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape" }));
   assert.equal(d.querySelectorAll("iframe").length, 0, "Escape stops music");
-  d.querySelector("#sound-toggle").click();
+  d.querySelector("#the-stage [data-track]").click();
   await tick();
   hidden = true;
   d.dispatchEvent(new w.Event("visibilitychange"));
-  assert.equal(
-    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
-    "false",
-    "hidden tabs are silent",
-  );
+  assert.equal(d.querySelectorAll("iframe").length, 0, "hidden tabs stop music");
   hidden = false;
   d.querySelector("#share-invitation").click();
   await tick();
@@ -446,10 +416,6 @@ const scroll = (cursor) => {
   assert(d.querySelector("#music-panel").hidden, "reload closes music");
   assert.equal(d.querySelectorAll("iframe").length, 0);
   assert.equal(
-    d.querySelector("#sound-toggle").getAttribute("aria-pressed"),
-    "false",
-  );
-  assert.equal(
     d.querySelector("#take-story-photo").getAttribute("aria-pressed"),
     "false",
   );
@@ -466,7 +432,7 @@ const scroll = (cursor) => {
     ),
   );
   console.log(
-    "PASS: local assets/CSS/anchors; ten-scene forward and reverse scrolling; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; opt-in ambient sound and mute; single nonmodal official player; sound-source exclusivity; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
+    "PASS: local assets/CSS/anchors; ten-scene forward and reverse scrolling; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
   );
   console.log(
     "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",

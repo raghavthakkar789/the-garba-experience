@@ -38,7 +38,6 @@
   let stageHeight = 1;
   let lastWidth = innerWidth;
   let lastHeight = innerHeight;
-  let soundScene = "welcome";
   const opening = document.querySelector(".opening-scene");
   const openingButtons = [
     ...document.querySelectorAll("[data-open-invitation]"),
@@ -75,7 +74,6 @@
   async function playDoorSound() {
     stopDoorSound();
     if (!openingSoundEnabled) return;
-    stopAmbient();
     stopMusic();
     const Audio = window.AudioContext || window.webkitAudioContext;
     if (!Audio) return;
@@ -433,7 +431,6 @@
         }
       });
       activeIndex = nearest;
-      soundScene = scenes[nearest].dataset.sound;
       return;
     }
     const cursor = clamp((scrollY - journeyTop) / travel) * scenes.length;
@@ -483,7 +480,6 @@
       document.querySelector("#beginning-title").focus({ preventScroll: true });
     }
     activeIndex = selected;
-    soundScene = scenes[selected].dataset.sound;
     document.querySelector("#current-chapter").textContent =
       scenes[selected].dataset.label;
     stage.style.setProperty("--dust-y", `${(cursor * -9).toFixed(2)}px`);
@@ -555,106 +551,6 @@
       button.textContent = show ? "Back to the moment" : "Take their photo";
       schedule();
     });
-  // Warm original ambient sound. No recording, network request or audio starts on page load.
-  const soundToggle = document.querySelector("#sound-toggle");
-  const soundLabel = document.querySelector("#sound-label");
-  const volume = document.querySelector("#sound-volume");
-  let audioContext,
-    master,
-    timer,
-    nextBeat = 0,
-    beat = 0,
-    soundEnabled = false;
-  let audioSession = 0;
-  const pitches = [220, 261.63, 293.66, 329.63, 392, 440, 392, 329.63];
-  function setSoundUI() {
-    soundToggle.setAttribute("aria-pressed", String(soundEnabled));
-    soundToggle.setAttribute(
-      "aria-label",
-      soundEnabled ? "Mute ambient sound" : "Enable ambient sound",
-    );
-    soundLabel.textContent = soundEnabled ? "Sound on" : "Sound off";
-  }
-  function tone(frequency, at, duration, amplitude, type = "sine") {
-    const oscillator = audioContext.createOscillator();
-    const envelope = audioContext.createGain();
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, at);
-    envelope.gain.setValueAtTime(0.0001, at);
-    envelope.gain.exponentialRampToValueAtTime(amplitude, at + 0.025);
-    envelope.gain.exponentialRampToValueAtTime(0.0001, at + duration);
-    oscillator.connect(envelope);
-    envelope.connect(master);
-    oscillator.start(at);
-    oscillator.stop(at + duration + 0.03);
-    oscillator.onended = () => {
-      oscillator.disconnect();
-      envelope.disconnect();
-    };
-  }
-  function percussion(at, accent) {
-    const oscillator = audioContext.createOscillator();
-    const envelope = audioContext.createGain();
-    oscillator.frequency.setValueAtTime(accent ? 135 : 185, at);
-    oscillator.frequency.exponentialRampToValueAtTime(
-      accent ? 58 : 92,
-      at + 0.16,
-    );
-    envelope.gain.setValueAtTime(0.0001, at);
-    envelope.gain.exponentialRampToValueAtTime(
-      accent ? 0.28 : 0.13,
-      at + 0.006,
-    );
-    envelope.gain.exponentialRampToValueAtTime(0.0001, at + 0.25);
-    oscillator.connect(envelope);
-    envelope.connect(master);
-    oscillator.start(at);
-    oscillator.stop(at + 0.27);
-    oscillator.onended = () => {
-      oscillator.disconnect();
-      envelope.disconnect();
-    };
-  }
-  function scheduleScore() {
-    if (!soundEnabled || audioContext.state !== "running") return;
-    // Look ahead only 150 ms so chapter changes feel immediate and background tabs stay quiet.
-    if (nextBeat < audioContext.currentTime)
-      nextBeat = audioContext.currentTime + 0.02;
-    while (nextBeat < audioContext.currentTime + 0.15) {
-      const dancing = ["stage", "celebration"].includes(soundScene);
-      const devotional = soundScene === "devotion";
-      const moving = ["journey", "arrival", "memory"].includes(soundScene);
-      const step = dancing ? 0.3125 : moving ? 0.44 : 0.65;
-      if (beat % 8 === 0) {
-        tone(110, nextBeat, step * 7, 0.09);
-        tone(164.81, nextBeat, step * 7, 0.035);
-      }
-      if (beat % (dancing ? 2 : 4) === 0) {
-        const note = pitches[Math.floor(beat / 2) % pitches.length];
-        tone(
-          note * (devotional ? 2 : 1),
-          nextBeat,
-          devotional ? 2.2 : 1.4,
-          0.1,
-        );
-        tone(note * (devotional ? 4 : 2), nextBeat, 0.8, 0.025);
-      }
-      if (dancing || (moving && beat % 2 === 0))
-        percussion(nextBeat, beat % 4 === 0);
-      nextBeat += step;
-      beat++;
-    }
-  }
-  function stopAmbient() {
-    ++audioSession;
-    soundEnabled = false;
-    clearInterval(timer);
-    if (audioContext) {
-      master.gain.cancelScheduledValues(audioContext.currentTime);
-      master.gain.setTargetAtTime(0, audioContext.currentTime, 0.08);
-    }
-    setSoundUI();
-  }
   const music = document.querySelector("#music-panel");
   const host = music.querySelector(".player-host");
   let tracks,
@@ -669,57 +565,9 @@
       .forEach((b) => b.setAttribute("aria-pressed", "false"));
     if (restoreFocus && musicOpener && !musicOpener.closest("[inert]"))
       musicOpener.focus({ preventScroll: true });
-    else if (restoreFocus) soundToggle.focus({ preventScroll: true });
+    else if (restoreFocus)
+      document.querySelector(".header-link").focus({ preventScroll: true });
   }
-  async function startAmbient() {
-    stopDoorSound();
-    const session = ++audioSession;
-    const Audio = window.AudioContext || window.webkitAudioContext;
-    if (!Audio) {
-      notify(
-        "Ambient sound is unavailable in this browser. You can still play the official tracks.",
-      );
-      return;
-    }
-    try {
-      if (!audioContext) {
-        audioContext = new Audio();
-        master = audioContext.createGain();
-        master.gain.value = 0;
-        master.connect(audioContext.destination);
-      }
-      stopMusic();
-      await audioContext.resume();
-      if (session !== audioSession || document.hidden) return;
-      soundEnabled = true;
-      master.gain.cancelScheduledValues(audioContext.currentTime);
-      master.gain.setTargetAtTime(
-        (Number(volume.value) / 100) * 0.65,
-        audioContext.currentTime,
-        0.25,
-      );
-      nextBeat = audioContext.currentTime + 0.03;
-      clearInterval(timer);
-      timer = setInterval(scheduleScore, 80);
-      scheduleScore();
-      setSoundUI();
-    } catch {
-      stopAmbient();
-      notify("Tap Sound on again to enable audio.");
-    }
-  }
-  document.querySelector(".sound-controls").hidden = false;
-  soundToggle.addEventListener("click", () =>
-    soundEnabled ? stopAmbient() : startAmbient(),
-  );
-  volume.addEventListener("input", () => {
-    if (audioContext && soundEnabled)
-      master.gain.setTargetAtTime(
-        (Number(volume.value) / 100) * 0.65,
-        audioContext.currentTime,
-        0.08,
-      );
-  });
   async function playTrack(key, button) {
     stopDoorSound();
     const token = ++selection;
@@ -734,7 +582,6 @@
       const track = tracks[key];
       if (!track || !/^[\w-]{11}$/.test(track.youtube))
         throw Error("Invalid track");
-      stopAmbient();
       host.replaceChildren();
       const iframe = document.createElement("iframe");
       iframe.title = `${track.title} — ${track.credit}`;
@@ -772,15 +619,12 @@
     }
   });
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) cancelEntry();
     if (document.hidden) {
-      stopAmbient();
+      cancelEntry();
       stopMusic();
-      audioContext?.suspend().catch(() => {});
     }
   });
   addEventListener("pagehide", () => {
-    stopAmbient();
     stopMusic();
   });
   document.querySelectorAll("dialog").forEach((dialog) => {
@@ -919,7 +763,6 @@
     openingSoundEnabled = true;
     openingSoundButton.setAttribute("aria-pressed", "true");
     openingSoundButton.textContent = "Opening sound on";
-    stopAmbient();
     stopMusic();
     document
       .querySelectorAll("dialog[open]")
@@ -950,7 +793,6 @@
     canvas.classList.remove("has-photo");
     canvas.width = canvas.width;
     status.textContent = initialMemoryStatus;
-    volume.value = volume.defaultValue;
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     setMotion();
     updateOpening(0);

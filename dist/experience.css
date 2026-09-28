@@ -822,71 +822,6 @@ footer > a:nth-of-type(2) {
   text-decoration: underline;
   text-underline-offset: 5px;
 }
-.sound-controls {
-  position: fixed;
-  bottom: 19px;
-  left: 20px;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 3px 6px;
-  border: 1px solid #d8bd7755;
-  background: #0b211ae8;
-  border-radius: 30px;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 8px 26px #0002;
-}
-.sound-controls button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: transparent;
-  min-height: 44px;
-  padding: 5px 14px;
-  font-size: 12px;
-}
-.sound-bars {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  height: 20px;
-}
-.sound-bars i {
-  display: block;
-  width: 2px;
-  background: var(--gold);
-  height: 4px;
-  transition: height 0.25s;
-}
-.sound-controls button[aria-pressed="true"] .sound-bars i:nth-child(1) {
-  height: 9px;
-}
-.sound-controls button[aria-pressed="true"] .sound-bars i:nth-child(2) {
-  height: 18px;
-}
-.sound-controls button[aria-pressed="true"] .sound-bars i:nth-child(3) {
-  height: 12px;
-}
-.sound-controls button[aria-pressed="true"] .sound-bars i:nth-child(4) {
-  height: 7px;
-}
-.volume-control {
-  display: none;
-  align-items: center;
-  font-size: 12px;
-  gap: 8px;
-  padding-right: 14px;
-}
-.sound-controls:has([aria-pressed="true"]) .volume-control {
-  display: flex;
-}
-.volume-control input {
-  width: 70px;
-  min-height: 44px;
-  accent-color: var(--gold);
-  cursor: pointer;
-}
 .music-panel {
   position: fixed;
   right: 20px;
@@ -1537,24 +1472,6 @@ dialog::backdrop {
   }
   footer > p {
     text-align: center;
-  }
-  .sound-controls {
-    left: 16px;
-    bottom: 18px;
-    padding: 1px 4px;
-    gap: 0;
-  }
-  .sound-controls button {
-    padding: 4px 12px;
-    font-size: 11px;
-  }
-  .volume-control {
-    font-size: 11px;
-    padding-right: 10px;
-    gap: 6px;
-  }
-  .volume-control input {
-    width: 55px;
   }
   .music-panel {
     right: 16px;
