@@ -22,7 +22,11 @@ Built-in image generation created `dist/assets/partners/festival-road.webp`; ori
 
 ## Verification
 
-- Existing `tests/verify-experience.cjs` passes, including all ten story scenes, invitation opening, reduced motion, sound-bar removal and event details.
+- Existing `tests/verify-experience.cjs` passes, including the original ten scenes plus the connected road chapter, invitation opening, reduced motion, sound-bar removal and event details.
 - Headless Chromium checked every shop pair at 1440×900, 390×844 and 320×640. All 16 names and their available logos load and their signboards fit within the viewport.
 - Checked continuous between-pair movement, reverse scrolling, reduced-motion static layout, reload-to-top behavior and lack of horizontal overflow or browser script errors.
 - Visually reviewed desktop, phone, compact phone and reading-mode screenshots. Gujarati heading uses the existing self-hosted Gujarati font.
+
+## Story integration correction
+
+The road now lives inside the original story stage immediately after the Garba circle. The shared story controller drives its longer scroll duration and the transition into the walk home. It has no separate sticky region, scroll listener or resize controller. The original non-animated event-details section is once again the last main section; its HTML is unchanged from before the sponsor-road addition. Its Gujarati text now explicitly uses the existing Gujarati font to prevent missing-glyph boxes. The redundant chapter caption is hidden during the road so it does not cross over the walking characters.

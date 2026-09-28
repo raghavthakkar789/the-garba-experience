@@ -13,6 +13,13 @@
   const journey = document.querySelector(".journey");
   const stage = document.querySelector(".journey-stage");
   const scenes = [...document.querySelectorAll(".scene")];
+  // The final walking chapter needs time for every shop, within the same film.
+  const sceneSpans = scenes.map((scene) => Number(scene.dataset.scrollSpan) || 1);
+  const sceneStarts = [];
+  const storySpan = sceneSpans.reduce((total, span) => {
+    sceneStarts.push(total);
+    return total + span;
+  }, 0);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const motionButton = document.querySelector("#motion-toggle");
   const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
@@ -123,7 +130,7 @@
       return;
     }
     const from = scrollY;
-    const to = journeyTop + (1.06 / scenes.length) * travel;
+    const to = journeyTop + (1.06 / storySpan) * travel;
     const started = performance.now();
     opening.dataset.entering = "true";
     focusStoryOnArrival = true;
@@ -377,7 +384,7 @@
     // Use a stable viewport height; mobile address-bar changes do not reshape the story.
     journey.style.setProperty(
       "--journey-height",
-      `${scenes.length * innerHeight * 1.32}px`,
+      `${storySpan * innerHeight * 1.32}px`,
     );
     clearSceneState();
     if (!cinematic) updateOpening(readingBoxOpen ? 1 : 0);
@@ -385,7 +392,7 @@
     if (
       cinematic &&
       scenes.some(
-        (s) => s.querySelector(".scene-copy").scrollHeight > stageHeight - 180,
+        (s) => (s.querySelector(".scene-copy")?.scrollHeight || 0) > stageHeight - 180,
       )
     ) {
       oversizedCopy = true;
@@ -408,7 +415,7 @@
       const top = !wasWithin
         ? journeyTop + journey.offsetHeight + finaleOffset
         : cinematic
-          ? journeyTop + (previous / scenes.length) * travel
+          ? journeyTop + (sceneStarts[previous] / storySpan) * travel
           : scenes[previous].getBoundingClientRect().top + scrollY;
       window.scrollTo({ top, behavior: "instant" });
     }
@@ -433,9 +440,10 @@
       activeIndex = nearest;
       return;
     }
-    const cursor = clamp((scrollY - journeyTop) / travel) * scenes.length;
-    const base = Math.min(scenes.length - 1, Math.floor(cursor));
-    const local = Math.min(1, cursor - base);
+    const cursor = clamp((scrollY - journeyTop) / travel) * storySpan;
+    let base = scenes.length - 1;
+    while (base > 0 && cursor < sceneStarts[base]) base--;
+    const local = clamp((cursor - sceneStarts[base]) / sceneSpans[base]);
     const blend = base < scenes.length - 1 ? ease((local - 0.7) / 0.3) : 0;
     const selected = blend > 0.5 ? base + 1 : base;
     scenes.forEach((scene, i) => {
@@ -454,6 +462,8 @@
       if (!visible) return;
       const progress = isBase ? local : 0;
       animateStory(scene, progress);
+      if (scene.id === "partner-road")
+        scene.dispatchEvent(new CustomEvent("story-progress", { detail: progress }));
       scene.style.setProperty("--scene-opacity", isBase ? 1 : blend.toFixed(4));
       scene.style.setProperty(
         "--copy-opacity",
@@ -491,7 +501,7 @@
     cancelEntry();
     const index = scenes.indexOf(scene);
     const top = cinematic
-      ? journeyTop + ((index + 0.06) / scenes.length) * travel
+      ? journeyTop + ((sceneStarts[index] + 0.06) / storySpan) * travel
       : scene.getBoundingClientRect().top + scrollY;
     window.scrollTo({ top, behavior: reduced.matches ? "instant" : behavior });
   }

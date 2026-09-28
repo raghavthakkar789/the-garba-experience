@@ -122,7 +122,7 @@ w.AudioContext = class {
 };
 const tick = () => new Promise((r) => setImmediate(r));
 const scroll = (cursor) => {
-  w.scrollY = (cursor / scenes.length) * 9792;
+  w.scrollY = (cursor / 18) * 9792;
   w.dispatchEvent(new w.Event("scroll"));
   frame?.();
 };
@@ -130,7 +130,12 @@ const scroll = (cursor) => {
   const ids = [...d.querySelectorAll("[id]")].map((e) => e.id);
   assert.equal(new Set(ids).size, ids.length, "unique IDs");
   assert.equal(d.querySelectorAll("h1").length, 1);
-  assert.equal(scenes.length, 10, "complete ten-scene storyline");
+  assert.equal(scenes.length, 11, "original ten scenes plus the connected walk home");
+  const road = d.querySelector('#partner-road');
+  assert.equal(road.parentElement, stage, 'road shares the original story stage');
+  assert.equal(road.previousElementSibling.id, 'celebration', 'Garba flows into the walk home');
+  assert.equal(d.querySelector('main').lastElementChild.id, 'details', 'original static details remain the ending');
+  assert.equal(road.querySelectorAll('.partner-shop').length, 16, 'every confirmed sponsor remains');
   for (const el of d.querySelectorAll("[src],link[href],a[href]")) {
     const value = el.getAttribute("src") || el.getAttribute("href");
     if (value.startsWith("#"))
@@ -145,6 +150,7 @@ const scroll = (cursor) => {
     "experience.css",
     "storybook.css",
     "button-motion.css",
+    "partner-road.css",
     "assets/fonts/fonts.css",
   ]) {
     const css = fs.readFileSync(path.join(base, file), "utf8");
@@ -156,6 +162,7 @@ const scroll = (cursor) => {
       );
     assert(!/scroll-snap-type/.test(css), "no pagination-like snapping");
   }
+  w.eval(fs.readFileSync(path.join(base, 'partner-road.js'), 'utf8'));
   w.eval(script);
   await tick(); // Let the initial pageshow restoration finish before interacting.
   assert.equal(w.scrollY, 0, "reload starts at the top");
@@ -199,8 +206,8 @@ const scroll = (cursor) => {
   assert(!d.querySelector("#open-invitation"), "no second continue button");
   // Enter every scene forwards and backwards using native scroll progress.
   for (const sequence of [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
   ]) {
     for (const i of sequence) {
       scroll(i + 0.25);
@@ -215,6 +222,14 @@ const scroll = (cursor) => {
         "only visible scene interactive",
       );
     }
+  }
+  scroll(9.85);
+  assert(scenes[9].classList.contains('is-visible') && road.classList.contains('is-visible'), 'celebration dissolves directly into the road');
+  for (let pair = 0; pair < 8; pair++) {
+    scroll(10 + (.04 + pair / 7 * .91) * 8);
+    assert.equal(d.querySelector('.scene.is-active'), road, 'road stays within the shared scene controller');
+    for (const shop of road.querySelectorAll(`[data-road-pair="${pair}"]`))
+      assert.equal(Number(shop.style.opacity), 1, 'each pair gets readable time during the walk');
   }
   for (const line of d.querySelectorAll(".dialogue-beat q")) {
     assert(
@@ -432,7 +447,7 @@ const scroll = (cursor) => {
     ),
   );
   console.log(
-    "PASS: local assets/CSS/anchors; ten-scene forward and reverse scrolling; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
+    "PASS: local assets/CSS/anchors; eleven-scene forward and reverse scrolling; connected sponsor walk; original static ending; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
   );
   console.log(
     "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",
