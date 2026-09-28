@@ -147,6 +147,39 @@
 .story-person[data-pose="dance"] i {
   background-position: 100% 100%;
 }
+/* The opening's silk descent lives only in the first animated scene. */
+.dupatta-descent { display: none; }
+.cinematic .story-meet .story-person > i { opacity: var(--landed, 0); }
+.cinematic .story-meet .dupatta-descent {
+  display: block;
+  position: absolute;
+  inset: auto 0 0;
+  aspect-ratio: 3 / 4;
+  opacity: calc(1 - var(--landed, 0));
+  transform: translateY(var(--descent-y, -125svh)) rotate(var(--descent-turn, 0deg));
+  transform-origin: 54% 0;
+  pointer-events: none;
+}
+.dupatta-descent img { display: block; width: 100%; height: 100%; }
+.dupatta-silk {
+  position: absolute;
+  bottom: calc(100% - 2px);
+  left: 54%;
+  width: 7.5%;
+  height: 150svh;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #520c22, #a91537 22%, #d44357 30%, #6b0924 48%, #991131 76%, #e2b962 80%, #fff0ab 83%, #8b5624 88%, #d6aa54 94%, #631024);
+  border-radius: 40% 10% 0 0;
+}
+.woman .dupatta-silk { left: 46%; }
+.cinematic #beginning .story-title,
+.cinematic #beginning .dialogue-track {
+  opacity: calc(var(--copy-opacity, 1) * var(--arrival-copy, 0));
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinematic .story-meet .dupatta-descent { display: none; }
+  .cinematic .story-meet .story-person > i { opacity: 1; }
+}
 .story-car {
   position: absolute;
   left: 50%;

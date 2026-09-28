@@ -207,6 +207,24 @@ const scroll = (cursor) => {
     "one logo click goes directly to the storyline",
   );
   assert.equal(d.activeElement.id, "beginning-title", "logo activation transfers focus into story");
+  const arrival = d.querySelector('#beginning');
+  const descendingMan = arrival.querySelector('.man');
+  assert.equal(arrival.style.getPropertyValue('--arrival-copy'), '0.0000', 'dialogue waits for landing');
+  const above = parseFloat(descendingMan.style.getPropertyValue('--descent-y'));
+  assert(above < -900, 'friends start above the viewport after doors open');
+  frame(1000);
+  frame(0);
+  const midway = parseFloat(descendingMan.style.getPropertyValue('--descent-y'));
+  assert(midway > above && midway < 0, 'automatic opening continues into the silk descent');
+  frame(1800);
+  frame(0);
+  assert.equal(descendingMan.style.getPropertyValue('--landed'), '1.0000', 'friends land automatically');
+  assert.equal(arrival.style.getPropertyValue('--arrival-copy'), '1.0000', 'conversation appears after landing');
+  const landed = descendingMan.getAttribute('style');
+  scroll(1.12);
+  assert(parseFloat(descendingMan.style.getPropertyValue('--descent-y')) < -100, 'reverse scrolling lifts friends');
+  scroll(1.42);
+  assert.equal(descendingMan.getAttribute('style'), landed, 'descent is deterministic on replay');
   assert.equal(d.querySelector("#invitation .hamper-interior img").getAttribute("src"),
     d.querySelector("#beginning .scene-art img").getAttribute("src"),
     "box interior leads into the first story scene");
@@ -288,7 +306,7 @@ const scroll = (cursor) => {
     d.querySelector("#beginning .is-speaking").dataset.speaker,
     "him",
   );
-  scroll(1.3);
+  scroll(1.65);
   assert.equal(
     d.querySelector("#beginning .is-speaking").dataset.speaker,
     "her",
@@ -490,6 +508,7 @@ const scroll = (cursor) => {
   console.log(
     "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",
   );
+  await tick(); // Drain queued scene observers before jsdom destroys document.
   w.close();
 })().catch((error) => {
   console.error(error);

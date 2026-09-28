@@ -130,18 +130,22 @@
       return;
     }
     const from = scrollY;
-    const to = journeyTop + (1.06 / storySpan) * travel;
+    const to = journeyTop + (1.42 / storySpan) * travel;
     const started = performance.now();
     opening.dataset.entering = "true";
     focusStoryOnArrival = true;
     playDoorSound();
     const advance = (now) => {
-      const elapsed = clamp((now - started) / 3800);
-      const progress = elapsed < 0.66
-        ? 0.48 * ease(elapsed / 0.66)
-        : 0.48 + 0.58 * ease((elapsed - 0.66) / 0.34);
-      window.scrollTo({ top: from + (to - from) * progress / 1.06, behavior: "instant" });
-      if (elapsed < 1) entryFrame = requestAnimationFrame(advance);
+      const elapsed = now - started;
+      const doorTime = clamp(elapsed / 3800);
+      // Finish the original door/camera move, then lower the friends on silk.
+      const progress = elapsed <= 3800
+        ? doorTime < 0.66
+          ? 0.48 * ease(doorTime / 0.66)
+          : 0.48 + 0.52 * ease((doorTime - 0.66) / 0.34)
+        : 1 + 0.42 * clamp((elapsed - 3800) / 2800);
+      window.scrollTo({ top: from + (to - from) * progress / 1.42, behavior: "instant" });
+      if (elapsed < 6600) entryFrame = requestAnimationFrame(advance);
       else {
         entryFrame = 0;
         delete opening.dataset.entering;
@@ -230,16 +234,19 @@
       scene.style.setProperty("--together-y", `${y.toFixed(2)}px`);
     };
     if (scene.id === "beginning") {
-      const meet = ease(progress / 0.22);
-      person("man", 0, 0, 1, 1, "think");
-      person(
-        "woman",
-        (1 - meet) * w * 0.52,
-        Math.sin(meet * Math.PI * 6) * 3,
-        1,
-        1,
-        meet < 0.98 ? "walk" : "think",
-      );
+      for (const [who, delay, direction] of [["man", 0, 1], ["woman", 0.025, -1]]) {
+        const lower = ease((progress - delay) / 0.28);
+        const land = ease((progress - 0.29 - delay) / 0.065);
+        const el = scene.querySelector(`.story-person.${who}`);
+        person(who);
+        el.style.setProperty("--descent-y", `${(-(1 - lower) * h * 1.25).toFixed(2)}px`);
+        el.style.setProperty("--descent-turn", `${(Math.sin(lower * Math.PI * 2) * 4 * direction * (1 - land)).toFixed(2)}deg`);
+        el.style.setProperty("--landed", land.toFixed(4));
+      }
+      // Finish before the automatic endpoint; scroll positions round to pixels.
+      const arrived = ease((progress - 0.385) / 0.025);
+      scene.style.setProperty("--arrival-copy", arrived.toFixed(4));
+      beats.forEach((line, i) => line.setAttribute("aria-hidden", String(arrived < 1 || i !== spoken)));
     }
     if (scene.id === "the-plan") {
       const arrive = ease((progress - 0.02) / 0.18),
@@ -361,6 +368,7 @@
         "--road-zoom",
         "--prayer-tilt",
         "--dialogue-opacity",
+        "--arrival-copy",
       ].forEach((prop) => scene.style.removeProperty(prop));
     }
   }
