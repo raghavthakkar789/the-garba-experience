@@ -279,13 +279,15 @@
       const joined = ease((progress - 0.34) / 0.07),
         walk = ease((progress - 0.42) / 0.26);
       const leave = ease((progress - 0.48) / 0.21);
+      const passage = ease((progress - 0.49) / 0.18);
+      scene.style.setProperty("--passage-opacity", passage.toFixed(4));
       car((1 - park) * -w * 1.2 + leave * w * 1.3);
       person("man", 0, -step * 25, step * (1 - joined), 0.8, "walk");
       person("woman", 0, -step * 25, step * (1 - joined), 0.8, "walk");
       together(
         joined,
         0.8 - walk * 0.49,
-        -walk * h * 0.2 + Math.sin(walk * Math.PI * 10) * 2,
+        -walk * h * 0.2 + passage * h * 0.12 + Math.sin(walk * Math.PI * 10) * 2,
       );
     }
     if (scene.id === "a-memory") {
@@ -391,6 +393,7 @@
         "--prayer-tilt",
         "--dialogue-opacity",
         "--arrival-copy",
+        "--passage-opacity",
       ].forEach((prop) => scene.style.removeProperty(prop));
     }
   }

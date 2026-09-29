@@ -71,7 +71,7 @@ html:not(.cinematic) .illustrated-scene .dialogue-beat {
   position: absolute;
   inset: -28px;
   z-index: -2;
-  background: url(assets/story/refinements/sheri-garba-overhead.webp) center / cover;
+  background: url(assets/story/event-decor/garba-ground.webp) center / cover;
   filter: blur(22px) brightness(.35);
 }
 .garba-world {
@@ -117,3 +117,12 @@ html:not(.cinematic) .garba-world { top: 65%; }
 @media (max-width: 650px) and (max-height: 700px) {
   .cinematic .journey-stage:has(#devotion.is-active) .journey-caption { opacity: 0; }
 }
+
+/* Arrival travels through the actual lotus passage as the friends enter. */
+#arrival .entry-passage-art {
+  z-index: -3;
+  opacity: 0;
+  pointer-events: none;
+}
+.cinematic #arrival .entry-passage-art { opacity: var(--passage-opacity, 0); }
+#the-stage .scene-art img { object-position: center; }

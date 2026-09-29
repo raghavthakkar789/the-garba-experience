@@ -187,6 +187,14 @@ const scroll = (cursor) => {
   assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
   assert.equal(scenes[0].id, "invitation", "box comes before the storyline");
   assert.equal(scenes[1].id, "beginning", "friends meet after the box opens");
+  assert.deepEqual(scenes.slice(5, 10).map(s => s.id),
+    ['arrival', 'a-memory', 'devotion', 'the-stage', 'celebration'],
+    'aarti precedes the stage and garba ground in every viewing mode');
+  for (const id of ['arrival', 'a-memory', 'devotion', 'the-stage', 'celebration']) {
+    const art = d.querySelector(`#${id} .scene-art img, #${id} .garba-courtyard`);
+    assert(art.getAttribute('src').includes('/event-decor/'), `${id} uses the supplied event decor`);
+  }
+
   assert.equal(d.querySelector(".scene.is-active").id, "invitation");
   assert.equal(
     d.querySelector("#invitation-seal").getAttribute("aria-expanded"),
@@ -378,6 +386,10 @@ const scroll = (cursor) => {
     "1.000",
     "friends enter together",
   );
+  scroll(5.68);
+  assert.equal(d.querySelector('#arrival').style.getPropertyValue('--passage-opacity'), '1.0000', 'lotus passage appears as friends enter');
+  scroll(5.2);
+  assert.equal(d.querySelector('#arrival').style.getPropertyValue('--passage-opacity'), '0.0000', 'reverse scroll restores entrance gate');
   scroll(6.6);
   assert.equal(
     d.querySelector("#take-story-photo").getAttribute("aria-pressed"),
@@ -463,14 +475,14 @@ const scroll = (cursor) => {
   assert(cinematic());
   assert(!d.querySelector(".sound-controls, #sound-toggle, #sound-volume"), "floating sound bar removed");
   assert(d.querySelector("#opening-sound"), "door sound control remains");
-  scroll(8.2);
+  scroll(7.2);
   d.querySelector("#devotion [data-track]").click();
   await tick();
   assert(!d.querySelector("#music-panel").hidden);
   assert.equal(d.querySelectorAll("iframe").length, 1);
   assert(!d.querySelector("dialog[open]"), "music does not block scrolling");
   assert(d.querySelector("iframe").src.includes(tracks.aarti.youtube));
-  scroll(7.3);
+  scroll(8.3);
   assert.equal(
     d.querySelector(".scene.is-active").id,
     "the-stage",

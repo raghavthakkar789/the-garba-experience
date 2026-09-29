@@ -35,7 +35,7 @@
     <script defer src="partner-road.js?v=4"></script>
     <script defer src="invitation-handoff.js?v=1"></script>
     <script defer src="aarti-flowers.js?v=1"></script>
-    <script defer="" src="experience.js?v=17"></script>
+    <script defer="" src="experience.js?v=18"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -70,7 +70,7 @@
     <link rel="stylesheet" href="storybook.css?v=19" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
     <link rel="stylesheet" href="partner-road.css?v=4" />
-    <link rel="stylesheet" href="scene-refinements.css?v=1" />
+    <link rel="stylesheet" href="scene-refinements.css?v=2" />
     <script defer src="button-motion.js?v=2"></script>
   </head>
   <body>
@@ -320,12 +320,16 @@
             <picture class="scene-art"
               ><source
                 media="(max-width:650px)"
-                srcset="assets/story/scroll/entrance-mobile.webp" />
+                srcset="assets/story/event-decor/entry-gate-mobile.webp" />
               <img
-                src="assets/story/scroll/entrance.webp"
-                alt="An illustrated Gujarati venue entrance glowing with lanterns"
+                src="assets/story/event-decor/entry-gate.webp"
+                alt="The event’s burgundy and gold scalloped entrance with glowing pink lotus sculptures and emerald panels"
                 loading="lazy"
             /></picture>
+            <picture class="scene-art entry-passage-art" aria-hidden="true">
+              <source media="(max-width:650px)" srcset="assets/story/event-decor/entry-passage-mobile.webp" />
+              <img src="assets/story/event-decor/entry-passage.webp" alt="" width="1536" height="1024" loading="lazy" />
+            </picture>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
               <h2 id="arrival-title">We’re <em>here.</em></h2>
@@ -360,10 +364,10 @@
             aria-labelledby="a-memory-title"
           >
             <picture class="scene-art photobooth-art">
-              <source media="(max-width:650px)" srcset="assets/story/locations/photobooth-mobile.webp" />
+              <source media="(max-width:650px)" srcset="assets/story/event-decor/photobooth-mobile.webp" />
               <img
-                src="assets/story/locations/photobooth.webp"
-                alt="A Navratri photobooth with an illuminated floral frame, embroidered emerald and burgundy backdrop, camera and ring light"
+                src="assets/story/event-decor/photobooth.webp"
+                alt="The lotus foyer photobooth, with a luminous pink lotus, gold botanical emerald panels, flowers and camera"
                 loading="lazy"
             /></picture>
             <div class="story-shade"></div>
@@ -400,38 +404,6 @@
             </div>
           </section>
           <section
-            class="scene illustrated-scene story-stage"
-            id="the-stage"
-            data-label="Hear that?"
-            data-sound="stage"
-            aria-labelledby="the-stage-title"
-          >
-            <picture class="scene-art"
-              ><img
-                src="assets/story/scroll/concert.webp"
-                alt="A hand-painted Garba concert with Gujarati decorations and golden lights"
-                loading="lazy"
-            /></picture>
-            <div class="story-shade"></div>
-            <div class="scene-copy story-title">
-              <h2 id="the-stage-title">Hear <em>that?</em></h2>
-            </div>
-            <div class="dialogue-track">
-              <p class="dialogue-beat" data-speaker="him" data-at="0.00"><span class="speaker">He</span><q lang="gu">આ અવાજમાં તો ઊભા રહેવાય જ નહીં.</q></p>
-            </div>
-            <img
-              class="together-art"
-              src="assets/story/scroll/together.webp"
-              alt="The friends look towards the glowing stage"
-              loading="lazy"
-            />
-            <div class="scene-actions">
-              <button class="outline-button" type="button" data-track="garba1">
-                ▷ Play Kinjal Dave
-              </button>
-            </div>
-          </section>
-          <section
             class="scene illustrated-scene story-prayer"
             id="devotion"
             data-label="First, a little gratitude."
@@ -439,9 +411,9 @@
             aria-labelledby="devotion-title"
           >
             <picture class="scene-art"
-              ><img
-                src="assets/story/locations/shrine-courtyard.webp"
-                alt="A quiet courtyard inside the venue, with a Durga Mata shrine and glowing diyas"
+              ><source media="(max-width:650px)" srcset="assets/story/event-decor/lotus-aarti-mobile.webp" /><img
+                src="assets/story/event-decor/lotus-aarti.webp"
+                alt="A Maa Amba aarti alcove with burgundy and gold backdrop, pink lotus sculptures, emerald panels and glowing diyas"
                 loading="lazy"
             /></picture>
             <div class="story-shade"></div>
@@ -465,6 +437,38 @@
             </div>
           </section>
           <section
+            class="scene illustrated-scene story-stage"
+            id="the-stage"
+            data-label="Hear that?"
+            data-sound="stage"
+            aria-labelledby="the-stage-title"
+          >
+            <picture class="scene-art"
+              ><source media="(max-width:650px)" srcset="assets/story/event-decor/circular-stage-mobile.webp" /><img
+                src="assets/story/event-decor/circular-stage.webp"
+                alt="The circular artist stage with concentric musician platforms and suspended rings of glowing lotus lights"
+                loading="lazy"
+            /></picture>
+            <div class="story-shade"></div>
+            <div class="scene-copy story-title">
+              <h2 id="the-stage-title">Hear <em>that?</em></h2>
+            </div>
+            <div class="dialogue-track">
+              <p class="dialogue-beat" data-speaker="him" data-at="0.00"><span class="speaker">He</span><q lang="gu">આ અવાજમાં તો ઊભા રહેવાય જ નહીં.</q></p>
+            </div>
+            <img
+              class="together-art"
+              src="assets/story/scroll/together.webp"
+              alt="The friends look towards the glowing stage"
+              loading="lazy"
+            />
+            <div class="scene-actions">
+              <button class="outline-button" type="button" data-track="garba1">
+                ▷ Play Kinjal Dave
+              </button>
+            </div>
+          </section>
+          <section
             class="scene illustrated-scene story-dance"
             id="celebration"
             data-label="Their circle is waiting."
@@ -472,7 +476,7 @@
             aria-labelledby="celebration-title"
           >
             <div class="garba-world">
-              <img class="garba-courtyard" src="assets/story/refinements/sheri-garba-overhead.webp" alt="Overhead view of neighbours playing sheri garba in circles around a small central Maa Amba shrine in an Ahmedabad pol" width="1254" height="1254" loading="lazy" />
+              <img class="garba-courtyard" src="assets/story/event-decor/garba-ground.webp" alt="Overhead view of friends playing garba around a small Maa Amba shrine, surrounded by emerald and gold event panels, flowers and glowing pink lotuses" width="1254" height="1254" loading="lazy" />
               <div class="garba-friend garba-man" data-speaker="him" aria-hidden="true"><img src="assets/story/refinements/garba-man.webp" alt="" loading="lazy" /></div>
               <div class="garba-friend garba-woman" data-speaker="her" aria-hidden="true"><img src="assets/story/refinements/garba-woman.webp" alt="" loading="lazy" /></div>
             </div>
