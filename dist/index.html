@@ -74,6 +74,7 @@
     <link rel="stylesheet" href="partner-road.css?v=5" />
     <link rel="stylesheet" href="scene-refinements.css?v=4" />
     <link rel="stylesheet" href="event-crowds.css?v=1" />
+    <link rel="stylesheet" href="thank-you.css?v=1" />
     <script defer src="button-motion.js?v=2"></script>
   </head>
   <body>
@@ -806,69 +807,39 @@
           </div>
         </div>
       </div>
-      <section
-        class="finale section-pad"
-        id="details"
-        aria-labelledby="details-title"
-      >
-        <div class="finale-heading">
-          <p class="eyebrow">Come and find your circle</p>
-          <h2 id="details-title">Your night<br /><em>starts here.</em></h2>
-          <p lang="gu" class="gujarati">
-            એક સાંજ, એક અનુભૂતિ,<br />અને ગરબાની એક નવી શરૂઆત.
-          </p>
-          <img
-            src="assets/logo.webp"
-            class="finale-logo"
-            alt="The Garba Experience"
-            width="160"
-            height="110"
-            loading="lazy"
-          />
+      <section class="finale thank-you" id="details" aria-labelledby="details-title">
+        <div class="thank-you-scene">
+          <div class="thank-you-art" aria-hidden="true">
+            <img class="thank-you-arch" src="assets/story/thank-you/gold-arch.webp" alt="" loading="lazy" />
+            <img class="thank-you-leaf leaf-left" src="assets/story/thank-you/left-leaf.webp" alt="" loading="lazy" />
+            <img class="thank-you-leaf leaf-right" src="assets/story/thank-you/right-leaf.webp" alt="" loading="lazy" />
+            <img class="thank-you-elephant" src="assets/story/thank-you/elephant.webp" alt="" loading="lazy" />
+            <img class="thank-you-lotus lotus-left" src="assets/story/thank-you/left-lotus.webp" alt="" loading="lazy" />
+            <img class="thank-you-lotus lotus-right" src="assets/story/thank-you/right-lotus.webp" alt="" loading="lazy" />
+          </div>
+          <img class="thank-you-logo" src="assets/story/thank-you/logo.webp" alt="The Garba Experience" width="410" height="410" loading="lazy" />
+          <div class="thank-you-message">
+            <h2 id="details-title">THANK YOU</h2>
+            <p lang="gu">આ સફરમાં સાથે રહેવા બદલ આભાર.<br />હવે મળીશું ગરબાના મેદાનમાં!</p>
+          </div>
         </div>
-        <div class="event-card">
+        <div class="thank-you-details">
           <p class="eyebrow">THE GARBA EXPERIENCE · FEATURING KINJAL DAVE</p>
-          <div class="date-display">
-            <strong>09</strong>
-            <div>OCTOBER<br /><span>FRIDAY · 2026</span></div>
+          <p class="thank-you-date"><time datetime="2026-10-09T19:30:00+05:30">Friday, 9 October 2026 · 7:30 pm onwards</time></p>
+          <p class="thank-you-venue">Vivenza by Gopi Farm <span>· S.P. Ring Road, Ahmedabad</span></p>
+          <div class="thank-you-actions">
+            <a class="book-button" href="https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets">Grab your passes <span aria-hidden="true">↗</span></a>
+            <nav class="event-links" aria-label="Plan your evening">
+              <a href="garba-experience.ics" download>Save the date</a>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Vivenza+by+Gopi+Farm+SP+Ring+Road+Ahmedabad" target="_blank" rel="noopener">Directions ↗</a>
+              <button type="button" id="share-invitation">Share</button>
+            </nav>
           </div>
-          <dl class="event-facts">
-            <div>
-              <dt>THE TIME</dt>
-              <dd>7:30 pm onwards</dd>
-            </div>
-            <div>
-              <dt>THE PLACE</dt>
-              <dd>
-                Vivenza by Gopi Farm<small>S.P. Ring Road, Ahmedabad</small>
-              </dd>
-            </div>
-          </dl>
-          <a
-            class="book-button"
-            href="https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets"
-            >Grab your passes <span aria-hidden="true">↗</span></a
-          >
           <p class="booking-note">Bookings through District</p>
-          <nav class="event-links" aria-label="Plan your evening">
-            <a href="garba-experience.ics" download="">Save the date</a
-            ><a
-              href="https://www.google.com/maps/search/?api=1&amp;query=Vivenza+by+Gopi+Farm+SP+Ring+Road+Ahmedabad"
-              target="_blank"
-              rel="noopener"
-              >Directions ↗</a
-            ><button type="button" id="share-invitation">Share</button>
-          </nav>
           <div class="entry-note">
-            <span aria-hidden="true">✦</span>
-            <p>
-              <strong>One elephant-shaped invitation admits two people.</strong>
-              Please bring the elephant pass with you for entry.<br /><small
-                >For District bookings, follow the entry instructions on your
-                ticket.</small
-              >
-            </p>
+            <p><strong>One elephant-shaped invitation admits two people.</strong><br />Please bring your elephant pass for entry. <small>For District bookings, follow the entry instructions on your ticket.</small></p>
           </div>
+          <a class="thank-you-replay" href="#beginning">Relive their evening ↑</a>
         </div>
       </section>
     </main>

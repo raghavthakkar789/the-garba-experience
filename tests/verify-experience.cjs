@@ -616,7 +616,7 @@ const scroll = (cursor) => {
     ),
   );
   console.log(
-    "PASS: local assets/CSS/anchors; eleven-scene forward and reverse scrolling; stationary sponsor street; moving friends; board details; original static ending; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
+    "PASS: local assets/CSS/anchors; eleven-scene forward and reverse scrolling; stationary sponsor street; moving friends; board details; PDF thank-you ending; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
   );
   console.log(
     "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",
