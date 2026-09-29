@@ -327,27 +327,48 @@
         `${Math.sin(progress * Math.PI * 3) * 1.4}deg`,
       );
     if (scene.id === "celebration") {
-      const join = ease(progress / 0.23);
-      const stride = Math.sin(progress * Math.PI * 12);
-      person(
-        "man",
-        (1 - join) * -w * 0.2,
-        -Math.abs(stride) * 4,
-        1,
-        1,
-        join < 0.9 ? "walk" : "dance",
-        stride * 2,
-      );
-      person(
-        "woman",
-        (1 - join) * w * 0.2,
-        -Math.abs(stride) * 4,
-        1,
-        1,
-        join < 0.9 ? "walk" : "dance",
-        -stride * 2,
-      );
+      // A short arc in the inner ring, viewed from directly above.
+      scene.querySelectorAll(".garba-friend").forEach((dancer, i) => {
+        const angle = Math.PI / 2 + (i ? -0.24 : 0.24) + progress * 0.22;
+        dancer.style.setProperty("--dancer-x", `${(50 + Math.cos(angle) * 26).toFixed(3)}%`);
+        dancer.style.setProperty("--dancer-y", `${(48 + Math.sin(angle) * 26).toFixed(3)}%`);
+        dancer.style.setProperty("--dancer-angle", `${(angle * 180 / Math.PI - 90 + Math.sin(progress * Math.PI * 12) * 5).toFixed(2)}deg`);
+      });
     }
+  }
+
+  function positionDialogue(scene) {
+    const line = scene.querySelector(".dialogue-beat.is-speaking");
+    if (!line) return;
+    const her = line.dataset.speaker === "her";
+    let target, xPart = 0.5, yPart = 0.08;
+    if (scene.id === "the-invitation") {
+      target = scene.querySelector(her ? ".handoff-woman" : ".handoff-man");
+    } else if (scene.id === "devotion") {
+      target = scene.querySelector(".aarti-art");
+      xPart = her ? 0.72 : 0.27;
+      yPart = her ? 0.1 : 0.02;
+    } else if (scene.id === "celebration") {
+      target = scene.querySelector(her ? ".garba-woman" : ".garba-man");
+      yPart = 0.30;
+    } else {
+      const together = scene.querySelector(".together-art");
+      if (together && Number(getComputedStyle(together).opacity) > 0.5) {
+        target = together;
+        xPart = her ? 0.72 : 0.28;
+      } else target = scene.querySelector(her ? ".story-person.woman" : ".story-person.man");
+    }
+    if (!target) return;
+    const bounds = target.getBoundingClientRect();
+    const box = scene.getBoundingClientRect();
+    const headX = bounds.left - box.left + bounds.width * xPart;
+    const headY = bounds.top - box.top + bounds.height * yPart;
+    const width = line.offsetWidth;
+    const centre = clamp(headX, width / 2 + 12, box.width - width / 2 - 12);
+    line.style.setProperty("--bubble-x", `${centre.toFixed(2)}px`);
+    line.style.setProperty("--bubble-y", `${(headY - 12).toFixed(2)}px`);
+    line.style.setProperty("--bubble-tip", `${clamp(headX - centre + width / 2, 14, width - 14).toFixed(2)}px`);
+    line.style.setProperty("--speaker-visible", getComputedStyle(target).opacity);
   }
   function clearSceneState() {
     for (const scene of scenes) {
@@ -356,7 +377,8 @@
       scene.removeAttribute("aria-hidden");
       scene
         .querySelectorAll(".dialogue-beat")
-        .forEach((line) => line.removeAttribute("aria-hidden"));
+        .forEach((line) => { line.removeAttribute("aria-hidden"); line.removeAttribute("style"); });
+      scene.querySelectorAll(".garba-friend").forEach((dancer) => dancer.removeAttribute("style"));
       scene
         .querySelectorAll(".story-person")
         .forEach((person) => person.removeAttribute("style"));
@@ -489,6 +511,7 @@
           ease((progress - 0.24) / 0.6),
         );
     });
+    scenes.filter((scene) => scene.classList.contains("is-visible")).forEach(positionDialogue);
     const photoButton = document.querySelector("#take-story-photo");
     if (photoButton) photoButton.disabled = false;
     if (focusStoryOnArrival && scenes[selected].id === "beginning") {
@@ -503,6 +526,11 @@
   function schedule() {
     if (!frame) frame = requestAnimationFrame(renderScroll);
   }
+  // Re-anchor after responsive art and Gujarati fonts finish decoding/layout.
+  document.addEventListener("load", (event) => {
+    if (event.target instanceof HTMLImageElement) schedule();
+  }, true);
+  document.fonts?.ready.then(schedule);
   function scrollToScene(scene, behavior = "smooth") {
     cancelEntry();
     const index = scenes.indexOf(scene);

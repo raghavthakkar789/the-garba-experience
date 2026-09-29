@@ -154,6 +154,7 @@ const scroll = (cursor) => {
   for (const file of [
     "experience.css",
     "storybook.css",
+    "scene-refinements.css",
     "button-motion.css",
     "partner-road.css",
     "assets/fonts/fonts.css",
@@ -363,8 +364,15 @@ const scroll = (cursor) => {
     "manual snapshot",
   );
   scroll(9.5);
-  assert.equal(d.querySelector("#celebration .man").dataset.pose, "dance");
-  assert.equal(d.querySelector("#celebration .woman").dataset.pose, "dance");
+  const overheadMan = d.querySelector('#celebration .garba-man');
+  const overheadWoman = d.querySelector('#celebration .garba-woman');
+  assert(overheadMan && overheadWoman, 'both friends use overhead dance sprites');
+  scroll(9.1);
+  const firstDance = overheadMan.getAttribute('style');
+  scroll(9.6);
+  assert.notEqual(overheadMan.getAttribute('style'), firstDance, 'friends advance around the central shrine');
+  scroll(9.1);
+  assert.equal(overheadMan.getAttribute('style'), firstDance, 'overhead garba reverses with scroll');
   scroll(0.6);
   assert.equal(
     d.querySelector("#invitation").style.getPropertyValue("--open"),

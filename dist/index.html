@@ -35,7 +35,7 @@
     <script defer src="partner-road.js?v=3"></script>
     <script defer src="invitation-handoff.js?v=1"></script>
     <script defer src="aarti-flowers.js?v=1"></script>
-    <script defer="" src="experience.js?v=16"></script>
+    <script defer="" src="experience.js?v=17"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -70,6 +70,7 @@
     <link rel="stylesheet" href="storybook.css?v=19" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
     <link rel="stylesheet" href="partner-road.css?v=3" />
+    <link rel="stylesheet" href="scene-refinements.css?v=1" />
     <script defer src="button-motion.js?v=2"></script>
   </head>
   <body>
@@ -270,10 +271,10 @@
             </div>
             <div class="story-car" aria-hidden="true">
               <img
-                src="assets/arrival-car.webp"
+                src="assets/story/refinements/mercedes-side.webp"
                 alt=""
-                width="1502"
-                height="481"
+                width="1500"
+                height="470"
               />
             </div>
           </section>
@@ -300,9 +301,9 @@
             <picture class="drive-cockpit" aria-hidden="true"
               ><source
                 media="(max-width:650px)"
-                srcset="assets/story/scroll/cockpit-mobile.webp" />
+                srcset="assets/story/refinements/mercedes-cockpit-mobile.webp" />
               <img
-                src="assets/story/scroll/cockpit.webp"
+                src="assets/story/refinements/mercedes-cockpit.webp"
                 alt=""
                 width="1536"
                 height="1024"
@@ -338,10 +339,10 @@
             </div>
             <div class="story-car" aria-hidden="true">
               <img
-                src="assets/arrival-car.webp"
+                src="assets/story/refinements/mercedes-side.webp"
                 alt=""
-                width="1502"
-                height="481"
+                width="1500"
+                height="470"
               />
             </div>
             <img
@@ -453,8 +454,8 @@
             </div>
             <img
               class="aarti-art"
-              src="assets/story/scroll/aarti.webp"
-              alt="The two illustrated friends hold a lit aarti dish together"
+              src="assets/story/refinements/aarti-facing-devi.webp"
+              alt="The friends face Devi Maa with their backs to us, holding a lit aarti thali toward her"
               loading="lazy"
             />
             <div class="scene-actions">
@@ -470,12 +471,11 @@
             data-sound="celebration"
             aria-labelledby="celebration-title"
           >
-            <picture class="scene-art"
-              ><img
-                src="assets/story/scroll/circle.webp"
-                alt="An illustrated Garba circle with dancers in colorful traditional clothes"
-                loading="lazy"
-            /></picture>
+            <div class="garba-world">
+              <img class="garba-courtyard" src="assets/story/refinements/sheri-garba-overhead.webp" alt="Overhead view of neighbours playing sheri garba in circles around a small central Maa Amba shrine in an Ahmedabad pol" width="1254" height="1254" loading="lazy" />
+              <div class="garba-friend garba-man" data-speaker="him" aria-hidden="true"><img src="assets/story/refinements/garba-man.webp" alt="" loading="lazy" /></div>
+              <div class="garba-friend garba-woman" data-speaker="her" aria-hidden="true"><img src="assets/story/refinements/garba-woman.webp" alt="" loading="lazy" /></div>
+            </div>
             <div class="story-shade"></div>
             <div class="scene-copy story-title">
               <h2 id="celebration-title">Their circle <em>is waiting.</em></h2>
@@ -483,10 +483,6 @@
             <div class="dialogue-track">
               <p class="dialogue-beat" data-speaker="him" data-at="0.00"><span class="speaker">He</span><q lang="gu">આ છેલ્લો ફેરો કહીને ત્રણ થઈ ગયા.</q></p>
               <p class="dialogue-beat" data-speaker="her" data-at="0.24"><span class="speaker">She</span><q lang="gu">તો ગણવાનું બંધ કર. હજી વહેલું છે.</q></p>
-            </div>
-            <div class="story-cast" aria-hidden="true">
-              <div class="story-person man" data-pose="think"><i></i></div>
-              <div class="story-person woman" data-pose="think"><i></i></div>
             </div>
             <div class="scene-actions">
               <button class="outline-button" type="button" data-track="garba1">

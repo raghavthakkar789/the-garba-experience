@@ -1,0 +1,119 @@
+/* Small speech bubbles stay tied to the head, not a fixed page-wide bar. */
+.illustrated-scene .dialogue-beat {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 10px 13px;
+  min-height: 0;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px #17201730;
+}
+.illustrated-scene .dialogue-beat q[lang="gu"] { font-size: 1em; }
+.dialogue-beat .speaker {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.cinematic section.scene.illustrated-scene .dialogue-track {
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  transform: none;
+  pointer-events: none;
+}
+.cinematic .illustrated-scene .dialogue-beat {
+  position: absolute;
+  left: var(--bubble-x, 50%);
+  top: var(--bubble-y, 50%);
+  width: min(240px, calc(100vw - 28px));
+  min-height: 0;
+  margin: 0;
+  transform: translate(-50%, -100%);
+  opacity: var(--speaker-visible, 1);
+  border-radius: 14px;
+}
+.illustrated-scene .dialogue-beat:after {
+  left: var(--bubble-tip, 50%);
+  right: auto;
+  bottom: -11px;
+  width: 13px;
+  height: 12px;
+  transform: translateX(-50%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+html:not(.cinematic) .illustrated-scene .dialogue-track {
+  width: min(380px, 84%);
+  max-width: 380px;
+}
+html:not(.cinematic) .illustrated-scene .dialogue-beat {
+  font-size: 16px;
+  padding: 10px 13px;
+}
+
+/* The Mercedes overlay keeps its full steering wheel visible at each ratio. */
+.story-drive .drive-cockpit { transform: none; }
+.story-drive .drive-cockpit img { object-fit: fill; }
+
+/* Both friends now offer the thali towards the centre shrine. */
+#devotion .aarti-art {
+  left: 50%;
+  bottom: 17%;
+  height: min(36svh, 340px);
+}
+
+/* One overhead courtyard: the small shrine stays still as the friends circle. */
+#celebration { background: #172e25; }
+#celebration:before {
+  content: "";
+  position: absolute;
+  inset: -28px;
+  z-index: -2;
+  background: url(assets/story/refinements/sheri-garba-overhead.webp) center / cover;
+  filter: blur(22px) brightness(.35);
+}
+.garba-world {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: min(110svh, 100vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  isolation: isolate;
+}
+.garba-courtyard { display: block; width: 100%; height: 100%; }
+.garba-friend {
+  position: absolute;
+  width: 10%;
+  left: var(--dancer-x, 45%);
+  top: var(--dancer-y, 76%);
+  transform: translate(-50%, -50%) rotate(var(--dancer-angle, 0deg));
+  filter: drop-shadow(0 3px 3px #25120866);
+}
+.garba-woman { left: var(--dancer-x, 57%); width: 12%; }
+.garba-friend img { display: block; width: 100%; height: auto; }
+#celebration .story-shade { z-index: 1; }
+#celebration .dialogue-track { z-index: 7; }
+#celebration .story-title, #celebration .scene-actions { z-index: 5; }
+html:not(.cinematic) #celebration { min-height: 1050px; }
+html:not(.cinematic) .garba-world { top: 65%; }
+
+@media (max-width: 650px) {
+  .cinematic .illustrated-scene .dialogue-beat {
+    width: min(200px, calc(100vw - 28px));
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 9px 11px;
+  }
+  #devotion .aarti-art { height: 27svh; bottom: 20%; }
+  #devotion .scene-actions { bottom: 12%; }
+  .garba-world { width: 142vw; top: 55%; }
+  .garba-friend { width: 11%; }
+  .garba-woman { width: 13%; }
+  .cinematic #celebration .story-title { padding-top: 0; }
+}
+@media (max-width: 650px) and (max-height: 700px) {
+  .cinematic .journey-stage:has(#devotion.is-active) .journey-caption { opacity: 0; }
+}
