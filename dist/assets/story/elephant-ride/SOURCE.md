@@ -1,0 +1,11 @@
+# Elephant ride assets
+
+`hathi-original.webp` is a web-optimized copy of the user-provided **Hathi final.png**. The ivory texture, gold outlines and burgundy saddle are preserved. An SVG viewport omits transparent outer padding; CSS faces the elephant toward the destination. The original upload is unchanged.
+
+`seated-friends.webp` was prepared with the built-in image generation tool, using the existing man and woman from `assets/story/handoff/` as identity references. It is a separate transparent layer, keeping the user’s elephant artwork intact.
+
+One shared `.journey-elephant` layer carries the same seated friends across pickup, Ahmedabad and venue-background dissolves. Scroll drives mounting, travel, sway, dismounting and departure in both directions. Reading and reduced-motion modes show a still elephant ride in each scene.
+
+## Seated character prompt
+
+Use case: identity-preserve. Asset type: transparent character sprite for the existing illustrated Garba invitation website. Input image 1 is the exact male character reference; input image 2 is the exact female reference. Render these SAME two young adult friends together, seated side by side on an invisible broad elephant saddle, both facing toward the RIGHT in three-quarter side view. Man at the front/right, woman behind/left. Keep his short dark wavy hair, neat beard, emerald green and gold Gujarati kediyu, white trousers and brown embroidered shoes. Keep her long dark braid, pink and emerald gold-trimmed chaniya choli, earrings and bangles. Match the references' warm storybook/chibi hand-painted style and friendly faces. Both bodies clearly seated, bent knees and relaxed dangling lower legs, natural balanced poses, hands resting on their knees. They look ahead, excited but calm. Full bodies including feet, enough transparent padding around silhouettes. IMPORTANT: only the two seated people, NO elephant, NO saddle, NO seat, NO floor, NO background, NO props, NO text. Real alpha transparency. A square sprite composition, figures close together without touching or overlapping faces. They will be composited onto a separate elephant illustration.

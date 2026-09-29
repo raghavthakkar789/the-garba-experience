@@ -71,3 +71,43 @@
   .thank-you-scene { height: 600px; }
   .thank-you-logo { width: 140px; height: 140px; }
 }
+
+/* Invitation details live inside the thank-you arch, above all elephant artwork. */
+.thank-you-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  min-height: 0;
+  padding: 30px 24px 380px;
+}
+.thank-you-arch { width: min(850px, 98%); }
+.thank-you-logo { position: relative; top: auto; left: auto; transform: none; width: 155px; height: 155px; flex-shrink: 0; }
+.thank-you-message { position: relative; top: auto; left: auto; right: auto; margin-top: 8px; }
+.thank-you-message h2 { font-size: clamp(44px, 5vw, 70px); }
+.thank-you-message p { font-size: 14px; margin-top: 12px; }
+.thank-you-details { width: 100%; max-width: 670px; padding: 22px 0 0; background: none; border: 0; }
+.thank-you-date { font-size: 20px; }
+.thank-you-actions { gap: 22px; margin-top: 18px; }
+.thank-you-details .entry-note { margin-top: 16px; }
+.thank-you-elephant { height: 350px; }
+.thank-you-leaf { height: 280px; }
+.leaf-right { height: 360px; }
+.thank-you-lotus { height: 245px; }
+@media (max-width: 650px) {
+  .thank-you-scene { height: auto; padding: 28px 28px 290px; }
+  .thank-you-logo { width: 128px; height: 128px; }
+  .thank-you-message h2 { font-size: clamp(36px, 10vw, 54px); }
+  .thank-you-message p { font-size: 12px; }
+  .thank-you-details { padding: 20px 0 0; }
+  .thank-you-details > .eyebrow { font-size: 9px; }
+  .thank-you-date { font-size: 16px; }
+  .thank-you-venue { font-size: 12px; }
+  .thank-you-actions { gap: 10px; margin-top: 16px; }
+  .thank-you-actions .event-links { gap: 8px; }
+  .thank-you-elephant { height: 260px; }
+  .thank-you-leaf { height: 180px; }
+  .leaf-right { height: 240px; }
+  .thank-you-lotus { height: 160px; }
+  .thank-you-details .entry-note { font-size: 11px; }
+}

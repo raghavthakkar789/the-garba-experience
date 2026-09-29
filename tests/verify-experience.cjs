@@ -386,24 +386,28 @@ const scroll = (cursor) => {
     "him",
     "dialogue reverses",
   );
+  const elephantRide = d.querySelector('.journey-elephant');
+  assert(elephantRide && !d.querySelector('.story-car, .drive-cockpit'), 'elephant replaces every car and cockpit');
   scroll(3.26);
-  const parked = parseFloat(
-    d.querySelector("#the-plan").style.getPropertyValue("--car-x"),
-  );
-  assert(Math.abs(parked) < 1, "ride parks for boarding");
+  assert(!elephantRide.hidden, 'elephant arrives for boarding');
+  const waitingRide = Number.parseFloat(elephantRide.style.getPropertyValue('--ride-x'));
   scroll(3.66);
-  assert(
-    parseFloat(d.querySelector("#the-plan").style.getPropertyValue("--car-x")) >
-      100,
-    "ride departs",
-  );
-  assert.equal(
-    d
-      .querySelector("#the-plan .man")
-      .style.getPropertyValue("--person-opacity"),
-    "0.000",
-    "both friends board",
-  );
+  assert(Number.parseFloat(elephantRide.style.getPropertyValue('--ride-x')) > waitingRide, 'elephant advances after boarding');
+  assert.equal(elephantRide.style.getPropertyValue('--riders-opacity'), '1.0000', 'both friends ride together');
+  assert.equal(d.querySelector('#the-plan .man').style.getPropertyValue('--person-opacity'), '0.000', 'standing pose clears after mounting');
+  for (const point of [3.85, 4.1, 4.85, 5.05]) {
+    scroll(point);
+    assert(!elephantRide.hidden, 'one elephant persists through scene dissolves');
+    assert.equal(elephantRide.style.getPropertyValue('--riders-opacity'), '1.0000');
+  }
+  const arrivedRide = elephantRide.getAttribute('style');
+  scroll(5.5);
+  assert.equal(elephantRide.style.getPropertyValue('--riders-opacity'), '0.0000', 'friends dismount at venue');
+  scroll(5.75);
+  assert(elephantRide.hidden, 'elephant leaves after the friends enter');
+  scroll(5.05);
+  assert.equal(elephantRide.getAttribute('style'), arrivedRide, 'reverse scroll retraces the same ride');
+  assert(d.querySelector('.thank-you-scene .thank-you-details'), 'all final details sit in the thank-you composition');
   scroll(5.6);
   await tick();
   assert.equal(d.querySelector('#arrival').dataset.crowdRunning, 'true', 'entrance guests move while visible');

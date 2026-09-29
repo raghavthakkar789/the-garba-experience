@@ -12,6 +12,7 @@
   const root = document.documentElement;
   const journey = document.querySelector(".journey");
   const stage = document.querySelector(".journey-stage");
+  const elephantRide = document.querySelector(".journey-elephant");
   const scenes = [...document.querySelectorAll(".scene")];
   // The final walking chapter needs time for every shop, within the same film.
   const sceneSpans = scenes.map((scene) => Number(scene.dataset.scrollSpan) || 1);
@@ -227,7 +228,6 @@
       el.style.setProperty("--person-tilt", `${tilt.toFixed(2)}deg`);
       el.dataset.pose = pose;
     };
-    const car = (x) => scene.style.setProperty("--car-x", `${x.toFixed(2)}px`);
     const together = (opacity, scale, y) => {
       scene.style.setProperty("--together-opacity", opacity.toFixed(3));
       scene.style.setProperty("--together-scale", scale.toFixed(3));
@@ -249,41 +249,35 @@
       beats.forEach((line, i) => line.setAttribute("aria-hidden", String(arrived < 1 || i !== spoken)));
     }
     if (scene.id === "the-plan") {
-      const arrive = ease((progress - 0.02) / 0.18),
-        board = ease((progress - 0.25) / 0.18);
-      const leave = ease((progress - 0.51) / 0.19),
-        fade = 1 - ease((progress - 0.41) / 0.07);
-      car((1 - arrive) * -w * 1.25 + leave * w * 1.25);
+      const board = ease((progress - 0.25) / 0.22);
+      const fade = 1 - ease((progress - 0.36) / 0.11);
       person(
         "man",
-        board * w * 0.2,
-        Math.sin(board * Math.PI * 6) * 3,
+        board * w * 0.10,
+        -board * h * 0.31,
         fade,
-        1 - board * 0.14,
+        0.7 - board * 0.25,
         board > 0 ? "walk" : "think",
       );
       person(
         "woman",
-        board * w * 0.05,
-        Math.sin(board * Math.PI * 6 + 0.4) * 3,
+        -board * w * 0.12,
+        -board * h * 0.3,
         fade,
-        1 - board * 0.14,
+        0.7 - board * 0.25,
         board > 0 ? "walk" : "think",
       );
     }
     if (scene.id === "the-drive")
       scene.style.setProperty("--road-zoom", (1 + progress * 0.16).toFixed(3));
     if (scene.id === "arrival") {
-      const park = ease(progress / 0.17),
-        step = ease((progress - 0.22) / 0.1);
+      const step = ease((progress - 0.17) / 0.18);
       const joined = ease((progress - 0.34) / 0.07),
         walk = ease((progress - 0.42) / 0.26);
-      const leave = ease((progress - 0.48) / 0.21);
       const passage = ease((progress - 0.49) / 0.18);
       scene.style.setProperty("--passage-opacity", passage.toFixed(4));
-      car((1 - park) * -w * 1.2 + leave * w * 1.3);
-      person("man", 0, -step * 25, step * (1 - joined), 0.8, "walk");
-      person("woman", 0, -step * 25, step * (1 - joined), 0.8, "walk");
+      person("man", -(1 - step) * w * .1, -(1 - step) * h * .24, step * (1 - joined), .65, "walk");
+      person("woman", -(1 - step) * w * .22, -(1 - step) * h * .24, step * (1 - joined), .65, "walk");
       together(
         joined,
         0.8 - walk * 0.49,
@@ -335,6 +329,25 @@
       );
   }
 
+  // One shared elephant survives the scene dissolves; only its surroundings change.
+  function animateElephant(cursor) {
+    const visible = cursor >= 3 && cursor < 5.72;
+    elephantRide.hidden = !visible;
+    elephantRide.setAttribute("aria-hidden", String(!visible));
+    if (!visible) return;
+    const enter = ease((cursor - 3.02) / .20);
+    const travel = ease((cursor - 3.52) / 1.55);
+    const leave = ease((cursor - 5.38) / .32);
+    const board = ease((cursor - 3.36) / .11);
+    const dismount = ease((cursor - 5.17) / .18);
+    elephantRide.style.setProperty("--ride-x", `${((1 - enter) * -innerWidth * 1.2 + travel * innerWidth * .05 + leave * innerWidth * 1.2).toFixed(2)}px`);
+    elephantRide.style.setProperty("--ride-opacity", (1 - ease((cursor - 5.62) / .1)).toFixed(4));
+    elephantRide.style.setProperty("--riders-opacity", (board * (1 - dismount)).toFixed(4));
+    elephantRide.style.setProperty("--riders-y", `${(dismount * stageHeight * .13).toFixed(2)}px`);
+    elephantRide.style.setProperty("--ride-step", `${(Math.sin(cursor * 44) * 2).toFixed(2)}px`);
+    elephantRide.style.setProperty("--ride-sway", `${(Math.sin(cursor * 22) * .7).toFixed(2)}deg`);
+  }
+
   function positionDialogue(scene) {
     const line = scene.querySelector(".dialogue-beat.is-speaking");
     if (!line) return;
@@ -349,6 +362,11 @@
     } else if (scene.id === "celebration") {
       target = scene.querySelector(her ? ".garba-woman" : ".garba-man");
       yPart = 0.30;
+    } else if (scene.id === "arrival" && !elephantRide.hidden &&
+      Number(elephantRide.style.getPropertyValue("--riders-opacity")) > .4) {
+      target = elephantRide.querySelector(".elephant-riders");
+      xPart = her ? .32 : .72;
+      yPart = .12;
     } else {
       const together = scene.querySelector(".together-art");
       if (together && Number(getComputedStyle(together).opacity) > 0.5) {
@@ -373,6 +391,8 @@
     if (cinematic) positionDialogue(event.currentTarget);
   });
   function clearSceneState() {
+    elephantRide.hidden = true;
+    elephantRide.setAttribute("aria-hidden", "true");
     for (const scene of scenes) {
       scene.classList.remove("is-visible", "is-active");
       scene.inert = false;
@@ -384,7 +404,6 @@
         .querySelectorAll(".story-person")
         .forEach((person) => person.removeAttribute("style"));
       [
-        "--car-x",
         "--together-opacity",
         "--together-scale",
         "--together-y",
@@ -473,6 +492,7 @@
       return;
     }
     const cursor = clamp((scrollY - journeyTop) / travel) * storySpan;
+    animateElephant(cursor);
     let base = scenes.length - 1;
     while (base > 0 && cursor < sceneStarts[base]) base--;
     const local = clamp((cursor - sceneStarts[base]) / sceneSpans[base]);
