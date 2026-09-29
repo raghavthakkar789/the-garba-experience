@@ -322,7 +322,12 @@
         : "Take their photo";
     }
     if (scene.id === "the-stage")
-      together(1, 1 - progress * 0.2, -progress * h * 0.06);
+      together(1, 1 - progress * 0.12, -progress * h * 0.025);
+    if (scene.id === "celebration") {
+      const approach = ease((progress - 0.08) / 0.78);
+      scene.style.setProperty("--garba-zoom", (1 + approach * 1.15).toFixed(4));
+      scene.style.setProperty("--garba-dialogue-opacity", (1 - ease((progress - 0.42) / 0.14)).toFixed(4));
+    }
     if (scene.id === "devotion")
       scene.style.setProperty(
         "--prayer-tilt",
@@ -388,6 +393,8 @@
         "--dialogue-opacity",
         "--arrival-copy",
         "--passage-opacity",
+        "--garba-zoom",
+        "--garba-dialogue-opacity",
       ].forEach((prop) => scene.style.removeProperty(prop));
     }
   }

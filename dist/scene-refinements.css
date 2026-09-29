@@ -146,3 +146,35 @@ html:not(.cinematic) .garba-world { top: 65%; }
 }
 .cinematic #arrival .entry-passage-art { opacity: var(--passage-opacity, 0); }
 #the-stage .scene-art img { object-position: center; }
+
+/* The camera moves into the whole courtyard before dissolving to the final walk. */
+.cinematic .garba-world {
+  transform: translate(-50%, -50%) scale(var(--garba-zoom, 1));
+  transform-origin: 50% 48%;
+}
+.cinematic #celebration .dialogue-track { opacity: var(--garba-dialogue-opacity, 1); }
+
+/* Fit the complete concert composition; the friends watch from the foreground. */
+.cinematic #the-stage { background: #102820; }
+.cinematic #the-stage::before {
+  content: "";
+  position: absolute;
+  inset: -25px;
+  z-index: -5;
+  background: url(assets/story/event-decor/crowds/stage-clean.webp) center / cover;
+  filter: blur(22px) brightness(.3);
+}
+.cinematic #the-stage .scene-art,
+.cinematic #the-stage .stage-crowd { inset: 90px 0 80px; }
+.cinematic #the-stage .scene-art img { object-fit: contain; transform: none; }
+.cinematic #the-stage .stage-crowd { transform: none; }
+#the-stage .together-art {
+  height: min(20svh, 180px);
+  left: 23%;
+  bottom: 12%;
+}
+@media (max-width: 650px) {
+  .cinematic #the-stage .scene-art,
+  .cinematic #the-stage .stage-crowd { inset: 96px 0 92px; }
+  #the-stage .together-art { height: 17svh; left: 24%; bottom: 17%; }
+}

@@ -13,12 +13,13 @@
   let nearbyShop = null;
   let lastProgress = 0;
   let opener;
+  const ease = value => { const t = Math.max(0, Math.min(1, value)); return t * t * (3 - 2 * t); };
   function closeAutoCard() {
     autoCard.hidden = true;
     delete road.dataset.nearbyShop;
     nearbyShop = null;
   }
-  function updateAutoCard(x, y, worldBounds) {
+  function updateAutoCard(x, y, worldBounds, facing) {
     if (!document.documentElement.classList.contains('cinematic') ||
         !road.classList.contains('is-active') || dialog.open || document.hidden) {
       closeAutoCard();
@@ -34,6 +35,13 @@
         footY <= bounds.bottom + worldBounds.height * .09;
     });
     if (!nearby) { closeAutoCard(); return; }
+    const bounds = nearby.getBoundingClientRect();
+    const across = (footX - bounds.left - bounds.width * .15) / (bounds.width * .7);
+    const passed = facing < 0 ? 1 - across : across;
+    const enter = ease(passed / .2);
+    const leave = ease((passed - .65) / .35);
+    autoCard.style.setProperty('--partner-card-y', `${((1 - enter) * 34 + leave * Math.min(innerHeight * .38, 320)).toFixed(2)}px`);
+    autoCard.style.setProperty('--partner-card-opacity', (enter * (1 - leave)).toFixed(4));
     if (nearby === nearbyShop) return;
     nearbyShop = nearby;
     autoCard.querySelector('.partner-auto-name').textContent = nearby.querySelector('.shop-name').textContent;
@@ -86,7 +94,7 @@
     friends.style.setProperty('--walk-facing', to[0] < from[0] ? -1 : to[0] > from[0] ? 1 : segment < 5 ? 1 : segment < 8 ? -1 : 1);
     friends.style.setProperty('--walk-bob', `${Math.sin(progress*240)*1.6}px`);
     friends.style.setProperty('--walk-sway', `${Math.sin(progress*120)*1.1}deg`);
-    updateAutoCard(x, y, world.getBoundingClientRect());
+    updateAutoCard(x, y, world.getBoundingClientRect(), to[0] - from[0]);
   }
   road.addEventListener('story-progress', event => render(event.detail));
   const resetInactive = () => {

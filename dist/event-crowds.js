@@ -11,7 +11,8 @@
       const source = layer.dataset.art ? scene.querySelector(layer.dataset.art) : null;
       const width = layer.clientWidth, height = layer.clientHeight;
       const ratio = source ? (source.naturalWidth / source.naturalHeight || 1.5) : width / height;
-      const planeWidth = source ? Math.max(width, height * ratio) : width;
+      const contain = source && getComputedStyle(source).objectFit === "contain";
+      const planeWidth = source ? (contain ? Math.min(width, height * ratio) : Math.max(width, height * ratio)) : width;
       const planeHeight = source ? planeWidth / ratio : height;
       layer.style.setProperty("--plane-width", `${planeWidth}px`);
       layer.style.setProperty("--plane-height", `${planeHeight}px`);

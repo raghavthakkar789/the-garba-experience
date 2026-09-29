@@ -336,10 +336,23 @@ const scroll = (cursor) => {
   }
   road.dispatchEvent(new w.CustomEvent('story-progress', { detail: firstStop }));
   assert(!autoCard.hidden);
+  const cardMotion = [];
+  for (let step = 0; step <= 1000; step++) {
+    const progress = step / 1000;
+    road.dispatchEvent(new w.CustomEvent('story-progress', { detail: progress }));
+    if (road.dataset.nearbyShop === '0') cardMotion.push({ progress,
+      y: Number.parseFloat(autoCard.style.getPropertyValue('--partner-card-y')),
+      opacity: Number(autoCard.style.getPropertyValue('--partner-card-opacity')) });
+  }
+  const centered = cardMotion.find(state => state.y === 0 && state.opacity === 1);
+  const departing = cardMotion.find(state => state.y > 100 && state.opacity < .6);
+  assert(centered && departing && departing.progress > centered.progress, 'partner name holds in the center then descends and fades as friends pass');
+  road.dispatchEvent(new w.CustomEvent('story-progress', { detail: centered.progress }));
+  assert.equal(autoCard.style.getPropertyValue('--partner-card-y'), '0.00px', 'reverse scrolling restores the centered partner');
   scroll(9.3);
   await tick();
   assert(autoCard.hidden, 'leaving the sponsor scene closes the card');
-  assert.equal(d.querySelectorAll('.dialogue-beat').length, 11, 'fewer exchanges, rather than a word limit');
+  assert.equal(d.querySelectorAll('.dialogue-beat').length, 12, 'fewer exchanges, rather than a word limit');
   for (const scene of scenes)
     assert(scene.querySelectorAll('.dialogue-beat').length <= 2, 'at most two lines in a scene');
   for (const line of d.querySelectorAll('.dialogue-beat q'))
@@ -439,6 +452,12 @@ const scroll = (cursor) => {
   assert(danceScene.querySelector('.garba-inner .garba-man') && danceScene.querySelector('.garba-inner .garba-woman'), 'both friends dance in the same inner group');
   assert(d.querySelector('.selfie-print img').src.includes('event-decor/selfie-lotus'), 'selfie uses matching lotus photo wall');
   assert(danceScene.querySelector('.garba-courtyard').src.includes('garba-floor'), 'floor artwork has no fixed dancers');
+  const wideZoom = Number(danceScene.style.getPropertyValue('--garba-zoom'));
+  scroll(9.6);
+  assert(Number(danceScene.style.getPropertyValue('--garba-zoom')) > wideZoom + .7, 'scroll zooms into the complete garba circle');
+  scroll(9.1);
+  assert.equal(Number(danceScene.style.getPropertyValue('--garba-zoom')), wideZoom, 'camera zoom reverses with scrolling');
+  assert(d.querySelector('#the-stage q').textContent.includes('સ્ટેજ તો કમાલ'), 'short Gujarati dialogue appreciates the stage');
   const ringState = () => danceRings.map(r => r.style.transform);
   danceScene.dispatchEvent(new w.CustomEvent('story-progress', {detail: .1}));
   const firstDance = ringState();
