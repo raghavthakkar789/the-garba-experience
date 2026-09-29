@@ -14,7 +14,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1314 / 1010;
-  transform: translateY(var(--ride-step, 0px)) rotate(var(--ride-sway, 0deg));
+  transform: translateY(var(--gait-rise, 0px));
   transform-origin: 50% 92%;
 }
 .elephant-body::after {
@@ -37,7 +37,7 @@
   width: 49%;
   height: auto;
   opacity: var(--riders-opacity, 1);
-  transform: translateY(var(--riders-y, 0px));
+  transform: translateY(calc(var(--riders-y, 0px) + var(--saddle-rise, 0px)));
   filter: drop-shadow(1px 3px 1px #30261233);
 }
 .cinematic .elephant-still { display: none; }
@@ -53,4 +53,9 @@ html:not(.cinematic) #arrival .together-art { display: none; }
   .journey-elephant { width: min(89vw, 54svh); bottom: 24%; }
   html:not(.cinematic) .elephant-still { width: 86vw; bottom: 18%; }
   .cinematic #arrival .story-person { width: 38vw; }
+}
+
+.elephant-rig { overflow: visible; }
+@media (prefers-reduced-motion: reduce) {
+  .elephant-body, .elephant-riders { transform: none; }
 }

@@ -334,6 +334,8 @@
     const visible = cursor >= 3 && cursor < 5.72;
     elephantRide.hidden = !visible;
     elephantRide.setAttribute("aria-hidden", String(!visible));
+    elephantRide.dataset.walking = String(visible && (
+      cursor < 3.22 || (cursor > 3.5 && cursor < 5.08) || cursor > 5.38));
     if (!visible) return;
     const enter = ease((cursor - 3.02) / .20);
     const travel = ease((cursor - 3.52) / 1.55);
@@ -344,8 +346,6 @@
     elephantRide.style.setProperty("--ride-opacity", (1 - ease((cursor - 5.62) / .1)).toFixed(4));
     elephantRide.style.setProperty("--riders-opacity", (board * (1 - dismount)).toFixed(4));
     elephantRide.style.setProperty("--riders-y", `${(dismount * stageHeight * .13).toFixed(2)}px`);
-    elephantRide.style.setProperty("--ride-step", `${(Math.sin(cursor * 44) * 2).toFixed(2)}px`);
-    elephantRide.style.setProperty("--ride-sway", `${(Math.sin(cursor * 22) * .7).toFixed(2)}deg`);
   }
 
   function positionDialogue(scene) {

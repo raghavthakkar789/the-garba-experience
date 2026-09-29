@@ -4,7 +4,7 @@
 
 `seated-friends.webp` was prepared with the built-in image generation tool, using the existing man and woman from `assets/story/handoff/` as identity references. It is a separate transparent layer, keeping the user’s elephant artwork intact.
 
-One shared `.journey-elephant` layer carries the same seated friends across pickup, Ahmedabad and venue-background dissolves. Scroll drives mounting, travel, sway, dismounting and departure in both directions. Reading and reduced-motion modes show a still elephant ride in each scene.
+One shared `.journey-elephant` layer carries the same seated friends across pickup, Ahmedabad and venue-background dissolves. Scroll drives mounting, travel, dismounting and departure in both directions. The animated SVG now isolates four original-art legs below a stationary torso. `elephant-walk.js` gives them a four-beat 2.3-second walk cycle with compensated planted feet, lifted recovery and minimal saddle movement. It settles to neutral at boarding/dismounting and pauses outside the visible animated journey. Reading and reduced-motion modes show a still elephant ride in each scene.
 
 ## Seated character prompt
 
