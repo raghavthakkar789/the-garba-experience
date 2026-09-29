@@ -1,0 +1,127 @@
+/* Guests are independent of the floor, stage, lamps, shrine and shop signs. */
+.event-crowd {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.crowd-plane {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--plane-width, 100%);
+  height: var(--plane-height, 100%);
+  transform: translate(-50%, -50%);
+}
+.cinematic .event-crowd:not(.road-crowd) {
+  transform: scale(var(--zoom, 1.035)) translate3d(var(--pan, 0px), 0, 0);
+}
+.gate-crowd { opacity: calc(1 - var(--passage-opacity, 0)); }
+.passage-crowd { opacity: var(--passage-opacity, 0); }
+.guest {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  height: calc(var(--h) * 1%);
+  aspect-ratio: 3 / 4;
+  transform: translate(-50%, -95%);
+  --travel-x: calc(var(--dx, 0) * var(--unit-x, 1px));
+  --travel-y: calc(var(--dy, 0) * var(--unit-y, 1px));
+}
+.guest-shift, .guest-body, .guest-sprite { display: block; width: 100%; height: 100%; }
+.guest-shift { position: relative; isolation: isolate; transform-origin: 50% 95%; }
+.guest-shift::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 28%;
+  bottom: 2%;
+  width: 44%;
+  height: 3%;
+  border-radius: 50%;
+  background: #35210d55;
+  filter: blur(2px);
+}
+.guest-body { transform: scaleX(var(--facing, 1)); transform-origin: 50% 95%; }
+.guest-sprite {
+  background: var(--sprite) 0 0 / 400% 100% no-repeat;
+  filter: drop-shadow(1px 2px 1px #25170844);
+  transform-origin: 50% 95%;
+}
+.guest-pray .guest-sprite, .guest-performer .guest-sprite { background-size: 200% 100%; }
+.cinematic .guest-walk .guest-shift {
+  animation: guest-walk var(--duration, 26s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+.cinematic .guest-walk .guest-sprite, .cinematic .guest-dance .guest-sprite {
+  animation: guest-steps var(--tempo, 1.1s) steps(1, end) infinite;
+  animation-delay: var(--beat, 0s);
+}
+.cinematic .guest-dance .guest-shift {
+  animation: guest-dance var(--duration, 5s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.cinematic .guest-pray .guest-sprite {
+  animation: guest-prayer var(--duration, 7s) steps(1, end) infinite;
+  animation-delay: var(--delay, 0s);
+}
+.cinematic .guest-pray .guest-body {
+  animation: guest-bow var(--duration, 7s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.cinematic .guest-performer .guest-sprite {
+  animation: guest-playing var(--tempo, 1.3s) steps(1, end) infinite;
+  animation-delay: var(--beat, 0s);
+}
+.cinematic .event-crowd .guest-shift,
+.cinematic .event-crowd .guest-body,
+.cinematic .event-crowd .guest-sprite { animation-play-state: paused; }
+.cinematic .scene[data-crowd-running="true"] .event-crowd .guest-shift,
+.cinematic .scene[data-crowd-running="true"] .event-crowd .guest-body,
+.cinematic .scene[data-crowd-running="true"] .event-crowd .guest-sprite { animation-play-state: running; }
+@keyframes guest-walk {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(var(--travel-x), var(--travel-y), 0) scale(var(--end-scale, 1)); }
+}
+@keyframes guest-steps {
+  0%, 100% { background-position: 0% 0; }
+  25% { background-position: 33.333333% 0; }
+  50% { background-position: 66.666667% 0; }
+  75% { background-position: 100% 0; }
+}
+@keyframes guest-dance {
+  0%, 100% { transform: translate3d(calc(var(--travel-x) * -1), 0, 0) rotate(-2deg); }
+  50% { transform: translate3d(var(--travel-x), -2px, 0) rotate(2deg); }
+}
+@keyframes guest-prayer {
+  0%, 100% { background-position: 0% 0; }
+  55% { background-position: 100% 0; }
+  82% { background-position: 0% 0; }
+}
+@keyframes guest-bow {
+  0%, 100% { transform: scaleX(var(--facing, 1)); }
+  64% { transform: scaleX(var(--facing, 1)) scaleY(.98) rotate(1.2deg); }
+}
+@keyframes guest-playing {
+  0%, 100% { background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+}
+.road-crowd { z-index: 20; overflow: visible; }
+html:not(.cinematic) .road-crowd { display: none; }
+@media (max-width: 650px) {
+  .guest {
+    left: calc(var(--mx, var(--x)) * 1%);
+    top: calc(var(--my, var(--y)) * 1%);
+    height: calc(var(--mh, var(--h)) * 1%);
+    --travel-x: calc(var(--mdx, var(--dx, 0)) * var(--unit-x, 1px));
+    --travel-y: calc(var(--mdy, var(--dy, 0)) * var(--unit-y, 1px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinematic .event-crowd .guest-shift,
+  .cinematic .event-crowd .guest-body,
+  .cinematic .event-crowd .guest-sprite { animation: none; }
+}

@@ -172,6 +172,7 @@ const scroll = (cursor) => {
   w.eval(fs.readFileSync(path.join(base, 'invitation-handoff.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(base, 'aarti-flowers.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(base, 'garba-circle.js'), 'utf8'));
+  w.eval(fs.readFileSync(path.join(base, 'event-crowds.js'), 'utf8'));
   w.eval(script);
   await tick(); // Let the initial pageshow restoration finish before interacting.
   assert.equal(w.scrollY, 0, "reload starts at the top");
@@ -181,6 +182,15 @@ const scroll = (cursor) => {
     "?source=invitation",
     "reload retains URL parameters",
   );
+  for (const id of ['arrival', 'the-stage', 'devotion', 'partner-road']) {
+    assert(d.querySelectorAll(`#${id} .guest`).length >= 8, `${id} contains separate crowd figures`);
+  }
+  assert(d.querySelectorAll('#the-stage .guest-performer').length >= 9, 'singer and musicians have animated playing poses');
+  assert(d.querySelectorAll('#devotion .guest-pray').length === 8, 'eight guests pray facing the shrine');
+  for (const guest of d.querySelectorAll('.guest')) {
+    const src = guest.style.getPropertyValue('--sprite').match(/url\(([^)]+)\)/)[1];
+    assert(fs.existsSync(path.join(base, src)), `crowd sprite exists: ${src}`);
+  }
   assert.equal(fetches, 0, "no unsolicited network audio");
   assert.equal(contexts, 0, "no unsolicited generated audio");
   assert.equal(d.querySelectorAll("iframe").length, 0);
@@ -382,6 +392,15 @@ const scroll = (cursor) => {
     "both friends board",
   );
   scroll(5.6);
+  await tick();
+  assert.equal(d.querySelector('#arrival').dataset.crowdRunning, 'true', 'entrance guests move while visible');
+  hidden = true;
+  d.dispatchEvent(new w.Event('visibilitychange'));
+  assert(!d.querySelector('#arrival').dataset.crowdRunning, 'entrance guests pause in background tabs');
+  hidden = false;
+  d.dispatchEvent(new w.Event('visibilitychange'));
+  assert.equal(d.querySelector('#arrival').dataset.crowdRunning, 'true', 'guests resume on return');
+
   assert.equal(
     d.querySelector("#arrival").style.getPropertyValue("--together-opacity"),
     "1.000",
