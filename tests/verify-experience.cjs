@@ -138,8 +138,8 @@ const scroll = (cursor) => {
   assert.equal(road.querySelectorAll('.partner-shop').length, 16, 'every confirmed sponsor remains');
   assert(!d.querySelector('#the-invitation .original-invitation'), 'early invitation scene no longer shows the poster');
   assert(d.querySelector('#the-invitation .invitation-handoff img').getAttribute('src').includes('elephant-invitation-handoff'), 'she hands him the elephant-shaped invitation');
-  assert(d.querySelector('#the-invitation').textContent.includes('એક હાથીથી બે જણની એન્ટ્રી'), 'one elephant admits both friends');
-  assert.equal(d.querySelector('#the-invitation q [lang="en"]').textContent, '9 October', 'date stays in English');
+  assert(d.querySelector('#the-invitation').textContent.includes('એક હાથી · બે વ્યક્તિઓની એન્ટ્રી'), 'one elephant admits both friends');
+  assert([...d.querySelectorAll('#the-invitation q [lang="en"]')].some(line => line.textContent.includes('9th October')), 'date stays in English');
   assert(d.querySelector('#details .entry-note').textContent.includes('admits two people'), 'the final entry note repeats the same admission rule');
   for (const el of d.querySelectorAll("[src],link[href],a[href]")) {
     const value = el.getAttribute("src") || el.getAttribute("href");
@@ -352,9 +352,9 @@ const scroll = (cursor) => {
   scroll(9.3);
   await tick();
   assert(autoCard.hidden, 'leaving the sponsor scene closes the card');
-  assert.equal(d.querySelectorAll('.dialogue-beat').length, 12, 'fewer exchanges, rather than a word limit');
+  assert.equal(d.querySelectorAll('.dialogue-beat').length, 11, 'the requested eleven-line dialogue script');
   for (const scene of scenes)
-    assert(scene.querySelectorAll('.dialogue-beat').length <= 2, 'at most two lines in a scene');
+    assert(scene.querySelectorAll('.dialogue-beat').length <= (scene.id === 'the-invitation' ? 4 : 2), 'four invitation beats; at most two elsewhere');
   for (const line of d.querySelectorAll('.dialogue-beat q'))
     assert.equal(line.lang, 'gu', 'character dialogue remains Gujarati');
   assert(!d.querySelector('#the-plan .dialogue-track, #the-drive .dialogue-track'), 'pickup and drive tell the story visually');
@@ -461,7 +461,7 @@ const scroll = (cursor) => {
   assert(Number(danceScene.style.getPropertyValue('--garba-zoom')) > wideZoom + .7, 'scroll zooms into the complete garba circle');
   scroll(9.1);
   assert.equal(Number(danceScene.style.getPropertyValue('--garba-zoom')), wideZoom, 'camera zoom reverses with scrolling');
-  assert(d.querySelector('#the-stage q').textContent.includes('સ્ટેજ તો કમાલ'), 'short Gujarati dialogue appreciates the stage');
+  assert(d.querySelector('#the-stage q').textContent.includes('સ્ટેજ તો જો! બહુ જ સરસ'), 'short Gujarati dialogue appreciates the stage');
   const ringState = () => danceRings.map(r => r.style.transform);
   danceScene.dispatchEvent(new w.CustomEvent('story-progress', {detail: .1}));
   const firstDance = ringState();
