@@ -614,32 +614,13 @@ const scroll = (cursor) => {
     d.querySelector('script[type="application/ld+json"]').textContent,
   );
   assert.equal(metadata.startDate, "2026-10-09T19:30:00+05:30");
-  // Exercise elapsed-time walking separately from the reversible route controller.
+  // The original full image survives when WebGL cannot initialize.
   w.eval(fs.readFileSync(path.join(base, 'elephant-walk.js'), 'utf8'));
-  scroll(4.3);
-  await tick();
-  const walkingLegs = [...d.querySelectorAll('.journey-elephant .elephant-leg')];
-  const legPoses = () => walkingLegs.map(leg => leg.getAttribute('transform'));
-  assert.equal(walkingLegs.length, 4, 'four independently moving elephant legs');
-  for (let step = 0; step < 10; step++) frame(100);
-  const firstStride = legPoses();
-  frame(180);
-  assert(legPoses().every((pose, index) => pose !== firstStride[index]), 'all legs advance while riding');
-  assert.equal(new Set(legPoses()).size, 4, 'legs use distinct step phases');
-  scroll(3.3);
-  await tick();
-  for (let step = 0; step < 20; step++) frame(100);
-  assert(legPoses().every(pose => pose.includes('rotate(0.000')), 'elephant settles to a standing pose for boarding');
-  scroll(4.3);
-  await tick();
-  frame(100);
-  hidden = true;
-  d.dispatchEvent(new w.Event('visibilitychange'));
-  const pausedLegs = legPoses();
-  frame(500);
-  assert.deepEqual(legPoses(), pausedLegs, 'hidden tab pauses elephant steps');
-  hidden = false;
-  d.dispatchEvent(new w.Event('visibilitychange'));
+  const ride = d.querySelector('.journey-elephant');
+  assert.equal(ride.querySelectorAll('.elephant-mesh').length, 1);
+  assert.equal(ride.querySelectorAll('.elephant-fallback image').length, 1);
+  assert.equal(ride.querySelectorAll('clipPath, .elephant-leg').length, 0, 'no separate clipped image pieces');
+  assert(!ride.classList.contains('mesh-ready'), 'unavailable WebGL preserves the original SVG fallback');
   assert(
     html.includes(
       "https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets",

@@ -13,7 +13,7 @@
 .elephant-body {
   position: relative;
   width: 100%;
-  aspect-ratio: 1314 / 1010;
+  aspect-ratio: 1390 / 1040;
   transform: translateY(var(--gait-rise, 0px));
   transform-origin: 50% 92%;
 }
@@ -55,7 +55,10 @@ html:not(.cinematic) #arrival .together-art { display: none; }
   .cinematic #arrival .story-person { width: 38vw; }
 }
 
-.elephant-rig { overflow: visible; }
+/* One continuous textured surface, with the original image as a safe fallback. */
+.elephant-mesh { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.mesh-ready .elephant-mesh { opacity: 1; }
+.mesh-ready .elephant-fallback { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   .elephant-body, .elephant-riders { transform: none; }
 }
