@@ -171,6 +171,7 @@ const scroll = (cursor) => {
   w.eval(fs.readFileSync(path.join(base, 'partner-road.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(base, 'invitation-handoff.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(base, 'aarti-flowers.js'), 'utf8'));
+  w.eval(fs.readFileSync(path.join(base, 'garba-circle.js'), 'utf8'));
   w.eval(script);
   await tick(); // Let the initial pageshow restoration finish before interacting.
   assert.equal(w.scrollY, 0, "reload starts at the top");
@@ -410,16 +411,35 @@ const scroll = (cursor) => {
     "true",
     "manual snapshot",
   );
-  scroll(9.5);
-  const overheadMan = d.querySelector('#celebration .garba-man');
-  const overheadWoman = d.querySelector('#celebration .garba-woman');
-  assert(overheadMan && overheadWoman, 'both friends use overhead dance sprites');
   scroll(9.1);
-  const firstDance = overheadMan.getAttribute('style');
-  scroll(9.6);
-  assert.notEqual(overheadMan.getAttribute('style'), firstDance, 'friends advance around the central shrine');
-  scroll(9.1);
-  assert.equal(overheadMan.getAttribute('style'), firstDance, 'overhead garba reverses with scroll');
+  await tick();
+  const danceScene = d.querySelector('#celebration');
+  const danceRings = [...danceScene.querySelectorAll('.garba-ring')];
+  assert.equal(danceScene.querySelectorAll('.garba-dancer').length, 40, 'the entire group has separate animated dancers');
+  assert.equal(danceRings.length, 2, 'two circles surround the fixed shrine');
+  assert(danceScene.querySelector('.garba-inner .garba-man') && danceScene.querySelector('.garba-inner .garba-woman'), 'both friends dance in the same inner group');
+  assert(d.querySelector('.selfie-print img').src.includes('event-decor/selfie-lotus'), 'selfie uses matching lotus photo wall');
+  assert(danceScene.querySelector('.garba-courtyard').src.includes('garba-floor'), 'floor artwork has no fixed dancers');
+  const ringState = () => danceRings.map(r => r.style.transform);
+  danceScene.dispatchEvent(new w.CustomEvent('story-progress', {detail: .1}));
+  const firstDance = ringState();
+  danceScene.dispatchEvent(new w.CustomEvent('story-progress', {detail: .6}));
+  assert(ringState().every((v,i) => v !== firstDance[i]), 'scroll advances both whole circles');
+  danceScene.dispatchEvent(new w.CustomEvent('story-progress', {detail: .1}));
+  assert.deepEqual(ringState(), firstDance, 'scroll contribution reverses consistently');
+  frame();
+  const beforeStep = ringState();
+  frame();
+  assert(ringState().every((v,i) => v !== beforeStep[i]), 'both circles continue dancing without scrolling');
+  const floorStyle = danceScene.querySelector('.garba-courtyard').getAttribute('style');
+  hidden = true;
+  d.dispatchEvent(new w.Event('visibilitychange'));
+  const pausedDance = ringState();
+  frame(1000);
+  assert.deepEqual(ringState(), pausedDance, 'background tabs pause the full group');
+  assert.equal(danceScene.querySelector('.garba-courtyard').getAttribute('style'), floorStyle, 'floor and shrine remain stationary');
+  hidden = false;
+  d.dispatchEvent(new w.Event('visibilitychange'));
   scroll(0.6);
   assert.equal(
     d.querySelector("#invitation").style.getPropertyValue("--open"),

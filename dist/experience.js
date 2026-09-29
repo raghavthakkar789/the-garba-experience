@@ -328,15 +328,6 @@
         "--prayer-tilt",
         `${Math.sin(progress * Math.PI * 3) * 1.4}deg`,
       );
-    if (scene.id === "celebration") {
-      // A short arc in the inner ring, viewed from directly above.
-      scene.querySelectorAll(".garba-friend").forEach((dancer, i) => {
-        const angle = Math.PI / 2 + (i ? -0.24 : 0.24) + progress * 0.22;
-        dancer.style.setProperty("--dancer-x", `${(50 + Math.cos(angle) * 26).toFixed(3)}%`);
-        dancer.style.setProperty("--dancer-y", `${(48 + Math.sin(angle) * 26).toFixed(3)}%`);
-        dancer.style.setProperty("--dancer-angle", `${(angle * 180 / Math.PI - 90 + Math.sin(progress * Math.PI * 12) * 5).toFixed(2)}deg`);
-      });
-    }
   }
 
   function positionDialogue(scene) {
@@ -372,6 +363,10 @@
     line.style.setProperty("--bubble-tip", `${clamp(headX - centre + width / 2, 14, width - 14).toFixed(2)}px`);
     line.style.setProperty("--speaker-visible", getComputedStyle(target).opacity);
   }
+  // The moving circle keeps the small speech bubble attached between scroll events.
+  document.querySelector("#celebration").addEventListener("garba-frame", (event) => {
+    if (cinematic) positionDialogue(event.currentTarget);
+  });
   function clearSceneState() {
     for (const scene of scenes) {
       scene.classList.remove("is-visible", "is-active");
@@ -380,7 +375,6 @@
       scene
         .querySelectorAll(".dialogue-beat")
         .forEach((line) => { line.removeAttribute("aria-hidden"); line.removeAttribute("style"); });
-      scene.querySelectorAll(".garba-friend").forEach((dancer) => dancer.removeAttribute("style"));
       scene
         .querySelectorAll(".story-person")
         .forEach((person) => person.removeAttribute("style"));
@@ -493,7 +487,7 @@
       if (!visible) return;
       const progress = isBase ? local : 0;
       animateStory(scene, progress);
-      if (scene.id === "partner-road" || scene.id === "the-invitation")
+      if (["partner-road", "the-invitation", "celebration"].includes(scene.id))
         scene.dispatchEvent(new CustomEvent("story-progress", { detail: progress }));
       scene.style.setProperty("--scene-opacity", isBase ? 1 : blend.toFixed(4));
       scene.style.setProperty(
