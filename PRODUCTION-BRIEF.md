@@ -25,6 +25,8 @@ The same original green-kediyu and pink-chaniya-choli characters persist through
 
 Original cast, entrance, concert and Garba-circle artwork remain optimized WebP assets, with separate phone artwork for the entrance and car interior. Five new 1536×1024 painted location backgrounds total 2.34 MB. The friends meet in a home courtyard; pickup takes place on the street outside; the drive follows a clear forward-facing road; the photo scene has its own dedicated photobooth; aarti takes place in a full courtyard around the shrine. The old city collage, duplicated entrance at the selfie scene and isolated shrine portrait are no longer loaded. Forward road movement stays aligned to its vanishing point. Phone dialogue placement leaves the shrine visible. These environments are artistic impressions, not verified depictions of the actual venue. Fonts remain self-hosted.
 
+On the sponsor street, the friends reaching a shop frontage automatically reveals a compact card above the street with that partner’s name, role and available logo. It closes between shops, on turns, and when leaving the scene; reverse scrolling visits the same shops in reverse. All 16 shop fronts remain stationary. Automatic cards are nonmodal status panels, so they never steal focus or block scrolling. Shop-board clicks still open full details, including in reading mode.
+
 Reduced motion, short screens and reading mode show all conversations in normal document flow. Hidden cinematic scenes are inert. No-JavaScript visitors can read the complete story. Existing event details, original invitation, booking links, sound choices and local photo keepsakes are preserved.
 
 ## Sound and touch

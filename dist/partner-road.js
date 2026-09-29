@@ -8,11 +8,49 @@
   const points = [[5,23],[92,23],[95,26],[95,45],[92,48],[8,48],[5,51],[5,70],[8,73],[92,73],[95,76],[95,95],[92,98],[5,98]];
   const dialog = document.querySelector('#partner-dialog');
   const dialogLogo = dialog.querySelector('img');
+  const shops = [...road.querySelectorAll('.partner-shop')];
+  const autoCard = road.querySelector('.partner-auto-card');
+  let nearbyShop = null;
+  let lastProgress = 0;
   let opener;
+  function closeAutoCard() {
+    autoCard.hidden = true;
+    delete road.dataset.nearbyShop;
+    nearbyShop = null;
+  }
+  function updateAutoCard(x, y, worldBounds) {
+    if (!document.documentElement.classList.contains('cinematic') ||
+        !road.classList.contains('is-active') || dialog.open || document.hidden) {
+      closeAutoCard();
+      return;
+    }
+    const footX = worldBounds.left + x * worldBounds.width / 100;
+    const footY = worldBounds.top + y * worldBounds.height / 100;
+    const nearby = shops.find(shop => {
+      const bounds = shop.getBoundingClientRect();
+      // Only the shop frontage counts; gaps and turns have no open card.
+      return bounds.width > 0 && footX >= bounds.left + bounds.width * .15 &&
+        footX <= bounds.right - bounds.width * .15 && footY >= bounds.bottom - 2 &&
+        footY <= bounds.bottom + worldBounds.height * .09;
+    });
+    if (!nearby) { closeAutoCard(); return; }
+    if (nearby === nearbyShop) return;
+    nearbyShop = nearby;
+    autoCard.querySelector('.partner-auto-name').textContent = nearby.querySelector('.shop-name').textContent;
+    autoCard.querySelector('.partner-auto-role').textContent = nearby.querySelector('.shop-role').textContent;
+    const logo = nearby.querySelector('.shop-logo');
+    const cardLogo = autoCard.querySelector('img');
+    cardLogo.hidden = !logo;
+    if (logo) cardLogo.src = logo.getAttribute('src');
+    else cardLogo.removeAttribute('src');
+    road.dataset.nearbyShop = String(shops.indexOf(nearby));
+    autoCard.hidden = false;
+  }
   road.querySelectorAll('.shop-open').forEach(button => {
     button.disabled = false;
     button.addEventListener('click', () => {
       const shop = button.closest('.partner-shop');
+      closeAutoCard();
       opener = button;
       dialog.querySelector('#partner-dialog-name').textContent = shop.querySelector('.shop-name').textContent;
       dialog.querySelector('#partner-dialog-role').textContent = shop.querySelector('.shop-role').textContent;
@@ -31,6 +69,7 @@
     if (event.key === 'Escape') event.stopPropagation();
   });
   function render(progress) {
+    lastProgress = progress;
     const width = world.clientWidth || innerWidth;
     const height = world.clientHeight || innerHeight;
     const lengths = points.slice(1).map((point,index) => Math.hypot((point[0]-points[index][0])*width,(point[1]-points[index][1])*height));
@@ -40,14 +79,26 @@
     while (segment < lengths.length-1 && remaining > lengths[segment]) remaining -= lengths[segment++];
     const fraction = remaining/lengths[segment];
     const from = points[segment], to = points[segment+1];
-    friends.style.left = `${from[0]+(to[0]-from[0])*fraction}%`;
-    friends.style.top = `${from[1]+(to[1]-from[1])*fraction}%`;
+    const x = from[0]+(to[0]-from[0])*fraction;
+    const y = from[1]+(to[1]-from[1])*fraction;
+    friends.style.left = `${x}%`;
+    friends.style.top = `${y}%`;
     friends.style.setProperty('--walk-facing', to[0] < from[0] ? -1 : to[0] > from[0] ? 1 : segment < 5 ? 1 : segment < 8 ? -1 : 1);
     friends.style.setProperty('--walk-bob', `${Math.sin(progress*240)*1.6}px`);
     friends.style.setProperty('--walk-sway', `${Math.sin(progress*120)*1.1}deg`);
+    updateAutoCard(x, y, world.getBoundingClientRect());
   }
   road.addEventListener('story-progress', event => render(event.detail));
-  new MutationObserver(() => {
+  const resetInactive = () => {
     if (!document.documentElement.classList.contains('cinematic')) friends.removeAttribute('style');
-  }).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+    if (!document.documentElement.classList.contains('cinematic') || !road.classList.contains('is-active')) closeAutoCard();
+  };
+  const stateObserver = new MutationObserver(resetInactive);
+  stateObserver.observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+  stateObserver.observe(road,{attributes:true,attributeFilter:['class']});
+  addEventListener('pagehide', closeAutoCard);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) closeAutoCard();
+    else if (road.classList.contains('is-active') && document.documentElement.classList.contains('cinematic')) render(lastProgress);
+  });
 })();

@@ -285,6 +285,41 @@ const scroll = (cursor) => {
   assert.equal(d.querySelector('#partner-dialog-name').textContent,'Eventzz Planet');
   d.querySelector('#partner-dialog [data-close]').click();
   assert(!d.querySelector('#partner-dialog').open);
+  // Model shop frontages independently of the path's progress calculation.
+  const roadWorld = road.querySelector('.road-world');
+  roadWorld.getBoundingClientRect = () => ({ left: 0, top: 0, width: 1440, height: 900 });
+  shops.forEach((shop, index) => {
+    const left = (70 + index % 4 * 219.3) * 1.44;
+    const top = Math.floor(index / 4) * 225;
+    shop.getBoundingClientRect = () => ({ left, top, width: 202.1 * 1.44, height: 171, right: left + 202.1 * 1.44, bottom: top + 171 });
+  });
+  const autoCard = road.querySelector('.partner-auto-card');
+  const focusBeforeWalk = d.activeElement;
+  const expectedVisits = [0,1,2,3,7,6,5,4,8,9,10,11,15,14,13,12];
+  let firstStop;
+  for (const direction of [1,-1]) {
+    const visits = [];
+    let gaps = 0;
+    for (let step = 0; step <= 100; step++) {
+      const progress = direction === 1 ? step / 100 : 1 - step / 100;
+      road.dispatchEvent(new w.CustomEvent('story-progress', { detail: progress }));
+      if (autoCard.hidden) { gaps++; continue; }
+      const index = Number(road.dataset.nearbyShop);
+      if (visits.at(-1) !== index) visits.push(index);
+      if (firstStop === undefined) firstStop = progress;
+      assert.equal(autoCard.querySelector('.partner-auto-name').textContent, shops[index].querySelector('.shop-name').textContent);
+      assert.equal(autoCard.querySelector('img').hidden, !shops[index].querySelector('.shop-logo'), 'missing logos retain a readable name card');
+      assert(!d.querySelector('#partner-dialog').open, 'automatic card never opens a blocking modal');
+      assert.equal(d.activeElement, focusBeforeWalk, 'automatic cards do not steal focus');
+    }
+    assert.deepEqual(visits, direction === 1 ? expectedVisits : [...expectedVisits].reverse(), 'all sixteen frontages open in walking order');
+    assert(gaps > 8, 'cards close on gaps and corners');
+  }
+  road.dispatchEvent(new w.CustomEvent('story-progress', { detail: firstStop }));
+  assert(!autoCard.hidden);
+  scroll(9.3);
+  await tick();
+  assert(autoCard.hidden, 'leaving the sponsor scene closes the card');
   assert.equal(d.querySelectorAll('.dialogue-beat').length, 11, 'fewer exchanges, rather than a word limit');
   for (const scene of scenes)
     assert(scene.querySelectorAll('.dialogue-beat').length <= 2, 'at most two lines in a scene');

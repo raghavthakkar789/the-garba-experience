@@ -32,7 +32,7 @@
       crossorigin=""
     />
     <link rel="stylesheet" href="experience.css?v=8" />
-    <script defer src="partner-road.js?v=3"></script>
+    <script defer src="partner-road.js?v=4"></script>
     <script defer src="invitation-handoff.js?v=1"></script>
     <script defer src="aarti-flowers.js?v=1"></script>
     <script defer="" src="experience.js?v=17"></script>
@@ -69,7 +69,7 @@
     </script>
     <link rel="stylesheet" href="storybook.css?v=19" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
-    <link rel="stylesheet" href="partner-road.css?v=3" />
+    <link rel="stylesheet" href="partner-road.css?v=4" />
     <link rel="stylesheet" href="scene-refinements.css?v=1" />
     <script defer src="button-motion.js?v=2"></script>
   </head>
@@ -498,8 +498,13 @@
               <header class="partner-road-heading">
                 <p>THE WALK HOME</p>
                 <h2 id="partner-road-title" lang="gu">ઘરે જતાં જતાં…</h2>
-                <span lang="gu">દુકાનના બોર્ડ પર ટૅપ કરો.</span>
+                <span class="road-walk-hint" lang="gu">સાથે ચાલો, દરેક સાથીને મળીએ.</span>
+                <span class="road-read-hint" lang="gu">દુકાનના બોર્ડ પર ટૅપ કરો.</span>
               </header>
+              <aside class="partner-auto-card" role="status" aria-live="polite" aria-atomic="true" hidden>
+                <img alt="" hidden />
+                <div><p class="partner-auto-role"></p><h3 class="partner-auto-name"></h3></div>
+              </aside>
               <div class="road-world">
                 <svg class="street-route" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
                   <polyline class="street-edge" points="50,230 920,230 950,260 950,450 920,480 80,480 50,510 50,700 80,730 920,730 950,760 950,950 920,980 50,980" />
