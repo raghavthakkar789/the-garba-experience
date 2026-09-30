@@ -32,7 +32,7 @@
       crossorigin=""
     />
     <link rel="stylesheet" href="experience.css?v=9" />
-    <script defer src="partner-road.js?v=5"></script>
+    <script defer src="partner-road.js?v=6"></script>
     <script defer src="invitation-handoff.js?v=1"></script>
     <script defer src="aarti-flowers.js?v=1"></script>
     <script defer src="garba-circle.js?v=1"></script>
@@ -72,7 +72,7 @@
     </script>
     <link rel="stylesheet" href="storybook.css?v=20" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
-    <link rel="stylesheet" href="partner-road.css?v=7" />
+    <link rel="stylesheet" href="partner-road.css?v=8" />
     <link rel="stylesheet" href="scene-refinements.css?v=5" />
     <link rel="stylesheet" href="event-crowds.css?v=2" />
     <link rel="stylesheet" href="thank-you.css?v=2" />
@@ -612,8 +612,8 @@
                 <span class="road-read-hint" lang="gu">દુકાનના બોર્ડ પર ટૅપ કરો.</span>
               </header>
               <aside class="partner-auto-card" role="status" aria-live="polite" aria-atomic="true" hidden>
-                <img alt="" hidden />
-                <div><p class="partner-auto-role"></p><h3 class="partner-auto-name"></h3></div>
+                <div class="partner-logo-slot"><img alt="" hidden /><span class="partner-monogram" aria-hidden="true" hidden></span></div>
+                <div class="partner-card-copy"><p class="partner-auto-role"></p><h3 class="partner-auto-name"></h3></div>
               </aside>
               <div class="road-world">
                 <svg class="street-route" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
@@ -633,140 +633,128 @@
               <div class="partner-shops" role="list" aria-label="Event presenters, sponsors and partners">
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Present</p>
-                    <img class="shop-logo" src="assets/partners/eventzz.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Eventzz Planet</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/eventzz.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Present</p><h3 class="shop-name">Eventzz Planet</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Eventzz Planet — Present" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Present</p>
-                    <img class="shop-logo" src="assets/partners/saregama.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Saregama <span class="name-detail">Entertainment</span></h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/saregama.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Present</p><h3 class="shop-name">Saregama <span class="name-detail">Entertainment</span></h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Saregama Entertainment — Present" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">In Association With</p>
-                    <img class="shop-logo" src="assets/partners/ethereum.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Ethereum Infracon</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/ethereum.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">In Association With</p><h3 class="shop-name">Ethereum Infracon</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Ethereum Infracon — In Association With" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Powered by</p>
-                    <img class="shop-logo" src="assets/partners/mba.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">MBA Group</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/mba.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Powered by</p><h3 class="shop-name">MBA Group</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View MBA Group — Powered by" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Supported by</p>
-                    <h3 class="shop-name shop-lettering">Megma</h3>
+                    <div class="partner-logo-slot"><span class="partner-monogram" aria-hidden="true">M</span></div>
+                    <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name shop-lettering">Megma</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Megma — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Supported by</p>
-                    <img class="shop-logo" src="assets/partners/vivanta.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Vivanta Group</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/vivanta.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">Vivanta Group</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Vivanta Group — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Supported by</p>
-                    <img class="shop-logo" src="assets/partners/hst.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">HST</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/hst.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">HST</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View HST — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Supported by</p>
-                    <img class="shop-logo" src="assets/partners/eleven.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Eleven Infra</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/eleven.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">Eleven Infra</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Eleven Infra — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Supported by</p>
-                    <img class="shop-logo" src="assets/partners/vishakha.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Vishakha</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/vishakha.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">Vishakha</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Vishakha — Supported by" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Printing Partner</p>
-                    <h3 class="shop-name shop-lettering">Shah Events</h3>
+                    <div class="partner-logo-slot"><span class="partner-monogram" aria-hidden="true">SE</span></div>
+                    <div class="shop-details"><p class="shop-role">Printing Partner</p><h3 class="shop-name shop-lettering">Shah Events</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Shah Events — Printing Partner" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Digital Marketing</p>
-                    <h3 class="shop-name shop-lettering">Hungrito</h3>
+                    <div class="partner-logo-slot"><span class="partner-monogram" aria-hidden="true">H</span></div>
+                    <div class="shop-details"><p class="shop-role">Digital Marketing</p><h3 class="shop-name shop-lettering">Hungrito</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Hungrito — Digital Marketing" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Outdoor Marketing</p>
-                    <img class="shop-logo" src="assets/partners/krish.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Krish <span class="name-detail">Communication</span></h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/krish.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Outdoor Marketing</p><h3 class="shop-name">Krish <span class="name-detail">Communication</span></h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Krish Communication — Outdoor Marketing" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">University Partner</p>
-                    <img class="shop-logo" src="assets/partners/jg.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">JG University</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/jg.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">University Partner</p><h3 class="shop-name">JG University</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View JG University — University Partner" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Venue Partner</p>
-                    <img class="shop-logo" src="assets/partners/utsav.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">Utsav Decor</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/utsav.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Venue Partner</p><h3 class="shop-name">Utsav Decor</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Utsav Decor — Venue Partner" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Photo Video Partner</p>
-                    <img class="shop-logo" src="assets/partners/shouse.webp" alt="" loading="lazy" decoding="async" width="640" height="280" />
-                    <h3 class="shop-name">S House</h3>
+                    <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/shouse.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
+                    <div class="shop-details"><p class="shop-role">Photo Video Partner</p><h3 class="shop-name">S House</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View S House — Photo Video Partner" aria-haspopup="dialog" disabled></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
-                    <p class="shop-role">Hospital Partner</p>
-                    <h3 class="shop-name shop-lettering">Alpha Hospital</h3>
+                    <div class="partner-logo-slot"><span class="partner-monogram" aria-hidden="true">AH</span></div>
+                    <div class="shop-details"><p class="shop-role">Hospital Partner</p><h3 class="shop-name shop-lettering">Alpha Hospital</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
                   <button class="shop-open" type="button" aria-label="View Alpha Hospital — Hospital Partner" aria-haspopup="dialog" disabled></button>
@@ -888,9 +876,10 @@
     </dialog>
     <dialog id="partner-dialog" class="partner-dialog" aria-labelledby="partner-dialog-name">
       <button type="button" class="partner-dialog-close" data-close aria-label="Close partner details">×</button>
-      <p id="partner-dialog-role"></p>
-      <img id="partner-dialog-logo" alt="" hidden />
-      <h2 id="partner-dialog-name"></h2>
+      <div class="partner-card-row">
+        <div class="partner-logo-slot"><img id="partner-dialog-logo" alt="" hidden /><span class="partner-monogram" aria-hidden="true" hidden></span></div>
+        <div class="partner-card-copy"><p id="partner-dialog-role"></p><h2 id="partner-dialog-name"></h2></div>
+      </div>
     </dialog>
     <dialog
       class="memory-dialog"

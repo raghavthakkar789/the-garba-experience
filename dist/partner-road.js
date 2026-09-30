@@ -14,6 +14,15 @@
   let lastProgress = 0;
   let opener;
   const ease = value => { const t = Math.max(0, Math.min(1, value)); return t * t * (3 - 2 * t); };
+  function matchCard(shop, card) {
+    const colours = getComputedStyle(shop);
+    for (const property of ['--card-bg', '--card-accent'])
+      card.style.setProperty(property, colours.getPropertyValue(property));
+    const monogram = card.querySelector('.partner-monogram');
+    const source = shop.querySelector('.partner-monogram');
+    monogram.hidden = !source;
+    monogram.textContent = source?.textContent || '';
+  }
   function closeAutoCard() {
     autoCard.hidden = true;
     delete road.dataset.nearbyShop;
@@ -44,6 +53,7 @@
     autoCard.style.setProperty('--partner-card-opacity', (enter * (1 - leave)).toFixed(4));
     if (nearby === nearbyShop) return;
     nearbyShop = nearby;
+    matchCard(nearby, autoCard);
     autoCard.querySelector('.partner-auto-name').textContent = nearby.querySelector('.shop-name').textContent;
     autoCard.querySelector('.partner-auto-role').textContent = nearby.querySelector('.shop-role').textContent;
     const logo = nearby.querySelector('.shop-logo');
@@ -60,6 +70,7 @@
       const shop = button.closest('.partner-shop');
       closeAutoCard();
       opener = button;
+      matchCard(shop, dialog);
       dialog.querySelector('#partner-dialog-name').textContent = shop.querySelector('.shop-name').textContent;
       dialog.querySelector('#partner-dialog-role').textContent = shop.querySelector('.shop-role').textContent;
       const logo = shop.querySelector('.shop-logo');
