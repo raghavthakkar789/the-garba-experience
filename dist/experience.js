@@ -679,6 +679,23 @@
   addEventListener("pagehide", () => {
     stopMusic();
   });
+  const invitationViewer = document.querySelector("#original-invitation-dialog");
+  let invitationOpener, invitationScroll = 0;
+  document.querySelectorAll("[data-view-original]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      cancelEntry();
+      invitationOpener = link;
+      invitationScroll = scrollY;
+      invitationViewer.showModal();
+    });
+  });
+  invitationViewer.addEventListener("close", () => {
+    window.scrollTo({ top: invitationScroll, behavior: "instant" });
+    invitationOpener?.focus({ preventScroll: true });
+  });
+
   document.querySelectorAll("dialog").forEach((dialog) => {
     dialog
       .querySelector("[data-close]")

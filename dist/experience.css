@@ -1645,3 +1645,43 @@ dialog::backdrop {
     transform: none !important;
   }
 }
+
+/* View the printed invitation without leaving the story or losing scroll position. */
+.original-invitation-dialog {
+  width: min(720px, calc(100% - 24px));
+  max-width: 720px;
+  max-height: calc(100svh - 24px);
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.invitation-viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  padding: 6px 8px 6px 18px;
+  background: #123d32;
+  color: #fff3d5;
+  font-size: 14px;
+}
+.invitation-viewer-bar button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  flex-shrink: 0;
+  border: 1px solid #d8b86c;
+  border-radius: 50%;
+  background: #fff3d5;
+  color: #123d32;
+  font: 32px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+.original-invitation-dialog > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100svh - 84px);
+  object-fit: contain;
+  background: #09271f;
+}

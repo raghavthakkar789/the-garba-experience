@@ -31,14 +31,14 @@
       type="font/woff"
       crossorigin=""
     />
-    <link rel="stylesheet" href="experience.css?v=8" />
+    <link rel="stylesheet" href="experience.css?v=9" />
     <script defer src="partner-road.js?v=5"></script>
     <script defer src="invitation-handoff.js?v=1"></script>
     <script defer src="aarti-flowers.js?v=1"></script>
     <script defer src="garba-circle.js?v=1"></script>
     <script defer src="event-crowds.js?v=2"></script>
     <script defer src="elephant-walk.js?v=2"></script>
-    <script defer="" src="experience.js?v=23"></script>
+    <script defer="" src="experience.js?v=24"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -94,7 +94,7 @@
       /></a>
       <p class="header-date">9 OCTOBER · AHMEDABAD</p>
       <div class="header-actions">
-        <a class="header-link" href="assets/invitation.jpg" target="_blank" rel="noopener"
+        <a class="header-link" href="assets/invitation.jpg" data-view-original aria-haspopup="dialog"
           >Your invitation <span aria-hidden="true">↗</span></a
         >
       </div>
@@ -835,7 +835,7 @@
     <footer>
       <a href="#beginning">The Garba Experience</a>
       <p>Devotion. Rhythm. Togetherness.</p>
-      <a href="assets/invitation.jpg" target="_blank" rel="noopener"
+      <a href="assets/invitation.jpg" data-view-original aria-haspopup="dialog"
         >Original invitation ↗</a
       >
       <p>Story scenes are artistic impressions of the evening.</p>
@@ -879,6 +879,13 @@
         sound and photo keepsakes.
       </p></noscript
     >
+    <dialog id="original-invitation-dialog" class="original-invitation-dialog" aria-label="Original invitation">
+      <div class="invitation-viewer-bar">
+        <span>Original invitation</span>
+        <button type="button" data-close aria-label="Close invitation and return to the site" autofocus>×</button>
+      </div>
+      <img src="assets/invitation.jpg" alt="The original Garba Experience invitation featuring Kinjal Dave on 9 October 2026" width="1297" height="1600" loading="lazy" />
+    </dialog>
     <dialog id="partner-dialog" class="partner-dialog" aria-labelledby="partner-dialog-name">
       <button type="button" class="partner-dialog-close" data-close aria-label="Close partner details">×</button>
       <p id="partner-dialog-role"></p>
