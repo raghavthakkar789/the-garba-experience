@@ -1400,3 +1400,20 @@ html:not(.cinematic) .opening-scene .hamper {
   .flower-shower { display: none !important; }
   .flower-petal { animation: none; }
 }
+
+/* Opening is an explicit invitation: prompt motion runs only while waiting for a click. */
+html.invitation-locked, html.invitation-locked body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.invitation-locked .scroll-cue { visibility: hidden; }
+.cinematic.invitation-locked .seal-prompt {
+  animation: invitation-click-hint 1.8s ease-in-out infinite;
+}
+@keyframes invitation-click-hint {
+  0%, 100% { opacity: 1; transform: translate(-50%, 0); }
+  50% { opacity: .45; transform: translate(-50%, -9px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seal-prompt { animation: none !important; }
+}

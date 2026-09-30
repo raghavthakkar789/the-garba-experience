@@ -50,6 +50,8 @@
   ];
   const sealButton = document.querySelector("#invitation-seal");
   let readingBoxOpen = false;
+  let entryUnlocked = false;
+  let entryHasAdvanced = false;
   let focusStoryOnArrival = false;
   // One user gesture runs the doors and camera move on a deliberate timeline.
   const openingSoundButton = document.querySelector("#opening-sound");
@@ -121,6 +123,8 @@
   }
   function beginEntry() {
     if (entryFrame) return;
+    entryUnlocked = true;
+    root.classList.remove("invitation-locked");
     if (!cinematic) {
       readingBoxOpen = true;
       updateOpening(1);
@@ -165,6 +169,9 @@
       if (entryFrame) cancelEntry();
     }, { passive: true });
   addEventListener("pagehide", cancelEntry);
+  document.addEventListener("visibilitychange", () => {
+    opening.querySelector(".seal-prompt").style.animationPlayState = document.hidden ? "paused" : "running";
+  });
   document.addEventListener("keydown", (event) => {
     if (event.key === " " && event.target.closest?.("#opening-sound")) return;
     if (entryFrame && ["Escape", "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) cancelEntry();
@@ -449,6 +456,7 @@
       updateOpening(readingBoxOpen ? 1 : 0);
       measure();
     }
+    root.classList.toggle("invitation-locked", cinematic && !entryUnlocked);
     openingSoundButton.hidden = !cinematic;
     if (preservePlace && wasCinematic !== cinematic) {
       const top = !wasWithin
@@ -462,6 +470,16 @@
   }
   function renderScroll() {
     frame = 0;
+    // Wheel, touch, keyboard and restored scroll positions cannot open a sealed box.
+    if (cinematic) {
+      if (entryUnlocked && entryHasAdvanced && !entryFrame && scrollY <= journeyTop) {
+        entryUnlocked = false;
+        entryHasAdvanced = false;
+      }
+      root.classList.toggle("invitation-locked", !entryUnlocked);
+      if (!entryUnlocked && scrollY !== journeyTop)
+        window.scrollTo({ top: journeyTop, behavior: "instant" });
+    }
     root.style.setProperty(
       "--progress",
       clamp(scrollY / Math.max(1, root.scrollHeight - innerHeight)).toFixed(5),
@@ -480,6 +498,7 @@
       return;
     }
     const cursor = clamp((scrollY - journeyTop) / travel) * storySpan;
+    if (entryUnlocked && cursor > .05) entryHasAdvanced = true;
     animateElephant(cursor);
     let base = scenes.length - 1;
     while (base > 0 && cursor < sceneStarts[base]) base--;
@@ -843,6 +862,8 @@
     clearTimeout(toastTimer);
     toast.classList.remove("visible");
     readingBoxOpen = false;
+    entryUnlocked = false;
+    entryHasAdvanced = false;
     focusStoryOnArrival = false;
     const photoScene = document.querySelector("#a-memory");
     delete photoScene.dataset.photo;

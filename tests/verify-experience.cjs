@@ -213,6 +213,9 @@ const scroll = (cursor) => {
   );
   assert.equal(d.querySelectorAll(".box-hit-area").length, 1);
   assert(d.querySelector("#invitation-seal img"), "logo is inside the opening button");
+  scroll(0.6);
+  assert.equal(w.scrollY, 0, 'scrolling cannot bypass the unopened invitation');
+  assert.equal(d.querySelector('#invitation').style.getPropertyValue('--open'), '0.0000', 'scrolling alone leaves both doors closed');
   d.querySelector("#opening-sound").click(); // Muted entry stays silent; sound synthesis is checked in Chromium.
   d.querySelector("#invitation-seal").focus();
   d.querySelector("#invitation-seal").click();
