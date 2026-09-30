@@ -498,3 +498,13 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   .partner-card-row { grid-template-columns: 82px minmax(0, 1fr); }
   #partner-dialog-name { font-size: 23px; }
 }
+/* Four shop columns need compact lettering on tablets and short desktop screens. */
+@media (min-width: 651px) and (max-width: 1000px), (min-width: 651px) and (max-height: 760px) {
+  .cinematic .partner-road .shop-sign { grid-template-columns: 28% minmax(0, 1fr); height: 64%; }
+  .cinematic .partner-road .shop-details { padding: 2px; }
+  .cinematic .partner-road .shop-role { font-size: clamp(5px, .75vw, 7px); line-height: 1.1; letter-spacing: 0; }
+  .cinematic .partner-road .shop-name,
+  .cinematic .partner-road .shop-lettering { font-size: clamp(7px, 1.1vw, 11px); line-height: 1.1; }
+  .cinematic .partner-road .partner-logo-slot { padding: 2px; }
+  .cinematic .partner-road .partner-monogram { font-size: clamp(9px, 1.6vw, 16px); }
+}

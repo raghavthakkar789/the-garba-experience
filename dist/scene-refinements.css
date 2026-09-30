@@ -208,6 +208,24 @@ html:not(.cinematic) .garba-world { top: 65%; }
 }
 .invitation-wall-branding svg { display: block; width: 100%; height: 100%; }
 .invitation-wall-branding .wall-brand-mobile { display: none; }
+html:not(.cinematic) .invitation-wall-branding {
+  position: relative;
+  inset: auto;
+  z-index: 0;
+  width: min(180px, 40vw);
+  aspect-ratio: 152 / 104;
+  margin: 24px auto;
+  background: url(assets/logo.webp) center / contain no-repeat;
+}
+html:not(.cinematic) .invitation-wall-branding svg { display: none; }
+/* Measure every speech beat so the wall logo reserves room for the longest line. */
+.cinematic #the-invitation .dialogue-beat:not(.is-speaking) {
+  display: block;
+  visibility: hidden;
+}
+@media (min-width: 651px) and (max-height: 800px) {
+  .cinematic .story-invite .invitation-handoff { width: min(79vw, 650px, 48svh); }
+}
 .cinematic .invitation-wall-branding {
   transform: scale(var(--zoom, 1.035)) translate3d(var(--pan, 0px), 0, 0);
 }
