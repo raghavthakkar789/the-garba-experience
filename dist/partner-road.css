@@ -427,20 +427,6 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
 }
 @media (prefers-reduced-motion: reduce) { .partner-auto-card { animation: none; } }
 
-/* Light neutral surfaces keep every supplied logo's original colours distinct. */
-.scene.partner-road { background: #eee5d4; color: #244437; }
-.partner-road-art {
-  background: linear-gradient(#fffaf0d9, #f7eddb80 38%, #f9efda55), url('assets/partners/market-courtyard.webp') center/cover;
-}
-.partner-road-heading { color: #244437; text-shadow: 0 1px 4px #fff9ef; }
-.partner-road-heading h2 { color: #244437; }
-.cinematic .partner-road .partner-road-heading::before {
-  background: linear-gradient(#fff8e8f5, #fff8e8b3, transparent);
-}
+/* Keep the original street and card styling, with solid logo backgrounds in every state. */
 .shop-sign, .partner-auto-card, .partner-dialog { background: #fffdf7; }
-.shop-logo, .partner-auto-card img, #partner-dialog-logo {
-  background: #fff;
-  border-radius: 3px;
-  padding: 3px;
-  box-sizing: border-box;
-}
+.shop-logo, .partner-auto-card img, #partner-dialog-logo { background: #fff; }
