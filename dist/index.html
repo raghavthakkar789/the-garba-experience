@@ -38,7 +38,7 @@
     <script defer src="garba-circle.js?v=1"></script>
     <script defer src="event-crowds.js?v=2"></script>
     <script defer src="elephant-walk.js?v=2"></script>
-    <script defer="" src="experience.js?v=22"></script>
+    <script defer="" src="experience.js?v=23"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -72,9 +72,9 @@
     </script>
     <link rel="stylesheet" href="storybook.css?v=20" />
     <link rel="stylesheet" href="button-motion.css?v=1" />
-    <link rel="stylesheet" href="partner-road.css?v=5" />
-    <link rel="stylesheet" href="scene-refinements.css?v=4" />
-    <link rel="stylesheet" href="event-crowds.css?v=1" />
+    <link rel="stylesheet" href="partner-road.css?v=6" />
+    <link rel="stylesheet" href="scene-refinements.css?v=5" />
+    <link rel="stylesheet" href="event-crowds.css?v=2" />
     <link rel="stylesheet" href="thank-you.css?v=2" />
     <link rel="stylesheet" href="elephant-ride.css?v=3" />
     <script defer src="button-motion.js?v=2"></script>
@@ -94,9 +94,7 @@
       /></a>
       <p class="header-date">9 OCTOBER · AHMEDABAD</p>
       <div class="header-actions">
-        <button type="button" id="motion-toggle" hidden="" aria-pressed="false">
-          Read without animation</button
-        ><a class="header-link" href="#details"
+        <a class="header-link" href="assets/invitation.jpg" target="_blank" rel="noopener"
           >Your invitation <span aria-hidden="true">↗</span></a
         >
       </div>
@@ -251,6 +249,7 @@
                 </div>
               </div>
               <figcaption lang="gu">એક હાથી · બે વ્યક્તિઓની એન્ટ્રી</figcaption>
+              <p class="elephant-entry-disclaimer" lang="gu">ખાસ નોંધ: આ હાથી જ તમારો પાસ છે. તેના વગર પ્રવેશ નહીં મળે.</p>
             </figure>
           </section>
           <section
@@ -426,10 +425,11 @@
             <picture class="scene-art"
               ><source media="(max-width:650px)" srcset="assets/story/event-decor/crowds/aarti-clean.webp" /><img
                 src="assets/story/event-decor/crowds/aarti-clean.webp"
-                alt="A Maa Amba aarti alcove with burgundy and gold backdrop, pink lotus sculptures, emerald panels and glowing diyas"
+                alt="A Maa Amba aarti alcove with two maharajs on the shrine stairs, burgundy and gold backdrop, pink lotus sculptures and glowing diyas"
                 loading="lazy"
             /></picture>
             <div class="event-crowd prayer-crowd" data-art=".scene-art img" aria-hidden="true"><div class="crowd-plane">
+                <img class="aarti-maharajs" src="assets/story/event-decor/crowds/aarti-maharajs.webp" alt="" loading="lazy" />
                 <div class="guest guest-pray" style="--x:33;--y:71;--h:21.25;--mx:44;--my:71;--mh:15.86;--duration:6.5s;--delay:0.0s;--facing:1;--sprite:url(assets/story/event-decor/crowds/prayer-1.webp)"><span class="guest-shift"><span class="guest-body"><i class="guest-sprite"></i></span></span></div>
                 <div class="guest guest-pray" style="--x:28;--y:73;--h:20.5;--mx:41;--my:72;--mh:15.37;--duration:6.93s;--delay:-1.13s;--facing:1;--sprite:url(assets/story/event-decor/crowds/prayer-2.webp)"><span class="guest-shift"><span class="guest-body"><i class="guest-sprite"></i></span></span></div>
                 <div class="guest guest-pray" style="--x:23;--y:75;--h:19.75;--mx:38;--my:73;--mh:14.88;--duration:7.36s;--delay:-2.26s;--facing:1;--sprite:url(assets/story/event-decor/crowds/prayer-3.webp)"><span class="guest-shift"><span class="guest-body"><i class="guest-sprite"></i></span></span></div>
@@ -470,6 +470,7 @@
                 loading="lazy"
             /></picture>
             <div class="event-crowd stage-crowd" data-art=".scene-art img" aria-hidden="true"><div class="crowd-plane">
+                <div class="stage-lights"><i class="stage-beam" style="--lamp-x:41%;--lamp-mx:32%;--beam-color:#73ffe5;--sweep:19deg;--duration:8s;--delay:-0s"></i><i class="stage-beam" style="--lamp-x:47%;--lamp-mx:43%;--beam-color:#ffcc75;--sweep:-16deg;--duration:9s;--delay:-3s"></i><i class="stage-beam" style="--lamp-x:52%;--lamp-mx:52%;--beam-color:#ff92e6;--sweep:17deg;--duration:10s;--delay:-5s"></i><i class="stage-beam" style="--lamp-x:60%;--lamp-mx:68%;--beam-color:#8fffe9;--sweep:-20deg;--duration:8.5s;--delay:-2s"></i></div>
                 <div class="guest guest-dance" style="--x:6;--y:57.5;--h:7;--mx:6;--my:53.5;--mh:3.4;--dx:0.6;--mdx:0.6;--facing:1;--tempo:0.85s;--beat:0.0s;--duration:4.5s;--delay:0.0s;--sprite:url(assets/story/event-decor/crowds/dancer-1.webp)"><span class="guest-shift"><span class="guest-body"><i class="guest-sprite"></i></span></span></div>
                 <div class="guest guest-dance" style="--x:10;--y:58.3;--h:7;--mx:10;--my:54.4;--mh:3.4;--dx:0.6;--mdx:0.6;--facing:1;--tempo:0.95s;--beat:-0.19s;--duration:5.0s;--delay:-0.37s;--sprite:url(assets/story/event-decor/crowds/dancer-2.webp)"><span class="guest-shift"><span class="guest-body"><i class="guest-sprite"></i></span></span></div>
                 <div class="guest guest-dance" style="--x:14;--y:59.1;--h:7;--mx:14;--my:55.3;--mh:3.4;--dx:0.6;--mdx:0.6;--facing:1;--tempo:1.05s;--beat:-0.38s;--duration:5.5s;--delay:-0.74s;--sprite:url(assets/story/event-decor/crowds/dancer-1.webp)"><span class="guest-shift"><span class="guest-body"><i class="guest-sprite"></i></span></span></div>
@@ -601,12 +602,12 @@
               >
             </div>
           </section>
-          <section id="partner-road" class="scene partner-road" data-label="One last walk, together." data-scroll-span="4" aria-labelledby="partner-road-title">
+          <section id="partner-road" class="scene partner-road" data-label="આધારસ્તંભ" data-scroll-span="4" aria-labelledby="partner-road-title">
             <div class="partner-road-stage">
               <div class="partner-road-art" aria-hidden="true"></div>
               <header class="partner-road-heading">
-                <p>THE WALK HOME</p>
-                <h2 id="partner-road-title" lang="gu">ઘરે જતાં જતાં…</h2>
+                <p>SPONSORS &amp; PARTNERS</p>
+                <h2 id="partner-road-title" lang="gu">આધારસ્તંભ</h2>
                 <span class="road-walk-hint" lang="gu">સાથે ચાલો, દરેક સાથીને મળીએ.</span>
                 <span class="road-read-hint" lang="gu">દુકાનના બોર્ડ પર ટૅપ કરો.</span>
               </header>

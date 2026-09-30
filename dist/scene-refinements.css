@@ -178,3 +178,23 @@ html:not(.cinematic) .garba-world { top: 65%; }
   .cinematic #the-stage .stage-crowd { inset: 96px 0 92px; }
   #the-stage .together-art { height: 17svh; left: 24%; bottom: 17%; }
 }
+
+/* A separate note preserves the approved handoff's dimensions and motion. */
+.elephant-entry-disclaimer {
+  margin: 8px auto 0;
+  font: 500 12px/1.6 "Noto Serif Gujarati", serif;
+  color: #fff8e5;
+  background: #163b32ed;
+  border: 1px solid #d6b56c;
+  border-radius: 6px;
+  padding: 7px 10px;
+  text-align: center;
+}
+.cinematic .elephant-entry-disclaimer {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(460px, calc(100vw - 28px));
+  box-sizing: border-box;
+}

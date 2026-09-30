@@ -503,7 +503,8 @@ const scroll = (cursor) => {
     "overlapping dissolve",
   );
   assert.equal(d.querySelectorAll(".scene.is-active").length, 1);
-  d.querySelector("#motion-toggle").click();
+  reduced.matches = true;
+  reducedHandler();
   assert(!cinematic(), "reading mode");
   assert.equal(
     d.querySelector("#invitation-seal").getAttribute("aria-expanded"),
@@ -526,7 +527,8 @@ const scroll = (cursor) => {
     scenes.every((s) => !s.inert && !s.hasAttribute("aria-hidden")),
     "all story accessible without motion",
   );
-  d.querySelector("#motion-toggle").click();
+  reduced.matches = false;
+  reducedHandler();
   assert(cinematic(), "motion restored");
   reduced.matches = true;
   reducedHandler();
@@ -589,12 +591,11 @@ const scroll = (cursor) => {
   d.querySelector("#make-memory").click();
   d.querySelector("#the-stage [data-track]").click();
   await tick();
-  d.querySelector("#motion-toggle").click();
   d.querySelector("#invitation-seal").click();
   d.querySelector(".toast").classList.add("visible");
   w.dispatchEvent(new w.PageTransitionEvent("pageshow", { persisted: false }));
   assert.equal(w.scrollY, 0);
-  assert(cinematic(), "reload resets manual reading choice");
+  assert(cinematic(), "reload restores the animated opening");
   assert.equal(d.querySelector(".scene.is-active").id, "invitation");
   assert.equal(
     d.querySelector("#invitation-seal").getAttribute("aria-expanded"),

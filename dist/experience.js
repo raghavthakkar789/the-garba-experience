@@ -22,7 +22,6 @@
     return total + span;
   }, 0);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const motionButton = document.querySelector("#motion-toggle");
   const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
   const ease = (v) => {
     const x = clamp(v);
@@ -38,7 +37,6 @@
   }
 
   let frame = 0;
-  let manualRead = false;
   let cinematic = false;
   let activeIndex = 0;
   let journeyTop = 0;
@@ -425,11 +423,10 @@
   function setMotion(preservePlace = false) {
     cancelEntry();
     const previous = activeIndex;
-    let oversizedCopy = false;
     const wasCinematic = cinematic;
     const wasWithin = scrollY < journeyTop + journey.offsetHeight;
     const finaleOffset = scrollY - (journeyTop + journey.offsetHeight);
-    cinematic = !manualRead && !reduced.matches && innerHeight >= 640;
+    cinematic = !reduced.matches && innerHeight >= 640;
     root.classList.toggle("cinematic", cinematic);
     root.classList.toggle("read-mode", !cinematic);
     // Use a stable viewport height; mobile address-bar changes do not reshape the story.
@@ -446,7 +443,6 @@
         (s) => (s.querySelector(".scene-copy")?.scrollHeight || 0) > stageHeight - 180,
       )
     ) {
-      oversizedCopy = true;
       cinematic = false; // Enlarged text is more important than pinned animation.
       root.classList.remove("cinematic");
       root.classList.add("read-mode");
@@ -454,14 +450,6 @@
       measure();
     }
     openingSoundButton.hidden = !cinematic;
-    motionButton.hidden = false;
-    motionButton.textContent = cinematic
-      ? "Read without animation"
-      : "Play scroll animation";
-    motionButton.setAttribute("aria-pressed", String(!cinematic));
-    motionButton.disabled =
-      reduced.matches || innerHeight < 640 || oversizedCopy;
-    if (motionButton.disabled) motionButton.textContent = "Reading mode";
     if (preservePlace && wasCinematic !== cinematic) {
       const top = !wasWithin
         ? journeyTop + journey.offsetHeight + finaleOffset
@@ -574,10 +562,6 @@
     }),
   );
   openingButtons.forEach((button) => button.addEventListener("click", beginEntry));
-  motionButton.addEventListener("click", () => {
-    manualRead = !manualRead;
-    setMotion(true);
-  });
   addEventListener("scroll", schedule, { passive: true });
   addEventListener(
     "resize",
@@ -841,7 +825,6 @@
     document.activeElement?.blur();
     clearTimeout(toastTimer);
     toast.classList.remove("visible");
-    manualRead = false;
     readingBoxOpen = false;
     focusStoryOnArrival = false;
     const photoScene = document.querySelector("#a-memory");

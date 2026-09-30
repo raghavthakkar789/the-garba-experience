@@ -125,3 +125,45 @@ html:not(.cinematic) .road-crowd { display: none; }
   .cinematic .event-crowd .guest-body,
   .cinematic .event-crowd .guest-sprite { animation: none; }
 }
+
+/* Soft moving beams originate on the illustrated stage lighting truss. */
+.stage-lights { position: absolute; inset: 0; pointer-events: none; }
+.stage-beam {
+  position: absolute;
+  top: 28.7%;
+  left: var(--lamp-x);
+  width: 13%;
+  height: 36%;
+  transform-origin: 50% 0;
+  transform: translateX(-50%) rotate(var(--sweep));
+  background: linear-gradient(to bottom, var(--beam-color), transparent 95%);
+  clip-path: polygon(48% 0, 52% 0, 100% 100%, 0 100%);
+  opacity: .3;
+  mix-blend-mode: screen;
+  filter: blur(3px);
+}
+.cinematic .stage-beam {
+  animation: stage-light-sweep var(--duration) ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+  animation-play-state: paused;
+}
+.cinematic .scene[data-crowd-running="true"] .stage-beam { animation-play-state: running; }
+@keyframes stage-light-sweep {
+  from { transform: translateX(-50%) rotate(var(--sweep)); opacity: .23; }
+  to { transform: translateX(-50%) rotate(calc(var(--sweep) * -1)); opacity: .43; }
+}
+.aarti-maharajs {
+  position: absolute;
+  left: 50%;
+  top: 64.5%;
+  width: 31%;
+  height: auto;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+@media (max-width:650px) {
+  .stage-beam { top: 36%; left: var(--lamp-mx); height: 25%; width: 19%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .cinematic .stage-beam { animation: none; }
+}
