@@ -144,6 +144,25 @@ input:focus-visible {
   align-items: center;
   gap: 24px;
 }
+.soundtrack-toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  padding: 10px;
+  background: #0b281fdd;
+  border: 1px solid #dfbd7866;
+  border-radius: 50%;
+  color: var(--gold);
+}
+.soundtrack-toggle svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.soundtrack-slash { display: none; }
+.soundtrack-toggle[aria-pressed="false"] .soundtrack-waves { display: none; }
+.soundtrack-toggle[aria-pressed="false"] .soundtrack-slash { display: block; }
+@media (max-width: 650px) {
+  .masthead .header-actions { flex-direction: row; align-items: center; gap: 8px; }
+}
 .header-link,
 #motion-toggle {
   font-size: 13px;

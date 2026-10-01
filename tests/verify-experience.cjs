@@ -89,7 +89,7 @@ Object.defineProperty(w.navigator, "clipboard", {
 });
 const param = () => ({
   value: 0,
-  setValueAtTime() {},
+  setValueAtTime(value) { this.value = value; },
   exponentialRampToValueAtTime() {},
   setTargetAtTime() {},
   cancelScheduledValues() {},
@@ -101,6 +101,7 @@ w.AudioContext = class {
     this.state = "suspended";
     this.destination = {};
   }
+  createMediaElementSource() { return { connect() {} }; }
   createGain() {
     return { gain: param(), connect() {}, disconnect() {} };
   }
@@ -173,6 +174,12 @@ const scroll = (cursor) => {
   w.eval(fs.readFileSync(path.join(base, 'aarti-flowers.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(base, 'garba-circle.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(base, 'event-crowds.js'), 'utf8'));
+  for (const audio of d.querySelectorAll("audio")) {
+    Object.defineProperty(audio, "paused", { value: true, writable: true });
+    audio.play = () => { audio.paused = false; return Promise.resolve(); };
+    audio.pause = () => { audio.paused = true; };
+  }
+  w.eval(fs.readFileSync(path.join(base, "site-soundtrack.js"), "utf8"));
   w.eval(script);
   await tick(); // Let the initial pageshow restoration finish before interacting.
   assert.equal(w.scrollY, 0, "reload starts at the top");
@@ -216,9 +223,10 @@ const scroll = (cursor) => {
   scroll(0.6);
   assert.equal(w.scrollY, 0, 'scrolling cannot bypass the unopened invitation');
   assert.equal(d.querySelector('#invitation').style.getPropertyValue('--open'), '0.0000', 'scrolling alone leaves both doors closed');
-  d.querySelector("#opening-sound").click(); // Muted entry stays silent; sound synthesis is checked in Chromium.
   d.querySelector("#invitation-seal").focus();
   d.querySelector("#invitation-seal").click();
+  await tick();
+  assert(!d.querySelector("#door-sound").paused && d.querySelector("#descent-sound").paused && d.querySelector("#site-soundtrack").paused, "logo click plays only the supplied door sound");
   frame(1500);
   frame(0);
   assert.equal(d.querySelector(".scene.is-active").id, "invitation", "slow opening remains in the box midway");
@@ -230,6 +238,8 @@ const scroll = (cursor) => {
     "one logo click goes directly to the storyline",
   );
   assert.equal(d.activeElement.id, "beginning-title", "logo activation transfers focus into story");
+  await tick();
+  assert(d.querySelector("#door-sound").paused && !d.querySelector("#descent-sound").paused && d.querySelector("#site-soundtrack").paused, "door transition starts only the descent sound");
   const arrival = d.querySelector('#beginning');
   const descendingMan = arrival.querySelector('.man');
   assert.equal(arrival.style.getPropertyValue('--arrival-copy'), '0.0000', 'dialogue waits for landing');
@@ -243,6 +253,8 @@ const scroll = (cursor) => {
   frame(0);
   assert.equal(descendingMan.style.getPropertyValue('--landed'), '1.0000', 'friends land automatically');
   assert.equal(arrival.style.getPropertyValue('--arrival-copy'), '1.0000', 'conversation appears after landing');
+  await tick();
+  assert(d.querySelector("#door-sound").paused && d.querySelector("#descent-sound").paused && !d.querySelector("#site-soundtrack").paused, "landing starts Vichudo after both intro phases");
   const landed = descendingMan.getAttribute('style');
   scroll(1.12);
   assert(parseFloat(descendingMan.style.getPropertyValue('--descent-y')) < -100, 'reverse scrolling lifts friends');

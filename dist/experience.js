@@ -55,76 +55,21 @@
   let focusStoryOnArrival = false;
   // One user gesture runs the doors and camera move on a deliberate timeline.
   const openingSoundButton = document.querySelector("#opening-sound");
+  const soundtrack = window.garbaSoundtrack;
   let entryFrame = 0;
-  let openingSoundEnabled = true;
-  let doorContext, doorSource;
-  let doorSession = 0;
-  function stopDoorSound() {
-    ++doorSession;
-    if (doorSource) {
-      doorSource.onended = null;
-      try { doorSource.stop(); } catch {}
-      doorSource.disconnect();
-      doorSource = undefined;
-    }
-    if (doorContext) {
-      Promise.resolve(doorContext.close()).catch(() => {});
-      doorContext = undefined;
-    }
-  }
   function cancelEntry() {
     if (entryFrame) cancelAnimationFrame(entryFrame);
     entryFrame = 0;
     delete opening.dataset.entering;
     focusStoryOnArrival = false;
-    stopDoorSound();
-  }
-  async function playDoorSound() {
-    stopDoorSound();
-    if (!openingSoundEnabled) return;
-    stopMusic();
-    const Audio = window.AudioContext || window.webkitAudioContext;
-    if (!Audio) return;
-    const session = doorSession;
-    try {
-      const context = doorContext = new Audio();
-      await context.resume();
-      if (session !== doorSession || document.hidden) return;
-      const duration = 3.65, rate = context.sampleRate;
-      const buffer = context.createBuffer(1, Math.ceil(rate * duration), rate);
-      const data = buffer.getChannelData(0);
-      let phase = 0, wood = 0, air = 0, seed = 137;
-      const envelope = (t, start, length) => {
-        const p = (t - start) / length;
-        return p > 0 && p < 1 ? Math.sin(Math.PI * p) ** 2 : 0;
-      };
-      // A quiet latch, warm wooden hinge friction and a soft air release.
-      for (let i = 0; i < data.length; i++) {
-        const t = i / rate;
-        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-        const noise = seed / 2147483648 - 1;
-        wood += 0.045 * (noise - wood);
-        air += 0.2 * (noise - air);
-        phase += 2 * Math.PI * (125 + 24 * Math.sin(t * 2.7) + 5 * Math.sin(t * 41)) / rate;
-        const hinge = (Math.sin(phase) + 0.3 * Math.sin(phase * 2)) * 0.055;
-        const latch = t < 0.22 ? Math.sin(t * 2 * Math.PI * 180) * Math.exp(-t * 32) * 0.12 : 0;
-        data[i] = latch + (hinge + wood * 0.35) * envelope(t, 0.3, 2.35)
-          + air * 0.28 * envelope(t, 2.45, 1.15);
-      }
-      const source = doorSource = context.createBufferSource();
-      source.buffer = buffer;
-      source.connect(context.destination);
-      source.onended = () => { if (session === doorSession) stopDoorSound(); };
-      source.start();
-    } catch {
-      if (session === doorSession) stopDoorSound();
-      // Audio support never blocks opening the invitation.
-    }
+    soundtrack?.cancelIntro();
   }
   function beginEntry() {
     if (entryFrame) return;
     entryUnlocked = true;
     root.classList.remove("invitation-locked");
+    stopMusic();
+    soundtrack?.begin(cinematic);
     if (!cinematic) {
       readingBoxOpen = true;
       updateOpening(1);
@@ -137,7 +82,6 @@
     const started = performance.now();
     opening.dataset.entering = "true";
     focusStoryOnArrival = true;
-    playDoorSound();
     const advance = (now) => {
       const elapsed = now - started;
       const doorTime = clamp(elapsed / 3800);
@@ -157,27 +101,22 @@
     entryFrame = requestAnimationFrame(advance);
   }
   openingSoundButton.hidden = false;
-  openingSoundButton.addEventListener("click", () => {
-    openingSoundEnabled = !openingSoundEnabled;
-    openingSoundButton.setAttribute("aria-pressed", String(openingSoundEnabled));
-    openingSoundButton.textContent = openingSoundEnabled ? "Opening sound on" : "Opening sound off";
-    if (!openingSoundEnabled) stopDoorSound();
-  });
   for (const event of ["wheel", "touchstart"])
     addEventListener(event, (input) => {
-      if (input.type === "touchstart" && input.target.closest?.("#opening-sound")) return;
+      if (input.type === "touchstart" && input.target.closest?.("#opening-sound, #soundtrack-toggle")) return;
       if (entryFrame) cancelEntry();
     }, { passive: true });
   addEventListener("pagehide", cancelEntry);
   document.addEventListener("visibilitychange", () => {
+    if (document.hidden && entryFrame) cancelEntry();
     opening.querySelector(".seal-prompt").style.animationPlayState = document.hidden ? "paused" : "running";
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === " " && event.target.closest?.("#opening-sound")) return;
+    if (event.key === " " && event.target.closest?.("#opening-sound, #soundtrack-toggle")) return;
     if (entryFrame && ["Escape", "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) cancelEntry();
   });
   document.addEventListener("pointerdown", (event) => {
-    if (entryFrame && !event.target.closest?.("#invitation-seal, #opening-sound")) cancelEntry();
+    if (entryFrame && !event.target.closest?.("#invitation-seal, #opening-sound, #soundtrack-toggle")) cancelEntry();
   }, { passive: true });
   function updateOpening(open, enter = 0) {
     opening.style.setProperty("--enter", enter.toFixed(4));
@@ -500,6 +439,7 @@
       if (entryUnlocked && entryHasAdvanced && !entryFrame && scrollY <= journeyTop) {
         entryUnlocked = false;
         entryHasAdvanced = false;
+        soundtrack?.reset();
       }
       root.classList.toggle("invitation-locked", !entryUnlocked);
       if (!entryUnlocked && scrollY !== journeyTop)
@@ -510,6 +450,7 @@
       clamp(scrollY / Math.max(1, root.scrollHeight - innerHeight)).toFixed(5),
     );
     if (!cinematic) {
+      soundtrack?.setScene(1.42);
       let nearest = 0,
         distance = Infinity;
       scenes.forEach((s, i) => {
@@ -523,6 +464,7 @@
       return;
     }
     const cursor = clamp((scrollY - journeyTop) / travel) * storySpan;
+    if (entryUnlocked) soundtrack?.setScene(cursor);
     if (entryUnlocked && cursor > .05) entryHasAdvanced = true;
     animateElephant(cursor);
     let base = scenes.length - 1;
@@ -657,6 +599,7 @@
     ++selection;
     host.replaceChildren();
     music.hidden = true;
+    soundtrack?.resumeFromOfficial();
     document
       .querySelectorAll("[data-track]")
       .forEach((b) => b.setAttribute("aria-pressed", "false"));
@@ -666,7 +609,7 @@
       document.querySelector(".header-link").focus({ preventScroll: true });
   }
   async function playTrack(key, button) {
-    stopDoorSound();
+    soundtrack?.pauseForOfficial();
     const token = ++selection;
     musicOpener = button.closest("#music-panel") ? musicOpener : button;
     try {
@@ -699,6 +642,7 @@
       music.hidden = false;
       document.querySelector("#close-music").focus({ preventScroll: true });
     } catch {
+      if (token === selection) soundtrack?.resumeFromOfficial();
       notify("Music could not load. Please try again when you’re connected.");
     }
   }
@@ -873,10 +817,8 @@
       }
     });
   function resetReloadState() {
+    soundtrack?.reset();
     cancelEntry();
-    openingSoundEnabled = true;
-    openingSoundButton.setAttribute("aria-pressed", "true");
-    openingSoundButton.textContent = "Opening sound on";
     stopMusic();
     document
       .querySelectorAll("dialog[open]")

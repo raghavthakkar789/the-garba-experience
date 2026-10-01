@@ -31,14 +31,15 @@
       type="font/woff"
       crossorigin=""
     />
-    <link rel="stylesheet" href="experience.css?v=9" />
+    <link rel="stylesheet" href="experience.css?v=10" />
     <script defer src="partner-road.js?v=6"></script>
     <script defer src="invitation-handoff.js?v=1"></script>
     <script defer src="aarti-flowers.js?v=1"></script>
     <script defer src="garba-circle.js?v=1"></script>
     <script defer src="event-crowds.js?v=2"></script>
     <script defer src="elephant-walk.js?v=2"></script>
-    <script defer="" src="experience.js?v=26"></script>
+    <script defer src="site-soundtrack.js?v=2"></script>
+    <script defer="" src="experience.js?v=28"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -94,6 +95,9 @@
       /></a>
       <p class="header-date">9 OCTOBER · AHMEDABAD</p>
       <div class="header-actions">
+        <button type="button" id="soundtrack-toggle" class="soundtrack-toggle" aria-label="Mute website sound" aria-pressed="true" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path class="soundtrack-waves" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/><path class="soundtrack-slash" d="m15 9 6 6m0-6-6 6"/></svg>
+        </button>
         <a class="header-link" href="assets/invitation.jpg" data-view-original aria-haspopup="dialog"
           >Your invitation <span aria-hidden="true">↗</span></a
         >
@@ -154,7 +158,7 @@
                 <p class="opening-hint">Click the seal. Let the night unfold.</p>
               </div>
             </div>
-            <button id="opening-sound" type="button" aria-pressed="true" hidden>Opening sound on</button>
+            <button id="opening-sound" type="button" aria-pressed="true" hidden>Intro sound on</button>
           </section>
           <section
             class="scene illustrated-scene story-meet"
@@ -869,6 +873,9 @@
       </p>
     </aside>
     <div class="toast" role="status" aria-live="polite"></div>
+    <audio id="door-sound" src="assets/audio/door_opening_sound.mp3" preload="none" hidden></audio>
+    <audio id="descent-sound" src="assets/audio/comming_down_sound.mp3" preload="none" hidden></audio>
+    <audio id="site-soundtrack" src="assets/audio/vichudo-kinjal-dave.mp3" preload="none" loop hidden></audio>
     <noscript
       ><p class="noscript-note">
         The complete story is shown without animation. Enable JavaScript for
