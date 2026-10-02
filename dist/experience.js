@@ -95,7 +95,7 @@
       } else if (!cinematic) {
         sceneIndex = scenes.findIndex(scene => scene.getBoundingClientRect().bottom > innerHeight / 2);
       }
-      const speed = (inStory ? travel / storySpan / 12 : 36) * (sceneHasDialogue[sceneIndex] ? 1 : 2);
+      const speed = (inStory ? travel / storySpan / 12 : 36) * (sceneHasDialogue[sceneIndex] ? 1 : 3);
       autoScrollPosition = Math.min(end, autoScrollPosition + speed * seconds);
       window.scrollTo({ top: autoScrollPosition, behavior: "instant" });
     }
@@ -154,7 +154,7 @@
     focusStoryOnArrival = true;
     const advance = (now) => {
       // Autoscroll fast-forwards the dialogue-free opening; the logo keeps its normal timing.
-      elapsed += (now - lastEntryTime) * (autoScrolling ? 2 : 1);
+      elapsed += (now - lastEntryTime) * (autoScrolling ? 3 : 1);
       lastEntryTime = now;
       const doorTime = clamp(elapsed / 3800);
       // Finish the original door/camera move, then lower the friends on silk.
