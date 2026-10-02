@@ -1,4 +1,4 @@
-/* A continuous, native-scroll film. Every scene remains readable without JavaScript. */
+/* A continuous scroll-driven film with deliberate manual dialogue stops. Every scene remains readable without JavaScript. */
 (() => {
   "use strict";
   const isReload =
@@ -104,6 +104,7 @@
   }
   autoScrollButton.hidden = false;
   autoScrollButton.addEventListener("click", () => {
+    cancelManualScroll();
     if (autoScrolling) { stopAutoScroll(); return; }
     if (document.querySelector("dialog[open]")) return;
     if (!entryUnlocked || (!cinematic && !readingBoxOpen)) beginEntry();
@@ -128,6 +129,114 @@
   });
   document.addEventListener("visibilitychange", () => { if (document.hidden) stopAutoScroll(); });
   addEventListener("pagehide", stopAutoScroll);
+  // Manual gestures are bounded and cannot carry momentum past a dialogue stop.
+  let manualFrame = 0, manualTarget = 0, manualPosition = 0, manualLast = 0;
+  let dialogueHold = null, holdUntil = 0, lastManualInput = -Infinity;
+  let touchY = null, touchBlocked = false;
+  function stopManualMotion() {
+    cancelAnimationFrame(manualFrame);
+    manualFrame = 0;
+  }
+  function cancelManualScroll() {
+    stopManualMotion();
+    dialogueHold = null;
+    holdUntil = 0;
+    lastManualInput = -Infinity;
+  }
+  function dialogueStops() {
+    if (!cinematic) return [...document.querySelectorAll(".dialogue-beat")].map(line =>
+      Math.max(0, line.getBoundingClientRect().top + scrollY - innerHeight * .35));
+    return scenes.flatMap((scene, index) => [...scene.querySelectorAll(".dialogue-beat")].map(line => {
+      const beat = Number(line.dataset.at) || 0;
+      const local = scene.id === "beginning" && beat === 0 ? .42 : Math.max(.06, beat + .015);
+      return journeyTop + (sceneStarts[index] + local * sceneSpans[index]) / storySpan * travel;
+    }));
+  }
+  function holdDialogue(position) {
+    dialogueHold = position;
+    holdUntil = performance.now() + 1200;
+    touchBlocked = touchY !== null;
+    manualTarget = position;
+  }
+  function advanceManualScroll(now) {
+    manualFrame = 0;
+    if (autoScrolling || entryFrame || document.hidden || document.querySelector("dialog[open]")) {
+      cancelManualScroll(); return;
+    }
+    const direction = Math.sign(manualTarget - manualPosition);
+    const step = Math.min(64, now - manualLast) / 1000 * clamp(innerHeight * .18, 90, 180);
+    manualLast = now;
+    const next = manualPosition + direction * Math.min(Math.abs(manualTarget - manualPosition), step);
+    const stops = dialogueStops();
+    const stop = direction > 0
+      ? stops.find(y => y > manualPosition + .5 && y <= next + .5)
+      : stops.slice().reverse().find(y => y < manualPosition - .5 && y >= next - .5);
+    manualPosition = stop === undefined ? next : stop;
+    window.scrollTo({ top: manualPosition, behavior: "instant" });
+    if (stop !== undefined) { holdDialogue(stop); return; }
+    if (Math.abs(manualTarget - manualPosition) > .5) manualFrame = requestAnimationFrame(advanceManualScroll);
+  }
+  function manualScroll(delta, repeated = false) {
+    if (!delta || (cinematic && !entryUnlocked)) return;
+    const now = performance.now(), idle = now - lastManualInput;
+    lastManualInput = now;
+    if (dialogueHold !== null) {
+      if (now < holdUntil || idle < 240 || repeated || touchBlocked) return;
+      dialogueHold = null;
+    } else if (!manualFrame) {
+      const current = dialogueStops().find(y => Math.abs(y - scrollY) <= 2);
+      if (current !== undefined) { holdDialogue(current); return; }
+    }
+    if (!manualFrame) { manualPosition = scrollY; manualTarget = scrollY; }
+    const budget = Math.min(160, innerHeight * .2);
+    const amount = clamp(delta * .25, -budget, budget);
+    if (Math.sign(amount) !== Math.sign(manualTarget - manualPosition)) manualTarget = manualPosition;
+    manualTarget = clamp(manualTarget + amount, Math.max(0, manualPosition - budget),
+      Math.min(root.scrollHeight - innerHeight, manualPosition + budget));
+    // Reduced-motion reading mode uses small immediate steps, with the same dialogue gates.
+    if (reduced.matches) {
+      const direction = Math.sign(manualTarget - manualPosition), stops = dialogueStops();
+      const stop = direction > 0 ? stops.find(y => y > manualPosition + .5 && y <= manualTarget)
+        : stops.slice().reverse().find(y => y < manualPosition - .5 && y >= manualTarget);
+      if (stop !== undefined) { manualTarget = stop; holdDialogue(stop); }
+      window.scrollTo({ top: manualTarget, behavior: "instant" });
+    } else if (!manualFrame) {
+      manualLast = now;
+      manualFrame = requestAnimationFrame(advanceManualScroll);
+    }
+  }
+  const localScrollTarget = target => target?.closest?.("dialog, input, textarea, select, [contenteditable=true], iframe");
+  addEventListener("wheel", event => {
+    if (event.ctrlKey || event.metaKey || localScrollTarget(event.target) || document.querySelector("dialog[open]") || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+    event.preventDefault();
+    manualScroll(event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1));
+  }, { passive:false });
+  addEventListener("touchstart", event => {
+    stopManualMotion();
+    touchY = event.touches?.length === 1 && !localScrollTarget(event.target) && !scrollControl(event.target) ? event.touches[0].clientY : null;
+    touchBlocked = false;
+  }, { passive:true });
+  addEventListener("touchmove", event => {
+    if (touchY === null || event.touches.length !== 1 || document.querySelector("dialog[open]")) return;
+    if (!event.cancelable) return;
+    event.preventDefault();
+    const y = event.touches[0].clientY, delta = touchY - y;
+    touchY = y;
+    manualScroll(delta * 2);
+  }, { passive:false });
+  for (const name of ["touchend", "touchcancel"]) addEventListener(name, () => { touchY = null; }, { passive:true });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") { cancelManualScroll(); return; }
+    if (event.ctrlKey || event.metaKey || event.altKey || localScrollTarget(event.target) || document.querySelector("dialog[open]")) return;
+    if ([" ", "Enter"].includes(event.key) && event.target.closest?.("button,a,summary")) return;
+    const direction = { ArrowDown:1, PageDown:1, End:1, ArrowUp:-1, PageUp:-1, Home:-1, " ":event.shiftKey ? -1 : 1 }[event.key];
+    if (!direction) return;
+    event.preventDefault();
+    manualScroll(direction * (event.key.startsWith("Arrow") ? 48 : 640), event.repeat);
+  });
+  document.addEventListener("pointerdown", () => stopManualMotion(), { passive:true });
+  document.addEventListener("visibilitychange", () => { if (document.hidden) cancelManualScroll(); });
+  addEventListener("pagehide", cancelManualScroll);
   function cancelEntry() {
     if (entryFrame) cancelAnimationFrame(entryFrame);
     entryFrame = 0;
@@ -136,6 +245,7 @@
     soundtrack?.cancelIntro();
   }
   function beginEntry() {
+    cancelManualScroll();
     if (entryFrame) return;
     entryUnlocked = true;
     root.classList.remove("invitation-locked");
@@ -465,6 +575,7 @@
     travel = Math.max(1, journey.offsetHeight - stageHeight);
   }
   function setMotion(preservePlace = false) {
+    cancelManualScroll();
     stopAutoScroll();
     cancelEntry();
     const previous = activeIndex;
@@ -604,6 +715,7 @@
   }, true);
   document.fonts?.ready.then(schedule);
   function scrollToScene(scene, behavior = "smooth") {
+    cancelManualScroll();
     stopAutoScroll();
     cancelEntry();
     const index = scenes.indexOf(scene);
@@ -892,6 +1004,7 @@
       }
     });
   function resetReloadState() {
+    cancelManualScroll();
     stopAutoScroll();
     soundtrack?.reset();
     cancelEntry();

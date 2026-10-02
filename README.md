@@ -31,7 +31,7 @@ The header includes a gold oval **Autoscroll** button with green detailing. It s
 - `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
 - `dist/experience.css`: shared cinematic stage, event details, sound controls and keepsake layout.
 - `dist/storybook.css`: illustrated scenes, character poses, speech bubbles, mobile compositions and a complete unpinned reading layout.
-- `dist/experience.js`: native scroll progress, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, the automatic opening and its sound effect, official music selection, sharing and photo export.
+- `dist/experience.js`: controlled manual scrolling with dialogue checkpoints, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, the automatic opening and its sound effect, official music selection, sharing and photo export.
 - `dist/assets/story/scroll/`: optimized original illustrated characters, entrance, concert and Garba-circle artwork.
 - `dist/assets/story/locations/`: five painted environments matched to the action: home courtyard, pickup street, driving road, selfie corner and shrine courtyard. The later realistic story backgrounds and city collage are no longer loaded.
 - `dist/story-audio.json`: existing official YouTube selections. Official recordings are not downloaded or rehosted.
@@ -40,7 +40,7 @@ The header includes a gold oval **Autoscroll** button with green detailing. It s
 
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-autoscroll.cjs` (with Playwright available) checks start/pause, the opening handoff, manual takeover, keyboard and touch controls, tab visibility, dialogs, resize/reload, end-of-page stopping, reduced motion, no JavaScript and nine header sizes.
 
-The story does not use pagination, scroll snapping, intercepted wheel/touch events or next-page buttons. Mouse wheel, trackpad, touch and keyboard all use the browser's native scroll. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
+Manual wheel, trackpad, touch and navigation-key input is slowed and distance-limited, so a hard gesture cannot sweep through the story. Each dialogue stops for at least 1.2 seconds, then requires a fresh gesture after the previous momentum ends. Backward scrolling uses the same checkpoints. Reduced-motion reading uses small immediate steps; dialog scrolling and browser zoom remain native. Autoscroll retains its established pacing. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
 
 Reloading returns to the top of the closed invitation box and clears open music, dialogs, the selfie reveal and the local keepsake. A scene anchor is removed on reload; fresh direct links still work. Reduced-motion preferences remain respected.
 
@@ -65,3 +65,5 @@ See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existin
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-final-card.cjs` specifically checks the closing details card: its height on common phone screens, text/control containment, live resizing, independently constrained widths and enlarged text. The card uses its own container breakpoints and spacing to avoid legacy margins making it unnecessarily tall.
 
 `node tests/verify-soundtrack.cjs` (with `jsdom` in the Node module search path) checks door/descent/music sequencing, mute, official-player exclusivity, lifecycle cleanup, autoplay/error recovery, and the HTML media fallback. `dist/site-soundtrack.js` owns this playback lifecycle; the original supplied MP3 and source note are in `dist/assets/audio/`.
+
+`CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-manual-scroll.cjs` checks all eleven dialogue stops, hard and gentle gestures, continuous momentum, reverse scrolling, bounded speed/distance, keyboard, real browser touch input, dialog/zoom exemptions and reduced-motion reading.
