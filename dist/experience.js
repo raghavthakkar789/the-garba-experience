@@ -14,6 +14,7 @@
   const stage = document.querySelector(".journey-stage");
   const elephantRide = document.querySelector(".journey-elephant");
   const scenes = [...document.querySelectorAll(".scene")];
+  const sceneHasDialogue = scenes.map(scene => Boolean(scene.querySelector(".dialogue-beat")));
   // The final walking chapter needs time for every shop, within the same film.
   const sceneSpans = scenes.map((scene) => Number(scene.dataset.scrollSpan) || 1);
   const sceneStarts = [];
@@ -79,13 +80,22 @@
     if (document.hidden || document.querySelector("dialog[open]")) { stopAutoScroll(); return; }
     const seconds = Math.min(Math.max(0, now - autoScrollLast), 64) / 1000;
     autoScrollLast = now;
-    // The existing 6.6-second door/descent sequence retains sole control until landing.
+    // The door/descent sequence retains sole control until landing.
     if (entryFrame) { autoScrollPosition = scrollY; autoWasEntering = true; }
     else {
       if (autoWasEntering) { autoScrollPosition = scrollY; autoWasEntering = false; }
       const end = Math.max(0, root.scrollHeight - innerHeight);
       if (scrollY >= end - 1) { stopAutoScroll(); return; }
-      const speed = cinematic && scrollY < journeyTop + travel ? travel / storySpan / 12 : 36;
+      const inStory = cinematic && scrollY < journeyTop + travel;
+      let sceneIndex = -1;
+      if (inStory) {
+        const cursor = clamp((scrollY - journeyTop) / travel) * storySpan;
+        sceneIndex = scenes.length - 1;
+        while (sceneIndex > 0 && cursor < sceneStarts[sceneIndex]) sceneIndex--;
+      } else if (!cinematic) {
+        sceneIndex = scenes.findIndex(scene => scene.getBoundingClientRect().bottom > innerHeight / 2);
+      }
+      const speed = (inStory ? travel / storySpan / 12 : 36) * (sceneHasDialogue[sceneIndex] ? 1 : 2);
       autoScrollPosition = Math.min(end, autoScrollPosition + speed * seconds);
       window.scrollTo({ top: autoScrollPosition, behavior: "instant" });
     }
@@ -139,11 +149,13 @@
     }
     const from = scrollY;
     const to = journeyTop + (1.42 / storySpan) * travel;
-    const started = performance.now();
+    let lastEntryTime = performance.now(), elapsed = 0;
     opening.dataset.entering = "true";
     focusStoryOnArrival = true;
     const advance = (now) => {
-      const elapsed = now - started;
+      // Autoscroll fast-forwards the dialogue-free opening; the logo keeps its normal timing.
+      elapsed += (now - lastEntryTime) * (autoScrolling ? 2 : 1);
+      lastEntryTime = now;
       const doorTime = clamp(elapsed / 3800);
       // Finish the original door/camera move, then lower the friends on silk.
       const progress = elapsed <= 3800

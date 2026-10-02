@@ -26,7 +26,7 @@ player, booking link and maps link use their external services.
 
 ## Current implementation
 
-The header includes a gold oval **Autoscroll** button with green detailing. It starts the opening sequence and continues through the story, changing to **Pause** while active. Manual scrolling, other actions, leaving the tab and reaching the bottom stop it. The sound controls remain independent. It starts only after a click and fits compact phone headers.
+The header includes a gold oval **Autoscroll** button with green detailing. It starts the opening sequence and continues through the story, changing to **Pause** while active. Scenes without dialogue run at twice the normal Autoscroll speed, including the opening and closing sections; dialogue scenes keep their original pace. Manual scrolling, other actions, leaving the tab and reaching the bottom stop it. The sound controls remain independent. It starts only after a click and fits compact phone headers.
 
 - `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
 - `dist/experience.css`: shared cinematic stage, event details, sound controls and keepsake layout.

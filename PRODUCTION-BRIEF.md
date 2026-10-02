@@ -2,6 +2,8 @@
 
 ## Change contract
 
+Autoscroll pacing update (3 October 2026): dialogue-free scenes now advance at 2× speed (six seconds per cinematic span; 72 pixels per second in reading/final sections). Dialogue scenes retain twelve seconds per span or 36 pixels per second. Autoscroll also completes the silent door/descent sequence in 3.3 seconds; the standalone logo activation retains its original 6.6-second timing. Audio playback pitch and manual scroll behavior are unchanged. Fresh Chromium checks measured 2× scrolling through every dialogue-free story scene and 1× through every dialogue scene, plus the accelerated opening; the Autoscroll, story and soundtrack suites pass.
+
 Autoscroll revision (2 October 2026): added an explicitly activated gold oval header button with green detailing, a play/pause icon and a visible label. It uses the existing door/descent sequence, then advances the cinematic story at roughly twelve seconds per timeline span and the reading/final sections at 36 pixels per second. Pause, manual input, other actions, dialogs, background tabs, major resizing and the document bottom stop it; mute remains independent. Compact headers keep the logo, Autoscroll, sound and invitation controls visible.
 
 Verification: the focused Chromium Autoscroll suite passed start/pause/resume, full entry handoff, manual takeover, keyboard/touch, visibility, dialogs, page exit, resize, reload, bottom stopping, reduced motion, no JavaScript and nine header widths from 280 to 1440 pixels. The existing 16-viewport responsive suite, story and soundtrack suites also passed. Phone and desktop screenshots were reviewed. Safari, Firefox and physical-device behavior remain unverified.
