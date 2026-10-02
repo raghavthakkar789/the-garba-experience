@@ -95,7 +95,8 @@
       } else if (!cinematic) {
         sceneIndex = scenes.findIndex(scene => scene.getBoundingClientRect().bottom > innerHeight / 2);
       }
-      const speed = (inStory ? travel / storySpan / 12 : 36) * (sceneHasDialogue[sceneIndex] ? 1 : 3);
+      const pace = sceneHasDialogue[sceneIndex] ? 1 : scenes[sceneIndex]?.id === "partner-road" ? 2 : 3;
+      const speed = (inStory ? travel / storySpan / 12 : 36) * pace;
       autoScrollPosition = Math.min(end, autoScrollPosition + speed * seconds);
       window.scrollTo({ top: autoScrollPosition, behavior: "instant" });
     }

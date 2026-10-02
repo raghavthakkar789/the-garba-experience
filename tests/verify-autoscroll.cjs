@@ -35,7 +35,7 @@ let browser,server;
   const baseline=await page.evaluate(id=>{const scenes=[...document.querySelectorAll('.scene')],journey=document.querySelector('.journey'),stage=document.querySelector('.journey-stage'),spans=scenes.map(s=>Number(s.dataset.scrollSpan)||1),total=spans.reduce((a,b)=>a+b,0),index=scenes.findIndex(s=>s.id===id),start=spans.slice(0,index).reduce((a,b)=>a+b,0),travel=journey.offsetHeight-stage.clientHeight;scrollTo({top:journey.getBoundingClientRect().top+scrollY+(start+spans[index]*.45)/total*travel,behavior:'instant'});return travel/total/12;},test.id);
   await page.waitForTimeout(60);await button.click();
   const speed=await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(start=>{let last=start,y=scrollY,distance=0,time=0;function sample(now){const dt=now-last;if(dt<=50){distance+=scrollY-y;time+=dt;}last=now;y=scrollY;if(time>=350||now-start>4000)resolve(distance/(time/1000));else requestAnimationFrame(sample);}requestAnimationFrame(sample);})));
-  await button.click();assert(Math.abs(speed/baseline-(test.dialogue?1:3))<.15,`${test.id}: dialogue=${test.dialogue}, measured multiplier=${speed/baseline}`);
+  await button.click();assert(Math.abs(speed/baseline-(test.dialogue?1:test.id==='partner-road'?2:3))<.15,`${test.id}: dialogue=${test.dialogue}, measured multiplier=${speed/baseline}`);
  }
  // All three header controls stay visible, separated and usable after audio is enabled.
  for(const [width,height] of [[280,640],[320,568],[320,640],[390,844],[650,900],[651,900],[768,1024],[1024,768],[1440,900]]){
@@ -44,5 +44,5 @@ let browser,server;
   if(process.env.SCREENSHOT_DIR&&[390,1440].includes(width)){fs.mkdirSync(process.env.SCREENSHOT_DIR,{recursive:true});await page.locator('.masthead').screenshot({path:path.join(process.env.SCREENSHOT_DIR,`autoscroll-${width}.png`)});}
  }
  const nojs=await browser.newPage({javaScriptEnabled:false});await nojs.goto(url);assert(!(await nojs.locator('#autoscroll-toggle').isVisible()));
- assert.deepEqual(errors,[]);console.log('PASS: 3x silent-scene and 1x dialogue-scene speeds, accelerated intro, opt-in start, full intro and continuation, pause/resume, mute independence, manual takeover, dialogs, keyboard, touch, page exit, resize, reload, end stop, reduced motion, no-JS, and nine header sizes');
+ assert.deepEqual(errors,[]);console.log('PASS: 2x partner/sponsor, 3x other silent-scene and 1x dialogue-scene speeds, accelerated intro, opt-in start, full intro and continuation, pause/resume, mute independence, manual takeover, dialogs, keyboard, touch, page exit, resize, reload, end stop, reduced motion, no-JS, and nine header sizes');
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(async()=>{await browser?.close();server?.close();});
