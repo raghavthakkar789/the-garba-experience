@@ -13,6 +13,12 @@ let server,browser;
  async function inspect(label,fitScreen=false){
   const data=await page.evaluate(()=>{
    const card=document.querySelector('.thank-you-details'),c=card.getBoundingClientRect(),issues=[];
+   const frame=document.querySelector('.thank-you-frame'),f=frame.getBoundingClientRect();
+   const left=c.left-f.left,right=f.right-c.right;
+   if(Math.abs(left-right)>1)issues.push('card is not centered in its frame');
+   if(Math.min(left,right)<19.5)issues.push('card touches decorative frame');
+   const cap=parseFloat(getComputedStyle(frame.querySelector('.thank-you-arch')).borderImageWidth);
+   if(c.top<f.top+cap)issues.push('card begins inside curved arch cap');
    for(const el of card.querySelectorAll('*')){
     const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;
     if(r.left<c.left-1||r.right>c.right+1||r.top<c.top-1||r.bottom>c.bottom+1)issues.push('outside card: '+(el.className.baseVal||el.className));
