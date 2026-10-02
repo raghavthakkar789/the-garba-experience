@@ -57,6 +57,66 @@
   const openingSoundButton = document.querySelector("#opening-sound");
   const soundtrack = window.garbaSoundtrack;
   let entryFrame = 0;
+  const autoScrollButton = document.querySelector("#autoscroll-toggle");
+  let autoScrolling = false, autoScrollFrame = 0, autoScrollLast = 0, autoScrollPosition = 0;
+  let autoWasEntering = false;
+  function updateAutoScrollButton() {
+    autoScrollButton.setAttribute("aria-pressed", String(autoScrolling));
+    autoScrollButton.setAttribute("aria-label", autoScrolling ? "Pause automatic scrolling" : "Start automatic scrolling");
+    autoScrollButton.querySelector(".control-label").textContent = autoScrolling ? "Pause" : "Autoscroll";
+    autoScrollButton.querySelector("use").setAttribute("href", `assets/ui-icons.svg#${autoScrolling ? "pause" : "play"}`);
+  }
+  function stopAutoScroll() {
+    const wasRunning = autoScrolling;
+    autoScrolling = false;
+    cancelAnimationFrame(autoScrollFrame);
+    autoScrollFrame = 0;
+    if (wasRunning && entryFrame) cancelEntry();
+    updateAutoScrollButton();
+  }
+  function advanceAutoScroll(now) {
+    if (!autoScrolling) return;
+    if (document.hidden || document.querySelector("dialog[open]")) { stopAutoScroll(); return; }
+    const seconds = Math.min(Math.max(0, now - autoScrollLast), 64) / 1000;
+    autoScrollLast = now;
+    // The existing 6.6-second door/descent sequence retains sole control until landing.
+    if (entryFrame) { autoScrollPosition = scrollY; autoWasEntering = true; }
+    else {
+      if (autoWasEntering) { autoScrollPosition = scrollY; autoWasEntering = false; }
+      const end = Math.max(0, root.scrollHeight - innerHeight);
+      if (scrollY >= end - 1) { stopAutoScroll(); return; }
+      const speed = cinematic && scrollY < journeyTop + travel ? travel / storySpan / 12 : 36;
+      autoScrollPosition = Math.min(end, autoScrollPosition + speed * seconds);
+      window.scrollTo({ top: autoScrollPosition, behavior: "instant" });
+    }
+    autoScrollFrame = requestAnimationFrame(advanceAutoScroll);
+  }
+  autoScrollButton.hidden = false;
+  autoScrollButton.addEventListener("click", () => {
+    if (autoScrolling) { stopAutoScroll(); return; }
+    if (document.querySelector("dialog[open]")) return;
+    if (!entryUnlocked || (!cinematic && !readingBoxOpen)) beginEntry();
+    if (scrollY >= root.scrollHeight - innerHeight - 1) return;
+    autoScrolling = true;
+    autoWasEntering = Boolean(entryFrame);
+    autoScrollPosition = scrollY;
+    autoScrollLast = performance.now();
+    updateAutoScrollButton();
+    autoScrollFrame = requestAnimationFrame(advanceAutoScroll);
+  });
+  const scrollControl = target => target?.closest?.("#autoscroll-toggle, #soundtrack-toggle, #opening-sound");
+  addEventListener("wheel", stopAutoScroll, { passive:true });
+  addEventListener("touchstart", event => { if (!scrollControl(event.target)) stopAutoScroll(); }, { passive:true });
+  document.addEventListener("pointerdown", event => { if (!scrollControl(event.target)) stopAutoScroll(); }, { passive:true });
+  document.addEventListener("keydown", event => {
+    const activatesControl = event.key === " " && scrollControl(event.target);
+    if (event.key === "Escape" || (!activatesControl && ["ArrowUp","ArrowDown","PageUp","PageDown","Home","End"," "].includes(event.key))) stopAutoScroll();
+  });
+  document.addEventListener("click", event => {
+    if (event.target.closest?.("a,button,input,select,textarea") && !scrollControl(event.target)) stopAutoScroll();
+  });
+  document.addEventListener("visibilitychange", () => { if (document.hidden) stopAutoScroll(); });
+  addEventListener("pagehide", stopAutoScroll);
   function cancelEntry() {
     if (entryFrame) cancelAnimationFrame(entryFrame);
     entryFrame = 0;
@@ -103,7 +163,7 @@
   openingSoundButton.hidden = false;
   for (const event of ["wheel", "touchstart"])
     addEventListener(event, (input) => {
-      if (input.type === "touchstart" && input.target.closest?.("#opening-sound, #soundtrack-toggle")) return;
+      if (input.type === "touchstart" && scrollControl(input.target)) return;
       if (entryFrame) cancelEntry();
     }, { passive: true });
   addEventListener("pagehide", cancelEntry);
@@ -112,11 +172,11 @@
     opening.querySelector(".seal-prompt").style.animationPlayState = document.hidden ? "paused" : "running";
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === " " && event.target.closest?.("#opening-sound, #soundtrack-toggle")) return;
+    if (event.key === " " && scrollControl(event.target)) return;
     if (entryFrame && ["Escape", "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) cancelEntry();
   });
   document.addEventListener("pointerdown", (event) => {
-    if (entryFrame && !event.target.closest?.("#invitation-seal, #opening-sound, #soundtrack-toggle")) cancelEntry();
+    if (entryFrame && !event.target.closest?.("#invitation-seal, #opening-sound, #soundtrack-toggle, #autoscroll-toggle")) cancelEntry();
   }, { passive: true });
   function updateOpening(open, enter = 0) {
     opening.style.setProperty("--enter", enter.toFixed(4));
@@ -392,6 +452,7 @@
     travel = Math.max(1, journey.offsetHeight - stageHeight);
   }
   function setMotion(preservePlace = false) {
+    stopAutoScroll();
     cancelEntry();
     const previous = activeIndex;
     const wasCinematic = cinematic;
@@ -530,6 +591,7 @@
   }, true);
   document.fonts?.ready.then(schedule);
   function scrollToScene(scene, behavior = "smooth") {
+    stopAutoScroll();
     cancelEntry();
     const index = scenes.indexOf(scene);
     const top = cinematic
@@ -817,6 +879,7 @@
       }
     });
   function resetReloadState() {
+    stopAutoScroll();
     soundtrack?.reset();
     cancelEntry();
     stopMusic();

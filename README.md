@@ -26,6 +26,8 @@ player, booking link and maps link use their external services.
 
 ## Current implementation
 
+The header includes a gold oval **Autoscroll** button with green detailing. It starts the opening sequence and continues through the story, changing to **Pause** while active. Manual scrolling, other actions, leaving the tab and reaching the bottom stop it. The sound controls remain independent. It starts only after a click and fits compact phone headers.
+
 - `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
 - `dist/experience.css`: shared cinematic stage, event details, sound controls and keepsake layout.
 - `dist/storybook.css`: illustrated scenes, character poses, speech bubbles, mobile compositions and a complete unpinned reading layout.
@@ -35,6 +37,8 @@ player, booking link and maps link use their external services.
 - `dist/story-audio.json`: existing official YouTube selections. Official recordings are not downloaded or rehosted.
 - `dist/brand-controls.css` and `dist/assets/ui-icons.svg`: prominent logo plaques for The Garba Experience and the three lead partners, responsive handoff spacing, and icons with visible action labels.
 - `dist/thank-you.css`: the closing invitation with larger event details, contrasting action buttons and room for the original decorative artwork.
+
+`CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-autoscroll.cjs` (with Playwright available) checks start/pause, the opening handoff, manual takeover, keyboard and touch controls, tab visibility, dialogs, resize/reload, end-of-page stopping, reduced motion, no JavaScript and nine header sizes.
 
 The story does not use pagination, scroll snapping, intercepted wheel/touch events or next-page buttons. Mouse wheel, trackpad, touch and keyboard all use the browser's native scroll. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
 

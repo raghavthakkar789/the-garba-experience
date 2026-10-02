@@ -116,3 +116,32 @@ footer a { min-height:44px; padding:8px 4px; }
 .brand-details .partner-card-copy { padding:0 8px 12px; width:100%; }
 .brand-details #partner-dialog-role { font:600 12px/1.5 var(--sans); margin:0 0 6px; color:#54644e; }
 .brand-details #partner-dialog-name { font-size:clamp(22px,5vw,28px); line-height:1.25; }
+/* Gold oval control; its green centre detail matches the invitation palette. */
+.masthead #autoscroll-toggle {
+  display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto;
+  gap:7px; min-height:46px; min-width:132px; padding:8px 14px; border-radius:999px;
+  border:1px solid #f8dc91; background:linear-gradient(135deg,#ffeab3,#dab45f 60%,#f3d58d);
+  box-shadow:inset 0 0 0 2px #173c30,inset 0 0 0 3px #f6d895,0 3px 14px #0004;
+  color:#173c30; font-size:13px; font-weight:700; line-height:1.2;
+}
+#autoscroll-toggle .ui-icon { width:25px; height:25px; padding:4px; border-radius:50%; background:#173c30; color:#f5d69a; }
+.masthead #autoscroll-toggle[aria-pressed="true"] { background:linear-gradient(135deg,#f9d789,#cda047); }
+@media(max-width:1100px) { .masthead .header-date { display:none; } }
+@media(max-width:650px) {
+  .masthead { gap:7px; padding-inline:10px; }
+  .masthead .wordmark { width:51px; }
+  .masthead .header-actions { gap:6px; flex-shrink:0; }
+  .masthead #autoscroll-toggle { min-width:98px; min-height:46px; padding:7px; gap:5px; font-size:11px; }
+  #autoscroll-toggle .ui-icon { width:21px; height:21px; padding:3px; }
+  .masthead .soundtrack-toggle { flex-direction:column; width:46px; padding:5px 2px; gap:2px; font-size:10px; line-height:1.2; }
+  .masthead .soundtrack-toggle svg { width:18px; height:18px; }
+  .masthead .header-link { flex-direction:column; width:65px; padding:5px 2px; gap:2px; font-size:10px; line-height:1.2; }
+  .masthead .header-link .ui-icon { width:18px; height:18px; }
+}
+@media(max-width:310px) {
+  .masthead { padding-inline:6px; gap:4px; }
+  .masthead .wordmark { width:40px; }
+  .masthead .header-actions { gap:4px; }
+  .masthead #autoscroll-toggle { min-width:93px; }
+  .masthead .header-link { width:58px; }
+}

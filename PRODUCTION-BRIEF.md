@@ -2,6 +2,10 @@
 
 ## Change contract
 
+Autoscroll revision (2 October 2026): added an explicitly activated gold oval header button with green detailing, a play/pause icon and a visible label. It uses the existing door/descent sequence, then advances the cinematic story at roughly twelve seconds per timeline span and the reading/final sections at 36 pixels per second. Pause, manual input, other actions, dialogs, background tabs, major resizing and the document bottom stop it; mute remains independent. Compact headers keep the logo, Autoscroll, sound and invitation controls visible.
+
+Verification: the focused Chromium Autoscroll suite passed start/pause/resume, full entry handoff, manual takeover, keyboard/touch, visibility, dialogs, page exit, resize, reload, bottom stopping, reduced motion, no JavaScript and nine header widths from 280 to 1440 pixels. The existing 16-viewport responsive suite, story and soundtrack suites also passed. Phone and desktop screenshots were reviewed. Safari, Firefox and physical-device behavior remain unverified.
+
 Restore the original narrative as a connected scroll experience, improve visual continuity and touch use, and provide optional sound without interrupting the journey. Preserve the event details, printed invitation, existing bookings and keepsake capability.
 
 Base: GitHub `main` at `6718b601c6a302ba58e56ba39ba072c2f459372e` (the matching-background revision). The opening now presents the complete closed invitation box before the illustrated storyline.
