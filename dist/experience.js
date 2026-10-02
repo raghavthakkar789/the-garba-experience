@@ -154,7 +154,7 @@
   }
   function holdDialogue(position) {
     dialogueHold = position;
-    holdUntil = performance.now() + 450;
+    holdUntil = performance.now() + 500;
     touchBlocked = touchY !== null;
     manualTarget = position;
   }
