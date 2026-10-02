@@ -25,7 +25,8 @@
     button.setAttribute("aria-label", label);
     button.title = label;
     introButton.setAttribute("aria-pressed", String(introEnabled));
-    introButton.textContent = introEnabled ? "Intro sound on" : "Intro sound off";
+    button.querySelector(".control-label").textContent = retry ? "Play sound" : muted ? "Unmute" : "Mute";
+    introButton.querySelector(".control-label").textContent = introEnabled ? "Intro sound on" : "Intro sound off";
   }
   function setVolume(track, level) {
     if (track.gain) {

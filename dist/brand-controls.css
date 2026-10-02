@@ -1,0 +1,98 @@
+/* The original logos remain readable on their own contrasting backdrop plaques. */
+.ui-icon { display:inline-block; width:21px; height:21px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; vertical-align:middle; }
+a:has(>.ui-icon),button:has(>.ui-icon),.photo-input { display:inline-flex; align-items:center; justify-content:center; gap:9px; }
+.control-label { min-width:0; overflow-wrap:break-word; }
+.masthead { min-height:76px; padding-block:10px; align-items:center; }
+.masthead .header-actions { flex-direction:row; gap:12px; align-items:center; }
+.masthead .wordmark { width:78px; }
+.wordmark-action { display:flex; align-items:center; justify-content:center; gap:5px; font-size:11px; line-height:1.3; color:#fff0ca; margin-top:3px; }
+.wordmark-action .ui-icon { width:12px; height:12px; }
+.masthead .header-link { display:inline-flex; align-items:center; gap:9px; padding:10px 14px; min-height:46px; font-size:14px; }
+.header-link .control-label { padding:0; }
+.masthead .soundtrack-toggle { display:flex; align-items:center; justify-content:center; gap:7px; width:auto; height:auto; min-height:46px; border-radius:8px; padding:10px 12px; font-size:13px; color:#fff1ce; }
+#opening-sound { display:inline-flex; gap:8px; align-items:center; min-height:44px; padding:10px 14px; }
+.brand-wall { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.brand-plaque { display:flex; align-items:center; justify-content:center; min-width:0; height:100%; border:1px solid #dfc591; border-radius:6px; background:#fff; padding:7px; box-shadow:0 3px 12px #001a1744; overflow:hidden; }
+.brand-plaque img { width:100%; height:100%; object-fit:contain; mix-blend-mode:normal; }
+.brand-tge { background:#123b2e; }
+.brand-ethereum { background:#235543; }
+.stage-brands { display:none; pointer-events:none; }
+.cinematic .stage-brands { display:grid; position:absolute; z-index:21; bottom:10px; left:50%; transform:translateX(-50%); width:min(510px,calc(100% - 28px)); height:60px; }
+.cinematic .journey-caption { bottom:80px; border:0; padding:0; font-size:11px; }
+.cinematic .journey-stage:has(#invitation.is-active) .stage-brands { height:84px; width:min(630px,calc(100% - 32px)); bottom:18px; }
+.cinematic .journey-stage:has(#invitation.is-active) .journey-caption { display:none; }
+.cinematic #invitation #opening-sound { bottom:112px; }
+.cinematic .illustrated-scene .scene-actions { bottom:96px; }
+.cinematic .story-invite .invitation-handoff { bottom:14%; width:min(79vw,650px,48svh); }
+.cinematic .partner-road .road-world { bottom:94px; }
+.cinematic .journey-stage:has(#partner-road.is-active) .journey-caption { display:none; }
+.finale-brands { width:min(740px,100%); height:100px; gap:12px; }
+.finale-brands .brand-plaque { padding:12px; border-radius:10px; }
+.opening-brands { width:min(700px,100%); height:94px; margin:28px auto 0; }
+.cinematic .opening-brands { display:none; }
+html:not(.cinematic) #invitation { flex-direction:column; }
+html:not(.cinematic) .invitation-wall-branding { margin-top:42px; margin-bottom:28px; width:min(200px,45vw); }
+/* Three lead partners are identified by their supplied artwork, not added captions. */
+.featured-partner .shop-name,.featured-partner .shop-role,
+.featured-partner .partner-card-copy { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+.partner-shop.featured-partner .partner-logo-slot { width:100%; height:100%; max-width:none; flex:1; }
+.partner-shop.featured-partner .shop-logo { width:100%; height:100%; max-height:none; margin:0; object-fit:contain; }
+.partner-dialog.featured-partner .partner-logo-slot,.partner-auto-card.featured-partner .partner-logo-slot { width:100%; height:150px; max-width:none; flex:1; }
+.partner-dialog.featured-partner .partner-card-row { display:block; }
+.shop-action { position:absolute; bottom:2px; left:50%; transform:translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:4px 9px; border:1px solid #b69c68; border-radius:4px; background:#fff7e5; color:#15392c; font-size:12px; font-weight:600; line-height:1.2; }
+.shop-action .ui-icon { width:14px; height:14px; }
+.partner-dialog .partner-dialog-close,.close-button,.invitation-viewer-bar button,#close-music { display:inline-flex; align-items:center; justify-content:center; gap:6px; width:auto; min-width:44px; min-height:44px; font-size:14px; padding:10px 12px; }
+.partner-dialog .partner-dialog-close { right:12px; top:12px; }
+.partner-dialog { padding-top:68px; }
+.music-tabs button { min-height:44px; padding:10px; }
+footer a { min-height:44px; padding:8px 4px; }
+:where(a,button,label):focus-visible { outline:3px solid #f8cf74; outline-offset:4px; }
+@media(max-width:650px) {
+  .masthead { padding:8px 12px; gap:8px; }
+  .masthead .wordmark { width:61px; }
+  .masthead .header-actions { gap:7px; }
+  .masthead .header-link { font-size:12px; gap:6px; padding:10px; }
+  .masthead .soundtrack-toggle { font-size:12px; gap:5px; padding:10px 8px; }
+  .masthead .header-date { display:none; }
+  .stage-brands,.cinematic .stage-brands { height:54px; gap:6px; bottom:8px; }
+  .brand-plaque { padding:5px; }
+  .cinematic .journey-caption { display:none; }
+  .cinematic .illustrated-scene .scene-actions { bottom:80px; gap:8px; }
+  .cinematic .story-invite .invitation-handoff { width:min(86vw,49svh); bottom:14%; }
+  .cinematic .partner-road .road-world { bottom:82px; }
+  .cinematic .journey-stage:has(#invitation.is-active) .stage-brands { height:70px; bottom:12px; }
+  .cinematic #invitation #opening-sound { bottom:94px; }
+  .finale-brands,.opening-brands { grid-template-columns:repeat(2,minmax(0,1fr)); height:194px; gap:10px; }
+  .finale-brands .brand-plaque { min-height:0; padding:10px; }
+  .scene-actions .outline-button,.scene-actions .text-button { font-size:13px; min-height:44px; padding:10px 12px; }
+  .shop-action { font-size:11px; padding:3px 6px; gap:3px; }
+  .shop-action .ui-icon { width:12px; height:12px; }
+}
+@media(max-width:360px) {
+  .masthead .header-link { padding:10px 7px; }
+  .masthead .header-link .ui-icon { width:18px; height:18px; }
+  .masthead .wordmark { width:55px; }
+}
+@media(max-width:650px) and (max-height:700px) {
+  .cinematic .story-invite .invitation-handoff { width:min(80vw,38svh); bottom:18%; }
+}
+@media(min-width:651px) and (max-height:800px) {
+  .cinematic .story-invite .invitation-handoff { width:min(79vw,650px,44svh); bottom:17%; }
+}
+/* Let featured artwork occupy the entire board, including compact street layouts. */
+.partner-road .partner-shop.featured-partner .shop-sign { display:flex; padding:5px; }
+.partner-road .partner-shop.featured-partner .shop-details { display:none; }
+.partner-road .partner-shop.featured-partner .partner-logo-slot { border:0; padding:3px; background:#fff; }
+.partner-road .partner-shop.featured-partner:nth-child(3) .partner-logo-slot { background:#235543; }
+.partner-dialog.featured-partner .partner-logo-slot img,.partner-auto-card.featured-partner .partner-logo-slot img { width:100%; height:100%; object-fit:contain; }
+@media(max-width:360px) and (min-height:640px) {
+  .cinematic .story-invite .invitation-handoff { bottom:20%; }
+}
+.partner-auto-card.featured-partner { display:flex; padding:16px; width:min(380px,calc(100vw - 40px)); }
+@media(min-width:651px) and (max-height:800px) {
+  .cinematic .story-invite .invitation-handoff { width:min(72vw,650px,34svh); bottom:19%; }
+  .cinematic #the-invitation .dialogue-beat { width:280px; font-size:14px; }
+}
+@media(max-width:360px) and (min-height:640px) {
+  .cinematic .story-invite .invitation-handoff { width:min(80vw,35svh); bottom:20%; }
+}

@@ -4,6 +4,8 @@ Source: https://drive.google.com/drive/folders/1CX5Z0ul_NA9RgI9p_439_QE7khvmQTyw
 
 Checked 28 September 2026. The final road contains all 16 confirmed presenter, sponsor and partner names, with their supplied roles. Supplied artwork is preserved, cropped for surrounding whitespace and optimized to WebP. Brand names are also live HTML text.
 
+Updated 2 October 2026: rechecked the supplied Eventzz Planet PNG, Saregama logo PDF and Ethereum Infracon JPEG against the existing optimized images. These three partners now receive prominent logo-only plaques alongside The Garba Experience in the opening, cinematic backdrop and closing page. Their street boards, automatic cards and dialogs show larger logos with no additional visible name/role captions; names remain available for assistive technology. The other partners retain their existing name/role presentation. Chromium review across 16 viewport sizes verified the responsive layouts, with phone and desktop screenshots reviewed for logo sizing and contrast.
+
 ## Logos used
 
 Eventzz Planet, Saregama Entertainment, Ethereum Infracon, MBA Group, Vivanta Group, HST, Eleven Infra, Vishakha, Krish Communication, JG University, Utsav Decor and S House.

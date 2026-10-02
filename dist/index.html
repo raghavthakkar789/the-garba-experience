@@ -32,14 +32,14 @@
       crossorigin=""
     />
     <link rel="stylesheet" href="experience.css?v=10" />
-    <script defer src="partner-road.js?v=6"></script>
+    <script defer src="partner-road.js?v=7"></script>
     <script defer src="invitation-handoff.js?v=1"></script>
     <script defer src="aarti-flowers.js?v=1"></script>
     <script defer src="garba-circle.js?v=1"></script>
     <script defer src="event-crowds.js?v=2"></script>
     <script defer src="elephant-walk.js?v=2"></script>
-    <script defer src="site-soundtrack.js?v=2"></script>
-    <script defer="" src="experience.js?v=28"></script>
+    <script defer src="site-soundtrack.js?v=3"></script>
+    <script defer="" src="experience.js?v=29"></script>
     <meta property="og:title" content="The Garba Experience · You’re invited" />
     <meta
       property="og:description"
@@ -76,12 +76,13 @@
     <link rel="stylesheet" href="partner-road.css?v=9" />
     <link rel="stylesheet" href="scene-refinements.css?v=7" />
     <link rel="stylesheet" href="event-crowds.css?v=2" />
-    <link rel="stylesheet" href="thank-you.css?v=2" />
+    <link rel="stylesheet" href="thank-you.css?v=3" />
     <link rel="stylesheet" href="elephant-ride.css?v=3" />
+    <link rel="stylesheet" href="brand-controls.css?v=1" />
     <script defer src="button-motion.js?v=2"></script>
   </head>
   <body>
-    <a class="skip-link" href="#details">Skip to event details</a>
+    <a class="skip-link" href="#details"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#arrow" /></svg><span class="control-label">Skip to event details</span></a>
     <header class="masthead">
       <a
         class="wordmark"
@@ -92,20 +93,20 @@
           alt="The Garba Experience"
           width="96"
           height="66"
-      /></a>
+      /><span class="wordmark-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#home" /></svg><span>Home</span></span></a>
       <p class="header-date">9 OCTOBER · AHMEDABAD</p>
       <div class="header-actions">
         <button type="button" id="soundtrack-toggle" class="soundtrack-toggle" aria-label="Mute website sound" aria-pressed="true" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path class="soundtrack-waves" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/><path class="soundtrack-slash" d="m15 9 6 6m0-6-6 6"/></svg>
-        </button>
+        <span class="control-label">Mute</span></button>
         <a class="header-link" href="assets/invitation.jpg" data-view-original aria-haspopup="dialog"
-          >Your invitation <span aria-hidden="true">↗</span></a
-        >
+          ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#invitation" /></svg><span class="control-label">Invitation</span></a>
       </div>
     </header>
     <main>
       <div class="journey" id="journey">
         <div class="journey-stage">
+<div class="brand-wall stage-brands" aria-label="Event and partner logos"><div class="brand-plaque brand-tge"><img src="assets/logo.webp" alt="The Garba Experience" width="96" height="66" loading="eager" decoding="async" /></div><div class="brand-plaque brand-eventzz"><img src="assets/partners/eventzz.webp" alt="Eventzz Planet" width="446" height="280" loading="eager" decoding="async" /></div><div class="brand-plaque brand-saregama"><img src="assets/partners/saregama.webp" alt="Saregama Entertainment" width="640" height="185" loading="eager" decoding="async" /></div><div class="brand-plaque brand-ethereum"><img src="assets/partners/ethereum.webp" alt="Ethereum Infracon" width="280" height="280" loading="eager" decoding="async" /></div></div>
           <section
             class="scene opening-scene"
             id="invitation"
@@ -153,12 +154,12 @@
               </div>
               <div class="opening-actions">
                 <a class="opening-fallback outline-button" href="#beginning"
-                  >Follow their story ↓</a
-                >
+                  ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#arrow" /></svg><span class="control-label">Follow their story</span></a>
                 <p class="opening-hint">Click the seal. Let the night unfold.</p>
               </div>
             </div>
-            <button id="opening-sound" type="button" aria-pressed="true" hidden>Intro sound on</button>
+            <div class="brand-wall opening-brands" aria-label="Event and partner logos"><div class="brand-plaque brand-tge"><img src="assets/logo.webp" alt="The Garba Experience" width="96" height="66" loading="eager" decoding="async" /></div><div class="brand-plaque brand-eventzz"><img src="assets/partners/eventzz.webp" alt="Eventzz Planet" width="446" height="280" loading="eager" decoding="async" /></div><div class="brand-plaque brand-saregama"><img src="assets/partners/saregama.webp" alt="Saregama Entertainment" width="640" height="185" loading="eager" decoding="async" /></div><div class="brand-plaque brand-ethereum"><img src="assets/partners/ethereum.webp" alt="Ethereum Infracon" width="280" height="280" loading="eager" decoding="async" /></div></div>
+            <button id="opening-sound" type="button" aria-pressed="true" hidden><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#speaker" /></svg><span class="control-label">Intro sound on</span></button>
           </section>
           <section
             class="scene illustrated-scene story-meet"
@@ -224,10 +225,10 @@
             </div>
             <div class="invitation-wall-branding" aria-hidden="true">
               <svg class="wall-brand-desktop" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice">
-                <image href="assets/logo.webp" x="692" y="340" width="152" height="104" />
+                <image href="assets/logo.webp" x="692" y="370" width="152" height="104" />
               </svg>
               <svg class="wall-brand-mobile" viewBox="0 0 1024 1536" preserveAspectRatio="xMidYMid slice">
-                <image href="assets/logo.webp" x="397" y="425" width="230" height="157" />
+                <image href="assets/logo.webp" x="397" y="465" width="230" height="157" />
               </svg>
             </div>
             <div class="dialogue-track">
@@ -420,11 +421,7 @@
                 id="take-story-photo"
                 type="button"
                 aria-pressed="false"
-              >
-                Take their photo</button
-              ><button class="text-button" type="button" id="make-memory">
-                Make your own keepsake
-              </button>
+              ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#camera" /></svg><span class="control-label">Take their photo</span></button><button class="text-button" type="button" id="make-memory"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#photo" /></svg><span class="control-label">Make a keepsake</span></button>
             </div>
           </section>
           <section
@@ -463,9 +460,7 @@
               loading="lazy"
             />
             <div class="scene-actions">
-              <button class="outline-button" type="button" data-track="aarti">
-                ▷ Listen to the aarti
-              </button>
+              <button class="outline-button" type="button" data-track="aarti"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#play" /></svg><span class="control-label">Listen to the aarti</span></button>
             </div>
           </section>
           <section
@@ -543,9 +538,7 @@
               loading="lazy"
             />
             <div class="scene-actions">
-              <button class="outline-button" type="button" data-track="garba1">
-                ▷ Play Kinjal Dave
-              </button>
+              <button class="outline-button" type="button" data-track="garba1"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#play" /></svg><span class="control-label">Play Kinjal Dave</span></button>
             </div>
           </section>
           <section
@@ -607,11 +600,8 @@
               <h2 id="celebration-title">Their circle <em>is waiting.</em></h2>
             </div>
             <div class="scene-actions">
-              <button class="outline-button" type="button" data-track="garba1">
-                ▷ Play Garba</button
-              ><a class="text-button" href="#partner-road"
-                >Walk with them ↓</a
-              >
+              <button class="outline-button" type="button" data-track="garba1"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#play" /></svg><span class="control-label">Play Garba</span></button><a class="text-button" href="#partner-road"
+                ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#arrow" /></svg><span class="control-label">Walk with them</span></a>
             </div>
           </section>
           <section id="partner-road" class="scene partner-road" data-label="આધારસ્તંભ" data-scroll-span="4" aria-labelledby="partner-road-title">
@@ -643,29 +633,29 @@
                 <div class="guest guest-walk" style="--x:12;--y:98;--h:6.3;--mh:7;--dx:68;--dy:0;--end-scale:1;--facing:1;--duration:50s;--delay:-34s;--tempo:1.05s;--beat:-0.6000000000000001s;--sprite:url(assets/story/event-decor/crowds/walker-2.webp)"><span class="guest-shift"><span class="guest-body"><i class="guest-sprite"></i></span></span></div>
             </div></div>
               <div class="partner-shops" role="list" aria-label="Event presenters, sponsors and partners">
-                <article class="partner-shop" role="listitem">
+                <article class="partner-shop featured-partner" role="listitem">
                   <div class="shop-sign">
                     <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/eventzz.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
                     <div class="shop-details"><p class="shop-role">Present</p><h3 class="shop-name">Eventzz Planet</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Eventzz Planet — Present" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Eventzz Planet — Present" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
-                <article class="partner-shop" role="listitem">
+                <article class="partner-shop featured-partner" role="listitem">
                   <div class="shop-sign">
                     <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/saregama.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
                     <div class="shop-details"><p class="shop-role">Present</p><h3 class="shop-name">Saregama <span class="name-detail">Entertainment</span></h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Saregama Entertainment — Present" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Saregama Entertainment — Present" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
-                <article class="partner-shop" role="listitem">
+                <article class="partner-shop featured-partner" role="listitem">
                   <div class="shop-sign">
                     <div class="partner-logo-slot"><img class="shop-logo" src="assets/partners/ethereum.webp" alt="" loading="lazy" decoding="async" width="640" height="280" /></div>
                     <div class="shop-details"><p class="shop-role">In Association With</p><h3 class="shop-name">Ethereum Infracon</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Ethereum Infracon — In Association With" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Ethereum Infracon — In Association With" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -673,7 +663,7 @@
                     <div class="shop-details"><p class="shop-role">Powered by</p><h3 class="shop-name">MBA Group</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View MBA Group — Powered by" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View MBA Group — Powered by" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -681,7 +671,7 @@
                     <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name shop-lettering">Megma</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Megma — Supported by" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Megma — Supported by" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -689,7 +679,7 @@
                     <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">Vivanta Group</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Vivanta Group — Supported by" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Vivanta Group — Supported by" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -697,7 +687,7 @@
                     <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">HST</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View HST — Supported by" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View HST — Supported by" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -705,7 +695,7 @@
                     <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">Eleven Infra</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Eleven Infra — Supported by" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Eleven Infra — Supported by" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -713,7 +703,7 @@
                     <div class="shop-details"><p class="shop-role">Supported by</p><h3 class="shop-name">Vishakha</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Vishakha — Supported by" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Vishakha — Supported by" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -721,7 +711,7 @@
                     <div class="shop-details"><p class="shop-role">Printing Partner</p><h3 class="shop-name shop-lettering">Shah Events</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Shah Events — Printing Partner" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Shah Events — Printing Partner" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -729,7 +719,7 @@
                     <div class="shop-details"><p class="shop-role">Digital Marketing</p><h3 class="shop-name shop-lettering">Hungrito</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Hungrito — Digital Marketing" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Hungrito — Digital Marketing" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -737,7 +727,7 @@
                     <div class="shop-details"><p class="shop-role">Outdoor Marketing</p><h3 class="shop-name">Krish <span class="name-detail">Communication</span></h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Krish Communication — Outdoor Marketing" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Krish Communication — Outdoor Marketing" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -745,7 +735,7 @@
                     <div class="shop-details"><p class="shop-role">University Partner</p><h3 class="shop-name">JG University</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View JG University — University Partner" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View JG University — University Partner" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -753,7 +743,7 @@
                     <div class="shop-details"><p class="shop-role">Venue Partner</p><h3 class="shop-name">Utsav Decor</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Utsav Decor — Venue Partner" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Utsav Decor — Venue Partner" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -761,7 +751,7 @@
                     <div class="shop-details"><p class="shop-role">Photo Video Partner</p><h3 class="shop-name">S House</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View S House — Photo Video Partner" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View S House — Photo Video Partner" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
                 <article class="partner-shop" role="listitem">
                   <div class="shop-sign">
@@ -769,7 +759,7 @@
                     <div class="shop-details"><p class="shop-role">Hospital Partner</p><h3 class="shop-name shop-lettering">Alpha Hospital</h3></div>
                   </div>
                   <div class="shop-front" aria-hidden="true"></div>
-                  <button class="shop-open" type="button" aria-label="View Alpha Hospital — Hospital Partner" aria-haspopup="dialog" disabled></button>
+                  <button class="shop-open" type="button" aria-label="View Alpha Hospital — Hospital Partner" aria-haspopup="dialog" disabled><span class="shop-action"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#eye" /></svg><span class="control-label">View</span></span></button>
                 </article>
               </div>
               <div class="road-friends" role="img" aria-label="The two friends walking together down the festive street">
@@ -806,6 +796,7 @@
             <img class="thank-you-lotus lotus-left" src="assets/story/thank-you/left-lotus.webp" alt="" loading="lazy" />
             <img class="thank-you-lotus lotus-right" src="assets/story/thank-you/right-lotus.webp" alt="" loading="lazy" />
           </div>
+          <div class="brand-wall finale-brands" aria-label="Event and partner logos"><div class="brand-plaque brand-tge"><img src="assets/logo.webp" alt="The Garba Experience" width="96" height="66" loading="eager" decoding="async" /></div><div class="brand-plaque brand-eventzz"><img src="assets/partners/eventzz.webp" alt="Eventzz Planet" width="446" height="280" loading="eager" decoding="async" /></div><div class="brand-plaque brand-saregama"><img src="assets/partners/saregama.webp" alt="Saregama Entertainment" width="640" height="185" loading="eager" decoding="async" /></div><div class="brand-plaque brand-ethereum"><img src="assets/partners/ethereum.webp" alt="Ethereum Infracon" width="280" height="280" loading="eager" decoding="async" /></div></div>
           <img class="thank-you-logo" src="assets/story/thank-you/logo.webp" alt="The Garba Experience" width="410" height="410" loading="lazy" />
           <div class="thank-you-message">
             <h2 id="details-title">THANK YOU</h2>
@@ -813,31 +804,30 @@
           </div>
         <div class="thank-you-details">
           <p class="eyebrow">THE GARBA EXPERIENCE · FEATURING KINJAL DAVE</p>
-          <p class="thank-you-date"><time datetime="2026-10-09T19:30:00+05:30">Friday, 9 October 2026 · 7:30 pm onwards</time></p>
-          <p class="thank-you-venue">Vivenza by Gopi Farm <span>· S.P. Ring Road, Ahmedabad</span></p>
+          <div class="event-facts"><p class="thank-you-date"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#calendar" /></svg><time datetime="2026-10-09T19:30:00+05:30"><span class="fact-label">Date &amp; time</span><strong>Friday, 9 October 2026</strong><span>7:30 pm onwards</span></time></p>
+          <p class="thank-you-venue"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#pin" /></svg><span><span class="fact-label">Venue</span><strong>Vivenza by Gopi Farm</strong><span>S.P. Ring Road, Ahmedabad</span></span></p></div>
           <div class="thank-you-actions">
-            <a class="book-button" href="https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets">Grab your passes <span aria-hidden="true">↗</span></a>
+            <a class="book-button" href="https://www.district.in/events/the-garba-experience-with-kinjal-dave-1970-buy-tickets"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#ticket" /></svg><span class="control-label">Grab your passes</span></a>
             <nav class="event-links" aria-label="Plan your evening">
-              <a href="garba-experience.ics" download>Save the date</a>
-              <a href="https://www.google.com/maps/search/?api=1&amp;query=Vivenza+by+Gopi+Farm+SP+Ring+Road+Ahmedabad" target="_blank" rel="noopener">Directions ↗</a>
-              <button type="button" id="share-invitation">Share</button>
+              <a href="garba-experience.ics" download><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#calendar" /></svg><span class="control-label">Save the date</span></a>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Vivenza+by+Gopi+Farm+SP+Ring+Road+Ahmedabad" target="_blank" rel="noopener"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#pin" /></svg><span class="control-label">Get directions</span></a>
+              <button type="button" id="share-invitation"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#share" /></svg><span class="control-label">Share invitation</span></button>
             </nav>
           </div>
           <p class="booking-note">Bookings through District</p>
-          <div class="entry-note">
+          <div class="entry-note"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#people" /></svg>
             <p><strong>One elephant-shaped invitation admits two people.</strong><br />Please bring your elephant pass for entry. <small>For District bookings, follow the entry instructions on your ticket.</small></p>
           </div>
-          <a class="thank-you-replay" href="#beginning">Relive their evening ↑</a>
+          <a class="thank-you-replay" href="#beginning"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#replay" /></svg><span class="control-label">Relive their evening</span></a>
         </div>
         </div>
       </section>
     </main>
     <footer>
-      <a href="#beginning">The Garba Experience</a>
+      <a href="#beginning"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#replay" /></svg><span class="control-label">Relive their evening</span></a>
       <p>Devotion. Rhythm. Togetherness.</p>
       <a href="assets/invitation.jpg" data-view-original aria-haspopup="dialog"
-        >Original invitation ↗</a
-      >
+        ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#invitation" /></svg><span class="control-label">Original invitation</span></a>
       <p>Story scenes are artistic impressions of the evening.</p>
     </footer>
     <div class="progress-line" aria-hidden="true"></div>
@@ -853,20 +843,15 @@
           type="button"
           id="close-music"
           aria-label="Stop music and close player"
-        >
-          ×
-        </button>
+        ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#close" /></svg><span class="control-label">Close</span></button>
       </div>
       <div class="player-host"></div>
       <p class="track-credit"></p>
       <div class="music-tabs">
-        <button type="button" data-track="aarti">Aarti</button
-        ><button type="button" data-track="garba1">Navrangi 2.0</button
-        ><button type="button" data-track="garba2">Navrat</button>
+        <button type="button" data-track="aarti"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#play" /></svg><span class="control-label">Aarti</span></button><button type="button" data-track="garba1"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#play" /></svg><span class="control-label">Navrangi 2.0</span></button><button type="button" data-track="garba2"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#play" /></svg><span class="control-label">Navrat</span></button>
       </div>
       <a id="youtube-source" target="_blank" rel="noopener"
-        >Open official video on YouTube ↗</a
-      >
+        ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#external" /></svg><span class="control-label">Open official video on YouTube</span></a>
       <p class="sound-note">
         Keep scrolling while you listen. If playback is unavailable, use the
         official link.
@@ -885,12 +870,12 @@
     <dialog id="original-invitation-dialog" class="original-invitation-dialog" aria-label="Original invitation">
       <div class="invitation-viewer-bar">
         <span>Original invitation</span>
-        <button type="button" data-close aria-label="Close invitation and return to the site" autofocus>×</button>
+        <button type="button" data-close aria-label="Close invitation and return to the site" autofocus><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#close" /></svg><span class="control-label">Close</span></button>
       </div>
       <img src="assets/invitation.jpg" alt="The original Garba Experience invitation featuring Kinjal Dave on 9 October 2026" width="1297" height="1600" loading="lazy" />
     </dialog>
     <dialog id="partner-dialog" class="partner-dialog" aria-labelledby="partner-dialog-name">
-      <button type="button" class="partner-dialog-close" data-close aria-label="Close partner details">×</button>
+      <button type="button" class="partner-dialog-close" data-close aria-label="Close partner details"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#close" /></svg><span class="control-label">Close</span></button>
       <div class="partner-card-row">
         <div class="partner-logo-slot"><img id="partner-dialog-logo" alt="" hidden /><span class="partner-monogram" aria-hidden="true" hidden></span></div>
         <div class="partner-card-copy"><p id="partner-dialog-role"></p><h2 id="partner-dialog-name"></h2></div>
@@ -910,16 +895,14 @@
           class="close-button"
           data-close=""
           aria-label="Close memory maker"
-        >
-          ×
-        </button>
+        ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#close" /></svg><span class="control-label">Close</span></button>
       </div>
       <p>
         Add a photo or selfie to make your invitation keepsake. Your photo stays
         on this device.
       </p>
       <label class="photo-input" for="memory-photo"
-        >Choose a photo<input
+        ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#photo" /></svg><span class="control-label">Choose a photo</span><input
           id="memory-photo"
           type="file"
           accept="image/jpeg,image/png,image/webp" /></label
@@ -934,8 +917,7 @@
         id="download-memory"
         download="my-garba-memory.png"
         hidden=""
-        >Save your keepsake ↓</a
-      >
+        ><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/ui-icons.svg#download" /></svg><span class="control-label">Save your keepsake</span></a>
       <p class="sound-note" id="memory-status" role="status">
         Choose a JPG, PNG or WebP photo to begin.
       </p>

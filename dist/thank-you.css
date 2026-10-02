@@ -1,113 +1,70 @@
-/* Original closing artwork from page 10 of the event decor PDF. */
+/* A readable closing invitation, with the original artwork framing the content. */
 .finale.thank-you {
-  display: block;
-  padding: 0;
-  background: #003724 url(assets/story/thank-you/botanical-background.webp) center top / cover;
-  overflow: hidden;
-  scroll-margin-top: 84px;
+  display:block; padding:0; overflow:hidden; scroll-margin-top:90px;
+  color:#fff6df;
+  background:#003724 url(assets/story/thank-you/botanical-background.webp) center/cover;
 }
 .thank-you-scene {
-  position: relative;
-  height: min(850px, 92svh);
-  min-height: 650px;
-  isolation: isolate;
+  position:relative; isolation:isolate; display:flex; flex-direction:column;
+  align-items:center; padding:48px 24px 320px; gap:24px;
 }
-.thank-you-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.thank-you-art img { position: absolute; display: block; }
-.thank-you-arch { left: 50%; bottom: 0; transform: translateX(-50%); height: 100%; width: min(680px, 80%); }
-.thank-you-logo { position: absolute; top: 3%; left: 50%; transform: translateX(-50%); width: 195px; height: 195px; object-fit: contain; }
-.thank-you-message { position: absolute; top: 29%; left: 12px; right: 12px; text-align: center; }
-.thank-you-message h2 { margin: 0; font: 500 clamp(54px, 6vw, 86px)/1.1 Georgia, serif; color: #e4a63f; letter-spacing: -.04em; }
-.thank-you-message p { margin: 18px auto 0; font: 400 17px/1.8 "Noto Serif Gujarati", serif; color: #f5d99a; }
-.thank-you-elephant { height: 49%; width: auto; left: 48%; bottom: 0; transform: translateX(-50%); z-index: 2; }
-.thank-you-leaf { height: 40%; width: auto; bottom: 0; }
-.leaf-left { left: max(1%, calc(50% - 540px)); }
-.leaf-right { right: max(1%, calc(50% - 580px)); height: 51%; }
-.thank-you-lotus { height: 32%; width: auto; bottom: -1%; z-index: 3; }
-.lotus-left { left: max(3%, calc(50% - 500px)); }
-.lotus-right { right: max(2%, calc(50% - 520px)); }
+.thank-you-art { position:absolute; inset:0; z-index:-1; pointer-events:none; }
+.thank-you-art img { position:absolute; display:block; }
+.thank-you-arch { left:50%; bottom:0; transform:translateX(-50%); width:min(1000px,98%); height:100%; opacity:.85; }
+.thank-you-logo { width:150px; height:150px; object-fit:contain; }
+.thank-you-message { text-align:center; }
+.thank-you-message h2 { margin:0; font:500 clamp(42px,5vw,76px)/1.12 Georgia,serif; color:#f2d28e; letter-spacing:-.03em; }
+.thank-you-message p { margin:16px auto 0; max-width:38ch; font:400 18px/1.9 "Noto Serif Gujarati",serif; color:#fff2d3; }
 .thank-you-details {
-  position: relative;
-  text-align: center;
-  padding: 45px 24px 50px;
-  background: linear-gradient(#003724e8, #062d22);
-  border-top: 1px solid #cda65170;
+  width:100%; max-width:740px; padding:32px;
+  background:#092e25; border:1px solid #c9a86b; border-radius:20px;
+  box-shadow:0 18px 60px #001d2399; text-align:center;
 }
-.thank-you-details > .eyebrow { color: #d6b577; font-size: 11px; margin: 0 auto 16px; }
-.thank-you-date { font-size: clamp(17px, 2vw, 23px); color: #fae7bc; margin: 0 0 10px; }
-.thank-you-venue { font-size: 14px; line-height: 1.6; margin: 0; color: #d7dac5; }
-.thank-you-actions { display: flex; justify-content: center; align-items: center; gap: 30px; margin: 26px auto 0; }
-.thank-you-actions .book-button { min-width: 215px; }
-.thank-you-actions .event-links { border: 0; padding: 0; gap: 24px; }
-.thank-you-details .booking-note { margin: 12px 0 0; font-size: 11px; }
-.thank-you-details .entry-note { display: block; max-width: 580px; margin: 22px auto 14px; font-size: 12px; }
-.thank-you-details .entry-note p { margin: 0; }
-.thank-you-details .entry-note strong { color: #ecdcba; }
-.thank-you-details .entry-note small { font-size: 11px; margin-top: 3px; }
-.thank-you-replay { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; color: #e3c487; }
-@media (max-width: 650px) {
-  .thank-you-scene { height: 690px; min-height: 0; }
-  .thank-you-arch { width: 96%; height: 100%; }
-  .thank-you-logo { width: 155px; height: 155px; top: 5%; }
-  .thank-you-message { top: 31%; }
-  .thank-you-message h2 { font-size: clamp(40px, 10.5vw, 66px); }
-  .thank-you-message p { font-size: 13px; line-height: 1.9; margin-top: 17px; }
-  .thank-you-elephant { height: 42%; left: 48%; }
-  .thank-you-leaf { height: 28%; }
-  .leaf-left { left: -12%; }
-  .leaf-right { right: -17%; height: 36%; }
-  .thank-you-lotus { height: 22%; }
-  .lotus-left { left: -17%; }
-  .lotus-right { right: -20%; }
-  .thank-you-details { padding: 32px 22px 34px; }
-  .thank-you-details > .eyebrow { font-size: 9px; line-height: 1.8; }
-  .thank-you-date { max-width: 290px; line-height: 1.6; margin-inline: auto; }
-  .thank-you-venue span { display: block; }
-  .thank-you-actions { flex-direction: column; gap: 12px; }
-  .thank-you-actions .book-button { width: min(100%, 320px); }
-  .thank-you-actions .event-links { width: min(100%, 320px); justify-content: space-between; gap: 12px; }
+.thank-you-details>.eyebrow { max-width:none; margin:0 0 24px; font-size:13px; line-height:1.8; color:#f0dba9; letter-spacing:.09em; }
+.event-facts { display:grid; grid-template-columns:1fr 1fr; gap:24px; text-align:left; }
+.thank-you-date,.thank-you-venue { display:flex; align-items:flex-start; gap:12px; margin:0; font-size:16px; line-height:1.65; color:#fff8e9; }
+.event-facts .ui-icon { color:#edcf8d; width:26px; height:26px; margin-top:5px; }
+.event-facts strong { display:block; font-size:20px; font-weight:600; }
+.event-facts time>span,.thank-you-venue>span>span { display:block; }
+.event-facts .fact-label { color:#e1cda9; font-size:13px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:5px; }
+.thank-you-actions { display:flex; flex-direction:column; gap:14px; margin-top:28px; }
+.thank-you-actions .book-button { width:100%; min-height:58px; justify-content:center; gap:12px; padding:16px; border-radius:10px; background:#f0d49b; color:#123b2d; font-size:18px; font-weight:700; }
+.thank-you-actions .event-links { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; gap:10px; padding:0; border:0; }
+.thank-you-actions .event-links a,.thank-you-actions .event-links button {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-height:84px; gap:7px; padding:12px 7px; background:#f9f3e6; color:#123b2d;
+  border:1px solid #e8d6ac; border-radius:10px; font-size:15px; font-weight:600; line-height:1.4;
 }
-@media (max-width: 360px) {
-  .thank-you-scene { height: 600px; }
-  .thank-you-logo { width: 140px; height: 140px; }
-}
-
-/* Invitation details live inside the thank-you arch, above all elephant artwork. */
-.thank-you-scene {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: auto;
-  min-height: 0;
-  padding: 30px 24px 380px;
-}
-.thank-you-arch { width: min(850px, 98%); }
-.thank-you-logo { position: relative; top: auto; left: auto; transform: none; width: 155px; height: 155px; flex-shrink: 0; }
-.thank-you-message { position: relative; top: auto; left: auto; right: auto; margin-top: 8px; }
-.thank-you-message h2 { font-size: clamp(44px, 5vw, 70px); }
-.thank-you-message p { font-size: 14px; margin-top: 12px; }
-.thank-you-details { width: 100%; max-width: 670px; padding: 22px 0 0; background: none; border: 0; }
-.thank-you-date { font-size: 20px; }
-.thank-you-actions { gap: 22px; margin-top: 18px; }
-.thank-you-details .entry-note { margin-top: 16px; }
-.thank-you-elephant { height: 350px; }
-.thank-you-leaf { height: 280px; }
-.leaf-right { height: 360px; }
-.thank-you-lotus { height: 245px; }
-@media (max-width: 650px) {
-  .thank-you-scene { height: auto; padding: 28px 28px 290px; }
-  .thank-you-logo { width: 128px; height: 128px; }
-  .thank-you-message h2 { font-size: clamp(36px, 10vw, 54px); }
-  .thank-you-message p { font-size: 12px; }
-  .thank-you-details { padding: 20px 0 0; }
-  .thank-you-details > .eyebrow { font-size: 9px; }
-  .thank-you-date { font-size: 16px; }
-  .thank-you-venue { font-size: 12px; }
-  .thank-you-actions { gap: 10px; margin-top: 16px; }
-  .thank-you-actions .event-links { gap: 8px; }
-  .thank-you-elephant { height: 260px; }
-  .thank-you-leaf { height: 180px; }
-  .leaf-right { height: 240px; }
-  .thank-you-lotus { height: 160px; }
-  .thank-you-details .entry-note { font-size: 11px; }
+.thank-you-actions .ui-icon { width:24px; height:24px; }
+.thank-you-details .booking-note { font-size:14px; line-height:1.6; color:#e2d7c0; margin:12px 0 0; }
+.thank-you-details .entry-note { display:flex; text-align:left; align-items:flex-start; gap:12px; margin:24px 0 12px; padding:18px; border:1px solid #8a9770; border-radius:10px; background:#173f31; color:#f5efdf; font-size:16px; line-height:1.65; }
+.thank-you-details .entry-note .ui-icon { color:#f0d49b; margin-top:4px; }
+.thank-you-details .entry-note strong { color:#fff6df; }
+.thank-you-details .entry-note small { display:block; font-size:14px; margin-top:8px; color:#e8e1cf; }
+.thank-you-replay { display:inline-flex; justify-content:center; align-items:center; gap:10px; min-height:48px; font-size:16px; color:#f5d69a; padding:10px 16px; }
+.thank-you-elephant { height:280px; width:auto; left:48%; bottom:0; transform:translateX(-50%); z-index:2; }
+.thank-you-leaf { height:260px; width:auto; bottom:0; }
+.leaf-left { left:max(1%,calc(50% - 540px)); }
+.leaf-right { right:max(1%,calc(50% - 580px)); height:320px; }
+.thank-you-lotus { height:210px; width:auto; bottom:-1%; z-index:3; }
+.lotus-left { left:max(3%,calc(50% - 500px)); }
+.lotus-right { right:max(2%,calc(50% - 520px)); }
+@media(max-width:650px) {
+  .thank-you-scene { padding:30px 16px 250px; gap:22px; }
+  .thank-you-logo { width:128px; height:128px; }
+  .thank-you-message p { font-size:16px; }
+  .thank-you-details { padding:24px 18px; border-radius:16px; }
+  .event-facts { grid-template-columns:1fr; gap:20px; }
+  .event-facts strong { font-size:19px; }
+  .thank-you-details>.eyebrow { font-size:12px; }
+  .thank-you-actions .event-links { grid-template-columns:1fr; }
+  .thank-you-actions .event-links a,.thank-you-actions .event-links button { flex-direction:row; justify-content:flex-start; min-height:54px; gap:14px; padding:14px 18px; font-size:16px; }
+  .thank-you-details .entry-note { padding:14px; }
+  .thank-you-elephant { height:220px; }
+  .thank-you-leaf { height:170px; }
+  .leaf-left { left:-12%; }
+  .leaf-right { right:-17%; height:210px; }
+  .thank-you-lotus { height:145px; }
+  .lotus-left { left:-17%; }
+  .lotus-right { right:-20%; }
 }

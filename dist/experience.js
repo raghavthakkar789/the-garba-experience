@@ -255,7 +255,7 @@
       );
       const button = scene.querySelector("#take-story-photo");
       button.setAttribute("aria-pressed", String(showPhoto));
-      button.textContent = showPhoto
+      button.querySelector(".control-label").textContent = showPhoto
         ? "Back to the moment"
         : "Take their photo";
     }
@@ -337,13 +337,13 @@
     const logo = svg.querySelector("image");
     const matrix = svg.getScreenCTM?.();
     if (!matrix) return;
-    const upper = scene.querySelector(".story-title").getBoundingClientRect().bottom + 16;
+    const upper = scene.querySelector(".story-title").getBoundingClientRect().bottom + (!mobile && innerHeight <= 800 ? 22 : 30);
     const lower = Math.min(...[...scene.querySelectorAll(".dialogue-beat")].map(beat => {
       const person = scene.querySelector(beat.dataset.speaker === "her" ? ".handoff-woman" : ".handoff-man");
       const head = person.getBoundingClientRect();
       return head.top + head.height * .08 - 12 - beat.offsetHeight;
     })) - 12;
-    const preferred = new DOMPoint(mobile ? 512 : 768, mobile ? 425 : 340).matrixTransform(matrix);
+    const preferred = new DOMPoint(mobile ? 512 : 768, mobile ? 465 : 370).matrixTransform(matrix);
     const ratio = mobile ? 230 / 157 : 152 / 104;
     const height = Math.max(0, Math.min((mobile ? 157 : 104) * matrix.d, lower - upper));
     const top = clamp(preferred.y, upper, Math.max(upper, lower - height));
@@ -587,7 +587,7 @@
       const show = button.getAttribute("aria-pressed") !== "true";
       photoScene.dataset.photo = String(show);
       button.setAttribute("aria-pressed", String(show));
-      button.textContent = show ? "Back to the moment" : "Take their photo";
+      button.querySelector(".control-label").textContent = show ? "Back to the moment" : "Take their photo";
       schedule();
     });
   const music = document.querySelector("#music-panel");
@@ -840,7 +840,7 @@
     photoScene.style.setProperty("--dialogue-opacity", "1");
     const photoButton = document.querySelector("#take-story-photo");
     photoButton.setAttribute("aria-pressed", "false");
-    photoButton.textContent = "Take their photo";
+    photoButton.querySelector(".control-label").textContent = "Take their photo";
     ++photoVersion; // Ignore any photo processing that was still pending.
     if (downloadUrl) URL.revokeObjectURL(downloadUrl);
     downloadUrl = undefined;

@@ -15,6 +15,7 @@
   let opener;
   const ease = value => { const t = Math.max(0, Math.min(1, value)); return t * t * (3 - 2 * t); };
   function matchCard(shop, card) {
+    card.classList.toggle("featured-partner", shop.classList.contains("featured-partner"));
     const colours = getComputedStyle(shop);
     for (const property of ['--card-bg', '--card-accent'])
       card.style.setProperty(property, colours.getPropertyValue(property));
