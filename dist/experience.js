@@ -250,7 +250,6 @@
     if (entryFrame) return;
     entryUnlocked = true;
     root.classList.remove("invitation-locked");
-    stopMusic();
     soundtrack?.begin(cinematic);
     if (!cinematic) {
       readingBoxOpen = true;
@@ -778,84 +777,6 @@
       button.querySelector(".control-label").textContent = show ? "Back to the moment" : "Take their photo";
       schedule();
     });
-  const music = document.querySelector("#music-panel");
-  const host = music.querySelector(".player-host");
-  let tracks,
-    selection = 0,
-    musicOpener;
-  function stopMusic(restoreFocus = false) {
-    ++selection;
-    host.replaceChildren();
-    music.hidden = true;
-    soundtrack?.resumeFromOfficial();
-    document
-      .querySelectorAll("[data-track]")
-      .forEach((b) => b.setAttribute("aria-pressed", "false"));
-    if (restoreFocus && musicOpener && !musicOpener.closest("[inert]"))
-      musicOpener.focus({ preventScroll: true });
-    else if (restoreFocus)
-      document.querySelector(".header-link").focus({ preventScroll: true });
-  }
-  async function playTrack(key, button) {
-    soundtrack?.pauseForOfficial();
-    const token = ++selection;
-    musicOpener = button.closest("#music-panel") ? musicOpener : button;
-    try {
-      if (!tracks) {
-        const response = await fetch("story-audio.json");
-        if (!response.ok) throw Error("Music configuration unavailable");
-        tracks = await response.json();
-      }
-      if (token !== selection) return;
-      const track = tracks[key];
-      if (!track || !/^[\w-]{11}$/.test(track.youtube))
-        throw Error("Invalid track");
-      host.replaceChildren();
-      const iframe = document.createElement("iframe");
-      iframe.title = `${track.title} — ${track.credit}`;
-      iframe.allow = "autoplay; encrypted-media; picture-in-picture";
-      iframe.allowFullscreen = true;
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-      iframe.src = `https://www.youtube-nocookie.com/embed/${track.youtube}?autoplay=1&rel=0&playsinline=1`;
-      host.append(iframe);
-      music.querySelector(".track-credit").textContent =
-        `${track.title} · ${track.credit}`;
-      document.querySelector("#youtube-source").href =
-        `https://www.youtube.com/watch?v=${track.youtube}`;
-      document
-        .querySelectorAll("[data-track]")
-        .forEach((b) =>
-          b.setAttribute("aria-pressed", String(b.dataset.track === key)),
-        );
-      music.hidden = false;
-      document.querySelector("#close-music").focus({ preventScroll: true });
-    } catch {
-      if (token === selection) soundtrack?.resumeFromOfficial();
-      notify("Music could not load. Please try again when you’re connected.");
-    }
-  }
-  document.querySelectorAll("[data-track]").forEach((b) => {
-    b.setAttribute("aria-pressed", "false");
-    b.addEventListener("click", () => playTrack(b.dataset.track, b));
-  });
-  document
-    .querySelector("#close-music")
-    .addEventListener("click", () => stopMusic(true));
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !music.hidden) {
-      stopMusic(true);
-      event.preventDefault();
-    }
-  });
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      cancelEntry();
-      stopMusic();
-    }
-  });
-  addEventListener("pagehide", () => {
-    stopMusic();
-  });
   const invitationViewer = document.querySelector("#original-invitation-dialog");
   let invitationOpener, invitationScroll = 0;
   document.querySelectorAll("[data-view-original]").forEach((link) => {
@@ -1009,7 +930,6 @@
     stopAutoScroll();
     soundtrack?.reset();
     cancelEntry();
-    stopMusic();
     document
       .querySelectorAll("dialog[open]")
       .forEach((dialog) => dialog.close());

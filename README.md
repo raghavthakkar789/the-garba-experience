@@ -21,20 +21,18 @@ relative paths to these files, so no playback URL change is needed.
 ZIP `dist/` yourself, preserving its files and subfolders. The hosting team
 should place its contents in the domain's public root, with `index.html`
 directly in that root. No other repository folder is required. No OpenAI API,
-backend, database or build step is required. The optional official YouTube
-player, booking link and maps link use their external services.
+backend, database or build step is required. The booking and maps links use their external services.
 
 ## Current implementation
 
 The header includes a gold oval **Autoscroll** button with green detailing. It starts the opening sequence and continues through the story, changing to **Pause** while active. Scenes without dialogue run at three times the original Autoscroll speed, including the opening and closing sections; dialogue scenes keep their original pace. The partner/sponsor section uses 2× speed to give its logos more viewing time. Manual scrolling, other actions, leaving the tab and reaching the bottom stop it. The sound controls remain independent. It starts only after a click and fits compact phone headers.
 
-- `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
+- `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, background Garba music and local photo keepsake.
 - `dist/experience.css`: shared cinematic stage, event details, sound controls and keepsake layout.
 - `dist/storybook.css`: illustrated scenes, character poses, speech bubbles, mobile compositions and a complete unpinned reading layout.
-- `dist/experience.js`: controlled manual scrolling with dialogue checkpoints, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, the automatic opening and its sound effect, official music selection, sharing and photo export.
+- `dist/experience.js`: controlled manual scrolling with dialogue checkpoints, character movement, short dialogue beats, reversible hamper doors, selfie moment, reading mode, the automatic opening and its sound effect, sharing and photo export.
 - `dist/assets/story/scroll/`: optimized original illustrated characters, entrance, concert and Garba-circle artwork.
 - `dist/assets/story/locations/`: five painted environments matched to the action: home courtyard, pickup street, driving road, selfie corner and shrine courtyard. The later realistic story backgrounds and city collage are no longer loaded.
-- `dist/story-audio.json`: existing official YouTube selections. Official recordings are not downloaded or rehosted.
 - `dist/brand-controls.css` and `dist/assets/ui-icons.svg`: prominent logo plaques for The Garba Experience and the three lead partners, responsive handoff spacing, and icons with visible action labels.
 - `dist/thank-you.css`: the closing invitation with larger event details, contrasting action buttons and room for the original decorative artwork.
 
@@ -46,7 +44,7 @@ Reloading returns to the top of the closed invitation box and clears open music,
 
 “Read without animation” exposes all scenes in normal document flow. Reduced-motion preferences, short viewports and oversized text use the reading layout automatically. All story content is available without JavaScript.
 
-The supplied door-opening MP3 plays when the logo is clicked. At the end of the 3.8-second door phase, the descent MP3 plays as the friends lower into view. Vichudo begins from the start when they land, at about 6.6 seconds, and loops throughout the remaining website. The header speaker mutes all website sound; the intro control mutes both effects. Only one track is audible. Scrolling back into an intro phase replaces music with its effect and restores the song position afterward. In static/reduced-motion mode, the logo click starts Vichudo directly. Official YouTube selections pause website audio; closing the player restores the current track. Hidden pages pause audio; reload resets it. Playback failures offer a retry button. All three original recordings reside in `dist/assets/audio/`, which is their single maintained location and is included when serving or uploading only `dist`.
+The supplied door-opening MP3 plays when the logo is clicked. At the end of the 3.8-second door phase, the descent MP3 plays as the friends lower into view. Vichudo begins from the start when they land, at about 6.6 seconds, and loops throughout the remaining website. The header speaker mutes all website sound; the intro control mutes both effects. Only one track is audible. Scrolling back into an intro phase replaces music with its effect and restores the song position afterward. In static/reduced-motion mode, the logo click starts Vichudo directly. Hidden pages pause audio; reload resets it. Playback failures offer a retry button. All three original recordings reside in `dist/assets/audio/`, which is their single maintained location and is included when serving or uploading only `dist`.
 
 Photo keepsakes remain entirely in the visitor's browser, with no upload or persistence. Calendar, District booking, venue directions, the original invitation and entry-pass wording are preserved.
 
@@ -67,3 +65,5 @@ See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existin
 `node tests/verify-soundtrack.cjs` (with `jsdom` in the Node module search path) checks door/descent/music sequencing, mute, official-player exclusivity, lifecycle cleanup, autoplay/error recovery, and the HTML media fallback. `dist/site-soundtrack.js` owns this playback lifecycle; the original supplied MP3 and source note are in `dist/assets/audio/`.
 
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-manual-scroll.cjs` checks all eleven dialogue stops, hard and gentle gestures, continuous momentum, reverse scrolling, bounded speed/distance, keyboard, real browser touch input, dialog/zoom exemptions and reduced-motion reading.
+
+The separate Aarti, Play Kinjal Dave and Play Garba buttons and their music-selection player have been removed. The Aarti/Garba story scenes and existing background soundtrack remain.

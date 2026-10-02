@@ -52,7 +52,6 @@ html:not(.cinematic) .invitation-wall-branding { margin-top:42px; margin-bottom:
 .partner-dialog .partner-dialog-close,.close-button,.invitation-viewer-bar button,#close-music { display:inline-flex; align-items:center; justify-content:center; gap:6px; width:auto; min-width:44px; min-height:44px; font-size:14px; padding:10px 12px; }
 .partner-dialog .partner-dialog-close { right:12px; top:12px; }
 .partner-dialog { padding-top:68px; }
-.music-tabs button { min-height:44px; padding:10px; }
 footer a { min-height:44px; padding:8px 4px; }
 :where(a,button,label):focus-visible { outline:3px solid #f8cf74; outline-offset:4px; }
 @media(max-width:650px) {

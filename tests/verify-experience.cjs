@@ -7,7 +7,6 @@ const postcss = require("postcss");
 const base = path.resolve(__dirname, "../dist");
 const html = fs.readFileSync(path.join(base, "index.html"), "utf8");
 const script = fs.readFileSync(path.join(base, "experience.js"), "utf8");
-const tracks = JSON.parse(fs.readFileSync(path.join(base, "story-audio.json")));
 const dom = new JSDOM(html, {
   url: "https://garba.example/?source=invitation#celebration",
   runScripts: "outside-only",
@@ -19,11 +18,8 @@ let frame,
   reducedHandler,
   fetches = 0,
   copied,
-  contexts = 0,
-  fetchFail = false,
-  resolveFetch;
-let gateFetch = false,
-  hidden = false;
+  contexts = 0;
+let hidden = false;
 const reduced = {
   matches: false,
   addEventListener: (_, cb) => {
@@ -72,14 +68,7 @@ w.HTMLDialogElement.prototype.close = function () {
   this.open = false;
   this.dispatchEvent(new w.Event("close"));
 };
-w.fetch = async () => {
-  fetches++;
-  if (gateFetch)
-    await new Promise((r) => {
-      resolveFetch = r;
-    });
-  return { ok: !fetchFail, json: async () => tracks };
-};
+w.fetch = async () => { fetches++; throw new Error("Unexpected fetch"); };
 Object.defineProperty(w.navigator, "clipboard", {
   value: {
     writeText: async (s) => {
@@ -554,31 +543,12 @@ const scroll = (cursor) => {
   assert(cinematic());
   assert(!d.querySelector(".sound-controls, #sound-toggle, #sound-volume"), "floating sound bar removed");
   assert(d.querySelector("#opening-sound"), "door sound control remains");
-  scroll(7.2);
-  d.querySelector("#devotion [data-track]").click();
-  await tick();
-  assert(!d.querySelector("#music-panel").hidden);
-  assert.equal(d.querySelectorAll("iframe").length, 1);
-  assert(!d.querySelector("dialog[open]"), "music does not block scrolling");
-  assert(d.querySelector("iframe").src.includes(tracks.aarti.youtube));
+  assert(!d.querySelector("[data-track], #music-panel, .player-host, #youtube-source, iframe"), "extra aarti/garba player and controls removed");
+  assert(d.querySelector("#devotion") && d.querySelector("#celebration"), "aarti and garba story scenes remain");
+  assert.equal(d.querySelector("#site-soundtrack").getAttribute("src"), "assets/audio/vichudo-kinjal-dave.m4a");
+  assert(d.querySelector("#site-soundtrack").loop, "background garba keeps looping");
   scroll(8.3);
-  assert.equal(
-    d.querySelector(".scene.is-active").id,
-    "the-stage",
-    "scroll continues during playback",
-  );
-  d.querySelector('.music-tabs [data-track="garba2"]').click();
-  await tick();
-  assert.equal(d.querySelectorAll("iframe").length, 1, "one player only");
-  assert(d.querySelector("iframe").src.includes(tracks.garba2.youtube));
-  d.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape" }));
-  assert.equal(d.querySelectorAll("iframe").length, 0, "Escape stops music");
-  d.querySelector("#the-stage [data-track]").click();
-  await tick();
-  hidden = true;
-  d.dispatchEvent(new w.Event("visibilitychange"));
-  assert.equal(d.querySelectorAll("iframe").length, 0, "hidden tabs stop music");
-  hidden = false;
+  assert.equal(d.querySelector(".scene.is-active").id, "the-stage");
   d.querySelector("#share-invitation").click();
   await tick();
   assert.equal(copied, "https://garba.example/");
@@ -604,7 +574,6 @@ const scroll = (cursor) => {
   scroll(6.6);
   d.querySelector("#a-memory").dataset.photo = "true";
   d.querySelector("#make-memory").click();
-  d.querySelector("#the-stage [data-track]").click();
   await tick();
   d.querySelector("#invitation-seal").click();
   d.querySelector(".toast").classList.add("visible");
@@ -617,7 +586,6 @@ const scroll = (cursor) => {
     "false",
   );
   assert(!d.querySelector("dialog[open]"), "reload closes dialogs");
-  assert(d.querySelector("#music-panel").hidden, "reload closes music");
   assert.equal(d.querySelectorAll("iframe").length, 0);
   assert.equal(
     d.querySelector("#take-story-photo").getAttribute("aria-pressed"),
@@ -643,7 +611,7 @@ const scroll = (cursor) => {
     ),
   );
   console.log(
-    "PASS: local assets/CSS/anchors; eleven-scene forward and reverse scrolling; stationary sponsor street; moving friends; board details; PDF thank-you ending; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; single nonmodal official player; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
+    "PASS: local assets/CSS/anchors; eleven-scene forward and reverse scrolling; stationary sponsor street; moving friends; board details; PDF thank-you ending; illustrated character motion; concise dialogue beats; photo moment; continuous dissolves; reversible hamper; reading/reduced-motion modes; no floating sound bar; retained opening-sound control; removed extra music player; preserved background Garba; Escape/background cleanup; sharing; keepsake controls/validation; event details.",
   );
   console.log(
     "DOM-level checks only; rendering, actual audio output, third-party playback and photo export need real-browser verification.",
