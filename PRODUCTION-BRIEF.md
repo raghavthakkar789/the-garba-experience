@@ -35,7 +35,7 @@ The final page recreates the decor PDF’s THANK YOU design using its original e
 
 ## Sound and touch
 
-The floating ambient sound bar remains removed. The three user recordings from `Audio_folder/` are served unchanged from `dist/assets/audio/`. The logo click starts `door_opening_sound.mp3` in the 3.8-second door phase. `comming_down_sound.mp3` starts in the following 2.8-second character descent. Vichudo starts from its beginning only when the friends land and then loops across the remaining website. Scene progress drives the sequence, including manual scrolling; returning to either intro phase replaces music with that phase's effect and leaving it resumes the song's position. The compact header speaker mutes all website audio; the intro control mutes both effects. Only one track is audible at a time. Official YouTube selections pause website audio. Hidden pages pause playback, returning to the sealed box resets it, and blocked playback offers a retry control. Reduced-motion/static entry starts Vichudo directly because both animated intro phases are absent. No generated sound or video is used.
+The floating ambient sound bar remains removed. The three user recordings are maintained and served unchanged from `dist/assets/audio/`; their verified duplicate root folder has been consolidated into this single location. The logo click starts `door_opening_sound.mp3` in the 3.8-second door phase. `comming_down_sound.mp3` starts in the following 2.8-second character descent. Vichudo starts from its beginning only when the friends land and then loops across the remaining website. Scene progress drives the sequence, including manual scrolling; returning to either intro phase replaces music with that phase's effect and leaving it resumes the song's position. The compact header speaker mutes all website audio; the intro control mutes both effects. Only one track is audible at a time. Official YouTube selections pause website audio. Hidden pages pause playback, returning to the sealed box resets it, and blocked playback offers a retry control. Reduced-motion/static entry starts Vichudo directly because both animated intro phases are absent. No generated sound or video is used.
 
 Existing official aarti/Garba choices open one visible YouTube player in a nonmodal corner panel. Scrolling remains usable. Starting official playback stops the door-opening sound. The official source link remains available when embedding fails. Playback stops when the panel closes, Escape is pressed, the page hides or the visitor leaves.
 
@@ -104,3 +104,14 @@ The suite uses jsdom and postcss from the existing validation environment, with 
 ## Publication status
 
 The configured Sites project `appgprj_6ab0f411cd608191b92795e769008c0e` returns “Sites project not found.” No replacement project or audience change was made. The existing canonical and social metadata are preserved. This revision is prepared for the authorized GitHub update. GitHub source changes do not publish the live Sites website; the existing publication remains unchanged.
+
+## Self-contained folder consolidation (2 October 2026)
+
+All runtime assets are maintained inside `dist`. Removed the duplicate root
+`Audio_folder` only after confirming its three recordings match the maintained
+files in `dist/assets/audio` byte for byte. The audio URLs in `dist/index.html`
+already point to that folder and remain correct. The earlier source filename
+above is historical provenance; the current song is maintained as
+`dist/assets/audio/vichudo-kinjal-dave.m4a`. Removed the generated packaging
+command and hosting instruction file; the user will ZIP `dist` manually.
+Local dependency verification checks 111 required files inside `dist`.

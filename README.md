@@ -10,6 +10,20 @@ python3 -m http.server 8765 --directory dist
 
 Open http://localhost:8765. The site is static: no build or production dependencies.
 
+## Self-contained website folder
+
+`dist/` contains the complete website: HTML, CSS, JavaScript, artwork, logos,
+fonts, the invitation, calendar and all three audio recordings. The audio's
+single location is `dist/assets/audio/`; the duplicate root `Audio_folder/`
+has been consolidated into those byte-identical files. The page already uses
+relative paths to these files, so no playback URL change is needed.
+
+ZIP `dist/` yourself, preserving its files and subfolders. The hosting team
+should place its contents in the domain's public root, with `index.html`
+directly in that root. No other repository folder is required. No OpenAI API,
+backend, database or build step is required. The optional official YouTube
+player, booking link and maps link use their external services.
+
 ## Current implementation
 
 - `dist/index.html`: ten ordered story scenes, original printed invitation, unchanged event details, optional music player and local photo keepsake.
@@ -28,7 +42,7 @@ Reloading returns to the top of the closed invitation box and clears open music,
 
 “Read without animation” exposes all scenes in normal document flow. Reduced-motion preferences, short viewports and oversized text use the reading layout automatically. All story content is available without JavaScript.
 
-The supplied door-opening MP3 plays when the logo is clicked. At the end of the 3.8-second door phase, the descent MP3 plays as the friends lower into view. Vichudo begins from the start when they land, at about 6.6 seconds, and loops throughout the remaining website. The header speaker mutes all website sound; the intro control mutes both effects. Only one track is audible. Scrolling back into an intro phase replaces music with its effect and restores the song position afterward. In static/reduced-motion mode, the logo click starts Vichudo directly. Official YouTube selections pause website audio; closing the player restores the current track. Hidden pages pause audio; reload resets it. Playback failures offer a retry button. All three recordings are copied unchanged from `Audio_folder/` into `dist/assets/audio/` so static hosting includes them.
+The supplied door-opening MP3 plays when the logo is clicked. At the end of the 3.8-second door phase, the descent MP3 plays as the friends lower into view. Vichudo begins from the start when they land, at about 6.6 seconds, and loops throughout the remaining website. The header speaker mutes all website sound; the intro control mutes both effects. Only one track is audible. Scrolling back into an intro phase replaces music with its effect and restores the song position afterward. In static/reduced-motion mode, the logo click starts Vichudo directly. Official YouTube selections pause website audio; closing the player restores the current track. Hidden pages pause audio; reload resets it. Playback failures offer a retry button. All three original recordings reside in `dist/assets/audio/`, which is their single maintained location and is included when serving or uploading only `dist`.
 
 Photo keepsakes remain entirely in the visitor's browser, with no upload or persistence. Calendar, District booking, venue directions, the original invitation and entry-pass wording are preserved.
 
