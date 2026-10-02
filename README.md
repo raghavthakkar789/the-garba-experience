@@ -68,4 +68,4 @@ See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existin
 
 The separate Aarti, Play Kinjal Dave and Play Garba buttons and their music-selection player have been removed. The Aarti/Garba story scenes and existing background soundtrack remain.
 
-Home and View controls retain their text labels and click actions without the house/eye icons.
+Home and View controls show only their logos, with click actions and accessible names retained.

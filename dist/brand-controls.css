@@ -4,19 +4,15 @@ a:has(>.ui-icon),button:has(>.ui-icon),.photo-input { display:inline-flex; align
 .control-label { min-width:0; overflow-wrap:break-word; }
 .masthead { min-height:76px; padding-block:10px; align-items:center; }
 .masthead .header-actions { flex-direction:row; gap:12px; align-items:center; }
-.masthead .wordmark { width:78px; }
-.wordmark-action { display:flex; align-items:center; justify-content:center; gap:5px; font-size:11px; line-height:1.3; color:#fff0ca; margin-top:3px; }
-.wordmark-action .ui-icon { width:12px; height:12px; }
+.masthead .wordmark { width:78px; min-height:44px; }
 .masthead .header-link { display:inline-flex; align-items:center; gap:9px; padding:10px 14px; min-height:46px; font-size:14px; }
 .header-link .control-label { padding:0; }
 .masthead .soundtrack-toggle { display:flex; align-items:center; justify-content:center; gap:7px; width:auto; height:auto; min-height:46px; border-radius:8px; padding:10px 12px; font-size:13px; color:#fff1ce; }
 #opening-sound { display:inline-flex; gap:8px; align-items:center; min-height:44px; padding:10px 14px; }
 .brand-wall { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
-.brand-plaque { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:2px; min-width:0; min-height:44px; height:100%; border:1px solid #dfc591; border-radius:6px; background:#fff; padding:4px 7px; box-shadow:0 3px 12px #001a1744; overflow:hidden; color:#173c30; }
+.brand-plaque { display:grid; grid-template-rows:minmax(0,1fr); gap:0; min-width:0; min-height:44px; height:100%; border:1px solid #dfc591; border-radius:6px; background:#fff; padding:4px 7px; box-shadow:0 3px 12px #001a1744; overflow:hidden; color:#173c30; }
 .brand-logo { display:flex; justify-content:center; align-items:center; min-width:0; min-height:0; overflow:hidden; }
 .brand-plaque img { width:100%; height:100%; object-fit:contain; mix-blend-mode:normal; }
-.brand-action { display:flex; justify-content:center; align-items:center; gap:4px; font-size:10px; line-height:1.2; }
-.brand-action .ui-icon { width:11px; height:11px; }
 .brand-plaque:is(:hover,:focus-visible) { border-color:#f2c66c; box-shadow:0 0 0 2px #e0be8077; }
 .brand-tge { background:#123b2e; }
 .brand-ethereum { background:#235543; }
@@ -34,8 +30,6 @@ a:has(>.ui-icon),button:has(>.ui-icon),.photo-input { display:inline-flex; align
 .cinematic .journey-stage:has(#partner-road.is-active) .journey-caption { display:none; }
 .finale-brands,.opening-brands { width:min(740px,100%); height:auto; grid-auto-rows:clamp(84px,13vw,112px); gap:12px; }
 .finale-brands .brand-plaque { padding:8px; border-radius:10px; }
-.finale-brands .brand-action,.opening-brands .brand-action { font-size:12px; }
-.finale-brands .brand-action .ui-icon,.opening-brands .brand-action .ui-icon { width:13px; height:13px; }
 .opening-brands { margin:28px auto 0; }
 .cinematic .opening-brands { display:none; }
 html:not(.cinematic) #invitation { flex-direction:column; }
@@ -47,8 +41,6 @@ html:not(.cinematic) .invitation-wall-branding { margin-top:42px; margin-bottom:
 .partner-shop.featured-partner .shop-logo { width:100%; height:100%; max-height:none; margin:0; object-fit:contain; }
 .partner-dialog.featured-partner .partner-logo-slot,.partner-auto-card.featured-partner .partner-logo-slot { width:100%; height:150px; max-width:none; flex:1; }
 .partner-dialog.featured-partner .partner-card-row { display:block; }
-.shop-action { position:absolute; bottom:2px; left:50%; transform:translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:4px 9px; border:1px solid #b69c68; border-radius:4px; background:#fff7e5; color:#15392c; font-size:12px; font-weight:600; line-height:1.2; }
-.shop-action .ui-icon { width:14px; height:14px; }
 .partner-dialog .partner-dialog-close,.close-button,.invitation-viewer-bar button,#close-music { display:inline-flex; align-items:center; justify-content:center; gap:6px; width:auto; min-width:44px; min-height:44px; font-size:14px; padding:10px 12px; }
 .partner-dialog .partner-dialog-close { right:12px; top:12px; }
 .partner-dialog { padding-top:68px; }
@@ -72,8 +64,6 @@ footer a { min-height:44px; padding:8px 4px; }
   .finale-brands,.opening-brands { grid-template-columns:repeat(2,minmax(0,1fr)); height:auto; gap:10px; }
   .finale-brands .brand-plaque { min-height:44px; padding:6px; }
   .scene-actions .outline-button,.scene-actions .text-button { font-size:13px; min-height:44px; padding:10px 12px; }
-  .shop-action { font-size:11px; padding:3px 6px; gap:3px; }
-  .shop-action .ui-icon { width:12px; height:12px; }
 }
 @media(max-width:360px) {
   .masthead .header-link { padding:10px 7px; }

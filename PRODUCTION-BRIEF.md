@@ -2,7 +2,7 @@
 
 ## Change contract
 
-Opening/icon update (3 October 2026): halved the door phase from 3.8 to 1.9 seconds, retaining the 2.8-second character descent (4.7 seconds total; about 1.57 seconds under 3× Autoscroll). Removed all 29 Home/View house and eye icon instances while retaining visible text, accessible names and click actions.
+Opening/icon update (3 October 2026): halved the door phase from 3.8 to 1.9 seconds, retaining the 2.8-second character descent (4.7 seconds total; about 1.57 seconds under 3× Autoscroll). Removed all 29 Home/View house and eye icon instances and their visible Home/View labels, while retaining accessible names and click actions. Logo plaques use the freed space for their artwork.
 
 Playback-control cleanup (3 October 2026): removed Listen to the aarti, Play Kinjal Dave and Play Garba buttons, the separate YouTube music panel and its runtime/styles. The Aarti and Garba visual scenes remain. The three background audio elements, their sources, the soundtrack controller and recordings are unchanged. Earlier references to the optional music panel below describe historical revisions.
 
