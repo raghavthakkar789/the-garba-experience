@@ -17,36 +17,69 @@
 .thank-you-message { text-align:center; }
 .thank-you-message h2 { margin:0; font:500 clamp(2rem,7vw,4.75rem)/1.12 Georgia,serif; color:#f2d28e; letter-spacing:-.03em; overflow-wrap:anywhere; }
 .thank-you-message p { margin:clamp(10px,2vw,16px) auto 0; max-width:38ch; font:400 clamp(1rem,2vw,1.125rem)/1.9 "Noto Serif Gujarati",serif; color:#fff2d3; }
+/* One self-contained card: no legacy margins or viewport-dependent columns. */
 .thank-you-details {
-  width:min(100%,740px); padding:clamp(14px,3vw,32px);
-  background:#092e25; border:1px solid #c9a86b; border-radius:20px;
+  box-sizing:border-box; container:closing-card / inline-size;
+  display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(10px,1.5svh,16px);
+  width:min(100%,740px); max-width:100%; min-width:0; height:auto; min-height:0;
+  padding:clamp(12px,2.2vw,24px); margin:0;
+  background:#092e25; border:1px solid #c9a86b; border-radius:16px;
   box-shadow:0 18px 60px #001d2399; text-align:center;
 }
-.thank-you-details>.eyebrow { max-width:none; margin:0 0 24px; font-size:13px; line-height:1.8; color:#f0dba9; letter-spacing:.09em; }
-.thank-you-details .event-facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr)); gap:clamp(16px,3vw,24px); text-align:left; }
-.thank-you-date,.thank-you-venue { display:flex; align-items:flex-start; gap:12px; margin:0; font-size:16px; line-height:1.65; color:#fff8e9; }
-.event-facts .ui-icon { color:#edcf8d; width:26px; height:26px; margin-top:5px; }
-.event-facts strong { display:block; font-size:20px; font-weight:600; }
-.event-facts time>span,.thank-you-venue>span>span { display:block; }
-.thank-you-date>time,.thank-you-venue>span { min-width:0; }
-.event-facts .fact-label { color:#e1cda9; font-size:13px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:5px; }
-.thank-you-actions { display:flex; flex-direction:column; gap:14px; margin-top:28px; }
-.thank-you-actions .book-button { width:100%; min-height:58px; justify-content:center; gap:12px; padding:16px; border-radius:10px; background:#f0d49b; color:#123b2d; font-size:18px; font-weight:700; }
-.thank-you-actions .event-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr)); width:100%; gap:10px; padding:0; border:0; }
-.thank-you-actions .event-links a,.thank-you-actions .event-links button {
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  min-height:84px; gap:7px; padding:12px 7px; background:#f9f3e6; color:#123b2d;
-  border:1px solid #e8d6ac; border-radius:10px; font-size:15px; font-weight:600; line-height:1.4;
+.thank-you-details>* { min-width:0; max-width:100%; margin:0; }
+.thank-you-details>.eyebrow { font-size:12px; line-height:1.5; color:#f0dba9; letter-spacing:.06em; }
+.thank-you-details .event-facts {
+  display:grid; grid-template-columns:minmax(0,1fr); gap:12px; margin:0; text-align:left;
 }
-.thank-you-actions .ui-icon { width:24px; height:24px; }
-.thank-you-details :is(a,button) { min-width:0; max-width:100%; white-space:normal; }
-.thank-you-details .control-label { text-align:center; }
-.thank-you-details .booking-note { font-size:14px; line-height:1.6; color:#e2d7c0; margin:12px 0 0; }
-.thank-you-details .entry-note { display:flex; text-align:left; align-items:flex-start; gap:12px; margin:24px 0 12px; padding:18px; border:1px solid #8a9770; border-radius:10px; background:#173f31; color:#f5efdf; font-size:16px; line-height:1.65; }
-.thank-you-details .entry-note .ui-icon { color:#f0d49b; margin-top:4px; }
+.thank-you-details .thank-you-date,.thank-you-details .thank-you-venue {
+  display:grid; grid-template-columns:22px minmax(0,1fr); align-items:start; gap:10px;
+  min-width:0; margin:0; font-size:16px; line-height:1.45; color:#fff8e9;
+}
+.thank-you-details .event-facts .ui-icon { color:#edcf8d; width:22px; height:22px; margin-top:2px; }
+.thank-you-details .event-facts strong { display:block; font-size:18px; line-height:1.35; font-weight:600; }
+.thank-you-details .event-facts time>span,.thank-you-details .thank-you-venue>span>span { display:block; }
+.thank-you-details .event-facts :is(time,span) { min-width:0; }
+.thank-you-details .event-facts .fact-label { color:#e1cda9; font-size:12px; line-height:1.4; letter-spacing:.08em; text-transform:uppercase; margin-bottom:3px; }
+.thank-you-details .thank-you-actions { display:grid; grid-template-columns:minmax(0,1fr); gap:8px; margin:0; }
+.thank-you-details .book-button {
+  display:flex; width:100%; min-height:48px; align-items:center; justify-content:center;
+  gap:10px; padding:10px 12px; border-radius:8px; background:#f0d49b; color:#123b2d;
+  font-size:16px; line-height:1.4; font-weight:700;
+}
+.thank-you-details .event-links {
+  display:grid; grid-template-columns:minmax(0,1fr); gap:8px; width:100%; margin:0; padding:0; border:0;
+}
+.thank-you-details .event-links a,.thank-you-details .event-links button {
+  display:flex; flex-direction:row; align-items:center; justify-content:center;
+  min-height:44px; gap:8px; padding:9px 8px; background:#f9f3e6; color:#123b2d;
+  border:1px solid #e8d6ac; border-radius:8px; font-size:14px; font-weight:600; line-height:1.4;
+}
+.thank-you-details .thank-you-actions .ui-icon { width:22px; height:22px; }
+.thank-you-details :is(a,button) { box-sizing:border-box; min-width:0; max-width:100%; height:auto; white-space:normal; }
+.thank-you-details .control-label { min-width:0; text-align:center; overflow-wrap:break-word; }
+.thank-you-details .booking-note { margin:0; font-size:14px; line-height:1.4; color:#e2d7c0; }
+.thank-you-details .entry-note {
+  display:block; margin:0; padding:12px 0 0; border:0; border-top:1px solid #8a9770;
+  border-radius:0; background:none; text-align:left; color:#f5efdf; font-size:16px; line-height:1.45;
+}
+.thank-you-details .entry-note .ui-icon { display:inline-block; width:20px; height:20px; color:#f0d49b; margin:0 7px 0 0; vertical-align:-4px; }
 .thank-you-details .entry-note strong { color:#fff6df; }
-.thank-you-details .entry-note small { display:block; font-size:14px; margin-top:8px; color:#e8e1cf; }
-.thank-you-replay { display:inline-flex; justify-content:center; align-items:center; gap:10px; min-height:48px; font-size:16px; color:#f5d69a; padding:10px 16px; }
+.thank-you-details .entry-note small { display:block; font-size:14px; line-height:1.45; margin-top:6px; color:#e8e1cf; }
+.thank-you-details .thank-you-replay { display:flex; justify-content:center; align-items:center; gap:8px; min-height:44px; font-size:15px; line-height:1.4; color:#f5d69a; padding:8px; margin:0; }
+@container closing-card (min-width:15rem) {
+  .thank-you-details .event-links { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .thank-you-details .event-links> :last-child { grid-column:1 / -1; }
+}
+@container closing-card (min-width:18rem) {
+  .thank-you-details .event-links { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .thank-you-details .event-links> :last-child { grid-column:auto; }
+  .thank-you-details .event-links a,.thank-you-details .event-links button { flex-direction:column; gap:5px; }
+}
+@container closing-card (min-width:34rem) {
+  .thank-you-details .event-facts { grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+  .thank-you-details .event-facts strong { font-size:20px; }
+  .thank-you-details .event-links a,.thank-you-details .event-links button { flex-direction:row; font-size:16px; padding:12px; }
+}
 .thank-you-elephant { height:100%; width:70%; object-fit:contain; object-position:center bottom; left:50%; bottom:0; transform:translateX(-50%); z-index:2; }
 .thank-you-leaf { height:95%; width:38%; object-fit:contain; object-position:center bottom; bottom:0; }
 .leaf-left { left:0; }
@@ -54,12 +87,3 @@
 .thank-you-lotus { height:70%; width:30%; object-fit:contain; object-position:center bottom; bottom:0; z-index:3; }
 .lotus-left { left:0; }
 .lotus-right { right:0; }
-@media(max-width:650px) {
-  .thank-you-details { border-radius:16px; }
-  .event-facts strong { font-size:19px; }
-  .thank-you-details>.eyebrow { font-size:12px; }
-  .thank-you-actions .event-links { grid-template-columns:1fr; }
-  .thank-you-actions .event-links a,.thank-you-actions .event-links button { flex-direction:row; justify-content:flex-start; min-height:54px; gap:14px; padding:14px 18px; font-size:16px; }
-  .thank-you-details .entry-note { padding:14px; }
-  .thank-you-details .control-label { text-align:left; }
-}
