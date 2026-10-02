@@ -154,7 +154,7 @@
   }
   function holdDialogue(position) {
     dialogueHold = position;
-    holdUntil = performance.now() + 800;
+    holdUntil = performance.now() + 450;
     touchBlocked = touchY !== null;
     manualTarget = position;
   }
@@ -164,7 +164,8 @@
       cancelManualScroll(); return;
     }
     const direction = Math.sign(manualTarget - manualPosition);
-    const step = Math.min(64, now - manualLast) / 1000 * clamp(innerHeight * .5, 240, 480);
+    // A same-frame input can arrive after the RAF timestamp; never step backwards.
+    const step = Math.min(64, Math.max(0, now - manualLast)) / 1000 * clamp(innerHeight * 1.6, 800, 1600);
     manualLast = now;
     const next = manualPosition + direction * Math.min(Math.abs(manualTarget - manualPosition), step);
     const stops = dialogueStops();
@@ -188,8 +189,8 @@
       if (current !== undefined) { holdDialogue(current); return; }
     }
     if (!manualFrame) { manualPosition = scrollY; manualTarget = scrollY; }
-    const budget = Math.min(320, innerHeight * .4);
-    const amount = clamp(delta * .65, -budget, budget);
+    const budget = Math.min(700, innerHeight * .85);
+    const amount = clamp(delta * 1.5, -budget, budget);
     if (Math.sign(amount) !== Math.sign(manualTarget - manualPosition)) manualTarget = manualPosition;
     manualTarget = clamp(manualTarget + amount, Math.max(0, manualPosition - budget),
       Math.min(root.scrollHeight - innerHeight, manualPosition + budget));

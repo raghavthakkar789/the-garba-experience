@@ -40,7 +40,7 @@ The header includes a gold oval **Autoscroll** button with green detailing. It s
 
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-autoscroll.cjs` (with Playwright available) checks start/pause, the opening handoff, manual takeover, keyboard and touch controls, tab visibility, dialogs, resize/reload, end-of-page stopping, reduced motion, no JavaScript and nine header sizes.
 
-Manual wheel, trackpad, touch and navigation-key input is responsive and distance-limited, so a hard gesture cannot sweep through the story. Each dialogue stops for at least 0.8 seconds, then requires a fresh gesture after the previous momentum ends. Backward scrolling uses the same checkpoints. Reduced-motion reading uses small immediate steps; dialog scrolling and browser zoom remain native. Autoscroll retains its established pacing. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
+Manual wheel, trackpad, touch and navigation-key input is responsive and distance-limited, so a hard gesture cannot sweep through the story. Each dialogue stops for at least 0.45 seconds, then requires a fresh gesture after the previous momentum ends. Backward scrolling uses the same checkpoints. Reduced-motion reading uses small immediate steps; dialog scrolling and browser zoom remain native. Autoscroll retains its established pacing. The same stage dissolves through the story; scrolling backwards reverses it. Event details follow naturally at the end.
 
 Reloading returns to the top of the closed invitation box and clears open music, dialogs, the selfie reveal and the local keepsake. A scene anchor is removed on reload; fresh direct links still work. Reduced-motion preferences remain respected.
 

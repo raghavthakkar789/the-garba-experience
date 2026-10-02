@@ -18,14 +18,16 @@ let browser,server;
  const stop=stops[3];await place(stop.y-18);await wheel(20000);
  for(let i=0;i<18;i++){await page.waitForTimeout(90);await wheel(20000);}
  assert(Math.abs(await page.evaluate(()=>scrollY)-stop.y)<2,'momentum cannot pass a dialogue, even after minimum reading time');
+ // Reproduce an RAF timestamp slightly older than the gesture that scheduled it.
+ await page.evaluate(()=>{const raf=window.requestAnimationFrame;window.requestAnimationFrame=function(cb){if(cb.name==='advanceManualScroll'){window.requestAnimationFrame=raf;return raf.call(window,time=>cb(time-10));}return raf.call(window,cb);};});
  await page.waitForTimeout(300);await wheel(400);await page.waitForTimeout(400);assert(await page.evaluate(y=>scrollY>y+10,stop.y),'fresh gesture resumes: '+JSON.stringify({stop:stop.y,actual:await page.evaluate(()=>scrollY)}));
  // Slow wheel input also stops, and reverse gestures stop on the same line.
  await place(stop.y-3);await wheel(20);await page.waitForTimeout(200);assert(Math.abs(await page.evaluate(()=>scrollY)-stop.y)<2);
  await place(stop.y+18);await wheel(-20000);await page.waitForTimeout(300);assert(Math.abs(await page.evaluate(()=>scrollY)-stop.y)<2);
  await place(stop.y-18);await page.keyboard.press('End');await page.waitForTimeout(300);assert(Math.abs(await page.evaluate(()=>scrollY)-stop.y)<2,'End cannot skip dialogue');
  // A huge gesture in a silent scene is both speed-limited and distance-limited.
- await place(stops[5].y+800);const before=await page.evaluate(()=>scrollY);await wheel(20000);await page.waitForTimeout(250);const early=await page.evaluate(()=>scrollY);assert(early-before<150,'bounded velocity');await page.waitForTimeout(1300);assert(await page.evaluate(y=>scrollY-y<=321,before),'bounded impulse, no long coast');
- await place(stops[5].y+800);const gentleStart=await page.evaluate(()=>scrollY);await wheel(120);await page.waitForTimeout(450);const gentleDistance=await page.evaluate(y=>scrollY-y,gentleStart);assert(gentleDistance>=70&&gentleDistance<=85,'ordinary wheel gesture moves easily without excessive resistance');
+ await place(stops[5].y+800);const before=await page.evaluate(()=>scrollY);await wheel(20000);await page.waitForTimeout(250);const early=await page.evaluate(()=>scrollY);assert(early-before<480,'bounded velocity');await page.waitForTimeout(1300);assert(await page.evaluate(y=>scrollY-y<=701,before),'bounded impulse, no long coast');
+ await place(stops[5].y+800);const gentleStart=await page.evaluate(()=>scrollY);await wheel(120);await page.waitForTimeout(450);const gentleDistance=await page.evaluate(y=>scrollY-y,gentleStart);assert(gentleDistance>=170&&gentleDistance<=190,'ordinary wheel gesture moves easily without excessive resistance');
  // Real touch input: swipe through a checkpoint, then lift and deliberately resume.
  const session=await page.context().newCDPSession(page);await place(stop.y-18);
  await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:180,y:650}]});
