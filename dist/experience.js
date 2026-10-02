@@ -154,7 +154,7 @@
   }
   function holdDialogue(position) {
     dialogueHold = position;
-    holdUntil = performance.now() + 1200;
+    holdUntil = performance.now() + 800;
     touchBlocked = touchY !== null;
     manualTarget = position;
   }
@@ -164,7 +164,7 @@
       cancelManualScroll(); return;
     }
     const direction = Math.sign(manualTarget - manualPosition);
-    const step = Math.min(64, now - manualLast) / 1000 * clamp(innerHeight * .18, 90, 180);
+    const step = Math.min(64, now - manualLast) / 1000 * clamp(innerHeight * .5, 240, 480);
     manualLast = now;
     const next = manualPosition + direction * Math.min(Math.abs(manualTarget - manualPosition), step);
     const stops = dialogueStops();
@@ -181,15 +181,15 @@
     const now = performance.now(), idle = now - lastManualInput;
     lastManualInput = now;
     if (dialogueHold !== null) {
-      if (now < holdUntil || idle < 240 || repeated || touchBlocked) return;
+      if (now < holdUntil || idle < 180 || repeated || touchBlocked) return;
       dialogueHold = null;
     } else if (!manualFrame) {
       const current = dialogueStops().find(y => Math.abs(y - scrollY) <= 2);
       if (current !== undefined) { holdDialogue(current); return; }
     }
     if (!manualFrame) { manualPosition = scrollY; manualTarget = scrollY; }
-    const budget = Math.min(160, innerHeight * .2);
-    const amount = clamp(delta * .25, -budget, budget);
+    const budget = Math.min(320, innerHeight * .4);
+    const amount = clamp(delta * .65, -budget, budget);
     if (Math.sign(amount) !== Math.sign(manualTarget - manualPosition)) manualTarget = manualPosition;
     manualTarget = clamp(manualTarget + amount, Math.max(0, manualPosition - budget),
       Math.min(root.scrollHeight - innerHeight, manualPosition + budget));
