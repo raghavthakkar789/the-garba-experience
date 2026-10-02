@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '../dist');
 let browser, server;
 (async () => {
-  const types = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webp':'image/webp','.woff':'font/woff','.woff2':'font/woff2','.mp3':'audio/mpeg'};
+  const types = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webp':'image/webp','.woff':'font/woff','.woff2':'font/woff2','.mp3':'audio/mpeg','.m4a':'audio/mp4'};
   server = http.createServer((req, res) => {
     const name = decodeURIComponent(req.url.split('?')[0]);
     const file = path.join(root, name === '/' ? 'index.html' : name);

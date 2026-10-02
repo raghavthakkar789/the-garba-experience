@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '../dist');
 const dimensions = process.env.VIEWPORTS ? JSON.parse(process.env.VIEWPORTS) : [[320,568],[320,640],[360,640],[390,844],[430,932],[650,900],[651,900],[768,1024],[1024,768],[1440,640],[1440,900],[1920,1080],[2560,1080],[844,390],[1280,720],[1024,1366]];
 const failures=[], errors=[];
-const types={'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.webp':'image/webp','.svg':'image/svg+xml','.woff':'font/woff','.woff2':'font/woff2','.mp3':'audio/mpeg'};
+const types={'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.webp':'image/webp','.svg':'image/svg+xml','.woff':'font/woff','.woff2':'font/woff2','.mp3':'audio/mpeg','.m4a':'audio/mp4'};
 let browser, server;
 async function inspect(page, tag) {
  const found=await page.evaluate(()=>{
