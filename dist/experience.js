@@ -267,15 +267,15 @@
       // Autoscroll fast-forwards the dialogue-free opening; the logo keeps its normal timing.
       elapsed += (now - lastEntryTime) * (autoScrolling ? 3 : 1);
       lastEntryTime = now;
-      const doorTime = clamp(elapsed / 3800);
+      const doorTime = clamp(elapsed / 1900);
       // Finish the original door/camera move, then lower the friends on silk.
-      const progress = elapsed <= 3800
+      const progress = elapsed <= 1900
         ? doorTime < 0.66
           ? 0.48 * ease(doorTime / 0.66)
           : 0.48 + 0.52 * ease((doorTime - 0.66) / 0.34)
-        : 1 + 0.42 * clamp((elapsed - 3800) / 2800);
+        : 1 + 0.42 * clamp((elapsed - 1900) / 2800);
       window.scrollTo({ top: from + (to - from) * progress / 1.42, behavior: "instant" });
-      if (elapsed < 6600) entryFrame = requestAnimationFrame(advance);
+      if (elapsed < 4700) entryFrame = requestAnimationFrame(advance);
       else {
         entryFrame = 0;
         delete opening.dataset.entering;

@@ -1,6 +1,6 @@
 # The Garba Experience
 
-A continuous, scroll-driven Gujarati invitation with the original illustrated friends and short conversations. The closed invitation box fills the opening screen. Click the centre logo for a slow, automatic 3.8-second door-opening and entry sequence, using the supplied door-opening MP3. The next 2.8-second character descent uses its own MP3; both effects share the intro mute control. Scroll, touch the scene or press Escape to take over. The sequence moves straight into the friends’ story through the courtyard inside. Native scrolling drives the same reversible entry animation. The original card remains available later in the story. They meet, decide on a Garba night, catch their ride, travel through Ahmedabad, enter the venue, take a selfie, hear Kinjal Dave, share a prayer and join the circle.
+A continuous, scroll-driven Gujarati invitation with the original illustrated friends and short conversations. The closed invitation box fills the opening screen. Click the centre logo for a automatic 1.9-second door-opening and entry sequence, using the supplied door-opening MP3. The next 2.8-second character descent uses its own MP3; both effects share the intro mute control. Scroll, touch the scene or press Escape to take over. The sequence moves straight into the friends’ story through the courtyard inside. Native scrolling drives the same reversible entry animation. The original card remains available later in the story. They meet, decide on a Garba night, catch their ride, travel through Ahmedabad, enter the venue, take a selfie, hear Kinjal Dave, share a prayer and join the circle.
 
 ## Run locally
 
@@ -44,7 +44,7 @@ Reloading returns to the top of the closed invitation box and clears open music,
 
 “Read without animation” exposes all scenes in normal document flow. Reduced-motion preferences, short viewports and oversized text use the reading layout automatically. All story content is available without JavaScript.
 
-The supplied door-opening MP3 plays when the logo is clicked. At the end of the 3.8-second door phase, the descent MP3 plays as the friends lower into view. Vichudo begins from the start when they land, at about 6.6 seconds, and loops throughout the remaining website. The header speaker mutes all website sound; the intro control mutes both effects. Only one track is audible. Scrolling back into an intro phase replaces music with its effect and restores the song position afterward. In static/reduced-motion mode, the logo click starts Vichudo directly. Hidden pages pause audio; reload resets it. Playback failures offer a retry button. All three original recordings reside in `dist/assets/audio/`, which is their single maintained location and is included when serving or uploading only `dist`.
+The supplied door-opening MP3 plays when the logo is clicked. At the end of the 1.9-second door phase, the descent MP3 plays as the friends lower into view. Vichudo begins from the start when they land, at about 4.7 seconds, and loops throughout the remaining website. The header speaker mutes all website sound; the intro control mutes both effects. Only one track is audible. Scrolling back into an intro phase replaces music with its effect and restores the song position afterward. In static/reduced-motion mode, the logo click starts Vichudo directly. Hidden pages pause audio; reload resets it. Playback failures offer a retry button. All three original recordings reside in `dist/assets/audio/`, which is their single maintained location and is included when serving or uploading only `dist`.
 
 Photo keepsakes remain entirely in the visitor's browser, with no upload or persistence. Calendar, District booking, venue directions, the original invitation and entry-pass wording are preserved.
 
@@ -67,3 +67,5 @@ See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existin
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-manual-scroll.cjs` checks all eleven dialogue stops, hard and gentle gestures, continuous momentum, reverse scrolling, bounded speed/distance, keyboard, real browser touch input, dialog/zoom exemptions and reduced-motion reading.
 
 The separate Aarti, Play Kinjal Dave and Play Garba buttons and their music-selection player have been removed. The Aarti/Garba story scenes and existing background soundtrack remain.
+
+Home and View controls retain their text labels and click actions without the house/eye icons.

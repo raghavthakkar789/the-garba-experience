@@ -216,10 +216,10 @@ const scroll = (cursor) => {
   d.querySelector("#invitation-seal").click();
   await tick();
   assert(!d.querySelector("#door-sound").paused && d.querySelector("#descent-sound").paused && d.querySelector("#site-soundtrack").paused, "logo click plays only the supplied door sound");
-  frame(1500);
+  frame(750);
   frame(0);
-  assert.equal(d.querySelector(".scene.is-active").id, "invitation", "slow opening remains in the box midway");
-  frame(2300);
+  assert.equal(d.querySelector(".scene.is-active").id, "invitation", "opening remains in the box partway through the 1.9-second door phase");
+  frame(1150);
   frame(0);
   assert.equal(
     d.querySelector(".scene.is-active").id,
@@ -543,6 +543,8 @@ const scroll = (cursor) => {
   assert(cinematic());
   assert(!d.querySelector(".sound-controls, #sound-toggle, #sound-volume"), "floating sound bar removed");
   assert(d.querySelector("#opening-sound"), "door sound control remains");
+  assert(!d.querySelector('use[href$="#home"], use[href$="#eye"]'), "Home and View icons removed");
+  assert(d.querySelector(".wordmark[href]") && d.querySelectorAll(".brand-plaque[href]").length === 12, "home and partner links remain clickable");
   assert(!d.querySelector("[data-track], #music-panel, .player-host, #youtube-source, iframe"), "extra aarti/garba player and controls removed");
   assert(d.querySelector("#devotion") && d.querySelector("#celebration"), "aarti and garba story scenes remain");
   assert.equal(d.querySelector("#site-soundtrack").getAttribute("src"), "assets/audio/vichudo-kinjal-dave.m4a");
