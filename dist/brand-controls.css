@@ -12,11 +12,17 @@ a:has(>.ui-icon),button:has(>.ui-icon),.photo-input { display:inline-flex; align
 .masthead .soundtrack-toggle { display:flex; align-items:center; justify-content:center; gap:7px; width:auto; height:auto; min-height:46px; border-radius:8px; padding:10px 12px; font-size:13px; color:#fff1ce; }
 #opening-sound { display:inline-flex; gap:8px; align-items:center; min-height:44px; padding:10px 14px; }
 .brand-wall { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
-.brand-plaque { display:flex; align-items:center; justify-content:center; min-width:0; height:100%; border:1px solid #dfc591; border-radius:6px; background:#fff; padding:7px; box-shadow:0 3px 12px #001a1744; overflow:hidden; }
+.brand-plaque { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:2px; min-width:0; min-height:44px; height:100%; border:1px solid #dfc591; border-radius:6px; background:#fff; padding:4px 7px; box-shadow:0 3px 12px #001a1744; overflow:hidden; color:#173c30; }
+.brand-logo { display:flex; justify-content:center; align-items:center; min-width:0; min-height:0; overflow:hidden; }
 .brand-plaque img { width:100%; height:100%; object-fit:contain; mix-blend-mode:normal; }
+.brand-action { display:flex; justify-content:center; align-items:center; gap:4px; font-size:10px; line-height:1.2; }
+.brand-action .ui-icon { width:11px; height:11px; }
+.brand-plaque:is(:hover,:focus-visible) { border-color:#f2c66c; box-shadow:0 0 0 2px #e0be8077; }
 .brand-tge { background:#123b2e; }
 .brand-ethereum { background:#235543; }
-.stage-brands { display:none; pointer-events:none; }
+.brand-tge,.brand-ethereum { color:#fff0ca; }
+.brand-ethereum img { transform:scale(1.5); }
+.stage-brands { display:none; }
 .cinematic .stage-brands { display:grid; position:absolute; z-index:21; bottom:10px; left:50%; transform:translateX(-50%); width:min(510px,calc(100% - 28px)); height:60px; }
 .cinematic .journey-caption { bottom:80px; border:0; padding:0; font-size:11px; }
 .cinematic .journey-stage:has(#invitation.is-active) .stage-brands { height:84px; width:min(630px,calc(100% - 32px)); bottom:18px; }
@@ -26,9 +32,11 @@ a:has(>.ui-icon),button:has(>.ui-icon),.photo-input { display:inline-flex; align
 .cinematic .story-invite .invitation-handoff { bottom:14%; width:min(79vw,650px,48svh); }
 .cinematic .partner-road .road-world { bottom:94px; }
 .cinematic .journey-stage:has(#partner-road.is-active) .journey-caption { display:none; }
-.finale-brands { width:min(740px,100%); height:100px; gap:12px; }
-.finale-brands .brand-plaque { padding:12px; border-radius:10px; }
-.opening-brands { width:min(700px,100%); height:94px; margin:28px auto 0; }
+.finale-brands,.opening-brands { width:min(740px,100%); height:auto; grid-auto-rows:clamp(84px,13vw,112px); gap:12px; }
+.finale-brands .brand-plaque { padding:8px; border-radius:10px; }
+.finale-brands .brand-action,.opening-brands .brand-action { font-size:12px; }
+.finale-brands .brand-action .ui-icon,.opening-brands .brand-action .ui-icon { width:13px; height:13px; }
+.opening-brands { margin:28px auto 0; }
 .cinematic .opening-brands { display:none; }
 html:not(.cinematic) #invitation { flex-direction:column; }
 html:not(.cinematic) .invitation-wall-branding { margin-top:42px; margin-bottom:28px; width:min(200px,45vw); }
@@ -62,8 +70,8 @@ footer a { min-height:44px; padding:8px 4px; }
   .cinematic .partner-road .road-world { bottom:82px; }
   .cinematic .journey-stage:has(#invitation.is-active) .stage-brands { height:70px; bottom:12px; }
   .cinematic #invitation #opening-sound { bottom:94px; }
-  .finale-brands,.opening-brands { grid-template-columns:repeat(2,minmax(0,1fr)); height:194px; gap:10px; }
-  .finale-brands .brand-plaque { min-height:0; padding:10px; }
+  .finale-brands,.opening-brands { grid-template-columns:repeat(2,minmax(0,1fr)); height:auto; gap:10px; }
+  .finale-brands .brand-plaque { min-height:44px; padding:6px; }
   .scene-actions .outline-button,.scene-actions .text-button { font-size:13px; min-height:44px; padding:10px 12px; }
   .shop-action { font-size:11px; padding:3px 6px; gap:3px; }
   .shop-action .ui-icon { width:12px; height:12px; }
@@ -96,3 +104,15 @@ footer a { min-height:44px; padding:8px 4px; }
 @media(max-width:360px) and (min-height:640px) {
   .cinematic .story-invite .invitation-handoff { width:min(80vw,35svh); bottom:20%; }
 }
+/* The bottom plaques open a compact card with an explicit name and relationship. */
+.partner-dialog.brand-details { width:min(380px,calc(100% - 24px)); max-height:calc(100dvh - 24px); margin:auto; padding:12px; border:1px solid #d6b574; border-radius:16px; background:#fff7e7; text-align:center; }
+.brand-details .partner-dialog-close { position:static; display:flex; margin:0 0 8px auto; }
+.brand-details .partner-card-row { display:flex; flex-direction:column; gap:16px; min-height:0; }
+.brand-details .partner-logo-slot { width:100%; height:clamp(80px,24svh,160px); flex:none; border:0; padding:12px; background:white; border-radius:8px; overflow:hidden; }
+.brand-details #partner-dialog-logo { width:100%; height:100%; object-fit:contain; }
+.brand-details[data-brand="ethereum"] .partner-logo-slot { background:#235543; }
+.brand-details[data-brand="tge"] .partner-logo-slot { background:#123b2e; }
+.brand-details[data-brand="ethereum"] #partner-dialog-logo { transform:scale(1.35); }
+.brand-details .partner-card-copy { padding:0 8px 12px; width:100%; }
+.brand-details #partner-dialog-role { font:600 12px/1.5 var(--sans); margin:0 0 6px; color:#54644e; }
+.brand-details #partner-dialog-name { font-size:clamp(22px,5vw,28px); line-height:1.25; }

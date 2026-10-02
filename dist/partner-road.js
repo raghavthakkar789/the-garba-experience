@@ -71,6 +71,8 @@
       const shop = button.closest('.partner-shop');
       closeAutoCard();
       opener = button;
+      dialog.classList.remove('brand-details');
+      delete dialog.dataset.brand;
       matchCard(shop, dialog);
       dialog.querySelector('#partner-dialog-name').textContent = shop.querySelector('.shop-name').textContent;
       dialog.querySelector('#partner-dialog-role').textContent = shop.querySelector('.shop-role').textContent;
@@ -78,6 +80,25 @@
       dialogLogo.hidden = !logo;
       if (logo) dialogLogo.src = logo.getAttribute('src');
       else dialogLogo.removeAttribute('src');
+      dialog.showModal();
+    });
+  });
+  document.querySelectorAll('[data-brand-name]').forEach(button => {
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      closeAutoCard();
+      opener = button;
+      dialog.classList.remove('featured-partner');
+      dialog.classList.add('brand-details');
+      dialog.dataset.brand = button.classList.contains('brand-ethereum') ? 'ethereum' :
+        button.classList.contains('brand-tge') ? 'tge' : 'partner';
+      dialog.style.removeProperty('--card-bg');
+      dialog.style.removeProperty('--card-accent');
+      dialog.querySelector('.partner-monogram').hidden = true;
+      dialog.querySelector('#partner-dialog-name').textContent = button.dataset.brandName;
+      dialog.querySelector('#partner-dialog-role').textContent = button.dataset.brandRole;
+      dialogLogo.src = button.querySelector('img').getAttribute('src');
+      dialogLogo.hidden = false;
       dialog.showModal();
     });
   });

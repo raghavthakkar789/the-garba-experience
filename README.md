@@ -42,4 +42,6 @@ See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existin
 
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-responsive.cjs` requires Playwright in the Node module search path. It checks 16 viewport sizes from 320×568 to 2560×1080, all cinematic scenes, handoff logo clearance, labelled controls, the final page, dialogs, reduced motion and no-JavaScript content. Set `SCREENSHOT_DIR` to retain review images. The 2 October 2026 run passed in headless Chromium; Safari, Firefox and physical devices were not tested.
 
+`CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-brand-cards.cjs` checks the clickable logo plaques and centered name/logo cards, keyboard and focus behavior, and final-page reflow at 12 sizes with normal and doubled text. Ethereum's artwork is enlarged within its bottom plaque. The closing artwork now occupies its own responsive row, while event facts and buttons wrap to their available content width.
+
 `node tests/verify-soundtrack.cjs` (with `jsdom` in the Node module search path) checks door/descent/music sequencing, mute, official-player exclusivity, lifecycle cleanup, autoplay/error recovery, and the HTML media fallback. `dist/site-soundtrack.js` owns this playback lifecycle; the original supplied MP3 and source note are in `dist/assets/audio/`.
