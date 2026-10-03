@@ -50,6 +50,8 @@ Photo keepsakes remain entirely in the visitor's browser, with no upload or pers
 
 ## Verification
 
+`BROWSER=webkit node tests/verify-ios-touch.cjs` (with Playwright and its WebKit browser installed) checks the post-opening swipe handoff using non-cancelable touch events, the dialogue hold, bounded movement, pinch handling, native dialog scrolling, Autoscroll, and reading-mode gestures. Use `BROWSER=chromium CHROMIUM_EXECUTABLE_PATH=/path/to/chromium` for the Chromium run. These mobile-layout tests complement the real Chromium touch input in `verify-manual-scroll.cjs`; they do not replace physical iPhone/iPad testing.
+
 `node --check dist/experience.js`
 
 `tests/verify-experience.cjs` requires `jsdom` and `postcss` in the Node module search path. It checks scene traversal and reversal, dissolves, hamper opening, reading/reduced-motion modes, silent defaults, audio controls, player cleanup, asset references, sharing, keepsake validation and event details. These are DOM-level tests. The background correction was also rendered in Chromium at 1440×900, 390×844 and 320×700, with image loading, scroll scene selection, overflow and screenshot checks. This does not establish audio quality or third-party playback.

@@ -218,11 +218,14 @@
     touchBlocked = false;
   }, { passive:true });
   addEventListener("touchmove", event => {
-    if (touchY === null || event.touches.length !== 1 || document.querySelector("dialog[open]")) return;
-    if (!event.cancelable) return;
-    event.preventDefault();
+    if (event.touches.length !== 1) { touchY = null; stopManualMotion(); return; }
+    if (touchY === null || document.querySelector("dialog[open]")) return;
     const y = event.touches[0].clientY, delta = touchY - y;
     touchY = y;
+    // The cinematic stage owns vertical swipes through touch-action. WebKit may
+    // mark those moves non-cancelable; they still carry the finger's movement.
+    if (event.cancelable) event.preventDefault();
+    else if (!cinematic || !stage.contains(event.target)) return;
     manualScroll(delta * 2);
   }, { passive:false });
   for (const name of ["touchend", "touchcancel"]) addEventListener(name, () => { touchY = null; }, { passive:true });

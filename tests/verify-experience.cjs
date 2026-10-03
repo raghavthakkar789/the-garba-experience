@@ -245,6 +245,40 @@ const scroll = (cursor) => {
   await tick();
   assert(d.querySelector("#door-sound").paused && d.querySelector("#descent-sound").paused && !d.querySelector("#site-soundtrack").paused, "landing starts Vichudo after both intro phases");
   const landed = descendingMan.getAttribute('style');
+  // WebKit can deliver non-cancelable moves on a surface that owns vertical touch.
+  // The opening lands on dialogue one: lift, wait 0.5s, then swipe to continue.
+  const touch = (type, y, cancelable = false, count = 1) => {
+    const event = new w.Event(type, { bubbles: true, cancelable });
+    Object.defineProperty(event, 'touches', { value: y === null ? [] :
+      Array.from({ length: count }, (_, identifier) => ({ clientY: y, identifier })) });
+    stage.dispatchEvent(event);
+    return event;
+  };
+  const landingY = w.scrollY;
+  touch('touchstart', 650);
+  touch('touchmove', 550);
+  touch('touchend', null);
+  frame(490);
+  touch('touchstart', 650);
+  touch('touchmove', 550);
+  touch('touchend', null);
+  frame(0);
+  assert.equal(w.scrollY, landingY, 'touch retains the minimum half-second dialogue hold');
+  frame(200);
+  touch('touchstart', 650);
+  touch('touchmove', 600);
+  touch('touchend', null);
+  for (let i = 0; i < 12; i++) frame(16);
+  assert(w.scrollY > landingY + 30, 'non-cancelable iOS swipe resumes after the opening dialogue');
+  w.document.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  const beforePinch = w.scrollY;
+  touch('touchstart', 650);
+  assert(!touch('touchmove', 600, true, 2).defaultPrevented, 'pinch zoom stays native');
+  touch('touchmove', 500, true);
+  touch('touchend', null);
+  for (let i = 0; i < 12; i++) frame(16);
+  assert.equal(w.scrollY, beforePinch, 'lifting one pinch finger cannot create a stale swipe');
+  w.document.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   scroll(1.12);
   assert(parseFloat(descendingMan.style.getPropertyValue('--descent-y')) < -100, 'reverse scrolling lifts friends');
   scroll(1.42);

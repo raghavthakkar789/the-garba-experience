@@ -592,6 +592,8 @@ input:focus-visible {
   height: 100svh;
   min-height: 0;
   overflow: hidden;
+  /* Claim vertical swipes before Safari chooses native panning; keep pinch zoom. */
+  touch-action: pan-x pinch-zoom;
 }
 .cinematic .scene {
   position: absolute;
