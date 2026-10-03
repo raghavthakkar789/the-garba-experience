@@ -511,8 +511,17 @@
     const headY = bounds.top - box.top + bounds.height * yPart;
     const width = line.offsetWidth;
     const centre = clamp(headX, width / 2 + 12, box.width - width / 2 - 12);
+    let bubbleY = headY - 12;
+    // The shared elephant is above the scene's stacking context. Keep the
+    // arrival bubble and its tail physically clear while the elephant exits.
+    if (scene.id === "arrival" && !elephantRide.hidden) {
+      const ride = elephantRide.getBoundingClientRect();
+      const left = box.left + centre - width / 2;
+      if (ride.right > left && ride.left < left + width)
+        bubbleY = Math.min(bubbleY, ride.top - box.top - 16);
+    }
     line.style.setProperty("--bubble-x", `${centre.toFixed(2)}px`);
-    line.style.setProperty("--bubble-y", `${(headY - 12).toFixed(2)}px`);
+    line.style.setProperty("--bubble-y", `${bubbleY.toFixed(2)}px`);
     line.style.setProperty("--bubble-tip", `${clamp(headX - centre + width / 2, 14, width - 14).toFixed(2)}px`);
     line.style.setProperty("--speaker-visible", getComputedStyle(target).opacity);
     if (scene.id === "the-invitation") fitInvitationLogo(scene);

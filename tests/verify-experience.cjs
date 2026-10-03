@@ -366,6 +366,7 @@ const scroll = (cursor) => {
       if (firstStop === undefined) firstStop = progress;
       assert.equal(autoCard.querySelector('.partner-auto-name').textContent, shops[index].querySelector('.shop-name').textContent);
       assert.equal(autoCard.querySelector('img').hidden, !shops[index].querySelector('.shop-logo'), 'missing logos retain a readable name card');
+      if (shops[index].querySelector('.shop-logo')) assert.equal(autoCard.querySelector('img').getAttribute('src'), shops[index].querySelector('.shop-logo').getAttribute('src'), 'automatic card uses the matching supplied partner logo');
       assert(!d.querySelector('#partner-dialog').open, 'automatic card never opens a blocking modal');
       assert.equal(d.activeElement, focusBeforeWalk, 'automatic cards do not steal focus');
     }
