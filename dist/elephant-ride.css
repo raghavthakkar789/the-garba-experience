@@ -50,9 +50,14 @@ html:not(.cinematic) #the-plan .story-cast,
 html:not(.cinematic) #arrival .story-cast,
 html:not(.cinematic) #arrival .together-art { display: none; }
 @media (max-width: 650px) {
-  .journey-elephant { width: min(89vw, 54svh); bottom: 24%; }
-  html:not(.cinematic) .elephant-still { width: 86vw; bottom: 18%; }
+  .journey-elephant { width: min(62vw, 300px, 38svh); bottom: 20%; }
+  html:not(.cinematic) .elephant-still { width: min(62vw, 300px, 38svh); bottom: 12%; }
   .cinematic #arrival .story-person { width: 38vw; }
+}
+
+/* Short landscape phones use the reading layout; keep the decor visible there too. */
+@media (max-height: 600px) {
+  html:not(.cinematic) .elephant-still { width: min(62vw, 300px, 38svh); bottom: 12%; }
 }
 
 /* One continuous textured surface, with the original image as a safe fallback. */
