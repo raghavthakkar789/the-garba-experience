@@ -169,7 +169,8 @@ const scroll = (cursor) => {
     audio.pause = () => { audio.paused = true; };
   }
   w.eval(fs.readFileSync(path.join(base, "site-soundtrack.js"), "utf8"));
-  w.eval(script);
+  w.eval(fs.readFileSync(path.join(base, "autoscroll-timeline.js"), "utf8"));
+w.eval(script);
   await tick(); // Let the initial pageshow restoration finish before interacting.
   assert.equal(w.scrollY, 0, "reload starts at the top");
   assert.equal(w.location.hash, "", "reload ignores the old scene anchor");
@@ -462,7 +463,7 @@ const scroll = (cursor) => {
     "1.000",
     "friends enter together",
   );
-  scroll(5.68);
+  scroll(5.92);
   assert.equal(d.querySelector('#arrival').style.getPropertyValue('--passage-opacity'), '1.0000', 'lotus passage appears as friends enter');
   scroll(5.2);
   assert.equal(d.querySelector('#arrival').style.getPropertyValue('--passage-opacity'), '0.0000', 'reverse scroll restores entrance gate');

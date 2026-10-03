@@ -37,8 +37,9 @@ async function inspect(page, tag) {
   }
   for(const el of document.querySelectorAll('a,button,.photo-input')){
    if(el.matches('.box-hit-area'))continue;
-   if(!el.querySelector('svg'))issues.push('missing icon: '+(el.id||el.textContent.trim()));
-   if(!el.textContent.trim())issues.push('missing visible label: '+el.className);
+   const logo = el.querySelector('img[alt]') || (el.matches('.shop-open') && el.closest('.partner-shop')?.querySelector('.shop-logo'));
+   if(!el.querySelector('svg') && !logo)issues.push('missing icon or logo: '+(el.id||el.textContent.trim()));
+   if(!el.textContent.trim() && !(logo && (el.getAttribute('aria-label') || logo.alt)))issues.push('missing action name: '+el.className);
   }
   return issues;
  });

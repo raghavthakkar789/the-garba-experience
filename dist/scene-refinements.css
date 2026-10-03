@@ -54,8 +54,6 @@ html:not(.cinematic) .illustrated-scene .dialogue-beat {
 }
 
 /* The Mercedes overlay keeps its full steering wheel visible at each ratio. */
-.story-drive .drive-cockpit { transform: none; }
-.story-drive .drive-cockpit img { object-fit: fill; }
 
 /* Both friends now offer the thali towards the centre shrine. */
 #devotion .aarti-art {
@@ -118,7 +116,8 @@ html:not(.cinematic) .illustrated-scene .dialogue-beat {
 }
 #celebration .story-shade { z-index: 1; }
 #celebration .dialogue-track { z-index: 7; }
-#celebration .story-title, #celebration .scene-actions { z-index: 5; }
+#celebration .story-title,
+#celebration .scene-actions { z-index: 5; }
 html:not(.cinematic) #celebration { min-height: 1050px; }
 html:not(.cinematic) .garba-world { top: 65%; }
 
@@ -152,7 +151,6 @@ html:not(.cinematic) .garba-world { top: 65%; }
   transform: translate(-50%, -50%) scale(var(--garba-zoom, 1));
   transform-origin: 50% 48%;
 }
-.cinematic #celebration .dialogue-track { opacity: var(--garba-dialogue-opacity, 1); }
 
 /* Fit the complete concert composition; the friends watch from the foreground. */
 .cinematic #the-stage { background: #102820; }
@@ -175,7 +173,7 @@ html:not(.cinematic) .garba-world { top: 65%; }
 }
 @media (max-width: 650px) {
   .cinematic #the-stage .scene-art,
-  .cinematic #the-stage .stage-crowd { inset: 96px 0 92px; }
+.cinematic #the-stage .stage-crowd { inset: 96px 0 92px; }
   #the-stage .together-art { height: 17svh; left: 24%; bottom: 17%; }
 }
 

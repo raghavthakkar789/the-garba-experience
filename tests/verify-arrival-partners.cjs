@@ -42,6 +42,9 @@ let browser, server;
       assert(result.clear, `${width}x${height} cursor ${cursor}: bubble/tail overlaps elephant`);
       assert(result.inside, `${width}x${height} cursor ${cursor}: bubble outside frame`);
     }
+    await seek(5.6);
+    assert(await page.locator('.journey-elephant').evaluate(el => el.hidden), 'elephant clears the entrance viewing hold');
+    assert.equal(await page.locator('#arrival').evaluate(el => el.style.getPropertyValue('--passage-opacity')), '0.0000', 'gate stays visible before the passage');
     if (process.env.SCREENSHOT_DIR && [390,1440].includes(width)) {
       fs.mkdirSync(process.env.SCREENSHOT_DIR, { recursive: true });
       await page.screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `arrival-${engine}-${width}.png`) });

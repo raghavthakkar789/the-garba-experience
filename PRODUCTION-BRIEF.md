@@ -1,5 +1,35 @@
 # The Garba Experience — continuous story redesign
 
+## Current revision — one-minute journey (3 October 2026)
+
+The approved Phase 2 replaces distance-based Autoscroll with a single elapsed-time timeline in `dist/autoscroll-timeline.js`. From the Autoscroll click to the document end, the budget is 60 seconds, excluding explicit pauses. Rendering resumes at the elapsed position after a slow frame; a blocked browser can still present the final frame late. Manual seeking uses the same timeline mapping, while pause/resume preserves time within a hold. The logo-only entry remains 4.7 seconds.
+
+| Segment | Seconds |
+| --- | ---: |
+| Autoscroll opening and descent | 1.5 |
+| First conversation | 5 |
+| Invitation conversation | 11 |
+| Boarding | 1.5 |
+| Drive | 1.5 |
+| Entrance and conversation | 7 |
+| Photo stand and conversation | 4.5 |
+| Devotion | 1.5 |
+| Stage and conversation | 3.5 |
+| Garba circle | 1.5 |
+| Partners and sponsors | 20 |
+| Closing page and footer | 1.5 |
+| **Total** | **60** |
+
+The elephant finishes leaving before the gate changes to the passage. A 1.7-second clear-gate hold plus a later crossfade makes the entrance décor visible. Photo and stage durations drop from 12 seconds each to 4.5 and 3.5 seconds. The photo crossfade starts later to retain a clear view of the keepsake within its shorter interval. All eleven dialogue lines, manual half-second checkpoints, active pose atlases, mobile elephant sizing, logos and the Vichudo recording are retained.
+
+Cleanup removed 110 unreferenced runtime files (90,325,136 bytes), 198 obsolete CSS selector branches, unused dialogue tracking for the Garba circle, and the removed external music player's soundtrack hooks. Removed assets include five unused videos containing 1,032 encoded frames. Current animation uses CSS, continuous transforms, WebGL and pose atlases, so no active pose cells were deleted. The deployable `dist` folder is about 19.26 MiB, down from about 105.5 MiB. Historical prompts, attribution, font licenses and source notes remain for provenance; descriptions of retired assets below are historical.
+
+An uninterrupted real-time Chromium phone run measured 60.042 seconds overall and 20.016 seconds for partners, reaching the document bottom.
+
+Verification: story/asset/CSS and soundtrack checks pass; Chromium checks pass Autoscroll interactions, all sixteen responsive viewports, arrival dialogue clearance and supplied partner logos. The timeline test passes in Chromium and WebKit for cinematic, short-landscape and reduced-motion layouts, including the 20-second partner interval, the clear gate, pause/resume, skipped frames and reaching the document bottom. WebKit touch checks pass the normal logo entry, all eleven dialogue releases, bounded gestures, dialog scrolling and reading mode. Phone handoff, entrance and closing screenshots were reviewed. Physical iPhone/iPad testing is not established by these browser checks.
+
+Publication targets `raghavthakkar789/the-garba-experience` only. The separate `the-garba-experience-main` continuation is unchanged. Updating GitHub does not itself upload files to the externally hosted `.in` domain.
+
 ## Change contract
 
 Arrival dialogue and remaining logos (3 October 2026): keep the arrival speech bubble and its tail above the shared elephant whenever their horizontal bounds overlap, retaining the existing speaker wording, character movement, and elephant path. This avoids the elephant's separate stacking context covering the second arrival line. Added the supplied Hungrito SVG, Alpha Hospital BMP (losslessly encoded as WebP), and `Megma.png` artwork to the existing sponsor boards and their automatic/modal cards. The latter artwork is branded Magma, so its displayed/accessibility name is corrected to Magma. An SVG viewport frames the original embedded Magma PNG without altering its pixels. `experience.js` is now v41. The story suite and focused arrival/partner browser checks pass in Chromium and WebKit at 320×640, 390×844, 768×1024, and 1440×900. Checks cover both dialogue beats, forward/reverse departure, viewport containment, logo decoding and correct popup identities; phone screenshots were reviewed. Hosting still requires uploading the updated `dist` files.

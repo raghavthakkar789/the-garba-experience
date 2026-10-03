@@ -113,9 +113,6 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
-.shop-lettering {
-  font-size: 22px;
-}
 .shop-open {
   position: absolute;
   z-index: 2;
@@ -243,9 +240,6 @@
 .cinematic .partner-road .shop-name {
   font-size: clamp(11px,1vw,15px);
 }
-.cinematic .partner-road .shop-lettering {
-  font-size: clamp(14px,1.5vw,21px);
-}
 .cinematic .partner-road .road-friends {
   width: clamp(58px,5.5vw,84px);
   left: 5%;
@@ -321,9 +315,6 @@
   .shop-name {
     font-size: 13px;
   }
-  .shop-lettering {
-    font-size: 18px;
-  }
   .shop-logo {
     height: 30px;
   }
@@ -357,9 +348,6 @@
     font-size: 9px;
     line-height: 1.05;
   }
-  .cinematic .partner-road .shop-lettering {
-    font-size: 11px;
-  }
   .cinematic .partner-road .road-friends {
     width: 54px;
   }
@@ -367,9 +355,6 @@
 @media(max-width:360px) {
   .cinematic .partner-road .shop-name {
     font-size: 8px;
-  }
-  .cinematic .partner-road .shop-lettering {
-    font-size: 10px;
   }
   .cinematic .partner-road .road-friends {
     width: 46px;
@@ -413,7 +398,8 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   box-shadow: 0 6px 24px #091d2655;
   pointer-events: none;
 }
-.partner-auto-card[hidden], html:not(.cinematic) .partner-auto-card { display: none; }
+.partner-auto-card[hidden],
+html:not(.cinematic) .partner-auto-card { display: none; }
 .partner-auto-card img { width: 86px; height: 60px; object-fit: contain; mix-blend-mode: normal; flex-shrink: 0; }
 .partner-auto-card img[hidden] { display: none; }
 .partner-auto-card > div { min-width: 0; }
@@ -435,7 +421,9 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
 .partner-shop:nth-child(6n+4) { --card-bg: #d5e7f2; --card-accent: #b3cfdf; }
 .partner-shop:nth-child(6n+5) { --card-bg: #e8dcf0; --card-accent: #cdb8de; }
 .partner-shop:nth-child(6n) { --card-bg: #f4e9b8; --card-accent: #e3d389; }
-.shop-sign, .partner-auto-card, .partner-dialog { background: var(--card-bg, #f5d7dc); }
+.shop-sign,
+.partner-auto-card,
+.partner-dialog { background: var(--card-bg, #f5d7dc); }
 .partner-logo-slot {
   display: flex;
   align-items: center;
@@ -449,7 +437,8 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
 }
 .partner-monogram { font: 600 28px/1 Georgia, serif; color: #244337; }
 .partner-monogram[hidden] { display: none; }
-.shop-sign, .cinematic .partner-road .shop-sign {
+.shop-sign,
+.cinematic .partner-road .shop-sign {
   display: grid;
   grid-template-columns: 30% minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
@@ -458,16 +447,18 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   text-align: left;
 }
 .shop-details { min-width: 0; padding: 3px 7px; }
-.cinematic .partner-road .shop-lettering { font-size: clamp(11px,1vw,15px); }
-.shop-logo, .cinematic .partner-road .shop-logo {
+.shop-logo,
+.cinematic .partner-road .shop-logo {
   width: 100%;
   height: 100%;
   max-height: 100%;
   margin: 0;
   background: transparent;
 }
-.shop-role, .cinematic .partner-road .shop-role { display: block; }
-.shop-name, .cinematic .partner-road .shop-name { overflow-wrap: anywhere; }
+.shop-role,
+.cinematic .partner-road .shop-role { display: block; }
+.shop-name,
+.cinematic .partner-road .shop-name { overflow-wrap: anywhere; }
 .shop-name .name-detail { white-space: normal; }
 .partner-auto-card {
   display: grid;
@@ -489,7 +480,7 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   .cinematic .partner-road .shop-sign { grid-template-columns: 28% minmax(0, 1fr); height: 64%; }
   .cinematic .partner-road .shop-details { padding: 2px; }
   .cinematic .partner-road .shop-role { font-size: 5px; line-height: 1.1; letter-spacing: 0; margin-bottom: 2px; }
-  .cinematic .partner-road .shop-name, .cinematic .partner-road .shop-lettering { font-size: 7px; line-height: 1.1; }
+  .cinematic .partner-road .shop-name { font-size: 7px; line-height: 1.1; }
   .cinematic .partner-road .shop-sign .partner-logo-slot { padding: 1px; }
   .cinematic .partner-road .shop-sign .partner-monogram { font-size: 9px; }
   .partner-auto-card { grid-template-columns: 78px minmax(0, 1fr); padding: 0; gap: 0; }
@@ -503,14 +494,14 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   .cinematic .partner-road .shop-sign { grid-template-columns: 28% minmax(0, 1fr); height: 64%; }
   .cinematic .partner-road .shop-details { padding: 2px; }
   .cinematic .partner-road .shop-role { font-size: clamp(5px, .75vw, 7px); line-height: 1.1; letter-spacing: 0; }
-  .cinematic .partner-road .shop-name,
-  .cinematic .partner-road .shop-lettering { font-size: clamp(7px, 1.1vw, 11px); line-height: 1.1; }
+  .cinematic .partner-road .shop-name { font-size: clamp(7px, 1.1vw, 11px); line-height: 1.1; }
   .cinematic .partner-road .partner-logo-slot { padding: 2px; }
   .cinematic .partner-road .partner-monogram { font-size: clamp(9px, 1.6vw, 16px); }
 }
 
 /* Shared introduction/detail cards: generous artwork, complete names, quiet framing. */
-.partner-auto-card, .partner-dialog {
+.partner-auto-card,
+.partner-dialog {
   box-sizing: border-box;
   width: min(560px, calc(100% - 32px));
   min-height: 0;
@@ -522,7 +513,8 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   box-shadow: 0 18px 56px #071e1b66, inset 0 0 0 4px #d8bd8426;
   text-align: left;
 }
-.partner-auto-card, .partner-card-row {
+.partner-auto-card,
+.partner-card-row {
   display: grid;
   grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
   align-items: center;
@@ -565,7 +557,8 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   background: #fff;
   overflow: hidden;
 }
-.partner-auto-card img, #partner-dialog-logo {
+.partner-auto-card img,
+#partner-dialog-logo {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -575,7 +568,8 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
 :is(.partner-auto-card, .partner-dialog)[data-brand="tge"] .partner-logo-slot { background: #123b2e; }
 :is(.partner-auto-card, .partner-dialog)[data-brand="ethereum"] img { transform: scale(1.25); }
 :is(.partner-auto-card, .partner-dialog) .partner-card-copy { min-width: 0; padding: 0; }
-.partner-auto-role, #partner-dialog-role {
+.partner-auto-role,
+#partner-dialog-role {
   margin: 0 0 10px;
   color: #52634f;
   font: 600 12px/1.5 var(--sans);
@@ -583,7 +577,8 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   text-transform: uppercase;
   overflow-wrap: break-word;
 }
-.partner-auto-name, #partner-dialog-name {
+.partner-auto-name,
+#partner-dialog-name {
   margin: 0;
   color: #173c30;
   font: 600 clamp(24px, 3vw, 30px)/1.22 Georgia, serif;
@@ -593,12 +588,16 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
 }
 :is(.partner-auto-card, .partner-dialog) .partner-monogram { font-size: 44px; }
 @media (max-width: 600px) and (min-height: 501px) {
-  .partner-auto-card, .partner-dialog { width: min(400px, calc(100% - 28px)); padding: 16px; text-align: center; }
-  .partner-auto-card, .partner-card-row { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .partner-auto-card,
+.partner-dialog { width: min(400px, calc(100% - 28px)); padding: 16px; text-align: center; }
+  .partner-auto-card,
+.partner-card-row { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   :is(.partner-auto-card, .partner-dialog) .partner-logo-slot { height: clamp(112px, 18svh, 150px); padding: 14px 20px; }
   :is(.partner-auto-card, .partner-dialog) .partner-card-copy { padding: 0 4px 6px; }
-  .partner-auto-role, #partner-dialog-role { margin-bottom: 6px; }
-  .partner-auto-name, #partner-dialog-name { font-size: clamp(24px, 6.5vw, 28px); }
+  .partner-auto-role,
+#partner-dialog-role { margin-bottom: 6px; }
+  .partner-auto-name,
+#partner-dialog-name { font-size: clamp(24px, 6.5vw, 28px); }
 }
 @media (max-height: 500px) {
   .partner-dialog { padding: 12px; }

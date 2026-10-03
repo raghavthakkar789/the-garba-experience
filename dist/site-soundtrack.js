@@ -7,10 +7,10 @@
     ["door", "door-sound"], ["descent", "descent-sound"], ["music", "site-soundtrack"],
   ].map(([name, id]) => [name, { audio: document.getElementById(id), gain: null, blocked: false, ended: false, request: 0, pending: false }]));
   let context, started = false, muted = false, introEnabled = true;
-  let official = false, pageActive = true, introSuppressed = false;
+  let pageActive = true, introSuppressed = false;
   let phase = "door", musicStarted = false, session = 0;
   const current = () => tracks[phase];
-  const permitted = () => started && !muted && !official && pageActive && !document.hidden
+  const permitted = () => started && !muted && pageActive && !document.hidden
     && (phase === "music" || (introEnabled && !introSuppressed));
   const audible = track => track === current() && permitted() && !track.blocked && !track.ended;
   const rewind = track => { try { track.audio.currentTime = 0; } catch {} };
@@ -121,7 +121,7 @@
   function begin(animated = true) {
     ++session;
     started = true;
-    official = introSuppressed = musicStarted = false;
+    introSuppressed = musicStarted = false;
     phase = animated ? "door" : "music";
     for (const track of Object.values(tracks)) {
       track.audio.pause();
@@ -140,7 +140,7 @@
   }
   function reset() {
     ++session;
-    started = official = introSuppressed = musicStarted = false;
+    started = introSuppressed = musicStarted = false;
     for (const track of Object.values(tracks)) {
       track.audio.pause();
       rewind(track);
@@ -152,8 +152,6 @@
     begin,
     setScene(cursor) { select(cursor < 1 ? "door" : cursor < 1.42 - 1e-6 ? "descent" : "music"); },
     cancelIntro() { if (phase !== "music") { introSuppressed = true; sync(); } },
-    pauseForOfficial() { official = true; sync(); },
-    resumeFromOfficial() { if (official) { official = false; sync(); } },
     reset,
   };
   button.addEventListener("click", () => {

@@ -64,7 +64,6 @@ async function verify(webAudio) {
   sound.setScene(2); await Promise.resolve(); only("site-soundtrack");
   assert.equal(music.currentTime, 37, "return from intro preserves song position");
   button.click(); await Promise.resolve(); only(); button.click(); await Promise.resolve(); only("site-soundtrack");
-  sound.pauseForOfficial(); await Promise.resolve(); only(); sound.resumeFromOfficial(); await Promise.resolve(); only("site-soundtrack");
   assert.equal(music.currentTime, 37);
   hidden = true; d.dispatchEvent(new w.Event("visibilitychange")); await Promise.resolve(); only();
   hidden = false; d.dispatchEvent(new w.Event("visibilitychange")); await Promise.resolve(); only("site-soundtrack");
@@ -83,8 +82,7 @@ async function verify(webAudio) {
   sound.begin(true); await Promise.resolve(); sound.cancelIntro(); await Promise.resolve(); only();
   sound.setScene(.4); await Promise.resolve(); only();
   sound.setScene(1); await Promise.resolve(); only("descent-sound");
-  sound.pauseForOfficial(); await Promise.resolve(); only();
-  sound.setScene(1.42); await Promise.resolve(); only(); sound.resumeFromOfficial(); await Promise.resolve(); only("site-soundtrack");
+  sound.setScene(1.42); await Promise.resolve(); only("site-soundtrack");
   sound.reset(); sound.setScene(2); await Promise.resolve(); only(); assert(button.hidden);
   sound.begin(false); await Promise.resolve(); await Promise.resolve(); only("site-soundtrack");
 
@@ -115,5 +113,5 @@ async function verify(webAudio) {
 (async () => {
   await verify(true);
   await verify(false);
-  console.log("PASS: three-track scene sequencing; no overlap; loops; reverse scroll; mute; official-player exclusion; visibility; reset; blocked autoplay and media-error retry; HTML media fallback.");
+  console.log("PASS: three-track scene sequencing; no overlap; loops; reverse scroll; mute; visibility; reset; blocked autoplay and media-error retry; HTML media fallback.");
 })().catch(error => { console.error(error); process.exitCode = 1; });

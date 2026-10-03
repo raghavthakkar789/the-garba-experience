@@ -14,7 +14,6 @@
   const stage = document.querySelector(".journey-stage");
   const elephantRide = document.querySelector(".journey-elephant");
   const scenes = [...document.querySelectorAll(".scene")];
-  const sceneHasDialogue = scenes.map(scene => Boolean(scene.querySelector(".dialogue-beat")));
   // The final walking chapter needs time for every shop, within the same film.
   const sceneSpans = scenes.map((scene) => Number(scene.dataset.scrollSpan) || 1);
   const sceneStarts = [];
@@ -59,8 +58,32 @@
   const soundtrack = window.garbaSoundtrack;
   let entryFrame = 0;
   const autoScrollButton = document.querySelector("#autoscroll-toggle");
-  let autoScrolling = false, autoScrollFrame = 0, autoScrollLast = 0, autoScrollPosition = 0;
-  let autoWasEntering = false;
+  const timeline = window.garbaTimeline;
+  let autoScrolling = false, autoScrollFrame = 0;
+  let autoStarted = 0, autoOffset = 0, autoElapsed = 0, autoLastPosition = -1;
+  function autoPosition(cursor) {
+    const end = Math.max(0, root.scrollHeight - innerHeight);
+    const storyEnd = cinematic ? journeyTop + travel
+      : document.querySelector(".finale").getBoundingClientRect().top + scrollY;
+    if (cursor >= storySpan)
+      return Math.min(end, storyEnd + (end - storyEnd) * (cursor - storySpan));
+    if (cinematic) return journeyTop + cursor / storySpan * travel;
+    let index = scenes.length - 1;
+    while (index > 0 && cursor < sceneStarts[index]) index--;
+    const from = scenes[index].getBoundingClientRect().top + scrollY;
+    const to = index + 1 < scenes.length
+      ? scenes[index + 1].getBoundingClientRect().top + scrollY : storyEnd;
+    return Math.min(end, from + (to - from) * (cursor - sceneStarts[index]) / sceneSpans[index]);
+  }
+  function autoTimeAtPosition(position) {
+    // Monotonic mapping also supports normal-flow / reduced-motion layouts.
+    let low = 0, high = storySpan + 1;
+    for (let i = 0; i < 40; i++) {
+      const middle = (low + high) / 2;
+      if (autoPosition(middle) < position) low = middle; else high = middle;
+    }
+    return timeline.timeAt((low + high) / 2);
+  }
   function updateAutoScrollButton() {
     autoScrollButton.setAttribute("aria-pressed", String(autoScrolling));
     autoScrollButton.setAttribute("aria-label", autoScrolling ? "Pause automatic scrolling" : "Start automatic scrolling");
@@ -68,38 +91,22 @@
     autoScrollButton.querySelector("use").setAttribute("href", `assets/ui-icons.svg#${autoScrolling ? "pause" : "play"}`);
   }
   function stopAutoScroll() {
-    const wasRunning = autoScrolling;
+    if (autoScrolling) delete opening.dataset.entering;
     autoScrolling = false;
     cancelAnimationFrame(autoScrollFrame);
     autoScrollFrame = 0;
-    if (wasRunning && entryFrame) cancelEntry();
     updateAutoScrollButton();
   }
   function advanceAutoScroll(now) {
     if (!autoScrolling) return;
     if (document.hidden || document.querySelector("dialog[open]")) { stopAutoScroll(); return; }
-    const seconds = Math.min(Math.max(0, now - autoScrollLast), 64) / 1000;
-    autoScrollLast = now;
-    // The door/descent sequence retains sole control until landing.
-    if (entryFrame) { autoScrollPosition = scrollY; autoWasEntering = true; }
-    else {
-      if (autoWasEntering) { autoScrollPosition = scrollY; autoWasEntering = false; }
-      const end = Math.max(0, root.scrollHeight - innerHeight);
-      if (scrollY >= end - 1) { stopAutoScroll(); return; }
-      const inStory = cinematic && scrollY < journeyTop + travel;
-      let sceneIndex = -1;
-      if (inStory) {
-        const cursor = clamp((scrollY - journeyTop) / travel) * storySpan;
-        sceneIndex = scenes.length - 1;
-        while (sceneIndex > 0 && cursor < sceneStarts[sceneIndex]) sceneIndex--;
-      } else if (!cinematic) {
-        sceneIndex = scenes.findIndex(scene => scene.getBoundingClientRect().bottom > innerHeight / 2);
-      }
-      const pace = sceneHasDialogue[sceneIndex] ? 1 : scenes[sceneIndex]?.id === "partner-road" ? 2 : 3;
-      const speed = (inStory ? travel / storySpan / 12 : 36) * pace;
-      autoScrollPosition = Math.min(end, autoScrollPosition + speed * seconds);
-      window.scrollTo({ top: autoScrollPosition, behavior: "instant" });
-    }
+    // Absolute elapsed time: a dropped rendering frame cannot lengthen the journey.
+    autoElapsed = Math.min(timeline.duration, autoOffset + Math.max(0, now - autoStarted) / 1000);
+    if (autoElapsed < timeline.openingDuration && cinematic) opening.dataset.entering = "true";
+    else delete opening.dataset.entering;
+    window.scrollTo({ top: autoPosition(timeline.cursorAt(autoElapsed)), behavior: "instant" });
+    autoLastPosition = scrollY;
+    if (autoElapsed >= timeline.duration) { stopAutoScroll(); return; }
     autoScrollFrame = requestAnimationFrame(advanceAutoScroll);
   }
   autoScrollButton.hidden = false;
@@ -107,12 +114,22 @@
     cancelManualScroll();
     if (autoScrolling) { stopAutoScroll(); return; }
     if (document.querySelector("dialog[open]")) return;
-    if (!entryUnlocked || (!cinematic && !readingBoxOpen)) beginEntry();
+    const fresh = !entryUnlocked || scrollY <= journeyTop;
+    if (entryFrame) { cancelAnimationFrame(entryFrame); entryFrame = 0; }
+    if (fresh) {
+      entryUnlocked = true;
+      readingBoxOpen = true;
+      root.classList.remove("invitation-locked");
+      soundtrack?.begin(cinematic);
+      if (!cinematic) updateOpening(1);
+      focusStoryOnArrival = cinematic;
+    }
     if (scrollY >= root.scrollHeight - innerHeight - 1) return;
+    autoOffset = fresh ? 0 : Math.abs(scrollY - autoLastPosition) <= 2
+      ? autoElapsed : autoTimeAtPosition(scrollY);
     autoScrolling = true;
-    autoWasEntering = Boolean(entryFrame);
-    autoScrollPosition = scrollY;
-    autoScrollLast = performance.now();
+    autoStarted = performance.now();
+    if (autoOffset < timeline.openingDuration && cinematic) opening.dataset.entering = "true";
     updateAutoScrollButton();
     autoScrollFrame = requestAnimationFrame(advanceAutoScroll);
   });
@@ -277,8 +294,8 @@
     opening.dataset.entering = "true";
     focusStoryOnArrival = true;
     const advance = (now) => {
-      // Autoscroll fast-forwards the dialogue-free opening; the logo keeps its normal timing.
-      elapsed += (now - lastEntryTime) * (autoScrolling ? 3 : 1);
+      // The logo-only entry retains its original duration.
+      elapsed += now - lastEntryTime;
       lastEntryTime = now;
       const doorTime = clamp(elapsed / 1900);
       // Finish the original door/camera move, then lower the friends on silk.
@@ -414,7 +431,7 @@
       const step = ease((progress - 0.17) / 0.18);
       const joined = ease((progress - 0.34) / 0.07),
         walk = ease((progress - 0.42) / 0.26);
-      const passage = ease((progress - 0.49) / 0.18);
+      const passage = ease((progress - 0.74) / 0.16);
       scene.style.setProperty("--passage-opacity", passage.toFixed(4));
       person("man", -(1 - step) * w * .1, -(1 - step) * h * .24, step * (1 - joined), .65, "walk");
       person("woman", -(1 - step) * w * .22, -(1 - step) * h * .24, step * (1 - joined), .65, "walk");
@@ -460,7 +477,6 @@
     if (scene.id === "celebration") {
       const approach = ease((progress - 0.08) / 0.78);
       scene.style.setProperty("--garba-zoom", (1 + approach * 1.15).toFixed(4));
-      scene.style.setProperty("--garba-dialogue-opacity", (1 - ease((progress - 0.42) / 0.14)).toFixed(4));
     }
     if (scene.id === "devotion")
       scene.style.setProperty(
@@ -471,7 +487,7 @@
 
   // One shared elephant survives the scene dissolves; only its surroundings change.
   function animateElephant(cursor) {
-    const visible = cursor >= 3 && cursor < 5.72;
+    const visible = cursor >= 3 && cursor < 5.58;
     elephantRide.hidden = !visible;
     elephantRide.setAttribute("aria-hidden", String(!visible));
     elephantRide.dataset.walking = String(visible && (
@@ -479,11 +495,11 @@
     if (!visible) return;
     const enter = ease((cursor - 3.02) / .20);
     const travel = ease((cursor - 3.52) / 1.55);
-    const leave = ease((cursor - 5.38) / .32);
+    const leave = ease((cursor - 5.38) / .18);
     const board = ease((cursor - 3.36) / .11);
     const dismount = ease((cursor - 5.17) / .18);
     elephantRide.style.setProperty("--ride-x", `${((1 - enter) * -innerWidth * 1.2 + travel * innerWidth * .05 + leave * innerWidth * 1.2).toFixed(2)}px`);
-    elephantRide.style.setProperty("--ride-opacity", (1 - ease((cursor - 5.62) / .1)).toFixed(4));
+    elephantRide.style.setProperty("--ride-opacity", (1 - ease((cursor - 5.54) / .04)).toFixed(4));
     elephantRide.style.setProperty("--riders-opacity", (board * (1 - dismount)).toFixed(4));
     elephantRide.style.setProperty("--riders-y", `${(dismount * stageHeight * .13).toFixed(2)}px`);
   }
@@ -495,13 +511,6 @@
     let target, xPart = 0.5, yPart = 0.08;
     if (scene.id === "the-invitation") {
       target = scene.querySelector(her ? ".handoff-woman" : ".handoff-man");
-    } else if (scene.id === "devotion") {
-      target = scene.querySelector(".aarti-art");
-      xPart = her ? 0.72 : 0.27;
-      yPart = her ? 0.1 : 0.02;
-    } else if (scene.id === "celebration") {
-      target = scene.querySelector(her ? ".garba-woman" : ".garba-man");
-      yPart = 0.30;
     } else if (scene.id === "arrival" && !elephantRide.hidden &&
       Number(elephantRide.style.getPropertyValue("--riders-opacity")) > .4) {
       target = elephantRide.querySelector(".elephant-riders");
@@ -559,10 +568,6 @@
     logo.style.setProperty("width", `${artHeight * ratio}px`);
     logo.style.setProperty("height", `${artHeight}px`);
   }
-  // The moving circle keeps the small speech bubble attached between scroll events.
-  document.querySelector("#celebration").addEventListener("garba-frame", (event) => {
-    if (cinematic) positionDialogue(event.currentTarget);
-  });
   function clearSceneState() {
     document.querySelectorAll(".invitation-wall-branding image").forEach(logo => logo.removeAttribute("style"));
     elephantRide.hidden = true;
@@ -587,7 +592,6 @@
         "--arrival-copy",
         "--passage-opacity",
         "--garba-zoom",
-        "--garba-dialogue-opacity",
       ].forEach((prop) => scene.style.removeProperty(prop));
     }
   }
@@ -643,7 +647,7 @@
     frame = 0;
     // Wheel, touch, keyboard and restored scroll positions cannot open a sealed box.
     if (cinematic) {
-      if (entryUnlocked && entryHasAdvanced && !entryFrame && scrollY <= journeyTop) {
+      if (entryUnlocked && entryHasAdvanced && !entryFrame && !autoScrolling && scrollY <= journeyTop) {
         entryUnlocked = false;
         entryHasAdvanced = false;
         soundtrack?.reset();
@@ -677,7 +681,8 @@
     let base = scenes.length - 1;
     while (base > 0 && cursor < sceneStarts[base]) base--;
     const local = clamp((cursor - sceneStarts[base]) / sceneSpans[base]);
-    const blend = base < scenes.length - 1 ? ease((local - 0.7) / 0.3) : 0;
+    const fadeAt = ["arrival", "a-memory"].includes(scenes[base].id) ? .90 : .70;
+    const blend = base < scenes.length - 1 ? ease((local - fadeAt) / (1 - fadeAt)) : 0;
     const selected = blend > 0.5 ? base + 1 : base;
     scenes.forEach((scene, i) => {
       const isBase = i === base;
@@ -961,6 +966,8 @@
     document.activeElement?.blur();
     clearTimeout(toastTimer);
     toast.classList.remove("visible");
+    autoElapsed = autoOffset = 0;
+    autoLastPosition = -1;
     readingBoxOpen = false;
     entryUnlocked = false;
     entryHasAdvanced = false;

@@ -77,7 +77,7 @@ html:not(.read-mode) .button-motion.button-pressed::after {
     translate: 0 1px;
     scale: 0.97;
   }
-  html:not(.read-mode) :is(.close-button, #close-music).button-motion:hover {
+  html:not(.read-mode) :is(.close-button).button-motion:hover {
     rotate: 90deg;
   }
 }
@@ -112,10 +112,10 @@ html:not(.read-mode) .button-motion.button-pressed::after {
 }
 @media (prefers-reduced-motion: reduce) {
   .button-motion,
-  .button-motion:hover,
-  .button-motion:active,
-  .button-motion::before,
-  .button-motion::after {
+.button-motion:hover,
+.button-motion:active,
+.button-motion::before,
+.button-motion::after {
     translate: none !important;
     scale: none !important;
     rotate: none !important;

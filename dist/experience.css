@@ -163,8 +163,7 @@ input:focus-visible {
 @media (max-width: 650px) {
   .masthead .header-actions { flex-direction: row; align-items: center; gap: 8px; }
 }
-.header-link,
-#motion-toggle {
+.header-link {
   font-size: 13px;
   background: transparent;
   min-height: 44px;
@@ -173,10 +172,6 @@ input:focus-visible {
 }
 .header-link span {
   padding-left: 16px;
-}
-#motion-toggle {
-  color: #dfdfce;
-  border-color: transparent;
 }
 /* The complete document is readable first. Only a healthy motion controller pins it. */
 .journey {
@@ -209,26 +204,6 @@ input:focus-visible {
   object-fit: cover;
   object-position: 65% center;
 }
-.scene-shade {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background:
-    linear-gradient(
-      90deg,
-      #071b16f5 0%,
-      #071b16de 25%,
-      #071b165c 55%,
-      #071b160d 78%
-    ),
-    linear-gradient(
-      0deg,
-      #0b201b 0%,
-      transparent 25%,
-      transparent 78%,
-      #071b1645
-    );
-}
 .scene-copy {
   position: relative;
   z-index: 2;
@@ -242,60 +217,6 @@ input:focus-visible {
 .scene-copy h1,
 .scene-copy h2 {
   margin-left: -0.035em;
-}
-.scene-description {
-  font-size: 16px;
-  line-height: 1.85;
-  margin-top: 28px;
-  color: #e4e4d6;
-  max-width: 480px;
-}
-.story-conversation {
-  margin-top: 30px;
-  padding-left: 19px;
-  border-left: 1px solid #d9ba795c;
-  color: #ebe9da;
-  font-size: 16px;
-  line-height: 1.9;
-}
-.story-conversation p + p {
-  color: #d2bc90;
-}
-.journey-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 28px;
-  min-height: 48px;
-  margin-top: 34px;
-  font-size: 14px;
-  letter-spacing: 0.02em;
-  border-bottom: 1px solid #d4b67490;
-}
-.journey-link span {
-  font-size: 24px;
-  transition: transform 0.25s;
-}
-.journey-link:hover span {
-  transform: translateY(4px);
-}
-.quiet-prompt {
-  color: #cccebc;
-  font-size: 13px;
-  margin-top: 28px;
-  max-width: 420px;
-}
-.spoken-line {
-  font: italic 26px/1.3 var(--serif);
-  color: var(--gold);
-  margin-top: 30px;
-  max-width: 420px;
-}
-.art-caption {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 30px;
-  font-size: 12px;
-  color: #d6d5bc;
 }
 .paper-field {
   position: absolute;
@@ -383,10 +304,6 @@ input:focus-visible {
   overflow: hidden;
   box-shadow: inset 0 0 35px #19070970;
 }
-.inner-logo {
-  width: 32%;
-  margin-bottom: 8%;
-}
 .hamper-interior p {
   font: italic clamp(13px, 1.3vw, 19px)/1.35 var(--serif);
 }
@@ -401,54 +318,6 @@ input:focus-visible {
 }
 .hamper-interior small {
   font-size: 10px;
-}
-.inner-lotus {
-  position: absolute;
-  bottom: -7%;
-  width: 32%;
-  opacity: 0.45;
-}
-.scene-invitation {
-  background: #102f28;
-}
-.invitation-texture {
-  position: absolute;
-  inset: 0;
-  z-index: -3;
-  background:
-    radial-gradient(ellipse at 50% 60%, #4c795445, transparent 65%),
-    linear-gradient(135deg, #09241ee6, #245240c9),
-    url(assets/green-texture.webp) center/cover;
-}
-.scene-invitation .scene-copy {
-  width: 51%;
-}
-.scene-invitation h2 {
-  font-size: clamp(64px, 6.3vw, 108px);
-}
-.artist-line {
-  margin-top: 24px;
-  font-size: 14px;
-  color: #e1cab6;
-}
-.artist-line strong {
-  display: block;
-  font: 40px/1.25 var(--serif);
-  color: var(--gold);
-}
-.gujarati {
-  font-size: 19px;
-  line-height: 1.9;
-  margin: 24px 0;
-  color: #e5c79b;
-}
-.invitation-date {
-  font-size: 12px;
-  letter-spacing: 0.075em;
-  margin-top: 22px;
-}
-.scene-invitation .scene-description {
-  margin-top: 12px;
 }
 .original-invitation {
   position: absolute;
@@ -468,20 +337,6 @@ input:focus-visible {
   letter-spacing: 0.06em;
   margin-top: 18px;
   color: #e9cda3;
-}
-.scene-journey .scene-art img {
-  object-position: 65% center;
-}
-.scene-journey .scene-shade {
-  background:
-    linear-gradient(90deg, #071b16f2, #071b16b3 32%, #071b1600 76%),
-    linear-gradient(0deg, #0b201b, transparent 38%);
-}
-.scene-arrival .scene-art img {
-  object-position: 68% center;
-}
-.scene-memory .scene-art img {
-  object-position: 72% center;
 }
 .outline-button {
   display: inline-flex;
@@ -504,83 +359,6 @@ input:focus-visible {
 }
 .outline-button:active {
   transform: translateY(1px);
-}
-.scene-devotion {
-  background: #151f19;
-}
-.devotion-glow {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background: radial-gradient(ellipse at 75% 50%, #a765213f, transparent 63%);
-}
-.devotion-art {
-  position: absolute;
-  right: 9%;
-  top: 12%;
-  height: 76%;
-  width: 34%;
-  z-index: -1;
-  mask-image: linear-gradient(black 85%, transparent);
-  -webkit-mask-image: linear-gradient(black 85%, transparent);
-}
-.devotion-art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 46% 46% 0 0;
-}
-.scene-devotion .gujarati {
-  margin-bottom: 0;
-}
-.scene-stage .scene-art img {
-  object-position: 75% center;
-}
-.scene-stage .scene-shade {
-  background:
-    linear-gradient(90deg, #081913f5, #0b201bcc 29%, #0b201b15 80%),
-    linear-gradient(0deg, #0b201b, transparent 40%);
-}
-.artist-credit {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 100px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 16px 24px 16px 16px;
-  background: #112b23bb;
-  border: 1px solid #e0be8033;
-  backdrop-filter: blur(12px);
-}
-.artist-credit img {
-  width: 62px;
-  height: 78px;
-  object-fit: cover;
-  object-position: top;
-}
-.artist-credit div {
-  display: grid;
-}
-.artist-credit span {
-  font-size: 12px;
-  letter-spacing: 0.05em;
-}
-.artist-credit strong {
-  font: 34px/1.3 var(--serif);
-  color: var(--gold);
-}
-.scene-circle .scene-art img {
-  object-position: 30% center;
-}
-.scene-circle .scene-shade {
-  background:
-    linear-gradient(90deg, #081c17d9, #081c17ad 43%, #081c1720),
-    linear-gradient(0deg, #0b201b, transparent 45%);
-}
-.scene-circle h2 {
-  font-size: clamp(64px, 6.6vw, 116px);
 }
 /* One sticky stage, continuous progress, reversible dissolves. No scroll snapping or wheel interception. */
 .cinematic .journey {
@@ -623,9 +401,6 @@ input:focus-visible {
 }
 .cinematic .scene.is-visible .scene-art img {
   will-change: transform;
-}
-.cinematic .scene-hamper .hamper {
-  transform: scale(var(--hamper-scale, 1));
 }
 .journey-caption {
   display: none;
@@ -690,56 +465,6 @@ input:focus-visible {
   padding: 150px var(--gutter) 120px;
   background:
     radial-gradient(ellipse at 20% 40%, #305e422b, transparent 65%), var(--ink);
-}
-.finale-heading {
-  align-self: center;
-}
-.finale-heading .eyebrow {
-  color: var(--gold);
-  margin-bottom: 26px;
-}
-.finale-heading h2 {
-  font-size: clamp(72px, 7vw, 114px);
-}
-.finale-heading .gujarati {
-  margin: 32px 0;
-}
-.finale-logo {
-  width: 130px;
-  margin-top: 36px;
-}
-.event-card {
-  padding: 38px;
-  border: 1px solid #d2b17b88;
-  box-shadow:
-    inset 0 0 0 7px var(--ink),
-    inset 0 0 0 8px #d2b17b25;
-  align-self: center;
-  background: #16372b80;
-}
-.event-card > .eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-}
-.date-display {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  padding: 23px 0;
-  border-bottom: 1px solid #c9aa6b40;
-}
-.date-display > strong {
-  font: 120px/1 var(--serif);
-  color: var(--gold);
-}
-.date-display > div {
-  font-size: 22px;
-  letter-spacing: 0.08em;
-  line-height: 1.6;
-}
-.date-display span {
-  font-size: 12px;
-  letter-spacing: 0.08em;
 }
 .event-facts {
   margin: 26px 0;
@@ -944,14 +669,6 @@ dialog::backdrop {
   padding: 25px var(--gutter);
   font-size: 14px;
 }
-.read-mode .quiet-prompt,
-.read-mode .journey-link[href="#invitation"] {
-  display: none;
-}
-.read-mode .scene-hamper {
-  --open: 1;
-  --seal: 0;
-}
 @media (min-width: 1700px) {
   .scene-copy {
     max-width: 760px;
@@ -977,18 +694,12 @@ dialog::backdrop {
     width: 56%;
   }
   h1,
-  h2 {
+h2 {
     font-size: 70px;
-  }
-  .scene-invitation h2 {
-    font-size: 76px;
   }
   .scene-copy .eyebrow {
     font-size: 11px;
     letter-spacing: 0.13em;
-  }
-  .scene-description {
-    font-size: 15px;
   }
   .original-invitation {
     left: 65%;
@@ -998,37 +709,8 @@ dialog::backdrop {
     left: 54%;
     width: 43%;
   }
-  .scene-devotion .scene-copy {
-    width: 56%;
-  }
-  .devotion-art {
-    right: 5%;
-    width: 36%;
-    height: 66%;
-    top: 19%;
-  }
   .finale {
     gap: 6%;
-  }
-  .event-card {
-    padding: 30px 24px;
-  }
-  .artist-credit {
-    right: 30px;
-    bottom: 100px;
-  }
-  .artist-credit img {
-    width: 45px;
-    height: 56px;
-  }
-  .artist-credit strong {
-    font-size: 28px;
-  }
-  .artist-credit span {
-    font-size: 11px;
-  }
-  .story-conversation {
-    font-size: 14px;
   }
 }
 @media (max-width: 650px) {
@@ -1056,12 +738,6 @@ dialog::backdrop {
   .header-link span {
     padding-left: 10px;
   }
-  #motion-toggle {
-    font-size: 11px;
-    min-height: 32px;
-    padding: 0;
-    line-height: 1.5;
-  }
   .scene {
     min-height: 890px;
     min-height: 110svh;
@@ -1080,53 +756,15 @@ dialog::backdrop {
     margin-bottom: 22px;
   }
   h1,
-  h2 {
+h2 {
     font-size: clamp(47px, 12vw, 72px);
     line-height: 1.04;
   }
   h1 {
     font-size: clamp(51px, 12.4vw, 74px);
   }
-  .scene-description {
-    font-size: 14px;
-    line-height: 1.85;
-    max-width: 330px;
-    margin-top: 22px;
-  }
-  .story-conversation {
-    font-size: 13px;
-    line-height: 1.8;
-    margin-top: 22px;
-    max-width: 310px;
-    padding-left: 14px;
-  }
-  .scene-prologue .scene-description {
-    margin-top: 20px;
-    font-size: 14px;
-  }
-  .journey-link {
-    font-size: 12px;
-    min-height: 44px;
-    margin-top: 23px;
-    gap: 25px;
-  }
   .scene-art img {
     object-position: 72% center;
-  }
-  .scene-shade {
-    background:
-      linear-gradient(
-        180deg,
-        #071b16f2,
-        #071b16d9 23%,
-        #071b1666 53%,
-        #071b1610 73%,
-        #0b201b
-      ),
-      linear-gradient(90deg, #071b1630, transparent);
-  }
-  .scene-prologue .scene-art img {
-    object-position: 74% center;
   }
   .cinematic .scene {
     padding: 124px 24px 110px;
@@ -1147,30 +785,6 @@ dialog::backdrop {
   .scroll-cue > span {
     font-size: 16px;
   }
-  .art-caption {
-    display: none;
-  }
-  .scene-hamper {
-    min-height: 950px;
-  }
-  .scene-hamper .scene-copy {
-    width: 100%;
-    text-align: center;
-  }
-  .scene-hamper .eyebrow {
-    margin: 0 auto 16px;
-    max-width: 320px;
-  }
-  .scene-hamper h2 {
-    font-size: clamp(44px, 11vw, 62px);
-  }
-  .scene-hamper .scene-description {
-    margin: 16px auto 0;
-    font-size: 13px;
-  }
-  .scene-hamper .quiet-prompt {
-    display: none;
-  }
   .hamper-area {
     width: 100%;
     left: 0;
@@ -1190,48 +804,6 @@ dialog::backdrop {
   .hamper-interior small {
     font-size: 8px;
   }
-  .inner-logo {
-    width: 29%;
-  }
-  .scene-invitation {
-    min-height: 1130px;
-  }
-  .scene-invitation .scene-copy {
-    width: 100%;
-    text-align: center;
-  }
-  .scene-invitation .eyebrow {
-    margin: 0 auto 14px;
-    max-width: 320px;
-    font-size: 10px;
-  }
-  .scene-invitation h2 {
-    font-size: clamp(46px, 11.5vw, 64px);
-  }
-  .artist-line {
-    font-size: 12px;
-    margin-top: 15px;
-  }
-  .artist-line strong {
-    font-size: 30px;
-    display: inline;
-    margin-left: 5px;
-  }
-  .scene-invitation .gujarati {
-    font-size: 15px;
-    line-height: 1.8;
-    margin: 13px 0;
-  }
-  .invitation-date {
-    font-size: 10px;
-    letter-spacing: 0.03em;
-    margin-top: 15px;
-  }
-  .scene-invitation .scene-description {
-    font-size: 12px;
-    line-height: 1.6;
-    margin: 9px auto 0;
-  }
   .original-invitation {
     width: min(39vw, 23svh);
     left: 50%;
@@ -1245,34 +817,6 @@ dialog::backdrop {
     white-space: nowrap;
     gap: 10px;
   }
-  .scene-journey .scene-shade {
-    background: linear-gradient(
-      180deg,
-      #071b16f5,
-      #071b16d9 30%,
-      #071b1622 73%,
-      #0b201b
-    );
-  }
-  .scene-journey .scene-art img {
-    object-position: 61% center;
-  }
-  .scene-journey .quiet-prompt {
-    max-width: 280px;
-    margin-top: 22px;
-    font-size: 12px;
-  }
-  .scene-arrival .scene-art img {
-    object-position: 66% center;
-  }
-  .scene-memory .scene-art img {
-    object-position: 73% center;
-  }
-  .spoken-line {
-    font-size: 23px;
-    margin-top: 22px;
-    max-width: 290px;
-  }
   .outline-button {
     font-size: 12px;
     min-height: 44px;
@@ -1280,123 +824,10 @@ dialog::backdrop {
     margin-top: 22px;
     max-width: 100%;
   }
-  .scene-devotion {
-    min-height: 1080px;
-  }
-  .scene-devotion h2 {
-    font-size: 51px;
-  }
-  .scene-devotion .scene-copy {
-    width: 100%;
-  }
-  .scene-devotion .scene-description {
-    font-size: 13px;
-    max-width: 310px;
-  }
-  .scene-devotion .gujarati {
-    font-size: 18px;
-    margin-top: 12px;
-  }
-  .scene-devotion .outline-button {
-    margin-top: 12px;
-  }
-  .devotion-art {
-    right: 5%;
-    top: auto;
-    bottom: 95px;
-    width: 48%;
-    height: 41%;
-    opacity: 0.9;
-    z-index: -1;
-  }
-  .devotion-glow {
-    z-index: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      #151f19 10%,
-      #151f19e6 40%,
-      transparent 68%
-    );
-  }
-  .scene-stage .scene-shade {
-    background: linear-gradient(
-      180deg,
-      #071b16f5,
-      #071b16c9 30%,
-      #071b1622 72%,
-      #0b201b
-    );
-  }
-  .scene-stage .scene-art img {
-    object-position: 76% center;
-  }
-  .artist-credit {
-    right: 24px;
-    left: auto;
-    bottom: 140px;
-    padding: 10px 14px 10px 10px;
-    gap: 12px;
-  }
-  .artist-credit img {
-    height: 55px;
-    width: 44px;
-  }
-  .artist-credit strong {
-    font-size: 27px;
-  }
-  .artist-credit span {
-    font-size: 10px;
-  }
-  .scene-circle .scene-art img {
-    object-position: 42% center;
-  }
-  .scene-circle .scene-shade {
-    background: linear-gradient(
-      180deg,
-      #071b16f2,
-      #071b16cc 28%,
-      #071b1644 65%,
-      #0b201b
-    );
-  }
-  .scene-circle h2 {
-    font-size: clamp(48px, 12vw, 72px);
-  }
   .finale {
     grid-template-columns: 1fr;
     gap: 60px;
     padding: 95px 24px 65px;
-  }
-  .finale-heading {
-    text-align: center;
-  }
-  .finale-heading .eyebrow {
-    margin: 0 auto 22px;
-    font-size: 11px;
-  }
-  .finale-heading h2 {
-    font-size: 80px;
-  }
-  .finale-heading .gujarati {
-    font-size: 18px;
-    margin: 24px 0;
-  }
-  .finale-logo {
-    width: 100px;
-    margin: 25px auto 0;
-  }
-  .event-card {
-    padding: 29px 22px;
-  }
-  .event-card > .eyebrow {
-    font-size: 10px;
-  }
-  .date-display > strong {
-    font-size: 102px;
-  }
-  .date-display > div {
-    font-size: 20px;
   }
   .event-facts > div {
     grid-template-columns: 65px 1fr;
@@ -1412,7 +843,7 @@ dialog::backdrop {
     font-size: 12px;
   }
   .event-links a,
-  .event-links button {
+.event-links button {
     font-size: 12px;
   }
   .entry-note {
@@ -1446,22 +877,6 @@ dialog::backdrop {
   .memory-dialog > p {
     font-size: 13px;
   }
-  .read-mode .scene-invitation .original-invitation {
-    width: 220px;
-    bottom: 100px;
-  }
-  .read-mode .scene-hamper .hamper {
-    width: 245px;
-  }
-  .read-mode .scene-hamper .hamper-area {
-    bottom: 140px;
-  }
-  .read-mode .devotion-art {
-    height: 46%;
-    width: 68%;
-    right: 7%;
-    bottom: 40px;
-  }
 }
 @media (max-height: 760px) and (min-width: 651px) {
   .cinematic .scene {
@@ -1469,33 +884,13 @@ dialog::backdrop {
     padding-bottom: 85px;
   }
   h1,
-  h2,
-  .scene-invitation h2,
-  .scene-circle h2 {
+h2 {
     font-size: clamp(52px, 5.5vw, 82px);
   }
   .scene-copy .eyebrow {
     margin-bottom: 18px;
   }
-  .scene-description,
-  .story-conversation,
-  .spoken-line {
-    margin-top: 20px;
-  }
-  .scene-description {
-    font-size: 14px;
-  }
-  .scene-invitation .gujarati {
-    margin: 15px 0;
-  }
-  .artist-line {
-    margin-top: 17px;
-  }
-  .artist-line strong {
-    font-size: 32px;
-  }
-  .outline-button,
-  .journey-link {
+  .outline-button {
     margin-top: 20px;
   }
 }
@@ -1503,26 +898,12 @@ dialog::backdrop {
   .cinematic .scene {
     padding-top: 110px;
   }
-  .cinematic .scene-prologue .scene-description {
-    display: none;
-  }
   .cinematic .scene-copy .eyebrow {
     margin-bottom: 15px;
   }
   .cinematic h1,
-  .cinematic h2 {
+.cinematic h2 {
     font-size: clamp(41px, 10.7vw, 56px);
-  }
-  .cinematic .scene-description {
-    font-size: 13px;
-    margin-top: 17px;
-  }
-  .cinematic .story-conversation {
-    font-size: 12px;
-    margin-top: 18px;
-  }
-  .cinematic .scene-hamper .scene-description {
-    display: none;
   }
   .cinematic .hamper-area {
     bottom: 130px;
@@ -1530,40 +911,9 @@ dialog::backdrop {
   .cinematic .hamper {
     width: min(46vw, 29svh);
   }
-  .cinematic .scene-invitation .gujarati {
-    font-size: 13px;
-    margin: 10px 0;
-  }
-  .cinematic .scene-invitation .artist-line {
-    font-size: 11px;
-    margin-top: 10px;
-  }
-  .cinematic .scene-invitation .artist-line strong {
-    font-size: 24px;
-  }
   .cinematic .original-invitation {
     width: 19svh;
     bottom: 132px;
-  }
-  .cinematic .scene-invitation .scene-description {
-    font-size: 11px;
-    margin-top: 7px;
-  }
-  .cinematic .scene-devotion .scene-description {
-    font-size: 12px;
-  }
-  .cinematic .scene-devotion .gujarati {
-    margin-top: 10px;
-  }
-  .cinematic .scene-devotion .outline-button {
-    margin-top: 8px;
-  }
-  .cinematic .scene-journey .quiet-prompt {
-    display: none;
-  }
-  .cinematic .spoken-line {
-    font-size: 21px;
-    margin-top: 18px;
   }
   .cinematic .outline-button {
     margin-top: 18px;
@@ -1574,8 +924,8 @@ dialog::backdrop {
     scroll-behavior: auto;
   }
   *,
-  *:before,
-  *:after {
+*:before,
+*:after {
     animation: none !important;
     transition: none !important;
   }

@@ -135,9 +135,6 @@
 .story-person.woman i {
   background-image: url(assets/story/scroll/woman.webp);
 }
-.story-person.gift i {
-  background-image: url(assets/story/scroll/invitation-poses.webp);
-}
 .story-person[data-pose="walk"] i {
   background-position: 100% 0;
 }
@@ -180,38 +177,6 @@
   .cinematic .story-meet .dupatta-descent { display: none; }
   .cinematic .story-meet .story-person > i { opacity: 1; }
 }
-.story-car {
-  position: absolute;
-  left: 50%;
-  bottom: 15%;
-  width: min(67vw, 900px);
-  z-index: 5;
-  pointer-events: none;
-  transform: translateX(-50%) translate3d(var(--car-x, 0px), 0, 0);
-}
-.story-car img {
-  width: 100%;
-  filter: drop-shadow(0 15px 12px #111b);
-}
-.story-handover .story-person {
-  width: min(23vw, 265px, 30svh);
-  left: 23%;
-}
-.story-handover .woman {
-  left: 77%;
-}
-.story-handover .hamper-area {
-  top: auto;
-  bottom: 16%;
-  left: 0;
-  width: 100%;
-  transform: none;
-  z-index: 5;
-  pointer-events: none;
-}
-.story-handover .hamper {
-  width: min(27vw, 310px, 38svh);
-}
 .story-invite {
   background: #102f28;
 }
@@ -232,22 +197,6 @@
 .story-boarding .woman {
   left: 48%;
 }
-.story-boarding .story-car {
-  bottom: 17%;
-  z-index: 5;
-}
-.drive-cockpit {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  transform: scale(1.04);
-}
-.drive-cockpit img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 /* The road approaches the windscreen along its vanishing point. */
 .cinematic .story-drive .scene-art img {
   transform: scale(var(--road-zoom, 1));
@@ -267,11 +216,6 @@
 }
 .story-arrival .scene-art img {
   object-position: center;
-}
-.story-arrival .story-car {
-  bottom: 15%;
-  width: min(62vw, 820px);
-  z-index: 5;
 }
 .story-arrival .story-person {
   bottom: 20%;
@@ -445,10 +389,6 @@
   top: 22%;
   width: min(430px, 70%);
 }
-.cinematic .story-handover .dialogue-track {
-  top: 23%;
-  width: min(510px, 76%);
-}
 .cinematic .story-prayer .dialogue-track {
   left: 24%;
   top: 27%;
@@ -469,8 +409,7 @@
 .cinematic .story-arrival .story-person {
   opacity: var(--person-opacity, 0);
 }
-.cinematic .illustrated-scene.is-visible .story-person,
-.cinematic .illustrated-scene.is-visible .story-car {
+.cinematic .illustrated-scene.is-visible .story-person {
   will-change: transform;
 }
 .cinematic .story-dance.is-active .story-person i {
@@ -509,9 +448,6 @@ html:not(.cinematic) .story-person {
   width: 290px;
   max-width: 40vw;
 }
-html:not(.cinematic) .story-car {
-  bottom: 11%;
-}
 html:not(.cinematic) .story-boarding .story-cast {
   z-index: 6;
 }
@@ -522,8 +458,7 @@ html:not(.cinematic) .story-boarding .story-person {
 html:not(.cinematic) .story-boarding .woman {
   left: 48%;
 }
-html:not(.cinematic) .story-arrival .story-cast,
-html:not(.cinematic) .story-arrival .story-car {
+html:not(.cinematic) .story-arrival .story-cast {
   display: none;
 }
 html:not(.cinematic) .story-arrival .together-art {
@@ -548,19 +483,6 @@ html:not(.cinematic) .story-prayer .dialogue-track {
 }
 html:not(.cinematic) .scene-actions {
   bottom: 6%;
-}
-html:not(.cinematic) .story-handover .story-person {
-  max-width: 25vw;
-  left: 18%;
-}
-html:not(.cinematic) .story-handover .woman {
-  left: 82%;
-}
-html:not(.cinematic) .story-handover .hamper-area {
-  bottom: 13%;
-}
-html:not(.cinematic) .story-handover .hamper {
-  width: min(31vw, 310px);
 }
 @media (max-width: 650px) {
   .illustrated-scene .story-title h1 {
@@ -605,32 +527,8 @@ html:not(.cinematic) .story-handover .hamper {
       #0b211a
     );
   }
-  .story-handover .story-person {
-    width: 45vw;
-    left: 16%;
-    bottom: 21%;
-  }
-  .story-handover .woman {
-    left: 84%;
-  }
-  .story-handover .hamper-area {
-    bottom: 20%;
-  }
-  .story-handover .hamper {
-    width: min(44vw, 29svh);
-  }
-  .cinematic .story-handover .dialogue-track {
-    top: 24%;
-  }
   .cinematic .story-invite .dialogue-track {
     top: 23%;
-  }
-  .story-car {
-    width: 96vw;
-    bottom: 23%;
-  }
-  .story-boarding .story-car {
-    bottom: 23%;
   }
   .story-boarding .story-person {
     width: 45vw;
@@ -639,13 +537,6 @@ html:not(.cinematic) .story-handover .hamper {
   }
   .story-boarding .woman {
     left: 50%;
-  }
-  .drive-cockpit img {
-    object-position: center;
-  }
-  .story-arrival .story-car {
-    width: 97vw;
-    bottom: 22%;
   }
   .story-arrival .story-person {
     width: 40vw;
@@ -679,7 +570,7 @@ html:not(.cinematic) .story-handover .hamper {
     min-height: 38px;
   }
   .story-stage .scene-actions,
-  .story-prayer .scene-actions {
+.story-prayer .scene-actions {
     bottom: 15%;
   }
   .story-selfie .story-person {
@@ -742,13 +633,6 @@ html:not(.cinematic) .story-handover .hamper {
     font-size: 23px;
     padding: 16px 20px;
   }
-  html:not(.cinematic) .story-handover .story-cast {
-    display: none;
-  }
-  html:not(.cinematic) .story-handover .hamper {
-    width: 52vw;
-    max-width: 270px;
-  }
   html:not(.cinematic) .story-person {
     width: 55vw;
     max-width: 55vw;
@@ -791,16 +675,9 @@ html:not(.cinematic) .story-handover .hamper {
     width: 47vw;
     bottom: 23%;
   }
-  .story-handover .hamper {
-    width: min(40vw, 26svh);
-  }
   .story-selfie .selfie-print {
     width: 26svh;
     bottom: 28%;
-  }
-  .story-handover .story-person {
-    width: 34vw;
-    bottom: 23%;
   }
   .story-arrival .together-art {
     height: 27svh;
@@ -828,19 +705,15 @@ html:not(.cinematic) .story-handover .hamper {
 }
 @media (prefers-reduced-motion: reduce) {
   .story-person,
-  .together-art,
-  .aarti-art,
-  .story-car {
+.together-art,
+.aarti-art {
     transform: none;
   }
   .story-person {
     translate: -50% 0;
   }
   .together-art,
-  .aarti-art {
-    translate: -50% 0;
-  }
-  .story-car {
+.aarti-art {
     translate: -50% 0;
   }
   .dialogue-beat {
@@ -1035,7 +908,7 @@ html:not(.cinematic) .opening-scene .hamper-seal {
 }
 @media (prefers-reduced-motion: reduce) {
   html:not(.cinematic) .opening-scene .door,
-  html:not(.cinematic) .opening-scene .hamper-seal {
+html:not(.cinematic) .opening-scene .hamper-seal {
     transition: none;
   }
 }
@@ -1051,9 +924,6 @@ html:not(.cinematic) .opening-scene .hamper-seal {
 .dialogue-beat q[lang="gu"] {
   font-family: "Noto Serif Gujarati", serif;
   font-size: 0.9em;
-}
-.finale .gujarati {
-  font-family: "Noto Serif Gujarati", serif;
 }
 
 /* Invitation typography: clear navigation and quiet gold chapter ornaments. */
@@ -1079,11 +949,6 @@ html:not(.cinematic) .opening-scene .hamper-seal {
   border: 1px solid #d4b67b70;
   font-size: 12px;
   background: #d4b67b0a;
-}
-#motion-toggle {
-  border: 0;
-  color: #d0d6c8;
-  font-size: 12px;
 }
 .header-link:hover,
 .header-link:focus-visible {
@@ -1169,10 +1034,6 @@ html:not(.cinematic) .opening-scene .hamper-seal {
     min-height: 40px;
     padding: 5px 12px;
     font-size: 11px;
-  }
-  #motion-toggle {
-    min-height: 32px;
-    font-size: 10px;
   }
   .opening-title h1 {
     font-size: 52px;
@@ -1306,7 +1167,7 @@ html:not(.cinematic) .opening-scene .hamper {
   }
   .invitation-handoff figcaption { font-size: 12px; }
   .cinematic .journey-stage:has(#the-invitation.is-active) .journey-caption,
-  .cinematic .journey-stage:has(#a-memory.is-active) .journey-caption {
+.cinematic .journey-stage:has(#a-memory.is-active) .journey-caption {
     opacity: 0;
   }
 }
@@ -1329,7 +1190,8 @@ html:not(.cinematic) .opening-scene .hamper {
   filter: none;
   pointer-events: none;
 }
-.handoff-rear, .handoff-front { position: absolute; inset: 0; }
+.handoff-rear,
+.handoff-front { position: absolute; inset: 0; }
 .handoff-rear { opacity: var(--rear, 1); }
 .handoff-front { opacity: var(--front, 0); }
 .handoff-rig .handoff-man { width: 35%; left: 1.8182%; top: 1.0905%; }
@@ -1402,7 +1264,8 @@ html:not(.cinematic) .opening-scene .hamper {
 }
 
 /* Opening is an explicit invitation: prompt motion runs only while waiting for a click. */
-html.invitation-locked, html.invitation-locked body {
+html.invitation-locked,
+html.invitation-locked body {
   overflow: hidden;
   overscroll-behavior: none;
 }

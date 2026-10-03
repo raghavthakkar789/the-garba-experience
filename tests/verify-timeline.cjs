@@ -1,0 +1,70 @@
+/* Black-box browser timing contract, including a stalled frame and pause/resume. */
+const assert = require('node:assert/strict'), fs = require('node:fs'), http = require('node:http'), path = require('node:path');
+const engines = require('playwright');
+let browser, server;
+(async () => {
+  const root = path.resolve(__dirname, '../dist');
+  const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.webp':'image/webp','.woff2':'font/woff2'};
+  server = http.createServer((req, res) => {
+    const file = path.join(root, decodeURIComponent(req.url.split('?')[0]) === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0]));
+    try { res.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream'); res.end(fs.readFileSync(file)); }
+    catch { res.writeHead(404); res.end(); }
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const engine = process.env.BROWSER || 'chromium';
+  browser = await engines[engine].launch(engine === 'chromium' ? {executablePath:process.env.CHROMIUM_EXECUTABLE_PATH,args:['--no-sandbox','--disable-dev-shm-usage']} : {});
+  const url = `http://127.0.0.1:${server.address().port}`;
+  for (const mode of ['cinematic', 'short', 'reduced']) {
+    const page = await browser.newPage({viewport:mode === 'short' ? {width:844,height:390} : {width:390,height:844},reducedMotion:mode === 'reduced' ? 'reduce' : 'no-preference'});
+    const errors = [], missing = [];
+    page.on('pageerror', e => errors.push(e.message));
+    page.on('response', res => {if(res.status() >= 400) missing.push(res.url());});
+    await page.goto(url); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(100);
+    const clockStart = new Date("2026-10-03T12:00:00Z");
+    await page.clock.install({time:clockStart});
+    await page.clock.pauseAt(new Date(clockStart.getTime()+1000));
+    const advance = async ms => {
+      if (ms > 64) await page.clock.fastForward(ms - 64);
+      await page.clock.runFor(Math.min(64, ms));
+    };
+    const button = page.locator('#autoscroll-toggle');
+    // DOM activation avoids locator stability timers changing the controlled clock.
+    const click = () => button.evaluate(el => el.click());
+    const state = () => page.evaluate(() => {
+      const journey = document.querySelector('.journey'), stage = document.querySelector('.journey-stage');
+      return {cursor:(scrollY - journey.offsetTop) / (journey.offsetHeight - stage.clientHeight) * 14,
+        y:scrollY,end:document.documentElement.scrollHeight-innerHeight,
+        running:document.querySelector('#autoscroll-toggle').getAttribute('aria-pressed') === 'true',
+        gate:Number(document.querySelector('#arrival').style.getPropertyValue('--passage-opacity')),
+        elephant:!document.querySelector('.journey-elephant').hidden};
+    });
+    await click();
+    await advance(1504);
+    assert((await state()).running);
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor - 1.42) < .03, 'opening is included in total');
+    // Skip rendering to simulate a busy main thread: timing must catch up.
+    await page.clock.fastForward(18496);
+    await advance(32);
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor - windowlessCursor(20.032)) < .04, 'dropped frames do not stretch time');
+    await advance(3268); // 23.3 s, inside the clear-gate hold.
+    const gate = await state();
+    if(mode === 'cinematic') {assert(Math.abs(gate.cursor-5.6)<.01);assert(!gate.elephant);assert.equal(gate.gate,0);}
+    await click(); const paused = (await state()).y;
+    await advance(5000); assert.equal((await state()).y,paused);
+    await click(); await advance(1000);
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-5.6)<.01, 'resume preserves remaining hold time');
+    await advance(14200); // 38.5 s active time.
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-10)<.02,'partner section starts at 38.5s');
+    await advance(10000);
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-12)<.02,'partners receive twenty seconds: '+JSON.stringify(await state()));
+    await advance(10000);
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-14)<.02,'partners end at 58.5s');
+    assert((await state()).running,'finale remains in total duration');
+    await advance(1550);
+    const end = await state(); assert(!end.running,`${mode}: stops at 60s`);assert(Math.abs(end.y-end.end)<=1,`${mode}: reaches page end`);
+    assert.deepEqual(errors,[]); assert.deepEqual(missing,[]);
+    console.log(`PASS ${engine} ${mode}: 60s total, pause time excluded, stalled frame recovery, page end, no missing runtime assets`);
+    await page.close();
+  }
+})().catch(error => {console.error(error);process.exitCode=1;}).finally(async()=>{await browser?.close();server?.close();});
+function windowlessCursor(seconds) { return 4 + (seconds-19)/1.5; }

@@ -14,7 +14,6 @@
       const angle = elapsed * (i ? 5 : 7) + progress * (i ? 24 : 32);
       ring.style.transform = `rotate(${angle.toFixed(3)}deg)`;
     });
-    scene.dispatchEvent(new Event("garba-frame"));
   }
   function stop() {
     if (frame) cancelAnimationFrame(frame);
