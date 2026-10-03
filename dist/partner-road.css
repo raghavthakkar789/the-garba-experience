@@ -508,3 +508,102 @@ html:not(.cinematic):not(.read-mode) .partner-road-heading>span {
   .cinematic .partner-road .partner-logo-slot { padding: 2px; }
   .cinematic .partner-road .partner-monogram { font-size: clamp(9px, 1.6vw, 16px); }
 }
+
+/* Shared introduction/detail cards: generous artwork, complete names, quiet framing. */
+.partner-auto-card, .partner-dialog {
+  box-sizing: border-box;
+  width: min(560px, calc(100% - 32px));
+  min-height: 0;
+  padding: 20px;
+  border: 1px solid #c6a463;
+  border-radius: 20px;
+  background: #fff9ed;
+  color: #173c30;
+  box-shadow: 0 18px 56px #071e1b66, inset 0 0 0 4px #d8bd8426;
+  text-align: left;
+}
+.partner-auto-card, .partner-card-row {
+  display: grid;
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  align-items: center;
+  gap: 22px;
+  min-height: 0;
+}
+.partner-dialog {
+  margin: auto;
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.partner-dialog::backdrop { background: #071e1bd9; }
+.partner-dialog .partner-dialog-close {
+  position: relative;
+  inset: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: fit-content;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 12px;
+  margin: 0 0 12px auto;
+  border: 1px solid #c6a46380;
+  border-radius: 999px;
+  background: #f5ecd9;
+  color: #173c30;
+  font: 600 13px/1.2 var(--sans);
+}
+.partner-dialog-close:hover { background: #ecdfc3; }
+:is(.partner-auto-card, .partner-dialog) .partner-logo-slot {
+  width: 100%;
+  height: 144px;
+  align-self: center;
+  padding: 12px;
+  border: 1px solid #d8bd8455;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+.partner-auto-card img, #partner-dialog-logo {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: contain;
+}
+:is(.partner-auto-card, .partner-dialog)[data-brand="ethereum"] .partner-logo-slot { background: #235543; }
+:is(.partner-auto-card, .partner-dialog)[data-brand="tge"] .partner-logo-slot { background: #123b2e; }
+:is(.partner-auto-card, .partner-dialog)[data-brand="ethereum"] img { transform: scale(1.25); }
+:is(.partner-auto-card, .partner-dialog) .partner-card-copy { min-width: 0; padding: 0; }
+.partner-auto-role, #partner-dialog-role {
+  margin: 0 0 10px;
+  color: #52634f;
+  font: 600 12px/1.5 var(--sans);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+.partner-auto-name, #partner-dialog-name {
+  margin: 0;
+  color: #173c30;
+  font: 600 clamp(24px, 3vw, 30px)/1.22 Georgia, serif;
+  letter-spacing: -.02em;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+:is(.partner-auto-card, .partner-dialog) .partner-monogram { font-size: 44px; }
+@media (max-width: 600px) and (min-height: 501px) {
+  .partner-auto-card, .partner-dialog { width: min(400px, calc(100% - 28px)); padding: 16px; text-align: center; }
+  .partner-auto-card, .partner-card-row { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  :is(.partner-auto-card, .partner-dialog) .partner-logo-slot { height: clamp(112px, 18svh, 150px); padding: 14px 20px; }
+  :is(.partner-auto-card, .partner-dialog) .partner-card-copy { padding: 0 4px 6px; }
+  .partner-auto-role, #partner-dialog-role { margin-bottom: 6px; }
+  .partner-auto-name, #partner-dialog-name { font-size: clamp(24px, 6.5vw, 28px); }
+}
+@media (max-height: 500px) {
+  .partner-dialog { padding: 12px; }
+  .partner-dialog .partner-dialog-close { margin-bottom: 8px; }
+  .partner-card-row { gap: 16px; }
+  .partner-dialog .partner-logo-slot { height: 112px; }
+  #partner-dialog-name { font-size: 24px; }
+}

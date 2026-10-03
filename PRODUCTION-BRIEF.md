@@ -131,3 +131,9 @@ above is historical provenance; the current song is maintained as
 `dist/assets/audio/vichudo-kinjal-dave.m4a`. Removed the generated packaging
 command and hosting instruction file; the user will ZIP `dist` manually.
 Local dependency verification checks 111 required files inside `dist`.
+
+## Responsive partner-card refresh (3 October 2026)
+
+Automatic introductions, shop-detail dialogs and bottom-logo dialogs share a cream, green and gold card design. Logo panels are larger; every partner name and role is visible, including the three lead partners. Portrait phones stack the logo over the text, while wider and short landscape screens use two columns. Names wrap naturally at 24–30px, roles use 12px text, and dialogs can scroll vertically for enlarged text. The Close control retains its icon, label and 44px target. Ethereum artwork keeps a green background and the bottom-plaque zoom. Shop positions, walking timing, scrolling and background music are unchanged.
+
+Verification: `tests/verify-partner-cards.cjs` exercises all sixteen partner dialogs, all four bottom-logo dialogs, all sixteen automatic introductions in cinematic layouts, and representative names at 200% text size. The matrix covers 280×640, 320×568, 320×640, 390×844, 430×932, 600×800, 650×900, 768×1024, 844×390, 1024×768, 1440×900 and 1920×1080. Chromium and WebKit pass the complete matrix; phone and desktop screenshots were visually reviewed. These are browser-engine checks, not physical-device tests. The existing experience behavioral suite and JavaScript syntax checks pass.
