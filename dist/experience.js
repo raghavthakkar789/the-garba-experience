@@ -131,7 +131,7 @@
   addEventListener("pagehide", stopAutoScroll);
   // Manual gestures are bounded and cannot carry momentum past a dialogue stop.
   let manualFrame = 0, manualTarget = 0, manualPosition = 0, manualLast = 0;
-  let dialogueHold = null, holdUntil = 0, lastManualInput = -Infinity;
+  let dialogueHold = null, releasedDialogue = null, holdUntil = 0, lastManualInput = -Infinity;
   let touchY = null, touchBlocked = false;
   function stopManualMotion() {
     cancelAnimationFrame(manualFrame);
@@ -140,6 +140,7 @@
   function cancelManualScroll() {
     stopManualMotion();
     dialogueHold = null;
+    releasedDialogue = null;
     holdUntil = 0;
     lastManualInput = -Infinity;
   }
@@ -154,9 +155,16 @@
   }
   function holdDialogue(position) {
     dialogueHold = position;
+    releasedDialogue = null;
     holdUntil = performance.now() + 500;
     touchBlocked = touchY !== null;
     manualTarget = position;
+  }
+  function pendingDialogueStops() {
+    // WebKit can floor scrollY while checkpoints contain fractions of a pixel.
+    // A released checkpoint stays consumed until we have actually left it.
+    if (releasedDialogue !== null && Math.abs(scrollY - releasedDialogue) > 2) releasedDialogue = null;
+    return dialogueStops().filter(y => releasedDialogue === null || Math.abs(y - releasedDialogue) > 2);
   }
   function advanceManualScroll(now) {
     manualFrame = 0;
@@ -168,7 +176,7 @@
     const step = Math.min(64, Math.max(0, now - manualLast)) / 1000 * clamp(innerHeight * 1.6, 800, 1600);
     manualLast = now;
     const next = manualPosition + direction * Math.min(Math.abs(manualTarget - manualPosition), step);
-    const stops = dialogueStops();
+    const stops = pendingDialogueStops();
     const stop = direction > 0
       ? stops.find(y => y > manualPosition + .5 && y <= next + .5)
       : stops.slice().reverse().find(y => y < manualPosition - .5 && y >= next - .5);
@@ -177,15 +185,17 @@
     if (stop !== undefined) { holdDialogue(stop); return; }
     if (Math.abs(manualTarget - manualPosition) > .5) manualFrame = requestAnimationFrame(advanceManualScroll);
   }
-  function manualScroll(delta, repeated = false) {
+  function manualScroll(delta, repeated = false, fromTouch = false) {
     if (!delta || (cinematic && !entryUnlocked)) return;
     const now = performance.now(), idle = now - lastManualInput;
     lastManualInput = now;
     if (dialogueHold !== null) {
-      if (now < holdUntil || idle < 180 || repeated || touchBlocked) return;
+      // A new finger gesture is explicit intent; wheel momentum needs an idle gap.
+      if (now < holdUntil || (fromTouch ? touchBlocked : idle < 180 || repeated)) return;
+      releasedDialogue = dialogueHold;
       dialogueHold = null;
     } else if (!manualFrame) {
-      const current = dialogueStops().find(y => Math.abs(y - scrollY) <= 2);
+      const current = pendingDialogueStops().find(y => Math.abs(y - scrollY) <= 2);
       if (current !== undefined) { holdDialogue(current); return; }
     }
     if (!manualFrame) { manualPosition = scrollY; manualTarget = scrollY; }
@@ -196,7 +206,7 @@
       Math.min(root.scrollHeight - innerHeight, manualPosition + budget));
     // Reduced-motion reading mode uses small immediate steps, with the same dialogue gates.
     if (reduced.matches) {
-      const direction = Math.sign(manualTarget - manualPosition), stops = dialogueStops();
+      const direction = Math.sign(manualTarget - manualPosition), stops = pendingDialogueStops();
       const stop = direction > 0 ? stops.find(y => y > manualPosition + .5 && y <= manualTarget)
         : stops.slice().reverse().find(y => y < manualPosition - .5 && y >= manualTarget);
       if (stop !== undefined) { manualTarget = stop; holdDialogue(stop); }
@@ -226,9 +236,9 @@
     // mark those moves non-cancelable; they still carry the finger's movement.
     if (event.cancelable) event.preventDefault();
     else if (!cinematic || !stage.contains(event.target)) return;
-    manualScroll(delta * 2);
+    manualScroll(delta * 2, false, true);
   }, { passive:false });
-  for (const name of ["touchend", "touchcancel"]) addEventListener(name, () => { touchY = null; }, { passive:true });
+  for (const name of ["touchend", "touchcancel"]) addEventListener(name, () => { touchY = null; touchBlocked = false; }, { passive:true });
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") { cancelManualScroll(); return; }
     if (event.ctrlKey || event.metaKey || event.altKey || localScrollTarget(event.target) || document.querySelector("dialog[open]")) return;
