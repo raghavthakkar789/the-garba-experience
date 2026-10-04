@@ -290,22 +290,23 @@
     }
     const from = scrollY;
     const to = journeyTop + (1.42 / storySpan) * travel;
+    const doorDuration = 2900, descentDuration = 3800;
     let lastEntryTime = performance.now(), elapsed = 0;
     opening.dataset.entering = "true";
     focusStoryOnArrival = true;
     const advance = (now) => {
-      // The logo-only entry retains its original duration.
+      // The logo-only entry also adds a second to each opening phase.
       elapsed += now - lastEntryTime;
       lastEntryTime = now;
-      const doorTime = clamp(elapsed / 1900);
+      const doorTime = clamp(elapsed / doorDuration);
       // Finish the original door/camera move, then lower the friends on silk.
-      const progress = elapsed <= 1900
+      const progress = elapsed <= doorDuration
         ? doorTime < 0.66
           ? 0.48 * ease(doorTime / 0.66)
           : 0.48 + 0.52 * ease((doorTime - 0.66) / 0.34)
-        : 1 + 0.42 * clamp((elapsed - 1900) / 2800);
+        : 1 + 0.42 * clamp((elapsed - doorDuration) / descentDuration);
       window.scrollTo({ top: from + (to - from) * progress / 1.42, behavior: "instant" });
-      if (elapsed < 4700) entryFrame = requestAnimationFrame(advance);
+      if (elapsed < doorDuration + descentDuration) entryFrame = requestAnimationFrame(advance);
       else {
         entryFrame = 0;
         delete opening.dataset.entering;
@@ -430,7 +431,8 @@
     if (scene.id === "arrival") {
       const step = ease((progress - 0.17) / 0.18);
       const joined = ease((progress - 0.34) / 0.07),
-        walk = ease((progress - 0.42) / 0.26);
+        // Continue into the passage until the scene dissolves.
+        walk = ease((progress - 0.41) / 0.59);
       const passage = ease((progress - 0.74) / 0.16);
       scene.style.setProperty("--passage-opacity", passage.toFixed(4));
       person("man", -(1 - step) * w * .1, -(1 - step) * h * .24, step * (1 - joined), .65, "walk");
@@ -438,7 +440,7 @@
       together(
         joined,
         0.8 - walk * 0.49,
-        -walk * h * 0.2 + passage * h * 0.12 + Math.sin(walk * Math.PI * 10) * 2,
+        -walk * h * 0.2 + Math.sin(walk * Math.PI * 10) * 2,
       );
     }
     if (scene.id === "a-memory") {

@@ -2,6 +2,18 @@
 const assert = require('node:assert/strict'), fs = require('node:fs'), http = require('node:http'), path = require('node:path');
 const engines = require('playwright');
 let browser, server;
+// Exact added time belongs to the three requested actions, not nearby waits.
+const vm = require('node:vm'), context = {window:{}};
+vm.runInNewContext(fs.readFileSync(path.resolve(__dirname, '../dist/autoscroll-timeline.js'), 'utf8'), context);
+const timeline = context.window.garbaTimeline;
+const close = (actual, expected) => assert(Math.abs(actual - expected) < 1e-8, `${actual} != ${expected}`);
+close(timeline.timeAt(1), 1.5 * 1.9 / 4.7 + 1);
+close(timeline.timeAt(1.42) - timeline.timeAt(1), 1.5 * 2.8 / 4.7 + 1);
+close(timeline.timeAt(3.47) - timeline.timeAt(3.25), 1.5 * .22 + 1);
+close(timeline.duration, 63);
+close(timeline.timeAt(14) - timeline.timeAt(10), 20);
+for(let seconds = 25.3; seconds < 30.4; seconds += .1)
+  assert(timeline.cursorAt(seconds + .1) > timeline.cursorAt(seconds), 'entrance cursor must not freeze');
 (async () => {
   const root = path.resolve(__dirname, '../dist');
   const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.webp':'image/webp','.woff2':'font/woff2'};
@@ -39,32 +51,36 @@ let browser, server;
         elephant:!document.querySelector('.journey-elephant').hidden};
     });
     await click();
-    await advance(1504);
+    await advance(3504);
     assert((await state()).running);
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor - 1.42) < .03, 'opening is included in total');
     // Skip rendering to simulate a busy main thread: timing must catch up.
-    await page.clock.fastForward(18496);
+    await page.clock.fastForward(19496);
     await advance(32);
-    if(mode === 'cinematic') assert(Math.abs((await state()).cursor - windowlessCursor(20.032)) < .04, 'dropped frames do not stretch time');
-    await advance(3268); // 23.3 s, inside the clear-gate hold.
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor - windowlessCursor(23.032)) < .04, 'dropped frames do not stretch time');
+    await advance(3268); // 26.3 s, inside the clear-gate viewing interval.
     const gate = await state();
-    if(mode === 'cinematic') {assert(Math.abs(gate.cursor-5.6)<.01);assert(!gate.elephant);assert.equal(gate.gate,0);}
+    if(mode === 'cinematic') {assert(gate.cursor>5.6 && gate.cursor<5.62);assert(!gate.elephant);assert.equal(gate.gate,0);}
     await click(); const paused = (await state()).y;
     await advance(5000); assert.equal((await state()).y,paused);
     await click(); await advance(1000);
-    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-5.6)<.01, 'resume preserves remaining hold time');
-    await advance(14200); // 38.5 s active time.
-    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-10)<.02,'partner section starts at 38.5s');
+    if(mode === 'cinematic') {
+      const resumed = await state();
+      assert(resumed.cursor > gate.cursor + .07 && resumed.cursor < gate.cursor + .10, 'friends continue walking after resume');
+      assert(!resumed.elephant); assert.equal(resumed.gate, 0, 'gate stays visible while friends move');
+    }
+    await advance(14200); // 41.5 s active time.
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-10)<.02,'partner section starts at 41.5s');
     await advance(10000);
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor-12)<.02,'partners receive twenty seconds: '+JSON.stringify(await state()));
     await advance(10000);
-    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-14)<.02,'partners end at 58.5s');
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-14)<.02,'partners end at 61.5s');
     assert((await state()).running,'finale remains in total duration');
     await advance(1550);
-    const end = await state(); assert(!end.running,`${mode}: stops at 60s`);assert(Math.abs(end.y-end.end)<=1,`${mode}: reaches page end`);
+    const end = await state(); assert(!end.running,`${mode}: stops at 63s`);assert(Math.abs(end.y-end.end)<=1,`${mode}: reaches page end`);
     assert.deepEqual(errors,[]); assert.deepEqual(missing,[]);
-    console.log(`PASS ${engine} ${mode}: 60s total, pause time excluded, stalled frame recovery, page end, no missing runtime assets`);
+    console.log(`PASS ${engine} ${mode}: 63s total, pause time excluded, stalled frame recovery, page end, no missing runtime assets`);
     await page.close();
   }
 })().catch(error => {console.error(error);process.exitCode=1;}).finally(async()=>{await browser?.close();server?.close();});
-function windowlessCursor(seconds) { return 4 + (seconds-19)/1.5; }
+function windowlessCursor(seconds) { return 4 + (seconds-22)/1.5; }

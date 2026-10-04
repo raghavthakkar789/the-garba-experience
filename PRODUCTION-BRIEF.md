@@ -1,6 +1,14 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — one-minute journey (3 October 2026)
+## Current revision — slower opening and continuous entrance (4 October 2026)
+
+Autoscroll now lasts 63 seconds. The doors and descent each receive exactly one additional second (about 1.606s and 1.894s respectively, 3.5s combined). Boarding lasts 2.5s: its extra second is allocated directly to the climb between story cursor 3.25 and 3.47. All later sections shift by three seconds; partners still receive 20s and all conversation budgets stay unchanged. The independent logo-triggered entry also gains a second per phase: 2.9s doors plus 3.8s descent.
+
+The apparent entrance lag had two animation causes: duplicate timeline positions froze the friends for 1.7s, and their walk finished at arrival progress .68 while the scene continued. The passage reveal then shifted them back toward the viewer. Removed the repeated cursor, extended the walk through the full remaining scene, and removed the backward offset. The gate remains clear for about 1.8s while the friends move, followed by a continuous walk into the passage. Manual pause and reverse scrolling retain their normal behavior.
+
+Fresh verification: the entrance movement regression fails on the previous code and passes after the fix. Story and audio lifecycle suites pass. Chromium confirms 63s total, exact one-second additions to each requested action, 20s for partners, uninterrupted entrance progression, pause/resume, skipped-frame recovery, and cinematic/landscape/reduced-motion layouts. Autoscroll interaction checks and four-size arrival/dialogue/logo checks pass; phone entrance artwork was reviewed. A fresh WebKit run could not be completed because this environment lacks its runtime libraries. Physical-device smoothness remains unverified.
+
+## Previous revision — one-minute journey (3 October 2026)
 
 The approved Phase 2 replaces distance-based Autoscroll with a single elapsed-time timeline in `dist/autoscroll-timeline.js`. From the Autoscroll click to the document end, the budget is 60 seconds, excluding explicit pauses. Rendering resumes at the elapsed position after a slow frame; a blocked browser can still present the final frame late. Manual seeking uses the same timeline mapping, while pause/resume preserves time within a hold. The logo-only entry remains 4.7 seconds.
 

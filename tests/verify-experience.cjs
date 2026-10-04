@@ -219,8 +219,8 @@ w.eval(script);
   assert(!d.querySelector("#door-sound").paused && d.querySelector("#descent-sound").paused && d.querySelector("#site-soundtrack").paused, "logo click plays only the supplied door sound");
   frame(750);
   frame(0);
-  assert.equal(d.querySelector(".scene.is-active").id, "invitation", "opening remains in the box partway through the 1.9-second door phase");
-  frame(1150);
+  assert.equal(d.querySelector(".scene.is-active").id, "invitation", "opening remains in the box partway through the 2.9-second door phase");
+  frame(2150);
   frame(0);
   assert.equal(
     d.querySelector(".scene.is-active").id,
@@ -239,7 +239,7 @@ w.eval(script);
   frame(0);
   const midway = parseFloat(descendingMan.style.getPropertyValue('--descent-y'));
   assert(midway > above && midway < 0, 'automatic opening continues into the silk descent');
-  frame(1800);
+  frame(2800);
   frame(0);
   assert.equal(descendingMan.style.getPropertyValue('--landed'), '1.0000', 'friends land automatically');
   assert.equal(arrival.style.getPropertyValue('--arrival-copy'), '1.0000', 'conversation appears after landing');
@@ -463,6 +463,17 @@ w.eval(script);
     "1.000",
     "friends enter together",
   );
+  scroll(5.72);
+  const enteringScale = Number(d.querySelector('#arrival').style.getPropertyValue('--together-scale'));
+  const enteringY = parseFloat(d.querySelector('#arrival').style.getPropertyValue('--together-y'));
+  scroll(5.86);
+  assert(Number(d.querySelector('#arrival').style.getPropertyValue('--together-scale')) < enteringScale,
+    'friends keep walking deeper after the gate instead of freezing');
+  assert(parseFloat(d.querySelector('#arrival').style.getPropertyValue('--together-y')) < enteringY,
+    'the passage reveal never pulls the friends backwards');
+  scroll(5.72);
+  assert.equal(Number(d.querySelector('#arrival').style.getPropertyValue('--together-scale')), enteringScale,
+    'reverse scrolling retraces the same entrance movement');
   scroll(5.92);
   assert.equal(d.querySelector('#arrival').style.getPropertyValue('--passage-opacity'), '1.0000', 'lotus passage appears as friends enter');
   scroll(5.2);
