@@ -1883,7 +1883,7 @@ footer.closing-footer a:focus-visible {
    END OF FINAL PAGE CSS
    ========================================================= */
 /* Integration with the current heading, in-section footer and preserved links. */
-.thank-you-heading { display:grid; justify-items:center; gap:5px; width:100%; }
+.thank-you-heading { display:grid; grid-template-columns:minmax(0,1fr); justify-items:center; gap:5px; width:100%; }
 .thank-you-logo { max-width:100%; }
 .thank-you-details .event-links a { text-decoration:none; }
 .thank-you-details .entry-note small { display:block; margin-top:3px; font-size:inherit; }
@@ -1930,10 +1930,10 @@ footer.closing-footer > p { min-height:0; grid-column:auto; font-size:inherit; t
 }
 
 
-/* Keep the larger logo beside the message where vertical space is limited. */
+/* Keep the heading centered and stacked while reducing ornamental spacing. */
 @media (max-height:800px) {
   .thank-you-frame { --arch-cap:80px; }
-  .thank-you-heading { grid-template-columns:minmax(0,1fr) minmax(0,1.6fr); align-items:center; gap:10px; }
+  .thank-you-heading { gap:3px; }
   .thank-you-message { margin-bottom:0; }
 }
 @media (max-height:650px) {
@@ -1942,11 +1942,10 @@ footer.closing-footer > p { min-height:0; grid-column:auto; font-size:inherit; t
   .thank-you-art { height:60px; }
 }
 @media (min-width:500px) and (max-height:540px) {
-  .thank-you-frame { grid-template-columns:minmax(0,1fr) minmax(0,3.5fr); gap:2px 10px; padding:4px 8px 0; }
-  .thank-you-heading { grid-column:1; grid-row:1 / 4; grid-template-columns:minmax(0,1fr); gap:3px; align-self:center; }
-  .thank-you-details { grid-column:2; grid-row:1; width:100%; }
-  .thank-you-text-links { grid-column:2; grid-row:2; }
-  .thank-you-art { grid-column:2; grid-row:3; height:32px; }
+  .thank-you-frame { gap:2px; padding:4px 8px 0; }
+  .thank-you-heading { gap:0; }
+  .thank-you-details { width:100%; }
+  .thank-you-art { height:32px; }
   footer.closing-footer { min-height:20px; padding:3px 8px; grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (min-width:500px) and (max-height:460px) {
@@ -1970,4 +1969,27 @@ footer.closing-footer > p:first-child { min-height:0; grid-column:auto; font-siz
   .thank-you-frame { padding-top:20px; gap:6px; }
   .thank-you-heading { gap:0; }
   .thank-you-message { margin-bottom:0; }
+}
+
+/* On very short screens, scale decoration before compressing readable content. */
+@media (min-width:500px) and (max-height:540px) {
+  .thank-you-logo { width:48px !important; }
+  .thank-you-message p { width:min(100%,64ch); }
+  .thank-you-art { height:12px; }
+}
+@media (min-height:541px) and (max-height:800px) {
+  .thank-you-frame { padding-top:8px; gap:3px; }
+  .thank-you-logo { width:103.5px !important; }
+  .thank-you-art { height:60px; }
+}
+@media (max-width:499px) and (max-height:600px) {
+  .thank-you-frame { padding-top:6px; }
+  .thank-you-art { height:32px; }
+}
+@media (min-width:500px) and (max-height:340px) {
+  .thank-you-logo { width:32px !important; }
+  .thank-you-details { gap:0; padding-block:2px; }
+  .thank-you-details .thank-you-kicker { padding-bottom:1px; }
+  .thank-you-art { height:6px; }
+  footer.closing-footer { min-height:14px; padding-block:2px; }
 }

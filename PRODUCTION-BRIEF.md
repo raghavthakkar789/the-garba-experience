@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — latest consolidated closing-page CSS (5 October 2026)
+## Current revision — centered stacked thank-you heading (5 October 2026)
+
+The event logo now always sits above THANK YOU and the Gujarati message, with all three aligned to the center of the page. Removed both the short-screen side-by-side heading and the landscape layout that placed the heading beside the card. Compact screens reduce decorative size and spacing to retain the full page; the text links retain their existing styling and behavior.
+
+Chromium passes 36 normal-size viewport cases and four enlarged-text cases. New assertions verify the common page center and vertical logo/heading/message order at every size, alongside the existing one-screen, control and overflow checks. Compact-phone and computer screenshots were reviewed. Stylesheet cache version is `thank-you.css?v=15`; external hosting needs updated `dist/index.html` and `dist/thank-you.css`.
+
+## Previous revision — latest consolidated closing-page CSS (5 October 2026)
 
 Applied the newest uploaded CSS (`Pasted text(2).txt`). Restored the larger event logo, reduced the THANK YOU heading according to the supplied values, merged the event identity into the green card with its divider, and hid the closing partner strip as specified. The partner logos elsewhere and their dialogs remain available. Replay story and View invitation retain their exact markup, gold text, left icons, underlines, equal columns, destinations and responsive sizes outside the card above the artwork. The original two-pixel keyboard-focus treatment is preserved as well.
 
