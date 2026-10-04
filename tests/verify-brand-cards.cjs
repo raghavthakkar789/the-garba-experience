@@ -36,7 +36,7 @@ let browser, server;
         const issues = [], final = document.querySelector('#details'), bounds = final.getBoundingClientRect();
         const art = final.querySelector('.thank-you-art').getBoundingClientRect();
         const details = final.querySelector('.thank-you-details').getBoundingClientRect();
-        if (art.top < details.bottom) issues.push('art overlaps details');
+        if (art.left < details.right - 1 && art.right > details.left + 1 && art.top < details.bottom - 1 && art.bottom > details.top + 1) issues.push('art overlaps details');
         const children = [...final.querySelector('.thank-you-scene').children].filter(e => !e.matches('.thank-you-arch'));
         children.slice(1).forEach((el,i) => { if (el.getBoundingClientRect().top < children[i].getBoundingClientRect().bottom - 1) issues.push('overlapping final sections'); });
         for (const el of final.querySelectorAll('*')) {
@@ -72,7 +72,7 @@ let browser, server;
       const dialog = page.locator('#partner-dialog');
       assert(await dialog.evaluate(d => d.open));
       assert.equal(await dialog.locator('#partner-dialog-name').textContent(),name);
-      assert.equal(await dialog.locator('#partner-dialog-role').textContent(),i === 0 ? 'The event' : 'Partner');
+      assert.equal(await dialog.locator('#partner-dialog-role').textContent(),i === 0 ? 'The event' : i === 3 ? 'Partner' : 'Presented by');
       assert.equal(await dialog.locator('img').getAttribute('src'),source);
       assert(await dialog.locator('#partner-dialog-name').isVisible());
       const box = await dialog.boundingBox();

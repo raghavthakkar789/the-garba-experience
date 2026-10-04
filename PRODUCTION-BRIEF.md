@@ -1,6 +1,10 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — continuous manual dialogue slowdowns (4 October 2026)
+## Current revision — dialogue and presenter wording (4 October 2026)
+
+Updated the woman's second opening line, the man's first invitation question and the woman's first handoff reply using the user's supplied Gujarati/English wording, including “The Garba Experienca” as supplied. Eventzz Planet and Saregama Entertainment now use “Presented by” throughout their logo-triggered dialogs, shop cards and automatic street cards. Other dialogue, branding, timings and scroll behavior are unchanged. Exact-text/source checks and the story suite pass; the brand-card browser suite passes twelve viewport sizes, enlarged text and dialog interactions. Its overlap assertion now checks both axes so the existing landscape side-by-side layout is assessed correctly.
+
+## Previous revision — continuous manual dialogue slowdowns (4 October 2026)
 
 Manual wheel, trackpad, touch and navigation keys now flow through dialogue areas without the former 500ms hold or fresh-gesture requirement. A smooth spatial speed curve eases from ordinary speed down to 22% at each dialogue center and back out over a 160–260px radius, in either direction. The queued distance shrinks with the speed factor to keep a hard swipe from building a long coast. Outside these areas, the existing 800–1600px/s limit, 1.5× wheel gain and maximum 700px queue remain. Reduced-motion scrolling uses immediate distance-weighted steps and never locks at a dialogue. Existing iOS non-cancelable touch handling, pinch and dialog exemptions remain.
 
