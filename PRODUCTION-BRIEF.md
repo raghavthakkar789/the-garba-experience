@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — responsive closing-section hierarchy (4 October 2026)
+## Current revision — consistent thank-you composition (4 October 2026)
+
+Following visual feedback on the previous revision, the closing card now uses a consistent centered composition up to 740px wide, aligned with the unchanged partner-logo row. The original arch, colours, Gujarati message and artwork remain. Booking is the single gold action; secondary buttons use green outlined surfaces. Shorter visible labels preserve the same six destinations and behaviors. The artwork is grouped with breathing room rather than spread across an oversized frame. Small computers use the centered composition; only short landscape moves the title beside the card.
+
+Fresh Chromium evidence: 36 normal-size viewports fit the full section below the header, including compact phones and breakpoint boundaries; four 200% text cases remain accessible through natural scrolling. All six controls, touch targets, original-invitation dialog and text containment pass. Phone, tablet, desktop and short-screen screenshots were visually reviewed. Story/asset checks pass. Partner row markup and CSS are byte-for-byte unchanged. Physical devices and Safari were not tested in this revision. GitHub publication does not deploy the external live hosting.
+
+## Previous revision — responsive closing-section hierarchy (4 October 2026)
 
 The closing card now fills the arch interior more comfortably, with larger width-responsive text, labelled buttons and artwork. Phones use two action columns where height permits; tablets use larger typography; short computer screens put the heading and artwork beside the details. Compact landscape retains a denser layout. The existing design, all actions and the partner-logo row's markup, assets and styles are unchanged.
 

@@ -42,7 +42,7 @@ let server,browser;
   if(fitScreen){assert(data.height<=data.available+1,`${label}: closing page ${data.height}px > ${data.available}px`);assert(data.top>=data.headerBottom-1,`${label}: header covers closing content ${JSON.stringify(data)}`);assert(data.bottom<=await page.evaluate(()=>innerHeight)+1);}
   console.log('PASS '+label+': whole closing page '+Math.round(data.height)+'px');
  }
- for(const [width,height] of [[280,640],[320,568],[320,640],[360,640],[390,844],[430,932],[540,720],[650,900],[651,900],[768,1024],[568,320],[667,375],[844,390],[1024,768],[1440,900],[1920,1080],[600,960],[720,1280],[800,1280],[800,600],[1024,600],[1280,720],[1366,768]]){
+ for(const [width,height] of [[280,640],[320,568],[320,640],[360,640],[390,844],[430,932],[540,720],[650,900],[651,900],[768,1024],[568,320],[667,375],[844,390],[1024,768],[1440,900],[1920,1080],[600,960],[720,1280],[800,1280],[800,600],[1024,600],[1280,720],[1366,768],[360,740],[375,667],[390,740],[390,741],[430,740],[480,640],[500,740],[501,740],[501,741],[800,480],[1024,440],[1024,441],[600,800]]){
   await page.setViewportSize({width,height});await inspect(width+'x'+height);
   if(process.env.SCREENSHOT_DIR&&[320,390,568,600,800,844,1024,1280,1440].includes(width)){fs.mkdirSync(process.env.SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.SCREENSHOT_DIR,`closing-${width}-${height}.png`)});}
  }

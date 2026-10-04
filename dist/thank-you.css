@@ -1,8 +1,6 @@
 /* The original arch and artwork, composed into one closing viewport.
    Natural height remains available for enlarged text and unusually small windows. */
 .finale.thank-you {
-  --closing-body:clamp(14px,2vw,17px);
-  --closing-small:clamp(12px,1.5vw,14px);
   display:block; padding:0; overflow:visible; scroll-margin-top:76px;
   min-height:calc(100svh - 76px); color:#fff6df;
   background:#003724 url(assets/story/thank-you/botanical-background.webp) center/cover;
@@ -18,11 +16,13 @@
   width:min(740px,100%); height:auto; gap:clamp(4px,1vw,10px);
 }
 .thank-you-scene .finale-brands .brand-plaque { min-height:44px; padding:4px; border-radius:8px; }
+/* A centered invitation at every ordinary viewport; compact landscape is the
+   only alternate composition. Content can grow naturally when text is enlarged. */
 .thank-you-frame {
-  --arch-cap:clamp(46px,10svh,100px); --arch-side:clamp(6px,1vw,14px);
+  --arch-cap:90px; --arch-side:10px;
   position:relative; isolation:isolate; display:grid; grid-template-columns:minmax(0,1fr);
-  justify-items:center; width:min(100%,940px); min-width:0;
-  padding:clamp(12px,2svh,24px) clamp(10px,2vw,24px) 0; gap:clamp(6px,1svh,12px);
+  justify-items:center; width:min(100%,740px); min-width:0;
+  padding:24px 20px 12px; gap:14px;
 }
 .thank-you-frame> :not(.thank-you-arch) { min-width:0; max-width:100%; }
 .thank-you-scene :is(p,time,strong,small,.control-label) { min-width:0; overflow-wrap:anywhere; }
@@ -31,129 +31,159 @@
   border-image-source:url(assets/story/thank-you/gold-arch.webp); border-image-slice:420 40 0 fill;
   border-image-width:var(--arch-cap) var(--arch-side) 0; border-image-repeat:stretch;
 }
-.thank-you-heading { display:flex; align-items:center; justify-content:center; gap:clamp(8px,2vw,24px); }
-.thank-you-logo { width:clamp(48px,8svh,76px); height:auto; aspect-ratio:1; object-fit:contain; flex-shrink:0; }
+.thank-you-heading { display:flex; align-items:center; justify-content:center; gap:18px; padding-inline:12px; }
+.thank-you-logo { width:64px; height:auto; aspect-ratio:1; object-fit:contain; flex-shrink:0; }
 .thank-you-message { text-align:center; }
-.thank-you-message h2 { margin:0; font:500 clamp(28px,3.6vw,44px)/1.1 Georgia,serif; color:#f2d28e; letter-spacing:-.03em; }
-.thank-you-message p { margin:4px 0 0; font:400 clamp(13px,1.7vw,16px)/1.55 "Noto Serif Gujarati",serif; color:#fff2d3; }
+.thank-you-message h2 { margin:0; font:500 clamp(28px,4vw,40px)/1.1 Georgia,serif; color:#f2d28e; letter-spacing:.02em; }
+.thank-you-message p { margin:6px 0 0; font:400 14px/1.6 "Noto Serif Gujarati",serif; color:#fff2d3; }
 .thank-you-details {
   box-sizing:border-box; container:closing-card / inline-size;
-  display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(8px,1.1svh,12px);
-  width:100%; min-width:0; height:auto; min-height:0;
-  padding:clamp(10px,1.5vw,18px); margin:0;
-  background:#092e25; border:1px solid #c9a86b; border-radius:12px;
-  box-shadow:0 12px 36px #001d2366; text-align:center;
+  display:grid; grid-template-columns:minmax(0,1fr); gap:14px;
+  width:100%; min-width:0; height:auto; min-height:0; padding:20px; margin:0;
+  background:#092e25; border:1px solid #a99361; border-radius:12px;
+  box-shadow:0 10px 28px #001d2333; text-align:center;
 }
 .thank-you-details>* { min-width:0; max-width:100%; margin:0; }
-.thank-you-details>.eyebrow { font-size:var(--closing-small); line-height:1.25; color:#f0dba9; letter-spacing:0; }
-.thank-you-details .event-facts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:0; text-align:left; }
+.thank-you-details>.eyebrow { font-size:12px; line-height:1.4; color:#f0dba9; letter-spacing:.06em; text-wrap:balance; }
+.thank-you-details .event-facts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin:0; text-align:left; }
 .thank-you-details .thank-you-date,.thank-you-details .thank-you-venue {
-  position:relative; display:block; min-width:0; margin:0; font-size:var(--closing-body); line-height:1.3; color:#fff8e9;
+  position:relative; display:block; min-width:0; margin:0; font-size:14px; line-height:1.4; color:#eee8d9;
 }
-.thank-you-details .event-facts .ui-icon { position:absolute; left:0; top:0; color:#edcf8d; width:16px; height:16px; }
-.thank-you-details .event-facts strong { display:block; font-size:clamp(15px,2.25vw,21px); line-height:1.25; font-weight:600; }
+.thank-you-details .event-facts .ui-icon { position:absolute; left:0; top:0; color:#edcf8d; width:15px; height:15px; }
+.thank-you-details .event-facts strong { display:block; margin-bottom:3px; font-size:18px; line-height:1.3; font-weight:600; color:#fff8e9; }
 .thank-you-details .event-facts time>span,.thank-you-details .thank-you-venue>span>span { display:block; }
 .thank-you-details .event-facts :is(time,span) { min-width:0; }
-.thank-you-details .event-facts .fact-label { padding-left:22px; color:#e1cda9; font-size:var(--closing-small); line-height:1.4; letter-spacing:.04em; text-transform:uppercase; margin-bottom:2px; }
+.thank-you-details .event-facts .fact-label { padding-left:21px; color:#e1cda9; font-size:11px; line-height:1.4; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px; }
 .thank-you-details .thank-you-actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:0; }
 .thank-you-details .event-links { display:contents; margin:0; padding:0; border:0; }
 .thank-you-details .thank-you-actions :is(a,button) {
   box-sizing:border-box; display:flex; align-items:center; justify-content:center;
-  min-width:0; width:100%; min-height:44px; height:auto; gap:7px; padding:8px;
-  background:#f9f3e6; color:#123b2d; border:1px solid #e8d6ac; border-radius:7px;
-  font-size:clamp(14px,1.6vw,16px); font-weight:600; line-height:1.2; white-space:normal;
+  min-width:0; width:100%; min-height:44px; height:auto; gap:8px; padding:10px 8px;
+  background:#164236; color:#fff3d6; border:1px solid #72876a; border-radius:8px;
+  font-size:14px; font-weight:500; line-height:1.25; white-space:normal; text-decoration:none;
 }
-.thank-you-details .thank-you-actions .book-button { background:#f0d49b; font-weight:700; }
+.thank-you-details .thank-you-actions .book-button { background:#f0d49b; border-color:#f0d49b; color:#123b2d; font-weight:700; }
+.thank-you-details .thank-you-actions :is(a,button):hover { border-color:#f0d49b; background:#245443; }
+.thank-you-details .thank-you-actions .book-button:hover { background:#ffe3aa; color:#123b2d; }
+.thank-you-details .thank-you-actions :is(a,button):focus-visible { outline:2px solid #fff3d6; outline-offset:3px; }
 .thank-you-details .thank-you-actions .ui-icon { width:18px; height:18px; flex-shrink:0; }
 .thank-you-details .control-label { min-width:0; max-width:100%; text-align:center; overflow-wrap:anywhere; word-break:normal; }
-.thank-you-details .booking-note { margin:0; font-size:var(--closing-small); line-height:1.2; color:#e2d7c0; }
+.thank-you-details .booking-note { margin:-6px 0 0; font-size:11px; line-height:1.3; color:#cabea5; }
 .thank-you-details .entry-note {
-  display:block; margin:0; padding:4px 0 0; border:0; border-top:1px solid #8a9770;
-  border-radius:0; background:none; text-align:left; color:#f5efdf;
-  font-size:clamp(13px,1.7vw,16px); line-height:1.3;
+  display:block; margin:0; padding:10px 0 0; border:0; border-top:1px solid #72876a;
+  border-radius:0; background:none; text-align:left; color:#f5efdf; font-size:13px; line-height:1.4;
 }
 .thank-you-details .entry-note p { margin:0; }
 .thank-you-details .entry-note .ui-icon { display:inline-block; width:16px; height:16px; color:#f0d49b; margin:0 4px 0 0; vertical-align:-3px; }
 .thank-you-details .entry-note strong { color:#fff6df; }
-.thank-you-details .entry-note small { display:block; font-size:var(--closing-small); line-height:1.3; margin-top:2px; color:#e8e1cf; }
-.thank-you-art { position:relative; width:min(100%,740px); height:clamp(44px,8svh,88px); pointer-events:none; }
+.thank-you-details .entry-note small { display:block; font-size:11px; line-height:1.4; margin-top:4px; color:#d6cdbb; }
+.thank-you-art { position:relative; width:80%; height:74px; pointer-events:none; }
 .thank-you-art img { position:absolute; display:block; }
-.thank-you-elephant { height:100%; width:70%; object-fit:contain; object-position:center bottom; left:50%; bottom:0; transform:translateX(-50%); z-index:2; }
-.thank-you-leaf { height:95%; width:38%; object-fit:contain; object-position:center bottom; bottom:0; }
+.thank-you-elephant { height:100%; width:40%; object-fit:contain; object-position:center bottom; left:50%; bottom:0; transform:translateX(-50%); z-index:2; }
+.thank-you-leaf { height:95%; width:28%; object-fit:contain; object-position:center bottom; bottom:0; }
 .leaf-left { left:0; }
 .leaf-right { right:0; height:100%; }
-.thank-you-lotus { height:70%; width:30%; object-fit:contain; object-position:center bottom; bottom:0; z-index:3; }
+.thank-you-lotus { height:70%; width:28%; object-fit:contain; object-position:center bottom; bottom:0; z-index:3; }
 .lotus-left { left:0; }
 .lotus-right { right:0; }
 footer.closing-footer {
   display:flex; flex-wrap:wrap; justify-content:center; gap:2px 16px; width:100%;
-  padding:0; border:0; background:transparent; font-size:clamp(10px,1.3svh,12px); line-height:1.25;
+  padding:0; border:0; background:transparent; font-size:10px; line-height:1.3;
 }
 footer.closing-footer p { margin:0; text-align:center; }
-/* Use the card's available width for readable labels, including embedded layouts. */
-@container closing-card (max-width:420px) {
+@container closing-card (max-width:480px) {
   .thank-you-details .thank-you-actions { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .thank-you-details .thank-you-actions :is(a,button) { justify-content:flex-start; padding-inline:8px; }
-  .thank-you-details .control-label { text-align:left; }
 }
-@container closing-card (max-width:260px) {
-  .thank-you-details .event-facts { gap:8px; }
-  .thank-you-details .control-label { overflow-wrap:anywhere; }
+@media (max-width:500px) {
+  .thank-you-frame { --arch-cap:70px; --arch-side:7px; padding:18px 10px 8px; gap:10px; }
+  .thank-you-heading { gap:10px; padding-inline:4px; }
+  .thank-you-logo { width:48px; }
+  .thank-you-message h2 { font-size:28px; }
+  .thank-you-message p { font-size:12px; margin-top:4px; }
+  .thank-you-details { padding:12px; gap:10px; }
+  .thank-you-details>.eyebrow { font-size:10px; letter-spacing:.03em; }
+  .thank-you-details .event-facts { gap:14px; }
+  .thank-you-details .event-facts strong { font-size:15px; }
+  .thank-you-details .thank-you-date,.thank-you-details .thank-you-venue { font-size:12px; }
+  .thank-you-details .thank-you-actions :is(a,button) { font-size:13px; padding:8px 6px; gap:6px; }
+  .thank-you-details .booking-note { margin-top:-4px; }
+  .thank-you-details .entry-note { font-size:12px; padding-top:8px; }
+  .thank-you-art { height:56px; }
 }
-/* Retain the one-screen composition on small, short phones. */
-@media (max-width:650px) and (max-height:740px) {
-  .finale.thank-you { --closing-body:12px; --closing-small:10px; }
-  .thank-you-frame { padding:6px 6px 0; gap:4px; }
+/* Reduce ornamental spacing first on shorter screens; retain a predictable grid. */
+@media (min-height:441px) and (max-height:740px),
+       (min-width:501px) and (max-width:650px) and (min-height:741px) and (max-height:800px) {
+  .thank-you-frame { --arch-cap:60px; padding-top:12px; padding-bottom:6px; gap:6px; }
   .thank-you-logo { width:40px; }
+  .thank-you-message h2 { font-size:26px; }
+  .thank-you-message p { font-size:11px; margin-top:3px; }
+  .thank-you-details { padding:10px; gap:8px; }
+  .thank-you-details .event-facts { gap:12px; }
+  .thank-you-details .event-facts strong { font-size:15px; margin-bottom:1px; }
+  .thank-you-details .thank-you-date,.thank-you-details .thank-you-venue { font-size:12px; }
+  .thank-you-details .event-facts .fact-label { margin-bottom:2px; }
+  .thank-you-details .thank-you-actions { gap:6px; }
+  .thank-you-details .thank-you-actions :is(a,button) { padding-block:6px; }
+  .thank-you-details .entry-note { padding-top:6px; font-size:12px; line-height:1.3; }
+  .thank-you-details .entry-note small { margin-top:2px; line-height:1.3; }
+  .thank-you-art { height:36px; }
+}
+/* Narrow compact phones still get two columns and fully labelled controls. */
+@media (max-width:350px) {
+  .thank-you-frame { padding-inline:7px; }
+  .thank-you-logo { width:36px; }
+  .thank-you-heading { gap:6px; }
   .thank-you-message h2 { font-size:24px; }
-  .thank-you-message p { font-size:11px; }
-  .thank-you-details { padding:6px; gap:4px; }
-  .thank-you-details .event-facts { gap:10px; }
+  .thank-you-message p { font-size:10px; }
+  .thank-you-details { padding:8px; gap:6px; }
+  .thank-you-details .event-facts { gap:8px; }
   .thank-you-details .event-facts strong { font-size:13px; }
-  .thank-you-details .event-facts .ui-icon { width:14px; height:14px; }
-  .thank-you-details .fact-label { padding-left:18px; }
-  .thank-you-details .thank-you-actions { grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; }
-  .thank-you-details .thank-you-actions :is(a,button) { font-size:11px; gap:4px; padding:4px; justify-content:center; }
-  .thank-you-details .control-label { text-align:center; overflow-wrap:anywhere; }
-  .thank-you-details .entry-note { font-size:12px; }
-  .thank-you-art { height:28px; }
+  .thank-you-details .event-facts .fact-label { font-size:10px; }
+  .thank-you-details .thank-you-actions :is(a,button) { font-size:12px; gap:5px; }
+  .thank-you-details .booking-note { margin-top:0; font-size:10px; }
+  .thank-you-details .entry-note small { font-size:10px; }
 }
-@media (min-width:320px) and (max-width:420px) and (min-height:620px) and (max-height:740px) {
-  .thank-you-details .thank-you-actions { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .thank-you-details .thank-you-actions :is(a,button) { font-size:12px; justify-content:flex-start; padding-inline:6px; }
-  .thank-you-details .control-label { text-align:left; }
+@media (max-width:500px) and (max-height:740px) {
+  .thank-you-details .thank-you-actions { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .thank-you-details .thank-you-actions :is(a,button) { flex-direction:column; font-size:11px; gap:2px; padding:2px; }
+  .thank-you-details .thank-you-actions .ui-icon { width:14px; height:14px; }
+  .thank-you-details .event-facts strong { font-size:13px; }
+  .thank-you-details { padding:6px; gap:4px; }
+  .thank-you-details .booking-note { margin-top:0; }
 }
-@media (min-width:500px) and (min-height:741px) {
-  .finale.thank-you { --closing-body:16px; --closing-small:13px; }
-  .thank-you-details .event-facts strong { font-size:clamp(18px,2.25vw,21px); }
+@media (max-width:500px) and (max-height:600px) {
+  .thank-you-frame { padding-block:6px; gap:4px; }
+  .thank-you-message h2 { font-size:22px; }
+  .thank-you-message p { font-size:10px; line-height:1.4; }
+  .thank-you-art { height:20px; }
+  .thank-you-details .event-facts strong { line-height:1.2; }
+  .thank-you-details .entry-note small { font-size:10px; }
 }
-/* Small computers and landscape tablets keep a readable card beside the artwork. */
-@media (min-width:651px) and (max-height:760px) {
-  .thank-you-frame { grid-template-columns:minmax(0,1fr) minmax(0,3fr); gap:8px 14px; padding-top:12px; }
-  .thank-you-heading { grid-column:1; grid-row:1; flex-direction:column; gap:6px; align-self:end; }
-  .thank-you-art { grid-column:1; grid-row:2; height:88px; }
-  .thank-you-details { grid-column:2; grid-row:1 / 3; }
-  .thank-you-message h2 { font-size:clamp(24px,3vw,34px); }
-  .thank-you-message p { font-size:13px; }
-}
-/* Only very short landscape viewports need the dense six-action row. */
-@media (min-width:500px) and (max-height:440px) {
-  .finale.thank-you { --closing-body:12px; --closing-small:10px; }
-  .thank-you-frame { grid-template-columns:minmax(0,1fr) minmax(0,3.5fr); gap:4px 8px; padding:1px 6px 0; }
-  .thank-you-heading { grid-column:1; grid-row:1; flex-direction:column; gap:2px; align-self:end; }
+/* Landscape phones: retain all details and actions beside a compact title. */
+@media (min-width:500px) and (max-height:540px) {
+  .thank-you-frame { --arch-cap:60px; grid-template-columns:minmax(0,1fr) minmax(0,3.5fr); gap:4px 10px; padding:6px 8px; }
+  .thank-you-heading { grid-column:1; grid-row:1; flex-direction:column; gap:2px; padding:0; align-self:end; }
   .thank-you-logo { width:36px; }
   .thank-you-message h2 { font-size:20px; }
-  .thank-you-message p { font-size:11px; }
-  .thank-you-art { grid-column:1; grid-row:2; height:48px; }
-  .thank-you-details { grid-column:2; grid-row:1 / 3; padding:4px; gap:2px; }
-  .thank-you-details .thank-you-actions { grid-template-columns:repeat(6,minmax(0,1fr)); gap:3px; }
-  .thank-you-details .thank-you-actions :is(a,button) { flex-direction:column; justify-content:center; gap:2px; font-size:11px; padding:3px 1px; }
-  .thank-you-details .control-label { text-align:center; overflow-wrap:anywhere; }
-  .thank-you-details .thank-you-actions .ui-icon { width:16px; height:16px; }
+  .thank-you-message p { font-size:11px; margin-top:2px; }
+  .thank-you-art { grid-column:1; grid-row:2; width:100%; height:42px; }
+  .thank-you-details { grid-column:2; grid-row:1 / 3; padding:5px; gap:3px; }
+  .thank-you-details>.eyebrow { font-size:10px; letter-spacing:0; }
+  .thank-you-details .thank-you-actions { grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; }
+  .thank-you-details .thank-you-actions :is(a,button) { font-size:11px; gap:4px; padding:3px; }
+  .thank-you-details .thank-you-actions .ui-icon { width:14px; height:14px; }
   .thank-you-details .event-facts { gap:6px; }
-  .thank-you-details .event-facts strong { font-size:13px; }
-  .thank-you-details .event-facts .ui-icon { width:14px; height:14px; }
-  .thank-you-details .entry-note { font-size:12px; }
+  .thank-you-details .event-facts strong { font-size:13px; margin-bottom:0; }
+  .thank-you-details .thank-you-date,.thank-you-details .thank-you-venue { font-size:12px; line-height:1.2; }
+  .thank-you-details .event-facts .fact-label { font-size:10px; margin-bottom:1px; }
+  .thank-you-details .booking-note { font-size:10px; margin:0; }
+  .thank-you-details .entry-note { font-size:12px; padding-top:3px; line-height:1.2; }
+  .thank-you-details .entry-note small { font-size:10px; line-height:1.2; margin-top:1px; }
+}
+@media (min-width:500px) and (max-height:340px) {
+  .thank-you-frame { padding-block:2px; }
+  .thank-you-details .thank-you-actions { grid-template-columns:repeat(6,minmax(0,1fr)); }
+  .thank-you-details .thank-you-actions :is(a,button) { flex-direction:column; gap:2px; font-size:10px; padding:2px 1px; }
 }
 @media (max-height:420px) {
   html .masthead { min-height:53px; padding-block:3px; }
