@@ -18,6 +18,10 @@ let server,browser;
    const section=document.querySelector('#details'),s=section.getBoundingClientRect();
    const card=document.querySelector('.thank-you-details'),c=card.getBoundingClientRect(),issues=[];
    const header=document.querySelector('.masthead').getBoundingClientRect();
+   const logos=section.querySelector('.finale-brands'), l=logos.getBoundingClientRect();
+   const art=section.querySelector('.thank-you-art').getBoundingClientRect();
+   if(logos.parentElement!==section.querySelector('.thank-you-frame')||card.contains(logos))issues.push('logos must be in red frame outside green details');
+   if(l.top<c.bottom-1||l.bottom>art.top+1)issues.push('logo row must sit between details and artwork');
    if(document.documentElement.scrollWidth>innerWidth+1)issues.push('horizontal overflow');
    for(const el of section.querySelectorAll('a,button')){
     const r=el.getBoundingClientRect();

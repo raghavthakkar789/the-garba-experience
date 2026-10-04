@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — dialogue and presenter wording (4 October 2026)
+## Current revision — logo cards inside the thank-you arch (4 October 2026)
+
+Moved the four closing-page logo cards into the red arch, outside and below the green details box and above the elephant, lotus and leaf artwork. Their markup, images, presenter labels and click behavior are unchanged. Action buttons remain in the green details box. Short landscape places the detail/logo/art stack beside the heading and uses compact spacing to retain the one-screen composition.
+
+The focused Chromium check passes 36 normal-size viewports and four enlarged-text cases, explicitly checking that the logo row is outside the green box and between the box and artwork. Normal text fits one screen below the header; enlarged text remains accessible by natural scrolling. Phone, short landscape, small-computer and desktop screenshots were reviewed. Runtime stylesheet version is `thank-you.css?v=10`.
+
+## Previous revision — dialogue and presenter wording (4 October 2026)
 
 Updated the woman's second opening line, the man's first invitation question and the woman's first handoff reply using the user's supplied Gujarati/English wording, including “The Garba Experienca” as supplied. Eventzz Planet and Saregama Entertainment now use “Presented by” throughout their logo-triggered dialogs, shop cards and automatic street cards. Other dialogue, branding, timings and scroll behavior are unchanged. Exact-text/source checks and the story suite pass; the brand-card browser suite passes twelve viewport sizes, enlarged text and dialog interactions. Its overlap assertion now checks both axes so the existing landscape side-by-side layout is assessed correctly.
 
