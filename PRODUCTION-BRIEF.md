@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — centered stacked thank-you heading (5 October 2026)
+## Current revision — continuous double-gold closing arch (5 October 2026)
+
+Matched the two supplied screenshot references using the original double-gold arch artwork. The rounded cap scales with screen width and available height instead of flattening at ordinary short-screen breakpoints. Both straight sides and the red interior now stretch continuously to the footer edge, eliminating the botanical gap beneath the frame. Available vertical space is distributed between content groups, with extra top clearance on short computer screens so the logo and card clear the curve. The centered logo/THANK YOU/Gujarati stack and existing gold text links remain intact; this change is confined to the closing-page styling.
+
+Chromium passes all 36 normal-size viewport checks and four enlarged-text cases. A new check verifies that the arch reaches the footer without a gap, alongside the existing centered-stack, controls, one-screen and overflow checks. Desktop, portrait tablet, mobile and compact-computer screenshots were reviewed. Updated runtime is `thank-you.css?v=16`; external hosting needs `dist/index.html` and `dist/thank-you.css`.
+
+## Previous revision — centered stacked thank-you heading (5 October 2026)
 
 The event logo now always sits above THANK YOU and the Gujarati message, with all three aligned to the center of the page. Removed both the short-screen side-by-side heading and the landscape layout that placed the heading beside the card. Compact screens reduce decorative size and spacing to retain the full page; the text links retain their existing styling and behavior.
 

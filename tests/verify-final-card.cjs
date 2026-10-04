@@ -20,6 +20,8 @@ let server,browser;
    const header=document.querySelector('.masthead').getBoundingClientRect();
    const logos=section.querySelector('.finale-brands');
    const art=section.querySelector('.thank-you-art').getBoundingClientRect();
+   const arch=section.querySelector('.thank-you-arch').getBoundingClientRect(),footer=section.querySelector('.closing-footer').getBoundingClientRect();
+   if(Math.abs(arch.bottom-footer.top)>1)issues.push('gold arch sides must reach the footer without a gap');
    const logo=section.querySelector('.thank-you-logo').getBoundingClientRect();
    const heading=section.querySelector('.thank-you-message h2').getBoundingClientRect();
    const message=section.querySelector('.thank-you-message p').getBoundingClientRect();

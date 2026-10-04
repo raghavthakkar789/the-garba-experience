@@ -113,7 +113,8 @@
   grid-template-columns: minmax(0, 1fr);
 
   justify-items: center;
-  align-content: start;
+  align-content: space-between;
+  align-self: stretch;
 
   width: 100%;
   height: auto;
@@ -1932,12 +1933,11 @@ footer.closing-footer > p { min-height:0; grid-column:auto; font-size:inherit; t
 
 /* Keep the heading centered and stacked while reducing ornamental spacing. */
 @media (max-height:800px) {
-  .thank-you-frame { --arch-cap:80px; }
   .thank-you-heading { gap:3px; }
   .thank-you-message { margin-bottom:0; }
 }
 @media (max-height:650px) {
-  .thank-you-frame { --arch-cap:60px; padding-top:12px; gap:3px; }
+  .thank-you-frame { padding-top:12px; gap:3px; }
   .thank-you-details { gap:2px; padding-block:4px; }
   .thank-you-art { height:60px; }
 }
@@ -1966,7 +1966,7 @@ footer.closing-footer > p { min-height:0; grid-column:auto; font-size:inherit; t
 /* The supplied footer's first-child sizing is for a link; ours contains text. */
 footer.closing-footer > p:first-child { min-height:0; grid-column:auto; font-size:inherit; }
 @media (min-height:741px) and (max-height:900px) {
-  .thank-you-frame { padding-top:20px; gap:6px; }
+  .thank-you-frame { padding-top:28px; gap:7px; }
   .thank-you-heading { gap:0; }
   .thank-you-message { margin-bottom:0; }
 }
@@ -1992,4 +1992,16 @@ footer.closing-footer > p:first-child { min-height:0; grid-column:auto; font-siz
   .thank-you-details .thank-you-kicker { padding-bottom:1px; }
   .thank-you-art { height:6px; }
   footer.closing-footer { min-height:14px; padding-block:2px; }
+}
+
+/* Continue both gold sides through the full red frame to the footer edge. */
+.thank-you-scene { row-gap:0; padding-bottom:0; }
+.thank-you-frame { --arch-cap:min(45vw,clamp(100px,calc(100svh - 380px),400px)); }
+@media (min-width:500px) and (max-height:540px) {
+  .thank-you-frame { --arch-cap:min(25vw,100px); }
+}
+
+@media (min-width:651px) and (min-height:541px) and (max-height:800px) {
+  .thank-you-frame { padding-top:24px; }
+  .thank-you-art { height:44px; }
 }
