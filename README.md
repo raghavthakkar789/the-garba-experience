@@ -35,7 +35,7 @@ The clock uses elapsed time, so dropped rendering frames do not stretch the jour
 - `dist/assets/story/scroll/`: active original character and shared prayer artwork.
 - `dist/assets/story/locations/`: the active home, pickup and road environments. Other scene décor lives in `event-decor/`; source notes remain with the artwork.
 - `dist/brand-controls.css` and `dist/assets/ui-icons.svg`: prominent logo plaques for The Garba Experience and the three lead partners, responsive handoff spacing, and icons with visible action labels.
-- `dist/thank-you.css`: the closing invitation with larger event details, contrasting action buttons and room for the original decorative artwork.
+- `dist/thank-you.css`: a one-screen closing invitation with the original arch, botanical artwork, partner plaques, event details and six labelled actions. Short landscape screens place the artwork beside the card.
 
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-autoscroll.cjs` (with Playwright available) checks start/pause, the opening handoff, manual takeover, keyboard and touch controls, tab visibility, dialogs, resize/reload, end-of-page stopping, reduced motion, no JavaScript and nine header sizes.
 
@@ -61,9 +61,9 @@ See `PRODUCTION-BRIEF.md` for verified results and remaining checks. The existin
 
 `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-responsive.cjs` requires Playwright in the Node module search path. It checks 16 viewport sizes from 320×568 to 2560×1080, all cinematic scenes, handoff logo clearance, labelled controls, the final page, dialogs, reduced motion and no-JavaScript content. Set `SCREENSHOT_DIR` to retain review images. The 2 October 2026 run passed in headless Chromium; Safari, Firefox and physical devices were not tested.
 
-`CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-brand-cards.cjs` checks the clickable logo plaques and centered name/logo cards, keyboard and focus behavior, and final-page reflow at 12 sizes with normal and doubled text. Ethereum's artwork is enlarged within its bottom plaque. The closing artwork now occupies its own responsive row, while event facts and buttons wrap to their available content width.
+`CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-brand-cards.cjs` checks the clickable logo plaques and centered name/logo cards, keyboard and focus behavior, and final-page reflow at 12 sizes with normal and doubled text. Ethereum's artwork is enlarged within its bottom plaque. The closing artwork occupies a compact row on portrait screens and a side panel in short landscape; partner plaques use one row and all six actions share a responsive grid.
 
-`CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-final-card.cjs` specifically checks the closing details card: its height on common phone screens, text/control containment, live resizing, independently constrained widths and enlarged text. The card uses its own container breakpoints and spacing to avoid legacy margins making it unnecessarily tall.
+`CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/verify-final-card.cjs` checks the entire closing page, including logos, artwork, footer and all actions, against the usable viewport at sixteen sizes (280×640 through 1920×1080, including 568×320 landscape). It checks 44px tap targets, control separation, text containment, the original-invitation dialog and 200% text. Enlarged text remains scrollable rather than being clipped to a fixed height. The duplicate footer replay link is consolidated into the card; all distinct content and actions remain.
 
 `node tests/verify-soundtrack.cjs` (with `jsdom` in the Node module search path) checks door/descent/music sequencing, mute, lifecycle cleanup, autoplay/error recovery, and the HTML media fallback. `dist/site-soundtrack.js` owns this playback lifecycle; the original supplied MP3 and source note are in `dist/assets/audio/`.
 

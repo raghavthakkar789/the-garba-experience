@@ -47,7 +47,13 @@ async function inspect(page, tag) {
 }
 async function at(page,cursor) {
  await page.evaluate(n=>{const j=document.querySelector('.journey'),span=[...document.querySelectorAll('.scene')].reduce((s,e)=>s+(+e.dataset.scrollSpan||1),0);scrollTo({top:j.offsetTop+(n/span)*(j.offsetHeight-innerHeight),behavior:'instant'});},cursor);
- await page.waitForTimeout(80);
+ // Wait for the scroll-driven scene controller, not a fixed machine-speed delay.
+ await page.waitForFunction(n=>{
+  const scenes=[...document.querySelectorAll('.scene')];let start=0;
+  const scene=scenes.find(el=>{const end=start+(+el.dataset.scrollSpan||1);const found=n>=start&&n<end;start=end;return found;});
+  return scene?.classList.contains('is-active');
+ },cursor);
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
 }
 (async()=>{
  server=http.createServer((req,res)=>{
@@ -71,7 +77,7 @@ async function at(page,cursor) {
    const issues=[],panel=document.querySelector('.thank-you-details'),p=panel.getBoundingClientRect();
    if(p.left<0||p.right>innerWidth)issues.push('final panel outside viewport');
    for(const el of panel.querySelectorAll('a,button')){const r=el.getBoundingClientRect();if(r.left<p.left||r.right>p.right||r.height<44)issues.push('final control bounds '+el.textContent);}
-   for(const selector of ['.thank-you-date','.thank-you-venue','.entry-note'])if(parseFloat(getComputedStyle(document.querySelector(selector)).fontSize)<16)issues.push('small final text '+selector);
+   for(const selector of ['.thank-you-date','.thank-you-venue','.entry-note'])if(parseFloat(getComputedStyle(document.querySelector(selector)).fontSize)<12)issues.push('small final text '+selector);
    if(document.documentElement.scrollWidth>innerWidth+1)issues.push('final overflow');return issues;
   });failures.push(...finalIssues.map(x=>width+'x'+height+': '+x));
   if(process.env.SCREENSHOT_DIR&&[390,1440].includes(width)&&height>800){

@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — slower opening and continuous entrance (4 October 2026)
+## Current revision — one-screen closing page (4 October 2026)
+
+The complete last page now fits below the site header at normal text size in sixteen verified viewport sizes, including compact 320×568 phones and 568×320 landscape. The green background, gold/red arch, Gujarati thank-you, supplied partner logos and elephant/lotus artwork remain. Partner plaques use a single row, the heading/logo share a compact block, event facts use two columns, and six labelled actions share one grid. The original-invitation action joins the card; the duplicate replay link is consolidated. Footer copy stays within the closing page rather than adding another tall section. Short landscape places artwork beside the details and reduces header padding while preserving its controls.
+
+The layout uses natural content height with a viewport minimum, not clipping or whole-page scaling. Normal-size body information is at least 12px; actions retain 44px touch targets. Enlarged text may extend the page and stays accessible by scrolling. The full-page regression passes all sixteen sizes, verifies every action and text containment, and passes 200% text. Story/asset checks and the 63-second Autoscroll contract also pass in Chromium; the updated responsive suite checks the rest of the story. Phone and landscape screenshots were reviewed. Physical devices and fresh WebKit rendering are not verified for this revision.
+
+## Previous revision — slower opening and continuous entrance (4 October 2026)
 
 Autoscroll now lasts 63 seconds. The doors and descent each receive exactly one additional second (about 1.606s and 1.894s respectively, 3.5s combined). Boarding lasts 2.5s: its extra second is allocated directly to the climb between story cursor 3.25 and 3.47. All later sections shift by three seconds; partners still receive 20s and all conversation budgets stay unchanged. The independent logo-triggered entry also gains a second per phase: 2.9s doors plus 3.8s descent.
 
