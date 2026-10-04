@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — continuous double-gold closing arch (5 October 2026)
+## Current revision — larger and lower closing logo (5 October 2026)
+
+Increased every responsive closing-logo width by exactly 50%, including clamp limits and compact-screen sizes. Added 10–18px above the heading group so the logo and following content move lower in normal document flow. The centered stack, typography, links, card, artwork and continuous double-gold frame retain their existing treatments.
+
+The larger logo can make the section taller than one viewport, so compact layouts now scroll naturally instead of shrinking the other elements or clipping content. The responsive regression reflects this intentional change and still checks all content bounds, centered stacking, control spacing, invitation behavior and the uninterrupted arch-to-footer connection. Chromium passes 36 viewport cases and four enlarged-text cases; desktop and mobile full-section screenshots were reviewed. Runtime stylesheet is `thank-you.css?v=17`; deploy updated `dist/index.html` and `dist/thank-you.css` together.
+
+## Previous revision — continuous double-gold closing arch (5 October 2026)
 
 Matched the two supplied screenshot references using the original double-gold arch artwork. The rounded cap scales with screen width and available height instead of flattening at ordinary short-screen breakpoints. Both straight sides and the red interior now stretch continuously to the footer edge, eliminating the botanical gap beneath the frame. Available vertical space is distributed between content groups, with extra top clearance on short computer screens so the logo and card clear the curve. The centered logo/THANK YOU/Gujarati stack and existing gold text links remain intact; this change is confined to the closing-page styling.
 
