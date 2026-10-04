@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — one-screen closing page (4 October 2026)
+## Current revision — responsive closing-section hierarchy (4 October 2026)
+
+The closing card now fills the arch interior more comfortably, with larger width-responsive text, labelled buttons and artwork. Phones use two action columns where height permits; tablets use larger typography; short computer screens put the heading and artwork beside the details. Compact landscape retains a denser layout. The existing design, all actions and the partner-logo row's markup, assets and styles are unchanged.
+
+The focused Chromium regression passes 23 normal-size viewports and four additional 200% text cases. At normal text size the entire section fits below the header; enlarged text flows naturally without clipping. Screenshots were reviewed for compact phones, taller phones, portrait tablets, small computers and desktop. These checks do not establish physical-device or fresh Safari/WebKit behavior.
+
+## Previous revision — one-screen closing page (4 October 2026)
 
 The complete last page now fits below the site header at normal text size in sixteen verified viewport sizes, including compact 320×568 phones and 568×320 landscape. The green background, gold/red arch, Gujarati thank-you, supplied partner logos and elephant/lotus artwork remain. Partner plaques use a single row, the heading/logo share a compact block, event facts use two columns, and six labelled actions share one grid. The original-invitation action joins the card; the duplicate replay link is consolidated. Footer copy stays within the closing page rather than adding another tall section. Short landscape places artwork beside the details and reduces header padding while preserving its controls.
 

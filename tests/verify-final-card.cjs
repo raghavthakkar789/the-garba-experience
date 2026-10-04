@@ -42,15 +42,18 @@ let server,browser;
   if(fitScreen){assert(data.height<=data.available+1,`${label}: closing page ${data.height}px > ${data.available}px`);assert(data.top>=data.headerBottom-1,`${label}: header covers closing content ${JSON.stringify(data)}`);assert(data.bottom<=await page.evaluate(()=>innerHeight)+1);}
   console.log('PASS '+label+': whole closing page '+Math.round(data.height)+'px');
  }
- for(const [width,height] of [[280,640],[320,568],[320,640],[360,640],[390,844],[430,932],[540,720],[650,900],[651,900],[768,1024],[568,320],[667,375],[844,390],[1024,768],[1440,900],[1920,1080]]){
+ for(const [width,height] of [[280,640],[320,568],[320,640],[360,640],[390,844],[430,932],[540,720],[650,900],[651,900],[768,1024],[568,320],[667,375],[844,390],[1024,768],[1440,900],[1920,1080],[600,960],[720,1280],[800,1280],[800,600],[1024,600],[1280,720],[1366,768]]){
   await page.setViewportSize({width,height});await inspect(width+'x'+height);
-  if(process.env.SCREENSHOT_DIR&&[320,390,568,844,1440].includes(width)){fs.mkdirSync(process.env.SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.SCREENSHOT_DIR,`closing-${width}-${height}.png`)});}
+  if(process.env.SCREENSHOT_DIR&&[320,390,568,600,800,844,1024,1280,1440].includes(width)){fs.mkdirSync(process.env.SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.SCREENSHOT_DIR,`closing-${width}-${height}.png`)});}
  }
  // All six actions remain present and the relocated original-invitation action works.
  assert.equal(await page.locator('.thank-you-actions a,.thank-you-actions button').count(),6);
  await page.locator('#details [data-view-original]').click();assert(await page.locator('#original-invitation-dialog').evaluate(d=>d.open));await page.locator('#original-invitation-dialog [data-close]').click();
- await page.setViewportSize({width:320,height:640});
- await page.evaluate(()=>{const nodes=[...document.querySelectorAll('#details *')].filter(el=>[...el.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim())).map(el=>[el,parseFloat(getComputedStyle(el).fontSize)]);for(const [el,size] of nodes)el.style.fontSize=size*2+'px';});
- await inspect('320px / 200% text (natural scrolling)',false);
+ for(const [width,height] of [[320,640],[390,844],[600,960],[800,600]]){
+  await page.goto('http://127.0.0.1:'+server.address().port);await page.evaluate(()=>document.fonts.ready);
+  await page.setViewportSize({width,height});
+  await page.evaluate(()=>{const nodes=[...document.querySelectorAll('#details *')].filter(el=>[...el.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim())).map(el=>[el,parseFloat(getComputedStyle(el).fontSize)]);for(const [el,size] of nodes)el.style.fontSize=size*2+'px';});
+  await inspect(`${width}x${height} / 200% text (natural scrolling)`,false);
+ }
  assert.deepEqual(errors,[]);
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{await browser?.close();server?.close();});
