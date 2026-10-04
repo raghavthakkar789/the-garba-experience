@@ -20,6 +20,8 @@ let server,browser;
    const header=document.querySelector('.masthead').getBoundingClientRect();
    const logos=section.querySelector('.finale-brands'), l=logos.getBoundingClientRect();
    const art=section.querySelector('.thank-you-art').getBoundingClientRect();
+   const kicker=section.querySelector('.thank-you-kicker');
+   if(!kicker || kicker.parentElement!==section.querySelector('.thank-you-frame') || kicker.getBoundingClientRect().bottom>c.top+1)issues.push('event identity must sit above and outside the green card');
    if(logos.parentElement!==section.querySelector('.thank-you-frame')||card.contains(logos))issues.push('logos must be in red frame outside green details');
    if(l.top<c.bottom-1||l.bottom>art.top+1)issues.push('logo row must sit between details and artwork');
    const links=section.querySelector('.thank-you-text-links'), n=links.getBoundingClientRect();

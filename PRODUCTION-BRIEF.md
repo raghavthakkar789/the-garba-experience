@@ -1,6 +1,14 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — closing link icons and thank-you wording (4 October 2026)
+## Current revision — supplied closing-page CSS and hierarchy (5 October 2026)
+
+Applied the user's uploaded stylesheet as the closing-page design: wider ceremonial arch, centered THANK YOU and existing Gujarati message, separate event-identity pill above the green details card, full-width booking action, three secondary controls, partner strip, larger botanical/elephant artwork and a footer band. Removed the duplicate heading logo; The Garba Experience remains in the four-logo strip. Per the explicit exception, Replay story and View invitation retain their exact markup, icons, gold underlines, destinations and two-column placement between the logos and artwork; no duplicate replay action was added inside the card.
+
+Integration adjustments keep the supplied design usable in the existing document: footer styles target the closing footer, natural content height replaces clipping, artwork participates in layout, buttons and logo plaques retain 44px targets, and short landscape uses a compact composition. The previous replay/invitation styling and breakpoint sizes are preserved. The supplied logo-strip rules are scoped to take precedence over shared brand styles without altering the other logo rows.
+
+Verification: the existing story/assets/CSS suite passes; Chromium passes 36 normal-size viewports and four enlarged-text cases, including the new assertion that the identity pill sits outside and above the card. Twelve brand-card viewport cases pass, including enlarged text, modal interactions, keyboard and no-JavaScript checks. Phone, desktop and compact screenshots were reviewed. This is browser-engine verification, not physical-device testing. Runtime version is `thank-you.css?v=13`; upload `dist/index.html` and `dist/thank-you.css` together to external hosting.
+
+## Previous revision — closing link icons and thank-you wording (4 October 2026)
 
 Replay story and View invitation now have small gold icons on the left and permanently underlined labels, preserving their equal columns below the logo cards. Replaced the Gujarati thank-you message exactly as supplied. All three Ethereum Infracon logo-card triggers now say “In Association With”, matching its existing sponsor-street card.
 
