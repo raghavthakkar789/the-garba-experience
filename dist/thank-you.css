@@ -777,8 +777,7 @@ time > span,
 
   width: min(100%, 900px);
 
-  height:
-    clamp(82px, 13svh, 126px);
+  --closing-art-base: clamp(82px, 13svh, 126px);
 
   margin: 0;
 
@@ -808,8 +807,8 @@ time > span,
 
   z-index: 2;
 
-  width: 50%;
-  height: 92%;
+  width: 100%;
+  height: calc(var(--closing-art-base) * 1.84);
 
   transform:
     translateX(-50%);
@@ -829,8 +828,8 @@ time > span,
 
   z-index: 1;
 
-  width: 34%;
-  height: 100%;
+  width: 68%;
+  height: calc(var(--closing-art-base) * 2);
 
   object-fit: contain;
   object-position:
@@ -846,7 +845,7 @@ time > span,
 .leaf-right {
   right: 0;
 
-  height: 100%;
+  height: calc(var(--closing-art-base) * 2);
 }
 
 
@@ -859,8 +858,8 @@ time > span,
 
   z-index: 3;
 
-  width: 24%;
-  height: 66%;
+  width: 48%;
+  height: calc(var(--closing-art-base) * 1.32);
 
   object-fit: contain;
   object-position:
@@ -1128,7 +1127,7 @@ and
   }
 
   .thank-you-elephant {
-    width: 48%;
+    width: 96%;
   }
 }
 
@@ -1316,23 +1315,22 @@ and
   .thank-you-art {
     width: 100%;
 
-    height:
-      clamp(88px, 14svh, 118px);
+    --closing-art-base: clamp(88px, 14svh, 118px);
   }
 
   .thank-you-elephant {
-    width: 46%;
-    height: 88%;
+    width: 92%;
+    height: calc(var(--closing-art-base) * 1.76);
   }
 
   .thank-you-leaf {
-    width: 37%;
-    height: 100%;
+    width: 74%;
+    height: calc(var(--closing-art-base) * 2);
   }
 
   .thank-you-lotus {
-    width: 26%;
-    height: 62%;
+    width: 52%;
+    height: calc(var(--closing-art-base) * 1.24);
   }
 
   .lotus-left {
@@ -1427,19 +1425,19 @@ and
   }
 
   .thank-you-art {
-    height: 94px;
+    --closing-art-base: 94px;
   }
 
   .thank-you-elephant {
-    width: 44%;
+    width: 88%;
   }
 
   .thank-you-leaf {
-    width: 39%;
+    width: 78%;
   }
 
   .thank-you-lotus {
-    width: 27%;
+    width: 54%;
   }
 }
 
@@ -1611,19 +1609,19 @@ and
   /* art */
 
   .thank-you-art {
-    height: 72px;
+    --closing-art-base: 72px;
   }
 
   .thank-you-elephant {
-    width: 40%;
+    width: 80%;
   }
 
   .thank-you-leaf {
-    width: 31%;
+    width: 62%;
   }
 
   .thank-you-lotus {
-    width: 22%;
+    width: 44%;
   }
 
 
@@ -1678,8 +1676,7 @@ and
   }
 
   .thank-you-art {
-    height:
-      clamp(70px, 11svh, 92px);
+    --closing-art-base: clamp(70px, 11svh, 92px);
   }
 }
 
@@ -1754,7 +1751,7 @@ and
   }
 
   .thank-you-art {
-    height: 52px;
+    --closing-art-base: 52px;
   }
 
   footer.closing-footer {
@@ -1931,13 +1928,13 @@ footer.closing-footer > p { min-height:0; grid-column:auto; font-size:inherit; t
 @media (max-height:650px) {
   .thank-you-frame { padding-top:12px; gap:3px; }
   .thank-you-details { gap:2px; padding-block:4px; }
-  .thank-you-art { height:60px; }
+  .thank-you-art { --closing-art-base: 60px; }
 }
 @media (min-width:500px) and (max-height:540px) {
   .thank-you-frame { gap:2px; padding:4px 8px 0; }
   .thank-you-heading { gap:0; }
   .thank-you-details { width:100%; }
-  .thank-you-art { height:32px; }
+  .thank-you-art { --closing-art-base: 32px; }
   footer.closing-footer { min-height:20px; padding:3px 8px; grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (min-width:500px) and (max-height:460px) {
@@ -1945,7 +1942,7 @@ footer.closing-footer > p { min-height:0; grid-column:auto; font-size:inherit; t
   .thank-you-details .thank-you-actions { grid-template-columns:repeat(4,minmax(0,1fr)); gap:3px; }
   .thank-you-details .event-links { display:contents; }
   .thank-you-details .event-links > :last-child { grid-column:auto; }
-  .thank-you-art { height:24px; }
+  .thank-you-art { --closing-art-base: 24px; }
 }
 /* The mobile three-column row also resets the narrow-container spanning rule. */
 @media (max-width:650px) {
@@ -1967,22 +1964,22 @@ footer.closing-footer > p:first-child { min-height:0; grid-column:auto; font-siz
 @media (min-width:500px) and (max-height:540px) {
   .thank-you-logo { width: 72px !important; }
   .thank-you-message p { width:min(100%,64ch); }
-  .thank-you-art { height:12px; }
+  .thank-you-art { --closing-art-base: 12px; }
 }
 @media (min-height:541px) and (max-height:800px) {
   .thank-you-frame { padding-top:8px; gap:3px; }
   .thank-you-logo { width: 155.25px !important; }
-  .thank-you-art { height:60px; }
+  .thank-you-art { --closing-art-base: 60px; }
 }
 @media (max-width:499px) and (max-height:600px) {
   .thank-you-frame { padding-top:6px; }
-  .thank-you-art { height:32px; }
+  .thank-you-art { --closing-art-base: 32px; }
 }
 @media (min-width:500px) and (max-height:340px) {
   .thank-you-logo { width: 48px !important; }
   .thank-you-details { gap:0; padding-block:2px; }
   .thank-you-details .thank-you-kicker { padding-bottom:1px; }
-  .thank-you-art { height:6px; }
+  .thank-you-art { --closing-art-base: 6px; }
   footer.closing-footer { min-height:14px; padding-block:2px; }
 }
 
@@ -1995,8 +1992,22 @@ footer.closing-footer > p:first-child { min-height:0; grid-column:auto; font-siz
 
 @media (min-width:651px) and (min-height:541px) and (max-height:800px) {
   .thank-you-frame { padding-top:24px; }
-  .thank-you-art { height:44px; }
+  .thank-you-art { --closing-art-base: 44px; }
 }
 
 /* Lower the complete content stack while retaining its natural flow. */
 .thank-you-heading { margin-top:clamp(10px,1.5svh,18px); }
+
+/* Double the closing artwork while reserving real layout space for it. */
+.finale.thank-you .thank-you-art {
+  height:calc(var(--closing-art-base) * 2);
+  margin-top:clamp(12px,2svh,22px);
+}
+.finale.thank-you :is(.leaf-left,.lotus-left) { object-position:left bottom; }
+.finale.thank-you :is(.leaf-right,.lotus-right) { object-position:right bottom; }
+.finale.thank-you .thank-you-logo { margin-bottom:clamp(16px,2svh,24px); }
+@media (max-width:650px) {
+  /* Give the doubled elephant its own centered row above the floral artwork. */
+  .finale.thank-you .thank-you-art { height:calc(var(--closing-art-base) * 3.76 + 16px); }
+  .finale.thank-you .thank-you-elephant { bottom:calc(var(--closing-art-base) * 2 + 16px); }
+}

@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — larger and lower closing logo (5 October 2026)
+## Current revision — doubled closing artwork and logo spacing (4 October 2026)
+
+Doubled the rendered elephant, both lotuses and both leaves on the last page at every responsive breakpoint. The artwork now reserves enough layout height for its larger size. Screens up to 650px wide place the elephant above the floral groups; wider screens keep the side-by-side composition. Added 16–24px below the logo and 12–22px above the artwork. Existing links, content and other scenes retain their treatments; taller compositions scroll naturally.
+
+Chromium passes 36 viewport cases and four enlarged-text cases. A separate before/after measurement confirms exactly 2x rendered image scale for all five decorative images at six representative portrait and landscape sizes. Desktop and mobile screenshots were reviewed. Screenshot capture now hides the fixed skip link alongside the fixed masthead without changing runtime accessibility. Runtime stylesheet is `thank-you.css?v=18`; deploy updated `dist/index.html` and `dist/thank-you.css` together.
+
+## Previous revision — larger and lower closing logo (5 October 2026)
 
 Increased every responsive closing-logo width by exactly 50%, including clamp limits and compact-screen sizes. Added 10–18px above the heading group so the logo and following content move lower in normal document flow. The centered stack, typography, links, card, artwork and continuous double-gold frame retain their existing treatments.
 
