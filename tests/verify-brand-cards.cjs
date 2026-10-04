@@ -53,7 +53,7 @@ let browser, server;
             }
           }
         }
-        for (const a of final.querySelectorAll('a,button')) if (a.getBoundingClientRect().height < 44) issues.push('small touch control');
+        for (const a of final.querySelectorAll('a,button')) if (a.getBoundingClientRect().height < (a.closest('.thank-you-text-links') ? 24 : 44)) issues.push('small touch control');
         return issues;
       });
       assert.deepEqual(failures, [], `${width}x${height}, enlarged=${enlarged}`);

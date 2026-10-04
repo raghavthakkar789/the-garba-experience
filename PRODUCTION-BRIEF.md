@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — logo cards inside the thank-you arch (4 October 2026)
+## Current revision — plain closing links and reference button layout (4 October 2026)
+
+Replay story and View invitation are now plain gold text links in two equal columns, outside the green details box, below the partner logos and above the elephant/lotus/leaf artwork. Both retain their existing destinations and behavior. The remaining controls match the supplied reference: a full-width gold Grab your passes button and three light buttons for Save the date, Get directions and Share invitation. Very short landscape uses one compact row of four buttons to retain the full page in one screen. Buttons and logo plaques keep 44px targets; plain links use 44px normally, 28px on compact screens and 24px in the shortest landscape. Enlarged text can scroll naturally.
+
+Verification: Chromium passes 36 normal-size viewports, four enlarged-text cases, and twelve brand-card viewport checks. The checks verify the equal-width text-link row lies between logos and artwork, that all six actions remain, and that the invitation dialog works. Phone, desktop, compact computer and short-landscape screenshots were reviewed. Story/asset and diff checks pass. Stylesheet version is `thank-you.css?v=11`.
+
+## Previous revision — logo cards inside the thank-you arch (4 October 2026)
 
 Moved the four closing-page logo cards into the red arch, outside and below the green details box and above the elephant, lotus and leaf artwork. Their markup, images, presenter labels and click behavior are unchanged. Action buttons remain in the green details box. Short landscape places the detail/logo/art stack beside the heading and uses compact spacing to retain the one-screen composition.
 

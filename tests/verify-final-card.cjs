@@ -22,10 +22,14 @@ let server,browser;
    const art=section.querySelector('.thank-you-art').getBoundingClientRect();
    if(logos.parentElement!==section.querySelector('.thank-you-frame')||card.contains(logos))issues.push('logos must be in red frame outside green details');
    if(l.top<c.bottom-1||l.bottom>art.top+1)issues.push('logo row must sit between details and artwork');
+   const links=section.querySelector('.thank-you-text-links'), n=links.getBoundingClientRect();
+   if(card.contains(links)||n.top<l.bottom-1||n.bottom>art.top+1)issues.push('text links must sit between logos and artwork');
+   const [left,right]=[...links.querySelectorAll('a')].map(el=>el.getBoundingClientRect());
+   if(Math.abs(left.width-right.width)>1)issues.push('text links must split the row evenly');
    if(document.documentElement.scrollWidth>innerWidth+1)issues.push('horizontal overflow');
    for(const el of section.querySelectorAll('a,button')){
     const r=el.getBoundingClientRect();
-    if(r.height<43.5||r.width<43.5)issues.push('small tap target: '+el.textContent.trim());
+    if(r.height<(el.closest('.thank-you-text-links')?23.5:43.5)||r.width<43.5)issues.push('small tap target: '+el.textContent.trim());
    }
    const controls=[...section.querySelectorAll('a,button')].map(e=>e.getBoundingClientRect());
    for(let i=0;i<controls.length;i++)for(let j=i+1;j<controls.length;j++){
@@ -51,7 +55,8 @@ let server,browser;
   if(process.env.SCREENSHOT_DIR&&[320,390,568,600,800,844,1024,1280,1440].includes(width)){fs.mkdirSync(process.env.SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.SCREENSHOT_DIR,`closing-${width}-${height}.png`)});}
  }
  // All six actions remain present and the relocated original-invitation action works.
- assert.equal(await page.locator('.thank-you-actions a,.thank-you-actions button').count(),6);
+ assert.equal(await page.locator('.thank-you-actions a,.thank-you-actions button').count(),4);
+ assert.equal(await page.locator('.thank-you-text-links a').count(),2);
  await page.locator('#details [data-view-original]').click();assert(await page.locator('#original-invitation-dialog').evaluate(d=>d.open));await page.locator('#original-invitation-dialog [data-close]').click();
  for(const [width,height] of [[320,640],[390,844],[600,960],[800,600]]){
   await page.goto('http://127.0.0.1:'+server.address().port);await page.evaluate(()=>document.fonts.ready);

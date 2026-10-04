@@ -59,11 +59,11 @@
 .thank-you-details .thank-you-actions :is(a,button) {
   box-sizing:border-box; display:flex; align-items:center; justify-content:center;
   min-width:0; width:100%; min-height:44px; height:auto; gap:8px; padding:10px 8px;
-  background:#164236; color:#fff3d6; border:1px solid #72876a; border-radius:8px;
+  background:#f9f3e6; color:#123b2d; border:1px solid #e8d6ac; border-radius:8px;
   font-size:14px; font-weight:500; line-height:1.25; white-space:normal; text-decoration:none;
 }
-.thank-you-details .thank-you-actions .book-button { background:#f0d49b; border-color:#f0d49b; color:#123b2d; font-weight:700; }
-.thank-you-details .thank-you-actions :is(a,button):hover { border-color:#f0d49b; background:#245443; }
+.thank-you-details .thank-you-actions .book-button { flex-direction:row; grid-column:1 / -1; background:#f0d49b; border-color:#f0d49b; color:#123b2d; font-weight:700; }
+.thank-you-details .thank-you-actions :is(a,button):hover { border-color:#f0d49b; background:#fff8e9; }
 .thank-you-details .thank-you-actions .book-button:hover { background:#ffe3aa; color:#123b2d; }
 .thank-you-details .thank-you-actions :is(a,button):focus-visible { outline:2px solid #fff3d6; outline-offset:3px; }
 .thank-you-details .thank-you-actions .ui-icon { width:18px; height:18px; flex-shrink:0; }
@@ -77,6 +77,15 @@
 .thank-you-details .entry-note .ui-icon { display:inline-block; width:16px; height:16px; color:#f0d49b; margin:0 4px 0 0; vertical-align:-3px; }
 .thank-you-details .entry-note strong { color:#fff6df; }
 .thank-you-details .entry-note small { display:block; font-size:11px; line-height:1.4; margin-top:4px; color:#d6cdbb; }
+.thank-you-text-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; gap:8px; margin:0; }
+.thank-you-text-links a {
+  display:flex; align-items:center; justify-content:center; min-width:0; min-height:44px;
+  padding:6px 2px; border:0; border-radius:0; background:none; box-shadow:none;
+  color:#f2d28e; font-size:14px; line-height:1.3; font-weight:400; text-align:center;
+  text-decoration:none; overflow-wrap:anywhere;
+}
+.thank-you-text-links a:hover { color:#ffe7b1; text-decoration:underline; }
+.thank-you-text-links a:focus-visible { outline:2px solid #f2d28e; outline-offset:2px; }
 .thank-you-art { position:relative; width:80%; height:74px; pointer-events:none; }
 .thank-you-art img { position:absolute; display:block; }
 .thank-you-elephant { height:100%; width:40%; object-fit:contain; object-position:center bottom; left:50%; bottom:0; transform:translateX(-50%); z-index:2; }
@@ -91,9 +100,6 @@ footer.closing-footer {
   padding:0; border:0; background:transparent; font-size:10px; line-height:1.3;
 }
 footer.closing-footer p { margin:0; text-align:center; }
-@container closing-card (max-width:480px) {
-  .thank-you-details .thank-you-actions { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
 @media (max-width:500px) {
   .thank-you-frame { --arch-cap:70px; --arch-side:7px; padding:18px 10px 8px; gap:10px; }
   .thank-you-heading { gap:10px; padding-inline:4px; }
@@ -113,7 +119,8 @@ footer.closing-footer p { margin:0; text-align:center; }
 /* Reduce ornamental spacing first on shorter screens; retain a predictable grid. */
 @media (min-height:441px) and (max-height:740px),
        (min-width:501px) and (max-width:650px) and (min-height:741px) and (max-height:800px) {
-  .thank-you-frame { --arch-cap:60px; padding-top:12px; padding-bottom:6px; gap:6px; }
+  .thank-you-frame { --arch-cap:60px; padding-top:12px; padding-bottom:6px; gap:4px; }
+  .thank-you-text-links a { min-height:28px; padding-block:4px; font-size:13px; }
   .thank-you-logo { width:40px; }
   .thank-you-message h2 { font-size:26px; }
   .thank-you-message p { font-size:11px; margin-top:3px; }
@@ -127,6 +134,11 @@ footer.closing-footer p { margin:0; text-align:center; }
   .thank-you-details .entry-note { padding-top:6px; font-size:12px; line-height:1.3; }
   .thank-you-details .entry-note small { margin-top:2px; line-height:1.3; }
   .thank-you-art { height:36px; }
+}
+@media (min-width:651px) and (min-height:741px) and (max-height:800px) {
+  .thank-you-frame { padding-top:18px; gap:10px; }
+  .thank-you-details { padding:16px; gap:12px; }
+  .thank-you-art { height:56px; }
 }
 /* Narrow compact phones still get two columns and fully labelled controls. */
 @media (max-width:350px) {
@@ -162,12 +174,13 @@ footer.closing-footer p { margin:0; text-align:center; }
 /* Landscape phones: retain all details and actions beside a compact title. */
 @media (min-width:500px) and (max-height:540px) {
   .thank-you-frame { --arch-cap:60px; grid-template-columns:minmax(0,1fr) minmax(0,3.5fr); gap:4px 10px; padding:6px 8px; }
-  .thank-you-heading { grid-column:1; grid-row:1 / 4; flex-direction:column; gap:2px; padding:0; align-self:center; }
+  .thank-you-heading { grid-column:1; grid-row:1 / 5; flex-direction:column; gap:2px; padding:0; align-self:center; }
   .thank-you-logo { width:36px; }
   .thank-you-message h2 { font-size:20px; }
   .thank-you-message p { font-size:11px; margin-top:2px; }
-  .thank-you-art { grid-column:2; grid-row:3; width:80%; height:24px; }
+  .thank-you-art { grid-column:2; grid-row:4; width:80%; height:24px; }
   .thank-you-frame>.finale-brands { grid-column:2; grid-row:2; }
+  .thank-you-text-links { grid-column:2; grid-row:3; }
   .thank-you-details { grid-column:2; grid-row:1; padding:5px; gap:3px; }
   .thank-you-details>.eyebrow { font-size:10px; letter-spacing:0; }
   .thank-you-details .thank-you-actions { grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; }
@@ -181,12 +194,34 @@ footer.closing-footer p { margin:0; text-align:center; }
   .thank-you-details .entry-note { font-size:12px; padding-top:3px; line-height:1.2; }
   .thank-you-details .entry-note small { font-size:10px; line-height:1.2; margin-top:1px; }
 }
-@media (min-width:500px) and (max-height:420px) {
+@media (min-width:500px) and (max-height:460px) {
   .thank-you-frame { padding-block:0; row-gap:0; }
   .thank-you-art { height:16px; }
   .thank-you-details { padding:3px; gap:2px; }
-  .thank-you-details .thank-you-actions { grid-template-columns:repeat(6,minmax(0,1fr)); }
+  .thank-you-details .thank-you-actions { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .thank-you-details .thank-you-actions .book-button { grid-column:auto; }
   .thank-you-details .thank-you-actions :is(a,button) { flex-direction:column; gap:2px; font-size:10px; padding:2px 1px; }
+}
+@media (max-width:500px) and (max-height:740px) {
+  .thank-you-frame { padding-block:4px; row-gap:2px; }
+  .thank-you-details { padding:4px; gap:2px; }
+  .thank-you-text-links a { min-height:28px; padding-block:4px; font-size:12px; }
+}
+@media (max-width:500px) and (max-height:600px) {
+  .thank-you-art { height:16px; }
+}
+@media (min-width:500px) and (max-height:540px) {
+  .thank-you-text-links a { min-height:28px; padding-block:4px; font-size:12px; }
+}
+@media (min-width:500px) and (max-height:340px) {
+  .thank-you-frame { grid-template-columns:minmax(0,.8fr) minmax(0,3.5fr); }
+  .thank-you-details { gap:0; padding-block:2px; }
+  .thank-you-details .thank-you-date,.thank-you-details .thank-you-venue { font-size:11px; }
+  .thank-you-details .event-facts strong { font-size:12px; line-height:1.1; }
+  .thank-you-details .entry-note { font-size:11px; line-height:1.1; }
+  .thank-you-details .entry-note small { font-size:10px; line-height:1.1; }
+  .thank-you-text-links a { min-height:24px; padding-block:2px; }
+  .thank-you-art { height:12px; }
 }
 @media (max-height:420px) {
   html .masthead { min-height:53px; padding-block:3px; }
