@@ -1,6 +1,14 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — consistent thank-you composition (4 October 2026)
+## Current revision — continuous manual dialogue slowdowns (4 October 2026)
+
+Manual wheel, trackpad, touch and navigation keys now flow through dialogue areas without the former 500ms hold or fresh-gesture requirement. A smooth spatial speed curve eases from ordinary speed down to 22% at each dialogue center and back out over a 160–260px radius, in either direction. The queued distance shrinks with the speed factor to keep a hard swipe from building a long coast. Outside these areas, the existing 800–1600px/s limit, 1.5× wheel gain and maximum 700px queue remain. Reduced-motion scrolling uses immediate distance-weighted steps and never locks at a dialogue. Existing iOS non-cancelable touch handling, pinch and dialog exemptions remain.
+
+Verification covers all eleven dialogue areas, uninterrupted hard wheel and real Chromium touch gestures, reverse and gentle input, keyboard, bounded movement, controlled-clock speed/coast checks, dialog/zoom exemptions and reduced motion. The previous code fails the new continue-past-dialogue assertion. Chromium non-cancelable touch checks pass; the 63-second timeline checks pass in cinematic, short and reduced-motion layouts. DOM story/assets and syntax checks pass. These are browser-engine checks, not physical iPhone/iPad verification.
+
+The separate 63-second Autoscroll timeline, 20-second partner segment, opening timing, audio, scene visuals and closing-page design are unchanged. Updated runtime is `experience.js?v=45`; deploy `dist/index.html` and `dist/experience.js` together to update external hosting.
+
+## Previous revision — consistent thank-you composition (4 October 2026)
 
 Following visual feedback on the previous revision, the closing card now uses a consistent centered composition up to 740px wide, aligned with the unchanged partner-logo row. The original arch, colours, Gujarati message and artwork remain. Booking is the single gold action; secondary buttons use green outlined surfaces. Shorter visible labels preserve the same six destinations and behaviors. The artwork is grouped with breathing room rather than spread across an oversized frame. Small computers use the centered composition; only short landscape moves the title beside the card.
 

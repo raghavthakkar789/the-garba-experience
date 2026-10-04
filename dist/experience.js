@@ -1,4 +1,4 @@
-/* A continuous scroll-driven film with deliberate manual dialogue stops. Every scene remains readable without JavaScript. */
+/* A scroll-driven film with continuous manual dialogue slowdowns. Every scene remains readable without JavaScript. */
 (() => {
   "use strict";
   const isReload =
@@ -146,42 +146,33 @@
   });
   document.addEventListener("visibilitychange", () => { if (document.hidden) stopAutoScroll(); });
   addEventListener("pagehide", stopAutoScroll);
-  // Manual gestures are bounded and cannot carry momentum past a dialogue stop.
+  // Manual input stays continuous, with eased reading zones around each dialogue.
+  // Autoscroll has its own timeline and never uses this speed profile.
   let manualFrame = 0, manualTarget = 0, manualPosition = 0, manualLast = 0;
-  let dialogueHold = null, releasedDialogue = null, holdUntil = 0, lastManualInput = -Infinity;
-  let touchY = null, touchBlocked = false;
+  let touchY = null;
+  const dialogueBeats = scenes.flatMap((scene, index) =>
+    [...scene.querySelectorAll(".dialogue-beat")].map(line => {
+      const beat = Number(line.dataset.at) || 0;
+      const local = scene.id === "beginning" && beat === 0 ? .42 : Math.max(.06, beat + .015);
+      return { line, cursor: sceneStarts[index] + local * sceneSpans[index] };
+    }));
   function stopManualMotion() {
     cancelAnimationFrame(manualFrame);
     manualFrame = 0;
   }
   function cancelManualScroll() {
     stopManualMotion();
-    dialogueHold = null;
-    releasedDialogue = null;
-    holdUntil = 0;
-    lastManualInput = -Infinity;
   }
-  function dialogueStops() {
-    if (!cinematic) return [...document.querySelectorAll(".dialogue-beat")].map(line =>
-      Math.max(0, line.getBoundingClientRect().top + scrollY - innerHeight * .35));
-    return scenes.flatMap((scene, index) => [...scene.querySelectorAll(".dialogue-beat")].map(line => {
-      const beat = Number(line.dataset.at) || 0;
-      const local = scene.id === "beginning" && beat === 0 ? .42 : Math.max(.06, beat + .015);
-      return journeyTop + (sceneStarts[index] + local * sceneSpans[index]) / storySpan * travel;
-    }));
+  function dialogueCenters() {
+    return dialogueBeats.map(({ line, cursor }) => cinematic
+      ? journeyTop + cursor / storySpan * travel
+      : Math.max(0, line.getBoundingClientRect().top + scrollY - innerHeight * .35));
   }
-  function holdDialogue(position) {
-    dialogueHold = position;
-    releasedDialogue = null;
-    holdUntil = performance.now() + 500;
-    touchBlocked = touchY !== null;
-    manualTarget = position;
-  }
-  function pendingDialogueStops() {
-    // WebKit can floor scrollY while checkpoints contain fractions of a pixel.
-    // A released checkpoint stays consumed until we have actually left it.
-    if (releasedDialogue !== null && Math.abs(scrollY - releasedDialogue) > 2) releasedDialogue = null;
-    return dialogueStops().filter(y => releasedDialogue === null || Math.abs(y - releasedDialogue) > 2);
+  function dialogueSpeed(position, centers) {
+    const radius = clamp(innerHeight * .26, 160, 260);
+    const distance = Math.min(...centers.map(center => Math.abs(position - center)));
+    // Smoothstep joins the ordinary speed without a sudden brake or a full stop.
+    return .22 + .78 * ease(distance / radius);
   }
   function advanceManualScroll(now) {
     manualFrame = 0;
@@ -189,45 +180,38 @@
       cancelManualScroll(); return;
     }
     const direction = Math.sign(manualTarget - manualPosition);
+    const factor = dialogueSpeed(manualPosition, dialogueCenters());
+    const speed = clamp(innerHeight * 1.6, 800, 1600) * factor;
+    // Keep the remaining coast short even when a fast gesture enters a slow zone.
+    const remaining = Math.min(Math.abs(manualTarget - manualPosition), Math.min(700, innerHeight * .85) * factor);
+    manualTarget = manualPosition + direction * remaining;
     // A same-frame input can arrive after the RAF timestamp; never step backwards.
-    const step = Math.min(64, Math.max(0, now - manualLast)) / 1000 * clamp(innerHeight * 1.6, 800, 1600);
+    const step = Math.min(64, Math.max(0, now - manualLast)) / 1000 * speed;
     manualLast = now;
-    const next = manualPosition + direction * Math.min(Math.abs(manualTarget - manualPosition), step);
-    const stops = pendingDialogueStops();
-    const stop = direction > 0
-      ? stops.find(y => y > manualPosition + .5 && y <= next + .5)
-      : stops.slice().reverse().find(y => y < manualPosition - .5 && y >= next - .5);
-    manualPosition = stop === undefined ? next : stop;
+    manualPosition += direction * Math.min(remaining, step);
     window.scrollTo({ top: manualPosition, behavior: "instant" });
-    if (stop !== undefined) { holdDialogue(stop); return; }
     if (Math.abs(manualTarget - manualPosition) > .5) manualFrame = requestAnimationFrame(advanceManualScroll);
   }
-  function manualScroll(delta, repeated = false, fromTouch = false) {
+  function manualScroll(delta) {
     if (!delta || (cinematic && !entryUnlocked)) return;
-    const now = performance.now(), idle = now - lastManualInput;
-    lastManualInput = now;
-    if (dialogueHold !== null) {
-      // A new finger gesture is explicit intent; wheel momentum needs an idle gap.
-      if (now < holdUntil || (fromTouch ? touchBlocked : idle < 180 || repeated)) return;
-      releasedDialogue = dialogueHold;
-      dialogueHold = null;
-    } else if (!manualFrame) {
-      const current = pendingDialogueStops().find(y => Math.abs(y - scrollY) <= 2);
-      if (current !== undefined) { holdDialogue(current); return; }
-    }
+    const now = performance.now();
     if (!manualFrame) { manualPosition = scrollY; manualTarget = scrollY; }
     const budget = Math.min(700, innerHeight * .85);
     const amount = clamp(delta * 1.5, -budget, budget);
     if (Math.sign(amount) !== Math.sign(manualTarget - manualPosition)) manualTarget = manualPosition;
     manualTarget = clamp(manualTarget + amount, Math.max(0, manualPosition - budget),
       Math.min(root.scrollHeight - innerHeight, manualPosition + budget));
-    // Reduced-motion reading mode uses small immediate steps, with the same dialogue gates.
     if (reduced.matches) {
-      const direction = Math.sign(manualTarget - manualPosition), stops = pendingDialogueStops();
-      const stop = direction > 0 ? stops.find(y => y > manualPosition + .5 && y <= manualTarget)
-        : stops.slice().reverse().find(y => y < manualPosition - .5 && y >= manualTarget);
-      if (stop !== undefined) { manualTarget = stop; holdDialogue(stop); }
-      window.scrollTo({ top: manualTarget, behavior: "instant" });
+      // Immediate, spatially weighted steps: no animated coast and no dialogue lock.
+      // Sampling along the path prevents a large key/wheel event jumping a slow zone.
+      const centers = dialogueCenters(), direction = Math.sign(manualTarget - manualPosition);
+      let input = Math.abs(manualTarget - manualPosition);
+      while (input > 0) {
+        const step = Math.min(input, 16);
+        manualPosition += direction * step * dialogueSpeed(manualPosition, centers);
+        input -= step;
+      }
+      window.scrollTo({ top: manualPosition, behavior: "instant" });
     } else if (!manualFrame) {
       manualLast = now;
       manualFrame = requestAnimationFrame(advanceManualScroll);
@@ -242,7 +226,6 @@
   addEventListener("touchstart", event => {
     stopManualMotion();
     touchY = event.touches?.length === 1 && !localScrollTarget(event.target) && !scrollControl(event.target) ? event.touches[0].clientY : null;
-    touchBlocked = false;
   }, { passive:true });
   addEventListener("touchmove", event => {
     if (event.touches.length !== 1) { touchY = null; stopManualMotion(); return; }
@@ -253,9 +236,9 @@
     // mark those moves non-cancelable; they still carry the finger's movement.
     if (event.cancelable) event.preventDefault();
     else if (!cinematic || !stage.contains(event.target)) return;
-    manualScroll(delta * 2, false, true);
+    manualScroll(delta * 2);
   }, { passive:false });
-  for (const name of ["touchend", "touchcancel"]) addEventListener(name, () => { touchY = null; touchBlocked = false; }, { passive:true });
+  for (const name of ["touchend", "touchcancel"]) addEventListener(name, () => { touchY = null; }, { passive:true });
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") { cancelManualScroll(); return; }
     if (event.ctrlKey || event.metaKey || event.altKey || localScrollTarget(event.target) || document.querySelector("dialog[open]")) return;
@@ -263,7 +246,7 @@
     const direction = { ArrowDown:1, PageDown:1, End:1, ArrowUp:-1, PageUp:-1, Home:-1, " ":event.shiftKey ? -1 : 1 }[event.key];
     if (!direction) return;
     event.preventDefault();
-    manualScroll(direction * (event.key.startsWith("Arrow") ? 48 : 640), event.repeat);
+    manualScroll(direction * (event.key.startsWith("Arrow") ? 48 : 640));
   });
   document.addEventListener("pointerdown", () => stopManualMotion(), { passive:true });
   document.addEventListener("visibilitychange", () => { if (document.hidden) cancelManualScroll(); });

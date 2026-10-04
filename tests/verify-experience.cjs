@@ -247,7 +247,7 @@ w.eval(script);
   assert(d.querySelector("#door-sound").paused && d.querySelector("#descent-sound").paused && !d.querySelector("#site-soundtrack").paused, "landing starts Vichudo after both intro phases");
   const landed = descendingMan.getAttribute('style');
   // WebKit can deliver non-cancelable moves on a surface that owns vertical touch.
-  // The opening lands on dialogue one: lift, wait 0.5s, then swipe to continue.
+  // The opening lands in a slow zone; swipes must continue without a dialogue lock.
   const touch = (type, y, cancelable = false, count = 1) => {
     const event = new w.Event(type, { bubbles: true, cancelable });
     Object.defineProperty(event, 'touches', { value: y === null ? [] :
@@ -264,7 +264,7 @@ w.eval(script);
   touch('touchmove', 550);
   touch('touchend', null);
   frame(0);
-  assert.equal(w.scrollY, landingY, 'touch retains the minimum half-second dialogue hold');
+  assert(w.scrollY > landingY, 'touch immediately advances within the dialogue zone');
   frame(200);
   touch('touchstart', 650);
   touch('touchmove', 600);

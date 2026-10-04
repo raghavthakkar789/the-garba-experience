@@ -47,14 +47,14 @@ let browser, server;
   const landing = await page.evaluate(() => scrollY);
   await swipe();
   await page.waitForTimeout(300);
-  assert(Math.abs(await page.evaluate(() => scrollY) - landing) < 2, 'first dialogue holds');
+  assert(await page.evaluate(() => scrollY) > landing + 20, 'first swipe advances immediately through dialogue');
   await page.waitForTimeout(350);
   await swipe();
   await page.waitForTimeout(400);
   const moved = await page.evaluate(() => scrollY);
   assert(moved > landing + 30, 'non-cancelable swipe must advance after the opening');
   assert(moved <= landing + 701, 'swipe distance remains bounded');
-  // Every dialogue must release a new touch gesture, including fractional scroll stops.
+  // Non-cancelable iOS-style moves remain continuous at all eleven dialogue areas.
   const stops = await page.evaluate(() => {
     const scenes = [...document.querySelectorAll('.scene')], journey = document.querySelector('.journey');
     const spans = scenes.map(s => Number(s.dataset.scrollSpan) || 1), total = spans.reduce((a,b) => a+b,0);
@@ -72,29 +72,15 @@ let browser, server;
     await page.keyboard.press('Escape');
     await page.evaluate(y => scrollTo({top:y-18,behavior:'instant'}),stop);
     await page.waitForTimeout(80);
-    await swipe();
-    await page.waitForTimeout(150);
-    const held = await page.evaluate(() => scrollY);
-    assert(Math.abs(held-stop)<2,`touch catches every dialogue: stop ${stop}, actual ${held}, scene ${await page.locator('.scene.is-active').getAttribute('id')}`);
-    await page.waitForTimeout(500);
-    await swipe();
-    await page.waitForTimeout(300);
-    assert(await page.evaluate(y=>scrollY>y+20,held),`touch resumes after dialogue at ${stop}, actual ${await page.evaluate(()=>scrollY)}`);
+    await gesture('touchstart',650);
+    await gesture('touchmove',550);
+    await page.waitForFunction(y=>scrollY>y+10,stop,{timeout:2500});
+    const first = await page.evaluate(()=>scrollY);
+    assert(first>stop+10,`touch flows across dialogue at ${stop}`);
+    await gesture('touchmove',450);
+    await page.waitForFunction(y=>scrollY>y+10,first,{timeout:2500});
+    await gesture('touchend',null);
   }
-  // Start the next swipe during the pause and keep moving after it expires.
-  await page.keyboard.press('Escape');
-  await page.evaluate(y=>scrollTo({top:y-18,behavior:'instant'}),stops[3]);
-  await page.waitForTimeout(80);
-  await swipe(); await page.waitForTimeout(150);
-  const paused = await page.evaluate(()=>scrollY);
-  await gesture('touchstart',650);
-  for(let i=1;i<=9;i++) {
-    await gesture('touchmove',650-i*12);
-    if(i===2) assert.equal(await page.evaluate(()=>scrollY),paused,'minimum half-second pause remains');
-    await page.waitForTimeout(80);
-  }
-  await gesture('touchend',null); await page.waitForTimeout(200);
-  assert(await page.evaluate(y=>scrollY>y+20,paused),'new swipe beginning during pause resumes once 500ms expires');
   await page.keyboard.press('Escape');
   await page.evaluate(y=>scrollTo({top:y,behavior:'instant'}),moved);
   await page.waitForTimeout(80);
@@ -119,5 +105,5 @@ let browser, server;
   await page.emulateMedia({ reducedMotion: 'reduce' });
   assert.equal(await page.locator('.journey-stage').evaluate(el => getComputedStyle(el).touchAction), 'auto', 'reading mode retains native gestures');
   assert.deepEqual(errors, []);
-  console.log(`PASS ${engine}: entry unlock, all eleven dialogue stops/resumes, early fresh swipe, non-cancelable touch, bounded movement, pinch, dialog scrolling, Autoscroll, reading-mode touch policy.`);
+  console.log(`PASS ${engine}: entry unlock, all eleven continuous dialogue slowdowns, uninterrupted swipe, non-cancelable touch, bounded movement, pinch, dialog scrolling, Autoscroll, reading-mode touch policy.`);
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => { await browser?.close(); server?.close(); });
