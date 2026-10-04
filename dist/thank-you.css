@@ -79,12 +79,14 @@
 .thank-you-details .entry-note small { display:block; font-size:11px; line-height:1.4; margin-top:4px; color:#d6cdbb; }
 .thank-you-text-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; gap:8px; margin:0; }
 .thank-you-text-links a {
-  display:flex; align-items:center; justify-content:center; min-width:0; min-height:44px;
+  display:flex; align-items:center; justify-content:center; gap:6px; min-width:0; min-height:44px;
   padding:6px 2px; border:0; border-radius:0; background:none; box-shadow:none;
   color:#f2d28e; font-size:14px; line-height:1.3; font-weight:400; text-align:center;
   text-decoration:none; overflow-wrap:anywhere;
 }
-.thank-you-text-links a:hover { color:#ffe7b1; text-decoration:underline; }
+.thank-you-text-links .ui-icon { width:14px; height:14px; flex-shrink:0; }
+.thank-you-text-links .control-label { text-decoration:underline; text-underline-offset:3px; }
+.thank-you-text-links a:hover { color:#ffe7b1; }
 .thank-you-text-links a:focus-visible { outline:2px solid #f2d28e; outline-offset:2px; }
 .thank-you-art { position:relative; width:80%; height:74px; pointer-events:none; }
 .thank-you-art img { position:absolute; display:block; }

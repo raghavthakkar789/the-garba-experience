@@ -72,7 +72,7 @@ let browser, server;
       const dialog = page.locator('#partner-dialog');
       assert(await dialog.evaluate(d => d.open));
       assert.equal(await dialog.locator('#partner-dialog-name').textContent(),name);
-      assert.equal(await dialog.locator('#partner-dialog-role').textContent(),i === 0 ? 'The event' : i === 3 ? 'Partner' : 'Presented by');
+      assert.equal(await dialog.locator('#partner-dialog-role').textContent(),i === 0 ? 'The event' : i === 3 ? 'In Association With' : 'Presented by');
       assert.equal(await dialog.locator('img').getAttribute('src'),source);
       assert(await dialog.locator('#partner-dialog-name').isVisible());
       const box = await dialog.boundingBox();

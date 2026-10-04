@@ -1,6 +1,12 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — plain closing links and reference button layout (4 October 2026)
+## Current revision — closing link icons and thank-you wording (4 October 2026)
+
+Replay story and View invitation now have small gold icons on the left and permanently underlined labels, preserving their equal columns below the logo cards. Replaced the Gujarati thank-you message exactly as supplied. All three Ethereum Infracon logo-card triggers now say “In Association With”, matching its existing sponsor-street card.
+
+Chromium checks pass for 36 normal-size closing-page viewports, four enlarged-text cases and twelve brand-card viewport cases. Phone, desktop and short-landscape screenshots were reviewed. The longer Gujarati text fits the existing responsive layout; story/assets and diff checks pass. Runtime stylesheet version is `thank-you.css?v=12`. Upload updated `dist/index.html` and `dist/thank-you.css` together for external hosting; the GitHub update itself does not deploy that hosting.
+
+## Previous revision — plain closing links and reference button layout (4 October 2026)
 
 Replay story and View invitation are now plain gold text links in two equal columns, outside the green details box, below the partner logos and above the elephant/lotus/leaf artwork. Both retain their existing destinations and behavior. The remaining controls match the supplied reference: a full-width gold Grab your passes button and three light buttons for Save the date, Get directions and Share invitation. Very short landscape uses one compact row of four buttons to retain the full page in one screen. Buttons and logo plaques keep 44px targets; plain links use 44px normally, 28px on compact screens and 24px in the shortest landscape. Enlarged text can scroll naturally.
 
