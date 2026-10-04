@@ -55,7 +55,8 @@ let browser, server;
       } else await page.keyboard.press('Escape');
     }
     for (let i=0;i<4;i++) {
-      await page.locator('.finale-brands .brand-plaque').nth(i).click();
+      await page.locator('.opening-brands .brand-plaque').nth(i).focus();
+      await page.keyboard.press('Enter');
       await page.locator('#partner-dialog-logo').evaluate(img=>img.decode());
       assert.deepEqual(await page.locator('#partner-dialog').evaluate(inspect),[],`bottom brand ${i}, ${width}x${height}`);
       await page.keyboard.press('Escape');

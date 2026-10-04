@@ -53,7 +53,7 @@ let browser, server;
             }
           }
         }
-        for (const a of final.querySelectorAll('a,button')) if (a.getBoundingClientRect().height < (a.closest('.thank-you-text-links') ? 24 : 44)) issues.push('small touch control');
+        for (const a of final.querySelectorAll('a,button')) if (a.getClientRects().length && a.getBoundingClientRect().height < (a.closest('.thank-you-text-links') ? 24 : 44)) issues.push('small touch control');
         return issues;
       });
       assert.deepEqual(failures, [], `${width}x${height}, enlarged=${enlarged}`);
@@ -65,10 +65,10 @@ let browser, server;
     // Fresh layout after the text-size stress test.
     await page.goto(url); await page.locator('#details').scrollIntoViewIfNeeded();
     for (let i=0;i<4;i++) {
-      const trigger = page.locator('.finale-brands .brand-plaque').nth(i);
+      const trigger = page.locator('.opening-brands .brand-plaque').nth(i);
       const name = await trigger.getAttribute('data-brand-name');
       const source = await trigger.locator('img').getAttribute('src');
-      await trigger.click();
+      await trigger.focus(); await page.keyboard.press('Enter');
       const dialog = page.locator('#partner-dialog');
       assert(await dialog.evaluate(d => d.open));
       assert.equal(await dialog.locator('#partner-dialog-name').textContent(),name);

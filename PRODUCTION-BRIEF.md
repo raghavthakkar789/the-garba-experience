@@ -1,6 +1,14 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — supplied closing-page CSS and hierarchy (5 October 2026)
+## Current revision — latest consolidated closing-page CSS (5 October 2026)
+
+Applied the newest uploaded CSS (`Pasted text(2).txt`). Restored the larger event logo, reduced the THANK YOU heading according to the supplied values, merged the event identity into the green card with its divider, and hid the closing partner strip as specified. The partner logos elsewhere and their dialogs remain available. Replay story and View invitation retain their exact markup, gold text, left icons, underlines, equal columns, destinations and responsive sizes outside the card above the artwork. The original two-pixel keyboard-focus treatment is preserved as well.
+
+Responsive integration accounts for the existing fixed header and footer inside the section: natural height replaces clipping, artwork stays in flow, the larger logo sits beside the message on short screens and above it on taller screens, compact landscape puts the heading beside the details, and 44px action targets remain. Corrected the supplied container/media-query conflict that put Share on an extra mobile row. Enlarged text can scroll naturally. Footer styles target only the existing closing footer and its two text items.
+
+Verification: Chromium passes 36 normal-size viewport cases and four enlarged-text cases. The brand-card suite passes twelve viewport cases, enlarged text, keyboard activation of opening logos, cinematic pointer access, focus restoration and no-JavaScript links. The story/asset/CSS suite passes; desktop, mobile and compact screenshots were reviewed. The final-page regression now checks the unified card title and hidden partner strip; partner-dialog checks use the still-visible opening logos. These are engine checks, not physical-device verification. Runtime stylesheet is `thank-you.css?v=14`; deploy `dist/index.html` and `dist/thank-you.css` together on external hosting.
+
+## Previous revision — supplied closing-page CSS and hierarchy (5 October 2026)
 
 Applied the user's uploaded stylesheet as the closing-page design: wider ceremonial arch, centered THANK YOU and existing Gujarati message, separate event-identity pill above the green details card, full-width booking action, three secondary controls, partner strip, larger botanical/elephant artwork and a footer band. Removed the duplicate heading logo; The Garba Experience remains in the four-logo strip. Per the explicit exception, Replay story and View invitation retain their exact markup, icons, gold underlines, destinations and two-column placement between the logos and artwork; no duplicate replay action was added inside the card.
 

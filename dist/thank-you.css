@@ -1,28 +1,45 @@
 /* =========================================================
-   THE GARBA EXPERIENCE — FINAL / THANK YOU PAGE
+   THE GARBA EXPERIENCE
+   COMPLETE FINAL / THANK YOU PAGE
+   CURRENT CONSOLIDATED VERSION
    ========================================================= */
 
-/* ---------- FINAL PAGE VARIABLES ---------- */
+
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
+:root {
+  --closing-footer-h: 64px;
+
+  --thank-bg: #003724;
+  --thank-panel: #092e25;
+
+  --thank-gold: #f2d28e;
+  --thank-gold-soft: #f0dba9;
+  --thank-border: #c9a86b;
+
+  --thank-cream: #fff6df;
+  --thank-cream-soft: #fff2d3;
+
+  --thank-muted: #e2d7c0;
+  --thank-dark-text: #123b2d;
+}
+
+
+/* =========================================================
+   FINAL PAGE SECTION
+   Thank You + footer together fit one viewport
+   ========================================================= */
 
 .finale.thank-you {
-  --final-bg: #003724;
-  --final-green: #092e25;
-  --final-green-soft: #123b2e;
-
-  --final-gold: #f2d28e;
-  --final-gold-border: #c9a86b;
-  --final-gold-soft: #f0dba9;
-
-  --final-cream: #fff6df;
-  --final-cream-soft: #fff2d3;
-
-
   position: relative;
   isolation: isolate;
 
   display: block;
 
   width: 100%;
+
   height: auto;
   min-height: calc(100svh - 76px);
   max-height: none;
@@ -32,21 +49,23 @@
 
   overflow: visible;
 
-  color: var(--final-cream);
+  scroll-margin-top: 76px;
+
+  color: var(--thank-cream);
 
   background:
-    #003724
+    var(--thank-bg)
     url("assets/story/thank-you/botanical-background.webp")
     center / cover no-repeat;
 
-  scroll-margin-top: 76px;
-
   contain: none;
+
+  z-index: 5;
 }
 
 
 /* =========================================================
-   MAIN THANK YOU CONTAINER
+   MAIN FINAL-PAGE WRAPPER
    ========================================================= */
 
 .thank-you-scene {
@@ -67,7 +86,7 @@
 
   padding:
     clamp(5px, 1svh, 12px)
-    clamp(8px, 2vw, 22px)
+    clamp(8px, 2vw, 20px)
     0;
 
   box-sizing: border-box;
@@ -84,16 +103,17 @@
    ========================================================= */
 
 .thank-you-frame {
-  --arch-cap: min(40vw, 350px);
-  --arch-side: clamp(10px, 2.4vw, 28px);
+  --arch-cap: min(45vw, 400px);
+  --arch-side: clamp(10px, 2.5vw, 30px);
 
   position: relative;
   isolation: isolate;
 
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+
   justify-items: center;
-  align-content: center;
+  align-content: start;
 
   width: 100%;
   height: auto;
@@ -103,13 +123,12 @@
 
   box-sizing: border-box;
 
-  /* Artwork follows the controls in flow so text resizing stays accessible. */
   padding:
-    clamp(40px, 6svh, 60px)
+    clamp(44px, 6.8svh, 62px)
     clamp(12px, 4vw, 56px)
     0;
 
-  gap: clamp(3px, 0.65svh, 7px);
+  gap: clamp(6px, 0.9svh, 10px);
 }
 
 .thank-you-frame > :not(.thank-you-arch) {
@@ -118,10 +137,13 @@
 }
 
 
-/* ---------- GOLD ARCH ---------- */
+/* =========================================================
+   GOLD ARCH
+   ========================================================= */
 
 .thank-you-arch {
   position: absolute;
+
   inset: 0;
 
   z-index: 0;
@@ -142,66 +164,90 @@
 
   border-image-repeat: stretch;
 
-  opacity: 0.9;
+  opacity: 0.88;
 }
 
 
 /* =========================================================
-   HEADING GROUP
+   FINAL EVENT LOGO
+   CURRENT SIZE = 50% LARGER THAN PREVIOUS APPROVED SIZE
    ========================================================= */
 
-.thank-you-heading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: 100%;
+.thank-you-logo {
+  position: relative;
+
+  z-index: 4;
+
+  display: block;
+
+  width: clamp(121.5px, 18svh, 193.5px) !important;
+  height: auto;
+
+  aspect-ratio: 1;
+
+  object-fit: contain;
+
+  margin: 0 auto;
 }
 
 
-
 /* =========================================================
-   THANK YOU HEADING + GUJARATI MESSAGE
+   THANK YOU MESSAGE
    ========================================================= */
 
 .thank-you-message {
   position: relative;
+
   z-index: 4;
 
   width: 100%;
 
-  text-align: center;
+  margin: 0 0 clamp(7px, 1svh, 12px);
 
-  margin: 0;
+  text-align: center;
 }
+
+
+/* THANK YOU heading - 25% reduced from older version */
 
 .thank-you-message h2 {
   margin: 0;
 
-  color: var(--final-gold);
+  color: var(--thank-gold);
 
   font-family: Georgia, serif;
-  font-size: clamp(1.8rem, 4.8svh, 3.4rem);
+  font-size: clamp(1.3125rem, 3.75svh, 2.475rem) !important;
   font-weight: 500;
   line-height: 1;
 
   letter-spacing: -0.03em;
+
+  overflow-wrap: anywhere;
 }
+
+
+/* Gujarati closing message */
 
 .thank-you-message p {
   width: min(100%, 42ch);
 
   margin:
-    clamp(4px, 0.65svh, 7px)
+    clamp(5px, 0.75svh, 9px)
     auto
     0;
 
-  color: var(--final-cream-soft);
+  color: var(--thank-cream-soft);
 
-  font-family: "Noto Serif Gujarati", serif;
-  font-size: clamp(0.78rem, 1.65svh, 1rem);
+  font-family:
+    "Noto Serif Gujarati",
+    serif;
+
+  font-size:
+    clamp(0.78rem, 1.7svh, 1rem);
+
   font-weight: 400;
-  line-height: 1.48;
+
+  line-height: 1.45;
 
   text-align: center;
 
@@ -210,58 +256,12 @@
 
 
 /* =========================================================
-   EVENT IDENTITY PILL
-   ========================================================= */
-
-.thank-you-kicker {
-  position: relative;
-  z-index: 4;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: min(92%, 620px);
-  min-height: 28px;
-
-  margin:
-    clamp(2px, 0.4svh, 5px)
-    auto
-    clamp(3px, 0.55svh, 6px);
-
-  padding: 4px 13px;
-
-  box-sizing: border-box;
-
-  border: 1px solid var(--final-gold-border);
-  border-radius: 999px;
-
-  background: #082f25f2;
-
-  box-shadow:
-    0 4px 14px #001d2340;
-
-  color: var(--final-gold-soft);
-
-  font-family: var(--sans, Arial, sans-serif);
-  font-size: clamp(8px, 1.1svh, 11px);
-  font-weight: 600;
-  line-height: 1.2;
-
-  letter-spacing: 0.075em;
-
-  text-align: center;
-
-  white-space: normal;
-}
-
-
-/* =========================================================
-   GREEN DETAILS CARD
+   ONE UNIFIED GREEN DETAILS CARD
    ========================================================= */
 
 .thank-you-details {
   position: relative;
+
   z-index: 4;
 
   container: closing-card / inline-size;
@@ -271,26 +271,32 @@
 
   width: min(100%, 820px);
 
-  gap: clamp(4px, 0.6svh, 8px);
+  min-width: 0;
+  min-height: 0;
 
-  margin: 0;
+  gap: clamp(7px, 1svh, 12px);
+
+  margin:
+    clamp(3px, 0.5svh, 6px)
+    0
+    0;
 
   padding:
-    clamp(7px, 1svh, 11px)
-    clamp(9px, 1.6vw, 15px);
+    clamp(10px, 1.45svh, 16px)
+    clamp(11px, 1.7vw, 17px);
 
   box-sizing: border-box;
 
-  border: 1px solid var(--final-gold-border);
+  border: 1px solid var(--thank-border);
   border-radius: 12px;
 
-  background: var(--final-green);
+  background: var(--thank-panel);
 
   box-shadow:
-    0 12px 42px #001d2370,
+    0 18px 60px #001d2385,
     inset 0 0 0 1px #ffffff08;
 
-  color: var(--final-cream);
+  color: var(--thank-cream);
 
   text-align: center;
 
@@ -306,6 +312,60 @@
 
 
 /* =========================================================
+   EVENT IDENTITY
+   Now merged into the SAME green card
+   ========================================================= */
+
+.thank-you-details .thank-you-kicker {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 0;
+
+  margin: 0;
+
+  padding:
+    0
+    0
+    clamp(7px, 1svh, 10px);
+
+  border: 0;
+  border-bottom: 1px solid #8f7a52;
+
+  border-radius: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  color: var(--thank-gold-soft);
+
+  font-family:
+    var(--sans, Arial, sans-serif);
+
+  font-size:
+    clamp(8px, 1.15svh, 11px);
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  letter-spacing: 0.07em;
+
+  text-align: center;
+
+  white-space: normal;
+
+  overflow-wrap: normal;
+}
+
+
+/* =========================================================
    DATE + VENUE
    ========================================================= */
 
@@ -315,7 +375,8 @@
   grid-template-columns:
     repeat(2, minmax(0, 1fr));
 
-  gap: clamp(8px, 1.4vw, 16px);
+  gap:
+    clamp(7px, 1.2vw, 14px);
 
   width: 100%;
 
@@ -324,12 +385,12 @@
   text-align: left;
 }
 
-.thank-you-date,
-.thank-you-venue {
+.thank-you-details .thank-you-date,
+.thank-you-details .thank-you-venue {
   display: grid;
 
   grid-template-columns:
-    17px minmax(0, 1fr);
+    16px minmax(0, 1fr);
 
   align-items: start;
 
@@ -341,17 +402,23 @@
 
   color: #fff8e9;
 
-  font-family: var(--sans, Arial, sans-serif);
-  font-size: clamp(10px, 1.4svh, 13px);
-  line-height: 1.28;
+  font-family:
+    var(--sans, Arial, sans-serif);
+
+  font-size:
+    clamp(10px, 1.45svh, 13px);
+
+  line-height: 1.25;
 }
 
 
-/* ---------- ICONS ---------- */
+/* icons */
 
-.thank-you-details .event-facts .ui-icon {
-  width: 17px;
-  height: 17px;
+.thank-you-details
+.event-facts
+.ui-icon {
+  width: 16px;
+  height: 16px;
 
   margin-top: 1px;
 
@@ -359,17 +426,21 @@
 }
 
 
-/* ---------- LABEL ---------- */
+/* labels */
 
-.thank-you-details .fact-label {
+.thank-you-details
+.event-facts
+.fact-label {
   display: block;
 
   margin-bottom: 1px;
 
   color: #e1cda9;
 
-  font-size: clamp(7px, 1svh, 9px);
-  line-height: 1.2;
+  font-size:
+    clamp(7px, 1svh, 9px);
+
+  line-height: 1.15;
 
   letter-spacing: 0.08em;
 
@@ -377,26 +448,34 @@
 }
 
 
-/* ---------- MAIN VALUE ---------- */
+/* values */
 
-.thank-you-details .event-facts strong {
+.thank-you-details
+.event-facts
+strong {
   display: block;
 
   color: #fff9eb;
 
-  font-size: clamp(11px, 1.65svh, 15px);
+  font-size:
+    clamp(11px, 1.65svh, 15px);
+
   font-weight: 600;
+
   line-height: 1.2;
 }
 
-.thank-you-details .event-facts time > span,
-.thank-you-details .thank-you-venue > span > span {
+.thank-you-details
+.event-facts
+time > span,
+.thank-you-details
+.thank-you-venue > span > span {
   display: block;
 }
 
 
 /* =========================================================
-   ACTION AREA
+   ACTIONS WRAPPER
    ========================================================= */
 
 .thank-you-actions {
@@ -408,11 +487,13 @@
   gap: 5px;
 
   width: 100%;
+
+  margin: 0;
 }
 
 
 /* =========================================================
-   MAIN GRAB PASSES BUTTON
+   GRAB YOUR PASSES
    ========================================================= */
 
 .thank-you-details .book-button {
@@ -426,7 +507,7 @@
 
   gap: 7px;
 
-  padding: 5px 10px;
+  padding: 5px 9px;
 
   box-sizing: border-box;
 
@@ -434,26 +515,42 @@
 
   background: #f0d49b;
 
-  color: #123b2d;
+  color: var(--thank-dark-text);
 
-  font-family: var(--sans, Arial, sans-serif);
-  font-size: clamp(11px, 1.5svh, 14px);
+  font-family:
+    var(--sans, Arial, sans-serif);
+
+  font-size:
+    clamp(11px, 1.5svh, 14px);
+
   font-weight: 700;
+
   line-height: 1.2;
 
   text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
-.thank-you-details .book-button:hover {
+.thank-you-details
+.book-button:hover {
   background: #f6dfad;
+}
+
+.thank-you-details
+.book-button:active {
+  transform: scale(0.995);
 }
 
 
 /* =========================================================
-   SAVE / DIRECTIONS / SHARE
+   SAVE DATE / DIRECTIONS / SHARE
    ========================================================= */
 
-.thank-you-details .event-links {
+.thank-you-details
+.event-links {
   display: grid;
 
   grid-template-columns:
@@ -469,9 +566,13 @@
   border: 0;
 }
 
-.thank-you-details .event-links a,
-.thank-you-details .event-links button {
+.thank-you-details
+.event-links a,
+.thank-you-details
+.event-links button {
   display: flex;
+
+  flex-direction: row;
 
   align-items: center;
   justify-content: center;
@@ -479,33 +580,42 @@
   min-width: 0;
   min-height: 44px;
 
-  gap: 5px;
+  gap: 4px;
 
-  padding: 4px 6px;
+  padding: 4px 5px;
 
   box-sizing: border-box;
 
-  border: 1px solid #e8d6ac;
-  border-radius: 7px;
+  border:
+    1px solid #e8d6ac;
+
+  border-radius: 8px;
 
   background: #f9f3e6;
 
-  color: #123b2d;
+  color: var(--thank-dark-text);
 
-  font-family: var(--sans, Arial, sans-serif);
-  font-size: clamp(9px, 1.25svh, 12px);
+  font-family:
+    var(--sans, Arial, sans-serif);
+
+  font-size:
+    clamp(9px, 1.3svh, 12px);
+
   font-weight: 600;
+
   line-height: 1.15;
 
-  white-space: normal;
-
   text-align: center;
+
+  white-space: normal;
 }
 
 
-/* ---------- ACTION ICONS ---------- */
+/* action icons */
 
-.thank-you-details .thank-you-actions .ui-icon {
+.thank-you-details
+.thank-you-actions
+.ui-icon {
   width: 16px;
   height: 16px;
 
@@ -514,16 +624,21 @@
 
 
 /* =========================================================
-   BOOKING NOTE
+   BOOKINGS THROUGH DISTRICT
    ========================================================= */
 
-.thank-you-details .booking-note {
+.thank-you-details
+.booking-note {
   margin: 0;
 
-  color: #e2d7c0;
+  color: var(--thank-muted);
 
-  font-family: var(--sans, Arial, sans-serif);
-  font-size: clamp(8px, 1.05svh, 10px);
+  font-family:
+    var(--sans, Arial, sans-serif);
+
+  font-size:
+    clamp(8px, 1.1svh, 10px);
+
   line-height: 1.2;
 
   text-align: center;
@@ -531,10 +646,11 @@
 
 
 /* =========================================================
-   ENTRY INFORMATION
+   ENTRY NOTE
    ========================================================= */
 
-.thank-you-details .entry-note {
+.thank-you-details
+.entry-note {
   display: block;
 
   margin: 0;
@@ -542,34 +658,48 @@
   padding: 5px 0 0;
 
   border: 0;
-  border-top: 1px solid #8a9770;
+  border-top:
+    1px solid #8a9770;
+
+  border-radius: 0;
 
   background: none;
 
   color: #f5efdf;
 
-  font-family: var(--sans, Arial, sans-serif);
-  font-size: clamp(9px, 1.25svh, 12px);
-  line-height: 1.28;
+  font-family:
+    var(--sans, Arial, sans-serif);
+
+  font-size:
+    clamp(9px, 1.3svh, 12px);
+
+  line-height: 1.25;
 
   text-align: left;
 }
 
-.thank-you-details .entry-note p {
+.thank-you-details
+.entry-note p {
   margin: 0;
 }
 
-.thank-you-details .entry-note strong {
+.thank-you-details
+.entry-note strong {
   color: #fff6df;
 }
 
-.thank-you-details .entry-note .ui-icon {
+.thank-you-details
+.entry-note .ui-icon {
   display: inline-block;
 
   width: 15px;
   height: 15px;
 
-  margin-right: 6px;
+  margin:
+    0
+    6px
+    0
+    0;
 
   color: #f0d49b;
 
@@ -578,123 +708,65 @@
 
 
 /* =========================================================
-   PARTNER / PRESENTER STRIP
-   OUTSIDE GREEN CARD
+   RELIVE EVENING INSIDE CARD
    ========================================================= */
 
-.finale.thank-you .finale-brands {
-  position: relative;
-
-  z-index: 4;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  grid-auto-rows:
-    clamp(44px, 5.4svh, 52px);
-
-  width: min(92%, 560px);
-
-  gap: clamp(4px, 0.7vw, 7px);
-
-  margin:
-    clamp(3px, 0.55svh, 6px)
-    auto
-    clamp(5px, 0.7svh, 8px);
-}
 
 
-/* ---------- PARTNER CARD ---------- */
 
-.finale.thank-you .finale-brands .brand-plaque {
-  display: grid;
+/* =========================================================
+   COMMON BUTTON / TEXT SAFETY
+   ========================================================= */
 
-  grid-template-rows:
-    minmax(0, 1fr);
-
+.thank-you-details
+:is(a, button) {
   min-width: 0;
-  min-height: 0;
+  max-width: 100%;
 
-  height: 100%;
-
-  padding: 3px 5px;
+  height: auto;
 
   box-sizing: border-box;
 
-  overflow: hidden;
-
-  border: 1px solid #dfc591;
-  border-radius: 7px;
-
-  background: #fff;
-
-  box-shadow:
-    0 2px 8px #001a1733;
-
-  color: #173c30;
+  white-space: normal;
 }
 
-
-/* ---------- BRAND IMAGE ---------- */
-
-.finale.thank-you .finale-brands .brand-logo {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
+.thank-you-details
+.control-label {
   min-width: 0;
-  min-height: 0;
+  max-width: 100%;
 
-  height: 100%;
+  overflow-wrap: anywhere;
 
-  overflow: hidden;
+  text-align: center;
 }
 
-.finale.thank-you .finale-brands .brand-plaque img {
-  display: block;
+.thank-you-scene
+:is(
+  p,
+  time,
+  strong,
+  small,
+  .control-label
+) {
+  min-width: 0;
 
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  mix-blend-mode: normal;
-}
-
-
-/* ---------- EVENT LOGO CARD ---------- */
-
-.finale.thank-you .finale-brands .brand-tge {
-  background: #123b2e;
-}
-
-
-/* ---------- ETHEREUM CARD ---------- */
-
-.finale.thank-you .finale-brands .brand-ethereum {
-  background: #235543;
-}
-
-.finale.thank-you .finale-brands .brand-ethereum img {
-  transform: scale(1.4);
-}
-
-
-/* ---------- INTERACTION ---------- */
-
-.finale.thank-you .finale-brands .brand-plaque:is(:hover, :focus-visible) {
-  border-color: #f2c66c;
-
-  box-shadow:
-    0 0 0 2px #e0be8077;
+  overflow-wrap: anywhere;
 }
 
 
 /* =========================================================
-   ELEPHANT / LOTUS / LEAVES ART
+   NO PARTNER / SPONSOR STRIP ON FINAL PAGE
+   ========================================================= */
+
+.finale.thank-you
+.finale-brands {
+  display: none !important;
+}
+
+
+/* =========================================================
+   BOTTOM DECORATIVE ARTWORK
+   Elephant + leaves + lotus
    ========================================================= */
 
 .thank-you-art {
@@ -703,11 +775,17 @@
   z-index: 2;
 
   width: min(100%, 900px);
-  height: clamp(84px, 13svh, 126px);
 
-  pointer-events: none;
+  height:
+    clamp(82px, 13svh, 126px);
+
+  margin: 0;
+
+  opacity: 1;
 
   overflow: visible;
+
+  pointer-events: none;
 }
 
 .thank-you-art img {
@@ -719,7 +797,9 @@
 }
 
 
-/* ---------- ELEPHANT ---------- */
+/* =========================================================
+   ELEPHANT
+   ========================================================= */
 
 .thank-you-elephant {
   left: 50%;
@@ -730,14 +810,18 @@
   width: 50%;
   height: 92%;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   object-fit: contain;
-  object-position: center bottom;
+  object-position:
+    center bottom;
 }
 
 
-/* ---------- LEAVES ---------- */
+/* =========================================================
+   LEAVES
+   ========================================================= */
 
 .thank-you-leaf {
   bottom: 0;
@@ -748,7 +832,8 @@
   height: 100%;
 
   object-fit: contain;
-  object-position: center bottom;
+  object-position:
+    center bottom;
 
   opacity: 0.96;
 }
@@ -759,10 +844,14 @@
 
 .leaf-right {
   right: 0;
+
+  height: 100%;
 }
 
 
-/* ---------- LOTUS ---------- */
+/* =========================================================
+   LOTUS
+   ========================================================= */
 
 .thank-you-lotus {
   bottom: 0;
@@ -773,7 +862,8 @@
   height: 66%;
 
   object-fit: contain;
-  object-position: center bottom;
+  object-position:
+    center bottom;
 }
 
 .lotus-left {
@@ -786,36 +876,111 @@
 
 
 /* =========================================================
-   FINAL FOOTER
+   CONTAINER RESPONSIVENESS
+   ========================================================= */
+
+@container closing-card (min-width: 15rem) {
+  .thank-you-details
+  .event-links {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .thank-you-details
+  .event-links > :last-child {
+    grid-column:
+      1 / -1;
+  }
+}
+
+
+@container closing-card (min-width: 18rem) {
+  .thank-you-details
+  .event-links {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .thank-you-details
+  .event-links > :last-child {
+    grid-column: auto;
+  }
+
+  .thank-you-details
+  .event-links a,
+  .thank-you-details
+  .event-links button {
+    flex-direction: column;
+
+    gap: 5px;
+  }
+}
+
+
+@container closing-card (min-width: 34rem) {
+  .thank-you-details
+  .event-facts {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+  }
+
+  .thank-you-details
+  .event-facts strong {
+    font-size: 15px;
+  }
+
+  .thank-you-details
+  .event-links a,
+  .thank-you-details
+  .event-links button {
+    flex-direction: row;
+
+    padding: 7px 10px;
+  }
+}
+
+
+/* =========================================================
+   FOOTER
    ========================================================= */
 
 footer.closing-footer {
   display: grid;
 
   grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+    1.2fr 1fr 1.2fr;
 
   align-items: center;
 
   gap: 8px;
 
   width: 100%;
-  height: auto;
-  min-height: 32px;
+
+  height:
+    var(--closing-footer-h);
+
+  min-height:
+    var(--closing-footer-h);
 
   padding:
     7px
-    clamp(14px, 5vw, 70px);
+    var(--gutter, 40px);
 
   box-sizing: border-box;
 
-  border-top: 1px solid #e0be8022;
+  border-top:
+    1px solid #e0be8022;
 
-  background: #0b201b;
+  background:
+    var(--ink, #0b201b);
 
   color: #c4c7b4;
 
-  font-family: var(--sans, Arial, sans-serif);
+  font-family:
+    var(--sans, Arial, sans-serif);
+
   font-size: 10px;
 }
 
@@ -828,55 +993,139 @@ footer.closing-footer > * {
 }
 
 
-footer.closing-footer > :nth-child(2) {
-  text-align: center;
+/* footer replay */
+
+footer.closing-footer > a:first-child {
+  display: flex;
+
+  align-items: center;
+
+  min-height: 44px;
+
+  padding: 6px 4px;
+
+  color:
+    var(--thank-gold);
+
+  font-family:
+    var(--serif, Georgia, serif);
+
+  font-size:
+    clamp(13px, 1.5vw, 18px);
+
+  text-decoration: none;
 }
 
+
+/* middle text */
+
+footer.closing-footer > :nth-child(2) {
+  text-align: center !important;
+}
+
+
+/* right text */
+
 footer.closing-footer > :last-child {
-  text-align: right;
+  text-align: right !important;
 }
 
 
 /* =========================================================
-   COMMON TEXT SAFETY
+   FOCUS STATES
    ========================================================= */
 
-.thank-you-scene :is(
-  p,
-  time,
-  strong,
-  small,
-  .control-label
-) {
-  min-width: 0;
+.finale.thank-you
+:is(a, button):focus-visible,
+footer.closing-footer a:focus-visible {
+  outline:
+    3px solid #f8cf74;
 
-  overflow-wrap: anywhere;
+  outline-offset: 3px;
 }
 
-.thank-you-details :is(a, button) {
-  max-width: 100%;
 
-  box-sizing: border-box;
+/* =========================================================
+   LARGE DESKTOP
+   1200px+
+   ========================================================= */
+
+@media (min-width: 1200px) {
+
+  .thank-you-frame {
+    padding-inline:
+      clamp(48px, 6vw, 90px);
+  }
+
+  .thank-you-details {
+    width:
+      min(820px, 78vw);
+  }
+
+  .thank-you-art {
+    width:
+      min(900px, 72vw);
+  }
+}
+
+
+/* =========================================================
+   STANDARD DESKTOP / LAPTOP
+   901px - 1199px
+   ========================================================= */
+
+@media
+(min-width: 901px)
+and
+(max-width: 1199px) {
+
+  .thank-you-frame {
+    padding-inline:
+      clamp(30px, 4vw, 52px);
+  }
+
+  .thank-you-details {
+    width:
+      min(820px, 88vw);
+  }
+
+  .thank-you-logo {
+    width:
+      clamp(121.5px, 17svh, 180px) !important;
+  }
 }
 
 
 /* =========================================================
    TABLET
+   651px - 900px
    ========================================================= */
 
-@media (max-width: 900px) {
+@media
+(min-width: 651px)
+and
+(max-width: 900px) {
 
   .thank-you-frame {
     padding-inline:
-      clamp(16px, 4vw, 36px);
+      clamp(20px, 4vw, 36px);
+
+    gap:
+      clamp(5px, 0.8svh, 8px);
+  }
+
+  .thank-you-logo {
+    width:
+      clamp(118px, 17svh, 172px) !important;
   }
 
   .thank-you-details {
-    width: min(100%, 700px);
+    width:
+      min(100%, 700px);
   }
 
-  .finale.thank-you .finale-brands {
-    width: min(90%, 520px);
+  .thank-you-art {
+    width: 100%;
   }
 
   .thank-you-elephant {
@@ -887,90 +1136,110 @@ footer.closing-footer > :last-child {
 
 /* =========================================================
    MOBILE
+   <= 650px
    ========================================================= */
 
 @media (max-width: 650px) {
 
-  .finale.thank-you {
+  :root {
+    --closing-footer-h: 82px;
+  }
 
+
+  /* page */
+
+  .finale.thank-you {
     height: auto;
+
     min-height: calc(100svh - 76px);
+
     max-height: none;
   }
 
 
-  /* ---------- FRAME ---------- */
+  /* frame */
 
   .thank-you-frame {
     padding:
-      clamp(34px, 5svh, 48px)
+      clamp(40px, 6svh, 52px)
       18px
       0;
 
-    gap: clamp(2px, 0.5svh, 5px);
+    gap:
+      clamp(5px, 0.8svh, 8px);
   }
 
 
-  /* ---------- LOGO ---------- */
+  /* logo */
+
+  .thank-you-logo {
+    width:
+      clamp(121.5px, 18svh, 193.5px) !important;
+  }
 
 
-
-  /* ---------- THANK YOU ---------- */
+  /* thank you heading */
 
   .thank-you-message h2 {
     font-size:
-      clamp(1.55rem, 4.2svh, 2.5rem);
+      clamp(1.3125rem, 3.75svh, 2.475rem) !important;
   }
+
+
+  /* Gujarati */
 
   .thank-you-message p {
-    max-width: 34ch;
+    width: min(100%, 34ch);
 
     font-size:
-      clamp(0.72rem, 1.55svh, 0.9rem);
+      clamp(0.72rem, 1.5svh, 0.9rem);
 
-    line-height: 1.4;
+    line-height: 1.38;
   }
 
 
-  /* ---------- IDENTITY ---------- */
-
-  .thank-you-kicker {
-    width: min(94%, 390px);
-
-    min-height: 26px;
-
-    padding: 4px 8px;
-
-    margin: 2px auto 4px;
-
-    font-size:
-      clamp(7px, 1.05svh, 9px);
-
-    letter-spacing: 0.05em;
-  }
-
-
-  /* ---------- DETAILS ---------- */
+  /* unified green card */
 
   .thank-you-details {
     width: 100%;
 
-    padding: 6px 8px;
+    gap:
+      clamp(5px, 0.75svh, 8px);
 
-    gap: clamp(3px, 0.5svh, 6px);
+    padding:
+      8px 9px;
+
+    border-radius: 11px;
   }
 
 
-  /* ---------- FACTS ---------- */
+  /* card heading */
 
-  .thank-you-details .event-facts {
+  .thank-you-details
+  .thank-you-kicker {
+    padding-bottom: 7px;
+
+    font-size:
+      clamp(7px, 1.05svh, 9px);
+
+    letter-spacing:
+      0.05em;
+  }
+
+
+  /* facts */
+
+  .thank-you-details
+  .event-facts {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
 
     gap: 6px;
   }
 
+  .thank-you-details
   .thank-you-date,
+  .thank-you-details
   .thank-you-venue {
     grid-template-columns:
       14px minmax(0, 1fr);
@@ -981,37 +1250,49 @@ footer.closing-footer > :last-child {
       clamp(8px, 1.2svh, 11px);
   }
 
-  .thank-you-details .event-facts .ui-icon {
+  .thank-you-details
+  .event-facts
+  .ui-icon {
     width: 14px;
     height: 14px;
   }
 
-  .thank-you-details .event-facts strong {
+  .thank-you-details
+  .event-facts
+  strong {
     font-size:
       clamp(9px, 1.4svh, 12px);
   }
 
 
-  /* ---------- BUTTONS ---------- */
+  /* CTA */
 
-  .thank-you-details .book-button {
+  .thank-you-details
+  .book-button {
     min-height: 44px;
 
-    padding: 4px 7px;
+    padding:
+      4px 7px;
 
     font-size:
       clamp(10px, 1.3svh, 12px);
   }
 
-  .thank-you-details .event-links {
+
+  /* utility links */
+
+  .thank-you-details
+  .event-links {
     grid-template-columns:
       repeat(3, minmax(0, 1fr));
 
     gap: 3px;
   }
 
-  .thank-you-details .event-links a,
-  .thank-you-details .event-links button {
+  .thank-you-details
+  .event-links a,
+  .thank-you-details
+  .event-links button {
     min-height: 44px;
 
     padding: 3px;
@@ -1023,33 +1304,16 @@ footer.closing-footer > :last-child {
   }
 
 
-  /* ---------- PARTNER CARDS ---------- */
+  /* entry */
 
-  .finale.thank-you .finale-brands {
-    width: min(94%, 390px);
-
-    grid-template-columns:
-      repeat(4, minmax(0, 1fr));
-
-    grid-auto-rows:
-      44px;
-
-    gap: 3px;
-
-    margin:
-      2px
-      auto
-      5px;
-  }
-
-  .finale.thank-you .finale-brands .brand-plaque {
-    padding: 2px 3px;
-
-    border-radius: 5px;
+  .thank-you-details
+  .entry-note {
+    font-size:
+      clamp(8px, 1.15svh, 10px);
   }
 
 
-  /* ---------- BOTTOM ART ---------- */
+  /* art */
 
   .thank-you-art {
     width: 100%;
@@ -1065,6 +1329,7 @@ footer.closing-footer > :last-child {
 
   .thank-you-leaf {
     width: 37%;
+    height: 100%;
   }
 
   .thank-you-lotus {
@@ -1081,72 +1346,91 @@ footer.closing-footer > :last-child {
   }
 
 
-  /* ---------- FOOTER ---------- */
+  /* footer */
 
   footer.closing-footer {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns:
+      1fr 1fr;
 
-    height: auto;
-    min-height: 32px;
+    grid-template-rows:
+      auto auto;
 
-    padding: 5px 10px;
+    height:
+      var(--closing-footer-h);
 
-    gap: 2px 8px;
+    min-height:
+      var(--closing-footer-h);
+
+    padding:
+      5px 10px;
+
+    gap:
+      2px 8px;
 
     font-size: 8px;
   }
 
   footer.closing-footer > :first-child {
-    grid-column: 1 / -1;
+    grid-column:
+      1 / -1;
 
     justify-content: center;
 
-    min-height: 0;
+    min-height: 36px;
 
     font-size: 12px;
   }
 
   footer.closing-footer > :nth-child(2),
   footer.closing-footer > :last-child {
-    text-align: center;
+    text-align:
+      center !important;
   }
 }
 
 
 /* =========================================================
-   SMALL PHONES
+   SMALL MOBILE
+   <= 380px
    ========================================================= */
 
 @media (max-width: 380px) {
 
   .thank-you-frame {
-    padding-inline: 10px;
+    padding-inline:
+      10px;
   }
 
+  .thank-you-logo {
+    width:
+      clamp(116px, 18svh, 174px) !important;
+  }
+
+  .thank-you-message h2 {
+    font-size:
+      clamp(1.15rem, 3.5svh, 2rem) !important;
+  }
+
+  .thank-you-message p {
+    font-size:
+      clamp(0.68rem, 1.45svh, 0.82rem);
+  }
+
+  .thank-you-details {
+    padding:
+      7px 8px;
+  }
+
+  .thank-you-details
   .thank-you-kicker {
-    width: 96%;
-
-    padding-inline: 5px;
-
     font-size: 7px;
 
-    letter-spacing: 0.03em;
-  }
-
-  .finale.thank-you .finale-brands {
-    width: calc(100% - 18px);
-
-    grid-auto-rows: 44px;
-
-    gap: 2px;
-  }
-
-  .finale.thank-you .finale-brands .brand-plaque {
-    padding: 1px 2px;
+    letter-spacing:
+      0.035em;
   }
 
   .thank-you-art {
-    height: 92px;
+    height: 94px;
   }
 
   .thank-you-elephant {
@@ -1164,81 +1448,175 @@ footer.closing-footer > :last-child {
 
 
 /* =========================================================
-   VERY SHORT / LANDSCAPE SCREENS
+   VERY SMALL MOBILE
+   <= 320px
+   ========================================================= */
+
+@media (max-width: 320px) {
+
+  .thank-you-frame {
+    padding-inline:
+      7px;
+  }
+
+  .thank-you-logo {
+    width:
+      clamp(105px, 17svh, 155px) !important;
+  }
+
+  .thank-you-details {
+    padding:
+      6px 7px;
+  }
+
+  .thank-you-details
+  .event-links a,
+  .thank-you-details
+  .event-links button {
+    font-size:
+      7.5px;
+  }
+
+  footer.closing-footer {
+    padding-inline:
+      6px;
+  }
+}
+
+
+/* =========================================================
+   SHORT SCREENS / LANDSCAPE
+   <= 650px height
    ========================================================= */
 
 @media (max-height: 650px) {
 
+  :root {
+    --closing-footer-h: 76px;
+  }
 
   .thank-you-frame {
-    --arch-cap: 60px;
     padding:
-      20px
+      34px
       12px
       0;
 
-    gap: 2px;
+    gap: 3px;
   }
 
 
+  /* current logo size +50% short-screen version */
+
+  .thank-you-logo {
+    width:
+      103.5px !important;
+  }
+
+
+  /* thank you heading */
+
   .thank-you-message h2 {
-    font-size: 1.45rem;
+    font-size:
+      1.1625rem !important;
+  }
+
+
+  /* message */
+
+  .thank-you-message {
+    margin-bottom: 4px;
   }
 
   .thank-you-message p {
     margin-top: 2px;
 
-    font-size: 0.66rem;
+    font-size: 0.68rem;
+
     line-height: 1.25;
   }
 
-  .thank-you-kicker {
-    min-height: 22px;
 
-    margin: 1px auto 2px;
-
-    padding: 2px 6px;
-
-    font-size: 6.5px;
-  }
+  /* card */
 
   .thank-you-details {
-    padding: 4px 6px;
+    gap: 4px;
 
-    gap: 2px;
+    padding:
+      6px 7px;
   }
 
-  .thank-you-details .book-button {
-    min-height: 44px;
+  .thank-you-details
+  .thank-you-kicker {
+    padding-bottom: 5px;
 
+    font-size: 7px;
+  }
+
+
+  /* facts */
+
+  .thank-you-details
+  .thank-you-date,
+  .thank-you-details
+  .thank-you-venue {
     font-size: 9px;
   }
 
-  .thank-you-details .event-links a,
-  .thank-you-details .event-links button {
+  .thank-you-details
+  .event-facts strong {
+    font-size: 10px;
+  }
+
+
+  /* CTA */
+
+  .thank-you-details
+  .book-button {
     min-height: 44px;
 
-    font-size: 7.5px;
-  }
+    padding:
+      3px 6px;
 
-  .thank-you-details .entry-note {
-    padding-top: 2px;
-
-    font-size: 7.5px;
+    font-size: 10px;
   }
 
 
-  .finale.thank-you .finale-brands {
-    grid-auto-rows: 44px;
+  /* actions */
 
-    margin:
-      1px
-      auto
-      3px;
+  .thank-you-details
+  .event-links a,
+  .thank-you-details
+  .event-links button {
+    min-height: 44px;
+
+    padding:
+      2px 3px;
+
+    font-size: 8px;
   }
+
+
+  /* notes */
+
+  .thank-you-details
+  .booking-note {
+    font-size: 7px;
+  }
+
+  .thank-you-details
+  .entry-note {
+    padding-top: 3px;
+
+    font-size: 8px;
+  }
+
+
+
+
+  /* art */
 
   .thank-you-art {
-    height: 60px;
+    height: 72px;
   }
 
   .thank-you-elephant {
@@ -1253,23 +1631,149 @@ footer.closing-footer > :last-child {
     width: 22%;
   }
 
+
+  /* footer */
+
   footer.closing-footer {
-    padding: 3px 8px;
+    padding:
+      4px 8px;
 
     font-size: 7px;
+  }
+
+  footer.closing-footer > a:first-child {
+    font-size: 10px;
   }
 }
 
 
 /* =========================================================
-   FOCUS / ACCESSIBILITY
+   SHORT DESKTOP / TABLET
+   <= 760px height and >650px width
    ========================================================= */
 
-.finale.thank-you
-:is(a, button):focus-visible,
-footer.closing-footer a:focus-visible {
-  outline: 2px solid #f8cf74;
-  outline-offset: 2px;
+@media
+(max-height: 760px)
+and
+(min-width: 651px) {
+
+  .thank-you-frame {
+    padding-top:
+      clamp(34px, 5.2svh, 46px);
+
+    padding-bottom:
+      0;
+  }
+
+  .thank-you-logo {
+    width:
+      clamp(106px, 16svh, 145px) !important;
+  }
+
+  .thank-you-message h2 {
+    font-size:
+      clamp(1.25rem, 3.4svh, 2rem) !important;
+  }
+
+  .thank-you-details {
+    gap:
+      clamp(4px, 0.6svh, 7px);
+
+    padding:
+      7px 10px;
+  }
+
+  .thank-you-art {
+    height:
+      clamp(70px, 11svh, 92px);
+  }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONE
+   ========================================================= */
+
+@media
+(max-width: 900px)
+and
+(max-height: 500px) {
+
+  :root {
+    --closing-footer-h: 58px;
+  }
+
+  .thank-you-frame {
+    padding:
+      20px
+      18px
+      0;
+
+    gap: 2px;
+  }
+
+  .thank-you-logo {
+    width:
+      78px !important;
+  }
+
+  .thank-you-message h2 {
+    font-size:
+      1rem !important;
+  }
+
+  .thank-you-message p {
+    font-size:
+      0.58rem;
+
+    line-height: 1.2;
+  }
+
+  .thank-you-details {
+    width:
+      min(94%, 760px);
+
+    gap: 2px;
+
+    padding:
+      4px 6px;
+  }
+
+  .thank-you-details
+  .thank-you-kicker {
+    font-size: 6px;
+
+    padding-bottom: 3px;
+  }
+
+  .thank-you-details
+  .event-facts {
+    gap: 5px;
+  }
+
+  .thank-you-details
+  .event-links a,
+  .thank-you-details
+  .event-links button,
+  .thank-you-details
+  .book-button {
+    min-height: 44px;
+  }
+
+  .thank-you-art {
+    height: 52px;
+  }
+
+  footer.closing-footer {
+    height:
+      var(--closing-footer-h);
+
+    min-height:
+      var(--closing-footer-h);
+
+    padding:
+      2px 8px;
+  }
 }
 
 
@@ -1277,14 +1781,120 @@ footer.closing-footer a:focus-visible {
    REDUCED MOTION
    ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media
+(prefers-reduced-motion: reduce) {
 
   .finale.thank-you *,
   footer.closing-footer * {
-    scroll-behavior: auto !important;
-    animation: none !important;
-    transition: none !important;
+    animation:
+      none !important;
+
+    transition:
+      none !important;
+
+    scroll-behavior:
+      auto !important;
   }
+}
+
+
+/* =========================================================
+   HIGH CONTRAST / FORCED COLORS
+   ========================================================= */
+
+@media
+(forced-colors: active) {
+
+  .thank-you-details,
+  .thank-you-details
+  .book-button,
+  .thank-you-details
+  .event-links a,
+  .thank-you-details
+  .event-links button {
+    border:
+      1px solid CanvasText;
+  }
+
+  .thank-you-message h2,
+  .thank-you-details
+  .thank-you-kicker,
+  .thank-you-replay {
+    color:
+      CanvasText;
+  }
+}
+
+
+/* =========================================================
+   SAFE AREA SUPPORT — iPHONE
+   ========================================================= */
+
+@supports
+(padding: max(0px)) {
+
+  .finale.thank-you {
+    padding-left:
+      env(safe-area-inset-left);
+
+    padding-right:
+      env(safe-area-inset-right);
+  }
+
+  footer.closing-footer {
+    padding-left:
+      max(
+        10px,
+        env(safe-area-inset-left)
+      );
+
+    padding-right:
+      max(
+        10px,
+        env(safe-area-inset-right)
+      );
+  }
+}
+
+
+/* =========================================================
+   FINAL ACCESSIBILITY / TAP TARGETS
+   ========================================================= */
+
+.thank-you-details
+:is(a, button),
+footer.closing-footer a {
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+.thank-you-details
+:is(a, button):focus-visible,
+footer.closing-footer a:focus-visible {
+  outline:
+    3px solid #f8cf74;
+
+  outline-offset:
+    3px;
+}
+
+
+/* =========================================================
+   END OF FINAL PAGE CSS
+   ========================================================= */
+/* Integration with the current heading, in-section footer and preserved links. */
+.thank-you-heading { display:grid; justify-items:center; gap:5px; width:100%; }
+.thank-you-logo { max-width:100%; }
+.thank-you-details .event-links a { text-decoration:none; }
+.thank-you-details .entry-note small { display:block; margin-top:3px; font-size:inherit; }
+footer.closing-footer {
+  height:auto; min-height:32px;
+  grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:auto;
+  padding:6px 10px;
+}
+footer.closing-footer > p { min-height:0; grid-column:auto; font-size:inherit; text-align:center !important; }
+@media (max-width:650px) {
+  footer.closing-footer { grid-template-columns:minmax(0,1fr); }
 }
 /* Retain the existing gold replay and invitation links without restyling. */
 .thank-you-text-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; gap:8px; margin:0; }
@@ -1297,12 +1907,9 @@ footer.closing-footer a:focus-visible {
 .thank-you-text-links .ui-icon { width:14px; height:14px; flex-shrink:0; }
 .thank-you-text-links .control-label { text-decoration:underline; text-underline-offset:3px; }
 .thank-you-text-links a:hover { color:#ffe7b1; }
-.thank-you-text-links a:focus-visible { outline:2px solid #f2d28e; outline-offset:2px; }
+.finale.thank-you .thank-you-text-links a:focus-visible { outline:2px solid #f2d28e; outline-offset:2px; }
 
 .thank-you-text-links { position:relative; z-index:4; }
-.thank-you-details .event-links a { text-decoration:none; }
-.thank-you-details .entry-note small { display:block; margin-top:3px; font-size:inherit; }
-footer.closing-footer > p { text-align:center; }
 @media (min-height:441px) and (max-height:740px),
        (min-width:501px) and (max-width:650px) and (min-height:741px) and (max-height:800px) {
   .thank-you-text-links a { min-height:28px; padding-block:4px; font-size:13px; }
@@ -1322,31 +1929,45 @@ footer.closing-footer > p { text-align:center; }
   .finale.thank-you { min-height:calc(100svh - 53px); scroll-margin-top:53px; }
 }
 
-/* Compact screens keep the same content order beside the thank-you heading. */
-@media (max-width:500px) and (max-height:600px) {
-  .thank-you-frame { padding-top:14px; }
+
+/* Keep the larger logo beside the message where vertical space is limited. */
+@media (max-height:800px) {
+  .thank-you-frame { --arch-cap:80px; }
+  .thank-you-heading { grid-template-columns:minmax(0,1fr) minmax(0,1.6fr); align-items:center; gap:10px; }
+  .thank-you-message { margin-bottom:0; }
+}
+@media (max-height:650px) {
+  .thank-you-frame { --arch-cap:60px; padding-top:12px; gap:3px; }
+  .thank-you-details { gap:2px; padding-block:4px; }
+  .thank-you-art { height:60px; }
 }
 @media (min-width:500px) and (max-height:540px) {
-  .thank-you-frame {
-    grid-template-columns:minmax(0,1fr) minmax(0,3.5fr);
-    gap:2px 10px;
-    padding:4px 8px 0;
-  }
-  .thank-you-heading { grid-column:1; grid-row:1 / 6; flex-direction:column; gap:3px; }
-  .thank-you-message h2 { font-size:20px; }
-  .thank-you-message p { font-size:11px; }
-  .thank-you-kicker { grid-column:2; grid-row:1; width:100%; }
-  .thank-you-details { grid-column:2; grid-row:2; }
-  .finale.thank-you .finale-brands { grid-column:2; grid-row:3; width:100%; margin:0; }
-  .thank-you-text-links { grid-column:2; grid-row:4; }
-  .thank-you-art { grid-column:2; grid-row:5; height:24px; }
+  .thank-you-frame { grid-template-columns:minmax(0,1fr) minmax(0,3.5fr); gap:2px 10px; padding:4px 8px 0; }
+  .thank-you-heading { grid-column:1; grid-row:1 / 4; grid-template-columns:minmax(0,1fr); gap:3px; align-self:center; }
+  .thank-you-details { grid-column:2; grid-row:1; width:100%; }
+  .thank-you-text-links { grid-column:2; grid-row:2; }
+  .thank-you-art { grid-column:2; grid-row:3; height:32px; }
   footer.closing-footer { min-height:20px; padding:3px 8px; grid-template-columns:repeat(2,minmax(0,1fr)); }
-  footer.closing-footer > :first-child { grid-column:auto; font-size:inherit; }
 }
 @media (min-width:500px) and (max-height:460px) {
   .thank-you-frame { padding-top:0; row-gap:0; }
-  .thank-you-details { gap:0; padding-block:2px; }
   .thank-you-details .thank-you-actions { grid-template-columns:repeat(4,minmax(0,1fr)); gap:3px; }
   .thank-you-details .event-links { display:contents; }
-  .thank-you-art { height:12px; }
+  .thank-you-details .event-links > :last-child { grid-column:auto; }
+  .thank-you-art { height:24px; }
+}
+/* The mobile three-column row also resets the narrow-container spanning rule. */
+@media (max-width:650px) {
+  .thank-you-details .event-links > :last-child { grid-column:auto; }
+}
+@media (min-height:651px) and (max-height:740px) {
+  .thank-you-frame { padding-top:28px; gap:5px; }
+}
+
+/* The supplied footer's first-child sizing is for a link; ours contains text. */
+footer.closing-footer > p:first-child { min-height:0; grid-column:auto; font-size:inherit; }
+@media (min-height:741px) and (max-height:900px) {
+  .thank-you-frame { padding-top:20px; gap:6px; }
+  .thank-you-heading { gap:0; }
+  .thank-you-message { margin-bottom:0; }
 }

@@ -18,19 +18,19 @@ let server,browser;
    const section=document.querySelector('#details'),s=section.getBoundingClientRect();
    const card=document.querySelector('.thank-you-details'),c=card.getBoundingClientRect(),issues=[];
    const header=document.querySelector('.masthead').getBoundingClientRect();
-   const logos=section.querySelector('.finale-brands'), l=logos.getBoundingClientRect();
+   const logos=section.querySelector('.finale-brands');
    const art=section.querySelector('.thank-you-art').getBoundingClientRect();
    const kicker=section.querySelector('.thank-you-kicker');
-   if(!kicker || kicker.parentElement!==section.querySelector('.thank-you-frame') || kicker.getBoundingClientRect().bottom>c.top+1)issues.push('event identity must sit above and outside the green card');
-   if(logos.parentElement!==section.querySelector('.thank-you-frame')||card.contains(logos))issues.push('logos must be in red frame outside green details');
-   if(l.top<c.bottom-1||l.bottom>art.top+1)issues.push('logo row must sit between details and artwork');
+   if(!kicker || kicker.parentElement!==card || kicker.getBoundingClientRect().bottom>card.querySelector('.event-facts').getBoundingClientRect().top+1)issues.push('event identity must head the unified green card');
+   if(getComputedStyle(logos).display!=='none')issues.push('final partner strip must be hidden');
    const links=section.querySelector('.thank-you-text-links'), n=links.getBoundingClientRect();
-   if(card.contains(links)||n.top<l.bottom-1||n.bottom>art.top+1)issues.push('text links must sit between logos and artwork');
+   if(card.contains(links)||n.top<c.bottom-1||n.bottom>art.top+1)issues.push('text links must sit between details and artwork');
    const [left,right]=[...links.querySelectorAll('a')].map(el=>el.getBoundingClientRect());
    if(Math.abs(left.width-right.width)>1)issues.push('text links must split the row evenly');
    if(document.documentElement.scrollWidth>innerWidth+1)issues.push('horizontal overflow');
    for(const el of section.querySelectorAll('a,button')){
     const r=el.getBoundingClientRect();
+    if(!r.width&&!r.height)continue;
     if(r.height<(el.closest('.thank-you-text-links')?23.5:43.5)||r.width<43.5)issues.push('small tap target: '+el.textContent.trim());
    }
    const controls=[...section.querySelectorAll('a,button')].map(e=>e.getBoundingClientRect());
