@@ -1,6 +1,18 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — grounded mobile elephant and iOS startup safeguards (5 October 2026)
+## Current revision — bounded iOS resources and effect failure isolation (5 October 2026)
+
+On iOS cinematic layouts, only the current scene and its immediate neighbours retain their image and CSS-background references (at most three groups, including the closing page). Distant images use a transparent placeholder and distant background/filter/layer references are removed. Original attributes are restored before scenes enter the view, in both scroll directions; reading/reduced-motion mode restores the complete document and its original lazy-loading policy. Desktop/Android loading is unchanged. This bounds application references; browser image-cache eviction and actual process RAM remain under browser control.
+
+The iOS elephant renderer now replaces its offscreen 2048x1536 GPU texture with a 1x1 texture and reduces its backing canvas to 1x1. Returning to the elephant restores the original texture using the existing mesh/context. Failed texture uploads retain the existing SVG fallback and do not repeatedly retry every frame. Optional runtime module initialization is isolated so one effect failure cannot prevent the core timeline/controller from starting.
+
+Design, original assets, dialogue, scene order, animation paths, manual input policy and the 64-second Autoscroll timeline remain unchanged. The build now retains previously published content-hashed bundles so cached HTML can still load its matching files; upload new bundles before replacing index.html, and retain old runtime files on the host.
+
+Verification: resource-window tests pass for iOS detection and desktop, with forward/reverse image decoding and reading-mode restoration. Simulated-WebGL checks verify full texture upload, offscreen release, reverse restoration and texture-handle reuse. An injected optional module failure leaves the story functional. Native-touch/viewport tests, startup fallback tests, manual-scroll regressions, DOM story/assets and bundle consistency checks pass. The 64-second timeline passes with iOS detection in cinematic, short and reduced-motion layouts. Baseline comparisons match visible geometry, typography, colors and transforms at seven positions for three viewport sizes. Physical iPhone Safari remains unverified; this is resource hardening, not proof that every Safari reload cause is resolved.
+
+Deploy `runtime.10787c643a73.css` and `runtime.985f0615959e.js` from dist first, then replace `index.html`. GitHub publication does not update external hosting.
+
+## Previous revision — grounded mobile elephant and iOS startup safeguards (5 October 2026)
 
 Reviewed the supplied Android screenshot and confirmed through the live site's DOM that the previously published safety bundles are deployed. The user clarified that iOS repeatedly reloads, rather than simply refusing to scroll. The precise Safari termination cause is not reproduced here; the changes below mitigate startup GPU pressure and provide a recoverable path without claiming a confirmed device-level diagnosis.
 

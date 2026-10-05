@@ -30,3 +30,13 @@
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
+
+/* Remove distant scene background/layer references; keep their layout geometry. */
+.ios-native-scroll [data-resources="parked"],
+.ios-native-scroll [data-resources="parked"] *,
+.ios-native-scroll [data-resources="parked"] *::before,
+.ios-native-scroll [data-resources="parked"] *::after {
+  background-image: none !important;
+  filter: none !important;
+  will-change: auto !important;
+}

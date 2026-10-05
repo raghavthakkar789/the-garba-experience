@@ -53,7 +53,7 @@ Photo keepsakes remain entirely in the visitor's browser, with no upload or pers
 
 `node tests/verify-browser-safety.cjs` (Playwright, Chromium and `CHROMIUM_EXECUTABLE_PATH`) verifies native touch policy for iPhone and desktop-identifying iPadOS, real Chromium touch movement, unchanged desktop/Android input, stable iOS viewport calculations and the sustained-load fallback. This simulates iOS detection in Chromium; physical iPhone/iPad Safari verification is still required. `tests/verify-ios-touch.cjs` retains the legacy custom-touch regression for non-iOS browsers; it does not test the new native iOS path.
 
-`node tests/verify-runtime.cjs` verifies deterministic runtime bundles, their source order and matching content hashes. The build consolidates the existing nine CSS and ten JavaScript requests plus the new safety modules into one stylesheet and one deferred script. It preserves source content and CSS relative asset paths; no hosting configuration change is required. All source modules remain available for maintenance.
+`node tests/verify-runtime.cjs` verifies deterministic runtime bundles, their source order and matching content hashes. The build consolidates the existing nine CSS and ten JavaScript requests plus the new safety modules into one stylesheet and one deferred script. It preserves source order and CSS relative asset paths, with initialization guards around optional effects; no hosting configuration change is required. All source modules remain available for maintenance.
 
 `node --check dist/experience.js`
 
@@ -83,6 +83,12 @@ The October 2026 cleanup removed 110 unreferenced runtime files (about 86 MiB), 
 
 On iPhone/iPad, manual swipes use native browser scrolling, so they do not have the custom dialogue slowdowns used on desktop/Android. The same animations still follow scroll position, and opt-in Autoscroll retains the unchanged 64-second timeline. Toolbar and keyboard height changes retain the stage height and story position; width/orientation changes still reflow normally.
 
-Hidden iOS scenes and background tabs pause CSS animations and release layer hints. Existing scene-specific JavaScript loops already pause when inactive. Artwork stays decoded for reverse scrolling. After two consecutive 2.5-second sampling windows of sustained slow scrolling, iOS alone drops soft character shadows/dialog backdrop blur and lowers the elephant canvas pixel density. It keeps the same assets, paths and motion, and retains this lightweight mode until reload to avoid quality oscillation. Healthy devices keep the original effects.
+Hidden iOS scenes and background tabs pause CSS animations and release layer hints. Existing scene-specific JavaScript loops already pause when inactive. On iOS cinematic layouts, the current scene and adjacent scenes stay ready; distant image/background references are released and restored when needed. After two consecutive 2.5-second sampling windows of sustained slow scrolling, iOS alone drops soft character shadows/dialog backdrop blur and lowers the elephant canvas pixel density. It keeps the same assets, paths and motion, and retains this lightweight mode until reload to avoid quality oscillation. Healthy devices keep the original effects.
 
 The optional WebGL elephant renderer is now deferred on iOS until its scene becomes visible. An immediate retry after an unclean startup uses the original SVG elephant and lighter effects; clean exits and successful startup clear the per-tab marker. `tests/verify-ios-startup.cjs` checks this path with simulated GPU failure. Physical Safari reload diagnosis still needs device verification.
+
+## Resource lifecycle and safe updates
+
+`tests/verify-scene-resources.cjs` checks the bounded iOS scene window, forward/reverse restoration and reading-mode completeness. `tests/verify-resource-failures.cjs` checks GPU texture release/restoration using a simulated WebGL context and injects an optional-module error to verify the core story still starts. Set `IOS=1` for `tests/verify-timeline.cjs` to exercise the unchanged timeline with iOS detection.
+
+After source edits, run `node scripts/build-runtime.cjs` and `node tests/verify-runtime.cjs`. The build retains previous content-hashed bundles for cached pages. Upload the new runtime CSS/JS files first, then replace `index.html` last. Keep the old runtime files on the host during rollout; deleting them can break a visitor's cached HTML. Hosting configuration still controls HTML caching. This upload order is necessary; a GitHub push alone does not deploy the public domain.

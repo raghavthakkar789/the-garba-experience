@@ -28,7 +28,7 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
   browser = await engines[engine].launch(engine === 'chromium' ? {executablePath:process.env.CHROMIUM_EXECUTABLE_PATH,args:['--no-sandbox','--disable-dev-shm-usage']} : {});
   const url = `http://127.0.0.1:${server.address().port}`;
   for (const mode of ['cinematic', 'short', 'reduced']) {
-    const page = await browser.newPage({viewport:mode === 'short' ? {width:844,height:390} : {width:390,height:844},reducedMotion:mode === 'reduced' ? 'reduce' : 'no-preference'});
+    const page = await browser.newPage({...(process.env.IOS ? {userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1',hasTouch:true} : {}),viewport:mode === 'short' ? {width:844,height:390} : {width:390,height:844},reducedMotion:mode === 'reduced' ? 'reduce' : 'no-preference'});
     const errors = [], missing = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('response', res => {if(res.status() >= 400) missing.push(res.url());});

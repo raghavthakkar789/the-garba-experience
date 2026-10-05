@@ -12,7 +12,7 @@
   let gl, program, movesLocation, texture, ready = false;
   let frame = 0, last = 0, phase = 0, weight = 0, pageVisible = true;
   const ios = root.classList.contains('ios-native-scroll');
-  let initialized = false;
+  let initialized = false, pendingImage = null, meshFailed = false;
   // Keep the supplied SVG visible if iOS is recovering from a terminated load.
   const allowMesh = () => !root.classList.contains('safety-recovery');
   const permitted = () => ready && root.classList.contains('cinematic') && !ride.hidden &&
@@ -23,7 +23,7 @@
     frame = 0; last = 0;
   }
   function fallback() {
-    ready = false; stop(); ride.classList.remove('mesh-ready');
+    ready = false; meshFailed = true; stop(); ride.classList.remove('mesh-ready');
   }
   function shader(type, source) {
     const result = gl.createShader(type);
@@ -34,6 +34,7 @@
   function initialize() {
     if (!allowMesh()) return;
     initialized = true;
+    meshFailed = false;
     try {
       gl = canvas.getContext('webgl', {alpha:true, antialias:true, premultipliedAlpha:true});
       if (!gl) return;
@@ -94,15 +95,40 @@
       gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
       gl.clearColor(0,0,0,0);
-      const image=new Image();
-      image.onload=()=>{
-        if(gl.isContextLost()) return;
-        gl.bindTexture(gl.TEXTURE_2D,texture);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);
-        ready=true;resize();paint();ride.classList.add('mesh-ready');sync();
-      };
-      image.onerror=fallback;
-      image.src='assets/story/elephant-ride/hathi-original.webp';
+      loadTexture();
     } catch { fallback(); }
+  }
+  function loadTexture() {
+    if (!gl || !texture || ready || pendingImage || meshFailed || gl.isContextLost()) return;
+    const image = new Image();
+    pendingImage = image;
+    image.onload = () => {
+      if (pendingImage !== image) return;
+      pendingImage = null;
+      if (gl.isContextLost()) return;
+      try {
+        gl.bindTexture(gl.TEXTURE_2D,texture);
+        gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);
+        ready=true;resize();paint();ride.classList.add('mesh-ready');sync();
+      } catch { fallback(); }
+    };
+    image.onerror = () => { pendingImage = null; fallback(); };
+    image.src='assets/story/elephant-ride/hathi-original.webp';
+  }
+  function releaseTexture() {
+    if (pendingImage) {
+      pendingImage.onload = pendingImage.onerror = null;
+      pendingImage.removeAttribute('src');
+      pendingImage = null;
+    }
+    if (!ready) return;
+    ready = false; stop(); ride.classList.remove('mesh-ready');
+    if (gl && texture && !gl.isContextLost()) {
+      // Release the 2048x1536 RGBA backing store, retaining the reusable mesh.
+      gl.bindTexture(gl.TEXTURE_2D,texture);
+      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));
+      canvas.width = canvas.height = 1;
+    }
   }
   function resize() {
     if (!ready) return;
@@ -143,6 +169,10 @@
     // Do not allocate a WebGL context, mesh or texture on an iPhone's first screen.
     if (ios && !initialized && allowMesh() && root.classList.contains('cinematic') &&
         !ride.hidden && !document.hidden && pageVisible) initialize();
+    if (ios && initialized) {
+      if (ride.hidden || document.hidden || !pageVisible || !root.classList.contains('cinematic')) releaseTexture();
+      else if (allowMesh()) loadTexture();
+    }
     if(!permitted()){
       stop();if(!root.classList.contains('cinematic')||reduced.matches){weight=0;paint();}return;
     }
@@ -155,7 +185,7 @@
   if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(canvas);
   addEventListener('resize',resize,{passive:true});
   document.addEventListener('visibilitychange',sync);
-  addEventListener('pagehide',()=>{pageVisible=false;stop();});
+  addEventListener('pagehide',()=>{pageVisible=false;stop();if(ios)releaseTexture();});
   addEventListener('pageshow',()=>{pageVisible=true;sync();});
   reduced.addEventListener('change',sync);
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();fallback();});

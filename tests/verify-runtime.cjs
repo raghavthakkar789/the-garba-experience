@@ -2,7 +2,7 @@ const assert = require('node:assert/strict'), fs = require('node:fs'), path = re
 const dist = path.resolve(__dirname, '../dist'), manifest = require('../scripts/runtime-manifest.json');
 const html = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
 for (const [kind, extension] of [['styles','css'], ['scripts','js']]) {
-  const expected = manifest[kind].map(name => `/* ${name} */\n${fs.readFileSync(path.join(dist, name),'utf8')}`).join(extension === 'js' ? '\n;\n' : '\n');
+  const expected = require('../scripts/runtime-source.cjs')(dist, manifest[kind], extension);
   const hash = crypto.createHash('sha256').update(expected).digest('hex').slice(0,12);
   const filename = `runtime.${hash}.${extension}`;
   assert(html.includes(`"${filename}"`), 'Rebuild runtime after source changes');
