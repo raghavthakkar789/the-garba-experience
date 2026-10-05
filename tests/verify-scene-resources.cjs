@@ -11,7 +11,7 @@ const {chromium}=require('playwright');let browser,server;
   await page.goto(`http://127.0.0.1:${server.address().port}`);await page.evaluate(()=>document.fonts.ready);
   if(ios) assert(await page.locator('[data-resources=parked]').count()>5,'distant scenes must release media on iOS');
   else assert.equal(await page.locator('[data-resources=parked]').count(),0,'desktop resources unchanged');
-  await page.locator('#autoscroll-toggle').click();await page.waitForTimeout(100);await page.locator('#autoscroll-toggle').click();
+  await page.locator('#invitation-seal').click();await page.waitForTimeout(100);await page.keyboard.press('Escape');
   for(const cursor of [1.5,2.4,3.2,5.94,8.2,13,14,8.2,5.94,2.4,1.5]){
    await page.evaluate(c=>{const j=document.querySelector('.journey'),s=document.querySelector('.journey-stage');scrollTo({top:j.offsetTop+c/14*(j.offsetHeight-s.clientHeight),behavior:'instant'})},cursor);await page.waitForTimeout(100);
    const result=await page.evaluate(async()=>{

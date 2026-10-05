@@ -38,9 +38,10 @@ assert(cadence(true,Array(160).fill(50)),'sustained slow iOS rendering reduces s
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.goto(`http://127.0.0.1:${server.address().port}`);await page.evaluate(()=>document.fonts.ready);
     assert.equal(await page.locator('html').evaluate(el=>el.classList.contains('ios-native-scroll')),ios,profile);
-    await page.locator('#autoscroll-toggle').click();
+    if(ios) await page.locator('#invitation-seal').click();
+    else await page.locator('#autoscroll-toggle').click();
     await page.waitForFunction(()=>!document.querySelector('#invitation').dataset.entering&&scrollY>0);
-    await page.locator('#autoscroll-toggle').click();
+    if(!ios) await page.locator('#autoscroll-toggle').click();
     assert.equal(await page.locator('.journey-stage').evaluate(el=>getComputedStyle(el).touchAction),ios?'auto':'pan-x pinch-zoom');
     const y=await page.evaluate(()=>scrollY);
     const prevented=await page.evaluate(()=>{
@@ -69,10 +70,9 @@ assert(cadence(true,Array(160).fill(50)),'sustained slow iOS rendering reduces s
       assert.equal(await page.locator('.journey-stage').evaluate(el=>el.clientHeight),geometry.height,'stage remains stable');
       assert(Math.abs(await page.evaluate(()=>scrollY)-geometry.y)<2,'viewport resize does not seek story');
       assert.equal(await page.locator('#the-plan .story-person').first().evaluate(el=>getComputedStyle(el).willChange),'auto','hidden layers released');
-      await page.locator('#autoscroll-toggle').click();await page.waitForTimeout(350);
-      assert.equal(await page.locator('#autoscroll-toggle').getAttribute('aria-pressed'),'true');
+      assert.equal(await page.locator('#autoscroll-toggle').isVisible(),false,'iOS has no Autoscroll control');
       await page.evaluate(()=>dispatchEvent(new Event('touchstart')));
-      assert.equal(await page.locator('#autoscroll-toggle').getAttribute('aria-pressed'),'false','native touch stops autoscroll');
+      assert.equal(await page.locator('#autoscroll-toggle').getAttribute('aria-pressed'),'false','native touch cannot activate Autoscroll');
       await page.setViewportSize({width:844,height:390});await page.waitForTimeout(100);
       assert(await page.locator('html').evaluate(el=>el.classList.contains('read-mode')),'real orientation changes still reflow');
     } else assert(await page.evaluate(()=>scrollY)>y,'custom scrolling preserved');

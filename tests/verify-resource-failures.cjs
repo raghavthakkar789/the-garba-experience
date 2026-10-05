@@ -15,7 +15,7 @@ const {chromium}=require('playwright');let browser,server;
   HTMLCanvasElement.prototype.getContext=function(type,...a){return type==='webgl'?gl:original.call(this,type,...a)};
  });
  await page.goto(url);await page.evaluate(()=>document.fonts.ready);
- await page.locator('#autoscroll-toggle').click();await page.waitForTimeout(100);await page.locator('#autoscroll-toggle').click();
+ await page.locator('#invitation-seal').click();await page.waitForTimeout(100);await page.keyboard.press('Escape');
  const seek=async c=>{await page.evaluate(c=>{const j=document.querySelector('.journey'),s=document.querySelector('.journey-stage');scrollTo({top:j.offsetTop+c/14*(j.offsetHeight-s.clientHeight),behavior:'instant'})},c);await page.waitForTimeout(100)};
  await seek(3.2);await page.waitForFunction(()=>document.querySelector('.journey-elephant').classList.contains('mesh-ready'));
  assert.deepEqual(await page.evaluate(()=>window.uploads.at(-1)),[2048,1536]);

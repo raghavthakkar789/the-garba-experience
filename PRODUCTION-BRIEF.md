@@ -1,6 +1,16 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — original elephant artwork during iOS Autoscroll (5 October 2026)
+## Current revision — Autoscroll unavailable on iOS (5 October 2026)
+
+Autoscroll is now hidden and disabled for iPhone/iPad/iPod, including iPads identifying as MacIntel with multiple touch points. The click handler and frame driver also reject iOS activation, so revealing the DOM control or dispatching synthetic clicks cannot start playback. The existing invitation-seal opening sequence and native manual scrolling remain available, with the same scene animations, audio, viewport handling and resource safeguards.
+
+The iOS GSAP adapter has been removed from the active manifest and source. Current pages make no GSAP/ScrollToPlugin requests or initialization calls. Older hashed bundles and their vendor files remain for cached pages. Android, Mac desktop and Windows (including touch PCs) retain the existing opt-in Autoscroll and 64-second timing; the styling, assets, soundtrack, timeline and elephant renderer are unchanged.
+
+The new disabled-policy regression replaces the superseded iOS GSAP and automatic-elephant suites. It covers iPhone Safari/Chrome, iPod, iPad desktop mode, Android, Mac and Windows touch PCs, including blocked synthetic activation, no library loading, preserved opening and hidden controls in landscape/reduced-motion layouts. Resource and browser-safety suites enter through the invitation seal on iOS instead of the removed control.
+
+Deployment: upload `dist/runtime.4f4dd30637ac.js` before replacing `dist/index.html`. The existing stylesheet and vendor files need no changes. Existing visitors may need a fresh page load to receive the new HTML; GitHub publication alone does not update external hosting.
+
+## Previous revision — original elephant artwork during iOS Autoscroll (5 October 2026)
 
 The user narrowed the continuing reload to the elephant scenes, after the GSAP runtime was confirmed on the live site. This identifies the optional WebGL elephant as a component to isolate, not a proven crash diagnosis. iOS Autoscroll now marks its active session so the elephant renderer uses the existing SVG/image fallback instead of allocating or drawing its textured WebGL mesh. If a mesh was already active during manual scrolling, its full texture is replaced by the existing 1x1 release path and its canvas is reduced before automatic playback continues.
 

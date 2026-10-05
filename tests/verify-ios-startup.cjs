@@ -20,7 +20,7 @@ const {chromium}=require('playwright');let browser,server;
   await page.goto(`http://127.0.0.1:${server.address().port}`);await page.evaluate(()=>document.fonts.ready);
   assert.equal(await page.evaluate(()=>window.webglAttempts),mode==='desktop'?1:0,'iOS must not allocate GPU at startup');
   assert.equal(await page.locator('html').evaluate(el=>el.classList.contains('safety-recovery')),mode.includes('recovery'));
-  await page.locator('#autoscroll-toggle').click();await page.waitForTimeout(150);await page.locator('#autoscroll-toggle').click();
+  await page.locator('#invitation-seal').click();await page.waitForTimeout(150);await page.keyboard.press('Escape');
   assert(await page.evaluate(()=>scrollY)>0,'entry remains usable without GPU');
   await page.evaluate(()=>{const j=document.querySelector('.journey'),s=document.querySelector('.journey-stage');scrollTo({top:j.offsetTop+3.2/14*(j.offsetHeight-s.clientHeight),behavior:'instant'})});await page.waitForTimeout(150);
   assert.equal(await page.evaluate(()=>window.webglAttempts),mode.includes('recovery')?0:1,'mesh deferred until boarding; bypassed during crash recovery');

@@ -28,14 +28,13 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
   browser = await engines[engine].launch(engine === 'chromium' ? {executablePath:process.env.CHROMIUM_EXECUTABLE_PATH,args:['--no-sandbox','--disable-dev-shm-usage']} : {});
   const url = `http://127.0.0.1:${server.address().port}`;
   for (const mode of ['cinematic', 'short', 'reduced']) {
-    const page = await browser.newPage({...(process.env.IOS ? {userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1',hasTouch:true} : {}),viewport:mode === 'short' ? {width:844,height:390} : {width:390,height:844},reducedMotion:mode === 'reduced' ? 'reduce' : 'no-preference'});
+    const page = await browser.newPage({viewport:mode === 'short' ? {width:844,height:390} : {width:390,height:844},reducedMotion:mode === 'reduced' ? 'reduce' : 'no-preference'});
     const errors = [], missing = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('response', res => {if(res.status() >= 400) missing.push(res.url());});
-    // Install before scripts load so GSAP and performance.now share the controlled clock.
+    // Install before scripts load to keep timer and animation clocks consistent.
     await page.clock.install({time:new Date("2026-10-03T12:00:00Z")});
     await page.goto(url); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(100);
-    if (process.env.IOS_LIGHT) await page.evaluate(() => document.documentElement.classList.add('safety-light-effects'));
     const playbackMarked = () => page.evaluate(() => sessionStorage.getItem('garba-ios-playback') !== null);
     await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 1000));
     const advance = async ms => {
@@ -59,7 +58,7 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
         elephant:!document.querySelector('.journey-elephant').hidden};
     });
     await click();
-    assert.equal(await playbackMarked(), !!process.env.IOS, 'playback marker only on iOS');
+    assert.equal(await playbackMarked(), false, 'non-iOS playback needs no iOS recovery marker');
     await advance(3504);
     assert((await state()).running);
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor - 1.42) < .03, 'opening is included in total');
@@ -70,7 +69,6 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
     await advance(3268); // 26.3 s, inside the clear-gate viewing interval.
     const gate = await state();
     if(mode === 'cinematic') {assert(gate.cursor>5.6 && gate.cursor<5.62);assert(!gate.elephant, JSON.stringify(gate));assert.equal(gate.gate,0);}
-    if (process.env.IOS) assert(await playbackMarked(), 'playback remains guarded after startup expires');
     await click(); const paused = (await state()).y;
     assert.equal(await playbackMarked(), false, 'pause clears recovery state');
     await advance(5000); assert.equal((await state()).y,paused);
@@ -81,8 +79,7 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
       assert(!resumed.elephant); assert.equal(resumed.gate, 0, 'gate stays visible while friends move');
     }
     await advance(15200); // 42.5 s active time.
-    // Two quantized samples (pause and resume) can differ by up to 50ms at 30fps.
-    if(mode === 'cinematic') assert(Math.abs(timeline.timeAt((await state()).cursor)-42.5)<(process.env.IOS_LIGHT?.05:.03),'partner section starts at 42.5s: '+JSON.stringify(await state()));
+    if(mode === 'cinematic') assert(Math.abs(timeline.timeAt((await state()).cursor)-42.5)<.03,'partner section starts at 42.5s: '+JSON.stringify(await state()));
     await advance(10000);
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor-12)<.02,'partners receive twenty seconds: '+JSON.stringify(await state()));
     await advance(10000);
