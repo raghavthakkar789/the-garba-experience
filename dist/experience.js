@@ -42,6 +42,7 @@
   let journeyTop = 0;
   let travel = 1;
   let stageHeight = 1;
+  let arrivalFloor = { baseFeet: 0, planeHeight: 1 };
   let lastWidth = innerWidth;
   let lastHeight = innerHeight;
   const opening = document.querySelector(".opening-scene");
@@ -415,16 +416,16 @@
       const step = ease((progress - 0.17) / 0.18);
       const joined = ease((progress - 0.34) / 0.07),
         // Continue into the passage until the scene dissolves.
-        walk = ease((progress - 0.41) / 0.59);
+        walk = clamp((progress - 0.41) / 0.59);
       const passage = ease((progress - 0.74) / 0.16);
       scene.style.setProperty("--passage-opacity", passage.toFixed(4));
       person("man", -(1 - step) * w * .1, -(1 - step) * h * .24, step * (1 - joined), .65, "walk");
       person("woman", -(1 - step) * w * .22, -(1 - step) * h * .24, step * (1 - joined), .65, "walk");
-      together(
-        joined,
-        0.8 - walk * 0.49,
-        -walk * h * 0.2 + Math.sin(walk * Math.PI * 10) * 2,
-      );
+      // Follow the center carpet in image space, accounting for cover cropping.
+      // The far floor sits below the doorway; a viewport-only path lifted the
+      // friends into the backdrop. Keep moving until the dissolve completes.
+      const floorY = h / 2 + arrivalFloor.planeHeight * .19 * (1.035 + progress * .045);
+      together(joined, 0.8 - walk * 0.49, walk * (floorY - arrivalFloor.baseFeet));
     }
     if (scene.id === "a-memory") {
       const gather = ease(progress / 0.22);
@@ -584,6 +585,14 @@
     stageHeight = stage.clientHeight || innerHeight;
     journeyTop = journey.getBoundingClientRect().top + scrollY;
     travel = Math.max(1, journey.offsetHeight - stageHeight);
+    const arrival = document.querySelector("#arrival");
+    const friends = arrival.querySelector(".together-art");
+    const art = arrival.querySelector(".entry-passage-art img");
+    // Read geometry only on layout changes, never on each animation frame.
+    arrivalFloor = {
+      baseFeet: friends.offsetTop + friends.offsetHeight * .95,
+      planeHeight: Math.max(stageHeight, arrival.clientWidth * Number(art.getAttribute("height")) / Number(art.getAttribute("width"))),
+    };
   }
   function setMotion(preservePlace = false) {
     cancelManualScroll();
@@ -666,7 +675,7 @@
     let base = scenes.length - 1;
     while (base > 0 && cursor < sceneStarts[base]) base--;
     const local = clamp((cursor - sceneStarts[base]) / sceneSpans[base]);
-    const fadeAt = ["arrival", "a-memory"].includes(scenes[base].id) ? .90 : .70;
+    const fadeAt = scenes[base].id === "arrival" ? .96 : scenes[base].id === "a-memory" ? .90 : .70;
     const blend = base < scenes.length - 1 ? ease((local - fadeAt) / (1 - fadeAt)) : 0;
     const selected = blend > 0.5 ? base + 1 : base;
     scenes.forEach((scene, i) => {

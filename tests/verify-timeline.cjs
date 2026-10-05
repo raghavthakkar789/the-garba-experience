@@ -10,7 +10,8 @@ const close = (actual, expected) => assert(Math.abs(actual - expected) < 1e-8, `
 close(timeline.timeAt(1), 1.5 * 1.9 / 4.7 + 1);
 close(timeline.timeAt(1.42) - timeline.timeAt(1), 1.5 * 2.8 / 4.7 + 1);
 close(timeline.timeAt(3.47) - timeline.timeAt(3.25), 1.5 * .22 + 1);
-close(timeline.duration, 63);
+close(timeline.duration, 64);
+close(timeline.timeAt(5.96) - timeline.timeAt(5.90), 1);
 close(timeline.timeAt(14) - timeline.timeAt(10), 20);
 for(let seconds = 25.3; seconds < 30.4; seconds += .1)
   assert(timeline.cursorAt(seconds + .1) > timeline.cursorAt(seconds), 'entrance cursor must not freeze');
@@ -69,17 +70,17 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
       assert(resumed.cursor > gate.cursor + .07 && resumed.cursor < gate.cursor + .10, 'friends continue walking after resume');
       assert(!resumed.elephant); assert.equal(resumed.gate, 0, 'gate stays visible while friends move');
     }
-    await advance(14200); // 41.5 s active time.
-    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-10)<.02,'partner section starts at 41.5s');
+    await advance(15200); // 42.5 s active time.
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-10)<.02,'partner section starts at 42.5s');
     await advance(10000);
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor-12)<.02,'partners receive twenty seconds: '+JSON.stringify(await state()));
     await advance(10000);
-    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-14)<.02,'partners end at 61.5s');
+    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-14)<.02,'partners end at 62.5s');
     assert((await state()).running,'finale remains in total duration');
     await advance(1550);
-    const end = await state(); assert(!end.running,`${mode}: stops at 63s`);assert(Math.abs(end.y-end.end)<=1,`${mode}: reaches page end`);
+    const end = await state(); assert(!end.running,`${mode}: stops at 64s`);assert(Math.abs(end.y-end.end)<=1,`${mode}: reaches page end`);
     assert.deepEqual(errors,[]); assert.deepEqual(missing,[]);
-    console.log(`PASS ${engine} ${mode}: 63s total, pause time excluded, stalled frame recovery, page end, no missing runtime assets`);
+    console.log(`PASS ${engine} ${mode}: 64s total, pause time excluded, stalled frame recovery, page end, no missing runtime assets`);
     await page.close();
   }
 })().catch(error => {console.error(error);process.exitCode=1;}).finally(async()=>{await browser?.close();server?.close();});

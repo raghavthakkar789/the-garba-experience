@@ -53,6 +53,12 @@ const journey = d.querySelector(".journey"),
 const scenes = [...d.querySelectorAll(".scene")];
 const cinematic = () => d.documentElement.classList.contains("cinematic");
 Object.defineProperty(stage, "clientHeight", { get: () => 900 });
+// jsdom has no layout engine: provide the arrival floor geometry read on resize.
+const arrivalScene = d.querySelector('#arrival');
+const arrivalFriends = arrivalScene.querySelector('.together-art');
+Object.defineProperty(arrivalScene, 'clientWidth', {get: () => 1440});
+Object.defineProperty(arrivalFriends, 'offsetTop', {get: () => 378});
+Object.defineProperty(arrivalFriends, 'offsetHeight', {get: () => 360});
 Object.defineProperty(journey, "offsetHeight", {
   get: () => (cinematic() ? 10692 : 8100),
 });

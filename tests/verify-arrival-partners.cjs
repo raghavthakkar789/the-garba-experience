@@ -49,6 +49,28 @@ let browser, server;
       fs.mkdirSync(process.env.SCREENSHOT_DIR, { recursive: true });
       await page.screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `arrival-${engine}-${width}.png`) });
     }
+    let previousFeet = Infinity;
+    for (const cursor of [5.905, 5.93, 5.955]) {
+      await seek(cursor);
+      const interior = await page.evaluate(() => {
+        const scene = document.querySelector('#arrival'), art = scene.querySelector('.entry-passage-art img');
+        const box = scene.getBoundingClientRect(), feet = scene.querySelector('.together-art').getBoundingClientRect();
+        const zoom = Number(scene.style.getPropertyValue('--zoom'));
+        const planeHeight = Math.max(box.height, box.width * art.naturalHeight / art.naturalWidth) * zoom;
+        const next = document.querySelector('#a-memory');
+        return {passage:Number(scene.style.getPropertyValue('--passage-opacity')),
+          nextVisible:next.classList.contains('is-visible'),
+          floor:(feet.bottom - box.top - box.height / 2) / planeHeight + .5,
+          feet:feet.bottom};
+      });
+      assert.equal(interior.passage, 1, 'interior decor is fully revealed during its extra second');
+      assert(!interior.nextVisible, 'photo scene must not cover the interior viewing interval');
+      assert(interior.floor > .665 && interior.floor < .9, 'friends must remain on the passage floor, below its far doorway');
+      assert(interior.feet < previousFeet, 'friends continue walking into the passage');
+      previousFeet = interior.feet;
+    }
+    if (process.env.SCREENSHOT_DIR && [390,1440].includes(width))
+      await page.screenshot({path:path.join(process.env.SCREENSHOT_DIR, `interior-${engine}-${width}.png`)});
     await seek(10.2);
     for (const [name, file] of [['Hungrito','hungrito.svg'],['Magma','magma.svg'],['Alpha Hospital','alpha-hospital.webp']]) {
       const shop = page.locator('.partner-shop').filter({ has: page.locator('.shop-name', { hasText: name }) });

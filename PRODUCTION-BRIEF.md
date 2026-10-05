@@ -1,6 +1,14 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — doubled closing artwork and logo spacing (4 October 2026)
+## Current revision — clear interior passage and floor-aligned walk (5 October 2026)
+
+Added exactly one second of fully revealed interior decor before the photo scene begins dissolving in. Arrival is now eight seconds and the complete opt-in timeline is 64 seconds. The exterior reveal, decor dimensions, remaining scene durations and twenty-second partner interval are unchanged. Manual scrolling uses the later dissolve boundary too, while its duration remains controlled by the visitor.
+
+The friends now follow the carpet toward a floor point below the far doorway, accounting for the background's cover crop and existing camera zoom. Their movement continues through the interior view and dissolve without easing to a premature stop. Geometry is measured on layout changes instead of animation frames.
+
+Verification: the new duration and clear-interior assertions failed on the previous implementation. Chromium passes the timeline in cinematic, short and reduced-motion modes, plus entrance/dialogue/floor-position checks at four phone, tablet and desktop viewports. Mobile and desktop interior screenshots were reviewed. Story/assets checks use explicit geometry in the DOM fixture because jsdom does not calculate layout. Runtime versions are `autoscroll-timeline.js?v=3` and `experience.js?v=46`; deploy those two scripts and `dist/index.html` together.
+
+## Previous revision — doubled closing artwork and logo spacing (4 October 2026)
 
 Doubled the rendered elephant, both lotuses and both leaves on the last page at every responsive breakpoint. The artwork now reserves enough layout height for its larger size. Screens up to 650px wide place the elephant above the floral groups; wider screens keep the side-by-side composition. Added 16–24px below the logo and 12–22px above the artwork. Existing links, content and other scenes retain their treatments; taller compositions scroll naturally.
 
