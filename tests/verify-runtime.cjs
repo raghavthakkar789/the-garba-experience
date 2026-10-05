@@ -10,3 +10,10 @@ for (const [kind, extension] of [['styles','css'], ['scripts','js']]) {
   assert.equal((html.match(extension === 'js' ? /<script defer src=/g : /<link rel="stylesheet"/g)||[]).length,1);
 }
 console.log('PASS: deterministic runtime bundles, source order/content, matching hashes and two entry requests');
+
+const vendor = path.join(dist, 'vendor/gsap-3.15.0');
+const provenance = JSON.parse(fs.readFileSync(path.join(vendor,'provenance.json'),'utf8'));
+for (const [name,sha256] of Object.entries(provenance.files)) {
+  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(vendor,name))).digest('hex'),sha256,'pinned GSAP file: '+name);
+}
+console.log('PASS: local GSAP/ScrollToPlugin dependency files match recorded package hashes');

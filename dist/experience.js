@@ -101,6 +101,10 @@
       window.garbaPlaybackRecovery?.stop();
     }
     autoScrolling = false;
+    if (nativeTouch) {
+      window.garbaIOSAutoScroll?.stop();
+      autoScrollButton.removeAttribute("aria-busy");
+    }
     cancelAnimationFrame(autoScrollFrame);
     autoScrollFrame = 0;
     updateAutoScrollButton();
@@ -150,6 +154,29 @@
     window.garbaPlaybackRecovery?.start();
     if (autoOffset < timeline.openingDuration && cinematic) opening.dataset.entering = "true";
     updateAutoScrollButton();
+    if (nativeTouch) {
+      const driver = window.garbaIOSAutoScroll;
+      const unavailable = () => {
+        stopAutoScroll();
+        notify("Autoscroll could not load. Please try again or scroll normally.");
+      };
+      if (!driver) { unavailable(); return; }
+      autoScrollButton.setAttribute("aria-busy", "true");
+      driver.start({
+        offset: autoOffset, duration: timeline.duration,
+        positionAt: seconds => autoPosition(timeline.cursorAt(seconds)),
+        canRun: () => autoScrolling && !document.hidden && !document.querySelector("dialog[open]"),
+        onStart: () => autoScrollButton.removeAttribute("aria-busy"),
+        onUpdate: seconds => {
+          autoElapsed = seconds;
+          autoLastPosition = scrollY;
+          if (seconds >= timeline.openingDuration) delete opening.dataset.entering;
+        },
+        onStop: stopAutoScroll,
+        onError: unavailable,
+      });
+      return;
+    }
     autoScrollFrame = requestAnimationFrame(advanceAutoScroll);
   });
   const scrollControl = target => target?.closest?.("#autoscroll-toggle, #soundtrack-toggle, #opening-sound");

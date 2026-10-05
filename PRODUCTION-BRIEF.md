@@ -1,6 +1,18 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — iOS Autoscroll rendering and playback recovery (5 October 2026)
+## Current revision — isolated GSAP driver for iOS Autoscroll (5 October 2026)
+
+Replaced only the iPhone/iPad opt-in Autoscroll driver with GSAP 3.15.0 and ScrollToPlugin. The existing controller delegates to the adapter on iOS and returns before scheduling its custom Autoscroll RAF. Android/desktop continue using the unchanged driver; they do not request, initialize or run GSAP. iPadOS desktop-identifying browsers are included. Native iOS touch scrolling, the scene renderer, CSS, artwork, audio implementation and the timing map are unchanged.
+
+The adapter uses the original time-to-position mapping as its easing function, preserving the 64-second duration and 20-second partner section. GSAP lag smoothing is disabled to preserve elapsed-time catch-up after dropped frames. The existing iOS lighter-effects flag limits its ticker to 30fps when needed. Existing input/dialog/lifecycle handlers kill the tween and clear pending starts; CSS smooth scrolling is temporarily disabled only during iOS playback and restored on every exit. The optional libraries are prefetched only on iOS from the local `vendor/gsap-3.15.0/` folder; no visitor-facing CDN is needed. A missing library leaves native scrolling available, and cancellation or a ten-second start timeout cannot trigger delayed playback when a download eventually completes.
+
+Official npm package integrity was verified; the two unmodified vendor files retain their license notices and have recorded SHA-256 hashes in `provenance.json`. No changes were made to `the-garba-experience-main`.
+
+Verification: actual GSAP/ScrollToPlugin tests in Chromium confirm iPhone/iPad vendor loading, exactly one scroll driver, Android/desktop isolation, native-touch policy, style restoration, and failed/cancelled/timed-out loading. Timing checks pass for desktop, normal iOS and the iOS lighter-effects mode across cinematic, short and reduced-motion layouts. The clock is installed before library initialization; the 30fps pause/resume boundary permits 50ms sampling tolerance without changing runtime durations. Full playback controls pass on iOS detection and desktop (intro, pause/resume, mute, input takeover, dialogs, keyboard, touch, backgrounding, resize, end and reload). Physical iPhone Safari reload resolution remains unverified; this is the requested isolated driver replacement, not proof that the reload was caused by the previous controller.
+
+Deployment: upload `dist/vendor/gsap-3.15.0/` and `dist/runtime.f81472164db1.js` first, then replace `dist/index.html`. Keep the current stylesheet and previously published runtime bundles. GitHub publication does not update external hosting.
+
+## Previous revision — iOS Autoscroll rendering and playback recovery (5 October 2026)
 
 Removed a confirmed redundant draw path: elephant state/resize events now invalidate one scheduled renderer instead of painting immediately alongside the walking loop. Canvas size reads and WebGL drawing run in that single frame callback; unchanged visibility/walking attributes are no longer rewritten on every scroll render. The supplied SVG stays visible until the mesh has actually painted. Healthy devices retain their normal cadence. Only iOS pages already in the existing lighter-effects fallback reduce Autoscroll writes and elephant rendering to approximately 30fps; the absolute elapsed-time timeline still finishes in 64 seconds, including the same 20 seconds for partners.
 

@@ -6,7 +6,7 @@ let browser,server;
  const root=path.resolve(__dirname,'../dist'),types={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webp':'image/webp','.woff':'font/woff','.woff2':'font/woff2','.mp3':'audio/mpeg','.m4a':'audio/mp4'};
  server=http.createServer((q,s)=>{const name=q.url.split('?')[0],file=path.join(root,name==='/'?'index.html':name);try{s.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');s.end(fs.readFileSync(file));}catch{s.writeHead(404);s.end();}});await new Promise(r=>server.listen(0,'127.0.0.1',r));
  browser=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE_PATH,args:['--no-sandbox','--disable-dev-shm-usage']});
- const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const page=await browser.newPage({viewport:{width:390,height:844},...(process.env.IOS?{userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1',hasTouch:true}:{})}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  const url='http://127.0.0.1:'+server.address().port;
  async function ready(){await page.goto(url);await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(150);}
  const button=page.locator('#autoscroll-toggle');

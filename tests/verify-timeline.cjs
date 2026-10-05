@@ -32,12 +32,12 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
     const errors = [], missing = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('response', res => {if(res.status() >= 400) missing.push(res.url());});
+    // Install before scripts load so GSAP and performance.now share the controlled clock.
+    await page.clock.install({time:new Date("2026-10-03T12:00:00Z")});
     await page.goto(url); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(100);
     if (process.env.IOS_LIGHT) await page.evaluate(() => document.documentElement.classList.add('safety-light-effects'));
     const playbackMarked = () => page.evaluate(() => sessionStorage.getItem('garba-ios-playback') !== null);
-    const clockStart = new Date("2026-10-03T12:00:00Z");
-    await page.clock.install({time:clockStart});
-    await page.clock.pauseAt(new Date(clockStart.getTime()+1000));
+    await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now()) + 1000));
     const advance = async ms => {
       if (ms > 64) await page.clock.fastForward(ms - 64);
       // Flush the browser scroll event between virtual frames. A single clock
@@ -81,7 +81,8 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
       assert(!resumed.elephant); assert.equal(resumed.gate, 0, 'gate stays visible while friends move');
     }
     await advance(15200); // 42.5 s active time.
-    if(mode === 'cinematic') assert(Math.abs((await state()).cursor-10)<.02,'partner section starts at 42.5s');
+    // Two quantized samples (pause and resume) can differ by up to 50ms at 30fps.
+    if(mode === 'cinematic') assert(Math.abs(timeline.timeAt((await state()).cursor)-42.5)<(process.env.IOS_LIGHT?.05:.03),'partner section starts at 42.5s: '+JSON.stringify(await state()));
     await advance(10000);
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor-12)<.02,'partners receive twenty seconds: '+JSON.stringify(await state()));
     await advance(10000);
