@@ -1,6 +1,16 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — bounded iOS resources and effect failure isolation (5 October 2026)
+## Current revision — iOS Autoscroll rendering and playback recovery (5 October 2026)
+
+Removed a confirmed redundant draw path: elephant state/resize events now invalidate one scheduled renderer instead of painting immediately alongside the walking loop. Canvas size reads and WebGL drawing run in that single frame callback; unchanged visibility/walking attributes are no longer rewritten on every scroll render. The supplied SVG stays visible until the mesh has actually painted. Healthy devices retain their normal cadence. Only iOS pages already in the existing lighter-effects fallback reduce Autoscroll writes and elephant rendering to approximately 30fps; the absolute elapsed-time timeline still finishes in 64 seconds, including the same 20 seconds for partners.
+
+A separate iOS playback marker refreshes every five seconds while Autoscroll is active. A recent interrupted playback can therefore select the existing SVG/lighter-effects recovery on the next load even after the ten-second startup guard has expired. Pause, completion, backgrounding and clean navigation clear playback state. Markers expire, restricted storage is tolerated, and no code forces a reload or restarts playback automatically. Recovery is best-effort and depends on per-tab storage surviving a process restart.
+
+The focused rendering regression reproduced eleven out-of-loop draws before the fix; afterward the same events yield one scheduled draw. Controlled frames give 62 draws/second normally and 31 in the iOS fallback, while desktop retains full cadence. Recovery lifetime checks cover interrupted playback, expiry, blocked storage and clean exits. Chromium timeline checks pass with normal iOS detection, iOS lighter effects and desktop across cinematic, short and reduced-motion layouts, including pause/resume and stalled-frame recovery. GPU release/failure, startup/recovery, iPhone/iPad/Android/desktop input and viewport checks, eleven-dialogue manual-scroll regressions, story/assets and bundle consistency checks pass. Physical iPhone Safari reload resolution remains unverified: these changes remove proven redundant work and harden recovery, without claiming a confirmed cause for the reported WebContent restart.
+
+Design, CSS, assets, dialogue, scene order and timeline definitions are unchanged. Deploy the new `dist/runtime.0d6a83588924.js` before replacing `dist/index.html`; retain the existing CSS and previously published runtime bundles. GitHub publication does not deploy external hosting.
+
+## Previous revision — bounded iOS resources and effect failure isolation (5 October 2026)
 
 On iOS cinematic layouts, only the current scene and its immediate neighbours retain their image and CSS-background references (at most three groups, including the closing page). Distant images use a transparent placeholder and distant background/filter/layer references are removed. Original attributes are restored before scenes enter the view, in both scroll directions; reading/reduced-motion mode restores the complete document and its original lazy-loading policy. Desktop/Android loading is unchanged. This bounds application references; browser image-cache eviction and actual process RAM remain under browser control.
 

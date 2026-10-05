@@ -33,6 +33,8 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
     page.on('pageerror', e => errors.push(e.message));
     page.on('response', res => {if(res.status() >= 400) missing.push(res.url());});
     await page.goto(url); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(100);
+    if (process.env.IOS_LIGHT) await page.evaluate(() => document.documentElement.classList.add('safety-light-effects'));
+    const playbackMarked = () => page.evaluate(() => sessionStorage.getItem('garba-ios-playback') !== null);
     const clockStart = new Date("2026-10-03T12:00:00Z");
     await page.clock.install({time:clockStart});
     await page.clock.pauseAt(new Date(clockStart.getTime()+1000));
@@ -57,6 +59,7 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
         elephant:!document.querySelector('.journey-elephant').hidden};
     });
     await click();
+    assert.equal(await playbackMarked(), !!process.env.IOS, 'playback marker only on iOS');
     await advance(3504);
     assert((await state()).running);
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor - 1.42) < .03, 'opening is included in total');
@@ -67,7 +70,9 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
     await advance(3268); // 26.3 s, inside the clear-gate viewing interval.
     const gate = await state();
     if(mode === 'cinematic') {assert(gate.cursor>5.6 && gate.cursor<5.62);assert(!gate.elephant, JSON.stringify(gate));assert.equal(gate.gate,0);}
+    if (process.env.IOS) assert(await playbackMarked(), 'playback remains guarded after startup expires');
     await click(); const paused = (await state()).y;
+    assert.equal(await playbackMarked(), false, 'pause clears recovery state');
     await advance(5000); assert.equal((await state()).y,paused);
     await click(); await advance(1000);
     if(mode === 'cinematic') {
@@ -84,6 +89,7 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
     assert((await state()).running,'finale remains in total duration');
     await advance(1550);
     const end = await state(); assert(!end.running,`${mode}: stops at 64s`);assert(Math.abs(end.y-end.end)<=1,`${mode}: reaches page end`);
+    assert.equal(await playbackMarked(), false, 'completion clears recovery state');
     assert.deepEqual(errors,[]); assert.deepEqual(missing,[]);
     console.log(`PASS ${engine} ${mode}: 64s total, pause time excluded, stalled frame recovery, page end, no missing runtime assets`);
     await page.close();

@@ -11,6 +11,7 @@
   const offsets = [0,.25,.5,.75];
   let gl, program, movesLocation, texture, ready = false;
   let frame = 0, last = 0, phase = 0, weight = 0, pageVisible = true;
+  let needsResize = true;
   const ios = root.classList.contains('ios-native-scroll');
   let initialized = false, pendingImage = null, meshFailed = false;
   // Keep the supplied SVG visible if iOS is recovering from a terminated load.
@@ -109,7 +110,7 @@
       try {
         gl.bindTexture(gl.TEXTURE_2D,texture);
         gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);
-        ready=true;resize();paint();ride.classList.add('mesh-ready');sync();
+        ready=true;needsResize=true;sync();
       } catch { fallback(); }
     };
     image.onerror = () => { pendingImage = null; fallback(); };
@@ -130,12 +131,17 @@
       canvas.width = canvas.height = 1;
     }
   }
+  // Events only invalidate size; tick owns all layout reads and GPU drawing.
   function resize() {
-    if (!ready) return;
+    needsResize = true;
+    if (permitted() && !frame) frame = requestAnimationFrame(tick);
+  }
+  function resizeBackingStore() {
     const dpr=Math.min(devicePixelRatio||1,root.classList.contains('safety-light-effects')?1:2);
     const width=Math.max(1,Math.round(canvas.clientWidth*dpr)),height=Math.max(1,Math.round(canvas.clientHeight*dpr));
     if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
-    gl.viewport(0,0,width,height);paint();
+    gl.viewport(0,0,width,height);
+    needsResize=false;
   }
   function paint() {
     if (!ready) return;
@@ -151,6 +157,8 @@
     }
     gl.uniform3fv(movesLocation,moves);gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawElements(gl.TRIANGLES,104*78*6,gl.UNSIGNED_SHORT,0);
+    // Keep the original SVG visible until the first actual frame is ready.
+    if(!ride.classList.contains('mesh-ready'))ride.classList.add('mesh-ready');
     // The upper artwork and saddle remain stable; only a tiny seat response is added.
     ride.style.setProperty('--saddle-rise',`${(Math.sin(phase*Math.PI*8)*.3*weight).toFixed(3)}px`);
     canvas.dataset.stride=phase.toFixed(4);
@@ -158,7 +166,12 @@
   }
   function tick(now) {
     frame=0;if(!permitted()){stop();return;}
+    // Keep full cadence normally. Only an already struggling iOS page drops to ~30fps.
+    if (ios && root.classList.contains('safety-light-effects') && last && now-last<1000/30-2) {
+      frame=requestAnimationFrame(tick);return;
+    }
     const dt=last?Math.min((now-last)/1000,.2):0;last=now;
+    if(needsResize)resizeBackingStore();
     const target=ride.dataset.walking==='true'?1:0;
     weight+=(target-weight)*(1-Math.exp(-dt*12));
     if(!target&&weight<.001)weight=0;
@@ -174,10 +187,11 @@
       else if (allowMesh()) loadTexture();
     }
     if(!permitted()){
-      stop();if(!root.classList.contains('cinematic')||reduced.matches){weight=0;paint();}return;
+      stop();
+      if(!root.classList.contains('cinematic')||reduced.matches){weight=0;ride.classList.remove('mesh-ready');}
+      return;
     }
     resize();
-    if(!frame&&(ride.dataset.walking==='true'||weight))frame=requestAnimationFrame(tick);
   }
   const observer=new MutationObserver(sync);
   observer.observe(root,{attributes:true,attributeFilter:['class']});

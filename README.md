@@ -75,7 +75,7 @@ The separate Aarti, Play Kinjal Dave and Play Garba buttons and their music-sele
 
 Home and View controls show only their logos, with click actions and accessible names retained.
 
-`BROWSER=webkit node tests/verify-timeline.cjs` checks the 63-second clock, exact extra seconds for doors/descent/climbing, 20-second partner interval, continuously moving entrance, pause/resume, skipped-frame recovery, reading layouts and runtime asset loads. Set `BROWSER=chromium CHROMIUM_EXECUTABLE_PATH=/path/to/chromium` for Chromium. Playwright is a development-only dependency.
+`BROWSER=webkit node tests/verify-timeline.cjs` checks the 64-second clock, exact extra seconds for doors/descent/climbing, 20-second partner interval, continuously moving entrance, pause/resume, skipped-frame recovery, reading layouts and runtime asset loads. Set `BROWSER=chromium CHROMIUM_EXECUTABLE_PATH=/path/to/chromium` for Chromium. Playwright is a development-only dependency.
 
 The October 2026 cleanup removed 110 unreferenced runtime files (about 86 MiB), including retired site implementations, unused Three.js libraries, earlier artwork and five unused videos. Historical asset prompts and license/source notes remain as provenance; they may describe artwork now retained only in Git history. All current images are single-frame rasters or pose atlases. All three audio tracks, supplied logos, original invitation, fonts and static/mobile fallbacks are preserved.
 
@@ -92,3 +92,7 @@ The optional WebGL elephant renderer is now deferred on iOS until its scene beco
 `tests/verify-scene-resources.cjs` checks the bounded iOS scene window, forward/reverse restoration and reading-mode completeness. `tests/verify-resource-failures.cjs` checks GPU texture release/restoration using a simulated WebGL context and injects an optional-module error to verify the core story still starts. Set `IOS=1` for `tests/verify-timeline.cjs` to exercise the unchanged timeline with iOS detection.
 
 After source edits, run `node scripts/build-runtime.cjs` and `node tests/verify-runtime.cjs`. The build retains previous content-hashed bundles for cached pages. Upload the new runtime CSS/JS files first, then replace `index.html` last. Keep the old runtime files on the host during rollout; deleting them can break a visitor's cached HTML. Hosting configuration still controls HTML caching. This upload order is necessary; a GitHub push alone does not deploy the public domain.
+
+Autoscroll rendering now coalesces elephant redraws into one frame owner. Healthy devices retain full cadence; the existing iOS lighter-effects fallback additionally uses approximately 30fps without changing the 64-second timeline. A five-second per-tab heartbeat extends interrupted-load recovery across active Autoscroll, clearing on pause/completion/backgrounding/navigation. It never reloads or resumes playback automatically.
+
+`node tests/verify-playback-recovery.cjs` checks recovery lifetimes and blocked storage without browser dependencies. `tests/verify-render-budget.cjs` counts WebGL draws using a controlled frame clock and simulated GPU. `IOS=1 IOS_LIGHT=1 node tests/verify-timeline.cjs` exercises unchanged timing and recovery-marker cleanup with the iOS rendering fallback. Real iPhone Safari verification is still required to confirm the reported reload is resolved.
