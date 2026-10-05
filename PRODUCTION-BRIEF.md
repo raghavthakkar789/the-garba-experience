@@ -1,6 +1,18 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — targeted iOS reliability and runtime consolidation (5 October 2026)
+## Current revision — grounded mobile elephant and iOS startup safeguards (5 October 2026)
+
+Reviewed the supplied Android screenshot and confirmed through the live site's DOM that the previously published safety bundles are deployed. The user clarified that iOS repeatedly reloads, rather than simply refusing to scroll. The precise Safari termination cause is not reproduced here; the changes below mitigate startup GPU pressure and provide a recoverable path without claiming a confirmed device-level diagnosis.
+
+Removed the elevated elephant row on screens up to 650px. Elephant, lotus and leaves now share the footer baseline, with narrower mobile image boxes so the floral sides frame the elephant. The same assets remain, desktop artwork is unchanged, and the existing logo/links/card treatment remains intact.
+
+On iOS only, the optional WebGL elephant context, mesh and texture are deferred until its scene becomes visible. A short per-tab startup marker detects an immediate retry after an unclean termination: that retry uses the supplied SVG elephant and lighter effects. Clean page exits and successful ten-second startups clear the marker, and blocked storage is handled safely. Normal desktop/Android initialization and the 64-second timeline are unchanged.
+
+Verification: closing layout passes 36 viewports and four enlarged-text cases, including a shared-baseline assertion. New startup tests exercise fresh iOS, unclean-retry recovery, blocked storage and desktop with simulated GPU failure, confirming that the opening remains usable and the original elephant stays visible. Existing native-touch/viewport and 64-second timeline checks pass. These are Chromium tests with iOS detection; physical Safari reload resolution remains unverified.
+
+Deploy updated `dist/index.html`, `dist/runtime.65dc9ae78cf7.css` and `dist/runtime.bdf3ab7fa184.js` together, or upload all of dist. The GitHub update does not deploy external hosting.
+
+## Previous revision — targeted iOS reliability and runtime consolidation (5 October 2026)
 
 Preserved assets, scene order, dialogue, the 64-second timeline, animation paths and desktop/Android input. iPhone/iPad (including desktop-identifying iPadOS) now use native vertical touch scrolling; the same scene renderer follows scroll position. Custom touch listeners are not installed there. Native swipes deliberately do not use the custom dialogue slowdown, while Autoscroll retains its existing timing. Wheel/keyboard behavior remains unchanged.
 

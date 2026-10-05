@@ -11,6 +11,10 @@
   const offsets = [0,.25,.5,.75];
   let gl, program, movesLocation, texture, ready = false;
   let frame = 0, last = 0, phase = 0, weight = 0, pageVisible = true;
+  const ios = root.classList.contains('ios-native-scroll');
+  let initialized = false;
+  // Keep the supplied SVG visible if iOS is recovering from a terminated load.
+  const allowMesh = () => !root.classList.contains('safety-recovery');
   const permitted = () => ready && root.classList.contains('cinematic') && !ride.hidden &&
     !document.hidden && pageVisible && !reduced.matches;
   const smooth = (a,b,v) => { const t=Math.max(0,Math.min(1,(v-a)/(b-a))); return t*t*(3-2*t); };
@@ -28,6 +32,8 @@
     return result;
   }
   function initialize() {
+    if (!allowMesh()) return;
+    initialized = true;
     try {
       gl = canvas.getContext('webgl', {alpha:true, antialias:true, premultipliedAlpha:true});
       if (!gl) return;
@@ -134,6 +140,9 @@
     if(target||weight)frame=requestAnimationFrame(tick);else last=0;
   }
   function sync() {
+    // Do not allocate a WebGL context, mesh or texture on an iPhone's first screen.
+    if (ios && !initialized && allowMesh() && root.classList.contains('cinematic') &&
+        !ride.hidden && !document.hidden && pageVisible) initialize();
     if(!permitted()){
       stop();if(!root.classList.contains('cinematic')||reduced.matches){weight=0;paint();}return;
     }
@@ -151,5 +160,5 @@
   reduced.addEventListener('change',sync);
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();fallback();});
   canvas.addEventListener('webglcontextrestored',initialize);
-  initialize();
+  if (!ios) initialize();
 })();

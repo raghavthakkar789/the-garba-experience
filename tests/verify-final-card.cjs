@@ -20,6 +20,8 @@ let server,browser;
    const header=document.querySelector('.masthead').getBoundingClientRect();
    const logos=section.querySelector('.finale-brands');
    const art=section.querySelector('.thank-you-art').getBoundingClientRect();
+   const elephant=section.querySelector('.thank-you-elephant').getBoundingClientRect();
+   if(innerWidth<=650 && Math.abs(elephant.bottom-art.bottom)>1)issues.push('mobile elephant must share the floral baseline instead of floating above it');
    const arch=section.querySelector('.thank-you-arch').getBoundingClientRect(),footer=section.querySelector('.closing-footer').getBoundingClientRect();
    if(Math.abs(arch.bottom-footer.top)>1)issues.push('gold arch sides must reach the footer without a gap');
    const logo=section.querySelector('.thank-you-logo').getBoundingClientRect();

@@ -2007,7 +2007,9 @@ footer.closing-footer > p:first-child { min-height:0; grid-column:auto; font-siz
 .finale.thank-you :is(.leaf-right,.lotus-right) { object-position:right bottom; }
 .finale.thank-you .thank-you-logo { margin-bottom:clamp(16px,2svh,24px); }
 @media (max-width:650px) {
-  /* Give the doubled elephant its own centered row above the floral artwork. */
-  .finale.thank-you .thank-you-art { height:calc(var(--closing-art-base) * 3.76 + 16px); }
-  .finale.thank-you .thank-you-elephant { bottom:calc(var(--closing-art-base) * 2 + 16px); }
+  /* A single grounded composition: foliage frames the elephant at the footer. */
+  .finale.thank-you .thank-you-art { height:calc(var(--closing-art-base) * 2); }
+  .finale.thank-you .thank-you-elephant { bottom:0; width:64%; }
+  .finale.thank-you .thank-you-leaf { width:42%; }
+  .finale.thank-you .thank-you-lotus { width:34%; }
 }

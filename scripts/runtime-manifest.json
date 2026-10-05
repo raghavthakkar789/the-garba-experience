@@ -12,6 +12,7 @@
     "browser-safety.css"
   ],
   "scripts": [
+    "browser-startup.js",
     "partner-road.js",
     "invitation-handoff.js",
     "aarti-flowers.js",
