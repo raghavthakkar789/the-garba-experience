@@ -15,8 +15,9 @@
   const ios = root.classList.contains('ios-native-scroll');
   let initialized = false, pendingImage = null, meshFailed = false;
   // Keep the supplied SVG visible if iOS is recovering from a terminated load.
-  const allowMesh = () => !root.classList.contains('safety-recovery');
-  const permitted = () => ready && root.classList.contains('cinematic') && !ride.hidden &&
+  const allowMesh = () => !root.classList.contains('safety-recovery') &&
+    !(ios && root.classList.contains('ios-autoscroll-active'));
+  const permitted = () => ready && allowMesh() && root.classList.contains('cinematic') && !ride.hidden &&
     !document.hidden && pageVisible && !reduced.matches;
   const smooth = (a,b,v) => { const t=Math.max(0,Math.min(1,(v-a)/(b-a))); return t*t*(3-2*t); };
   function stop() {
@@ -179,6 +180,11 @@
     if(target||weight)frame=requestAnimationFrame(tick);else last=0;
   }
   function sync() {
+    if (ios && !allowMesh()) {
+      stop(); releaseTexture();
+      ride.style.removeProperty('--saddle-rise');
+      return;
+    }
     // Do not allocate a WebGL context, mesh or texture on an iPhone's first screen.
     if (ios && !initialized && allowMesh() && root.classList.contains('cinematic') &&
         !ride.hidden && !document.hidden && pageVisible) initialize();

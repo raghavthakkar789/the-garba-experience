@@ -1,6 +1,16 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — isolated GSAP driver for iOS Autoscroll (5 October 2026)
+## Current revision — original elephant artwork during iOS Autoscroll (5 October 2026)
+
+The user narrowed the continuing reload to the elephant scenes, after the GSAP runtime was confirmed on the live site. This identifies the optional WebGL elephant as a component to isolate, not a proven crash diagnosis. iOS Autoscroll now marks its active session so the elephant renderer uses the existing SVG/image fallback instead of allocating or drawing its textured WebGL mesh. If a mesh was already active during manual scrolling, its full texture is replaced by the existing 1x1 release path and its canvas is reduced before automatic playback continues.
+
+The original artwork retains its size, location, journey path, riders, boarding/dismounting progression, dialogues and the 64-second timing map. The visible tradeoff is that independent mesh leg bending and its tiny saddle response do not run during iOS Autoscroll. Pause/manual takeover restores the previous renderer policy; Android/desktop and manual iOS playback are unchanged. No CSS, assets, audio or timeline definitions changed.
+
+A new regression fails on the prior implementation (one WebGL allocation during automatic elephant playback) and passes with zero allocations on fresh iOS Autoscroll. It verifies that the fallback artwork moves, manual playback restores the mesh, resuming automatic playback releases its full texture, and completion clears the scoped policy. GSAP platform isolation/load-failure checks, resource-release checks, render-budget checks, normal/light-mode 64-second iOS timelines, full iOS playback controls and bundle/vendor integrity checks pass. Physical Safari reload resolution still requires an affected-device test after deployment; removing this renderer does not prove that other scene resources cannot cause a reload.
+
+Deployment: upload `dist/runtime.fd3869985a4f.js` before replacing `dist/index.html`. Retain the existing `vendor/gsap-3.15.0/` files, stylesheet and older runtime bundles. GitHub publication does not update external hosting.
+
+## Previous revision — isolated GSAP driver for iOS Autoscroll (5 October 2026)
 
 Replaced only the iPhone/iPad opt-in Autoscroll driver with GSAP 3.15.0 and ScrollToPlugin. The existing controller delegates to the adapter on iOS and returns before scheduling its custom Autoscroll RAF. Android/desktop continue using the unchanged driver; they do not request, initialize or run GSAP. iPadOS desktop-identifying browsers are included. Native iOS touch scrolling, the scene renderer, CSS, artwork, audio implementation and the timing map are unchanged.
 

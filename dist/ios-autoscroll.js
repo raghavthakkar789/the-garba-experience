@@ -37,6 +37,7 @@
     generation++;
     clearTimeout(loadTimer); loadTimer = 0;
     tween?.kill(); tween = null;
+    if (root.classList.contains('ios-autoscroll-active')) root.classList.remove('ios-autoscroll-active');
     if (savedStyles) {
       for (const {node,value,priority} of savedStyles) {
         if (value) node.style.setProperty('scroll-behavior', value, priority);
@@ -63,6 +64,8 @@
       savedStyles.forEach(({node}) => node.style.setProperty('scroll-behavior','auto','important'));
       let light = root.classList.contains('safety-light-effects');
       gsap.ticker.fps(light ? 30 : 240);
+      // The original SVG follows the same scroll path without a second GPU renderer.
+      root.classList.add('ios-autoscroll-active');
       onStart();
       tween = gsap.to(window, {
         duration: remaining,
