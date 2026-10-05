@@ -38,7 +38,12 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
     await page.clock.pauseAt(new Date(clockStart.getTime()+1000));
     const advance = async ms => {
       if (ms > 64) await page.clock.fastForward(ms - 64);
-      await page.clock.runFor(Math.min(64, ms));
+      // Flush the browser scroll event between virtual frames. A single clock
+      // jump can otherwise observe the new scrollY before its animation render.
+      for (let remaining = Math.min(64, ms); remaining > 0; remaining -= 16) {
+        await page.clock.runFor(Math.min(16, remaining));
+        await page.evaluate(() => dispatchEvent(new Event('scroll')));
+      }
     };
     const button = page.locator('#autoscroll-toggle');
     // DOM activation avoids locator stability timers changing the controlled clock.
@@ -61,7 +66,7 @@ for(let seconds = 25.3; seconds < 30.4; seconds += .1)
     if(mode === 'cinematic') assert(Math.abs((await state()).cursor - windowlessCursor(23.032)) < .04, 'dropped frames do not stretch time');
     await advance(3268); // 26.3 s, inside the clear-gate viewing interval.
     const gate = await state();
-    if(mode === 'cinematic') {assert(gate.cursor>5.6 && gate.cursor<5.62);assert(!gate.elephant);assert.equal(gate.gate,0);}
+    if(mode === 'cinematic') {assert(gate.cursor>5.6 && gate.cursor<5.62);assert(!gate.elephant, JSON.stringify(gate));assert.equal(gate.gate,0);}
     await click(); const paused = (await state()).y;
     await advance(5000); assert.equal((await state()).y,paused);
     await click(); await advance(1000);

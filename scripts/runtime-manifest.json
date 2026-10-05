@@ -1,0 +1,27 @@
+{
+  "styles": [
+    "experience.css",
+    "storybook.css",
+    "button-motion.css",
+    "partner-road.css",
+    "scene-refinements.css",
+    "event-crowds.css",
+    "thank-you.css",
+    "elephant-ride.css",
+    "brand-controls.css",
+    "browser-safety.css"
+  ],
+  "scripts": [
+    "partner-road.js",
+    "invitation-handoff.js",
+    "aarti-flowers.js",
+    "garba-circle.js",
+    "event-crowds.js",
+    "elephant-walk.js",
+    "site-soundtrack.js",
+    "autoscroll-timeline.js",
+    "experience.js",
+    "button-motion.js",
+    "browser-safety.js"
+  ]
+}

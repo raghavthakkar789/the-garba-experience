@@ -1,6 +1,18 @@
 # The Garba Experience — continuous story redesign
 
-## Current revision — clear interior passage and floor-aligned walk (5 October 2026)
+## Current revision — targeted iOS reliability and runtime consolidation (5 October 2026)
+
+Preserved assets, scene order, dialogue, the 64-second timeline, animation paths and desktop/Android input. iPhone/iPad (including desktop-identifying iPadOS) now use native vertical touch scrolling; the same scene renderer follows scroll position. Custom touch listeners are not installed there. Native swipes deliberately do not use the custom dialogue slowdown, while Autoscroll retains its existing timing. Wheel/keyboard behavior remains unchanged.
+
+On iOS, stage height is captured from the existing layout and retained through toolbar/keyboard resizes and pinch zoom; real width/orientation changes still reflow. Hidden scenes and background pages pause CSS motion and release layer hints. Existing scene JavaScript loops continue their existing visibility guards, and assets stay decoded for seamless reverse scrolling. Only after two consecutive 2.5-second windows of sustained slow scrolling does iOS omit soft character shadows/dialog blur and cap the elephant canvas at 1x pixel density. No scene, asset or animation is removed. This quality fallback lasts until reload and never applies to desktop/Android.
+
+A dependency-free build (`node scripts/build-runtime.cjs`) consolidates runtime CSS and JS in their original order into two content-hashed requests, retaining readable source modules. This consolidates requests rather than minifying source or changing hosting compression settings. Rebuild after source edits; publish the generated files with the updated HTML. The entire dist folder remains self-contained.
+
+Verification: Chromium checks pass for iPhone/iPad detection with native browser touch input, stable height-only viewport changes, Android/desktop custom input, background lifecycle and controlled healthy/slow frame cadence. The manual-scroll suite and DOM story/assets suite pass; the timeline passes cinematic, short and reduced-motion modes at 64 seconds. Bundle source/hash checks pass. Baseline-versus-current comparisons match geometry, typography, colors and transforms at seven scene positions for 390x844, 768x1024 and 1440x900. Fixed a controlled-clock test race by dispatching scroll events between virtual frames, without changing runtime timing. WebKit could not launch because its system libraries are missing; physical iPhone/iPad Safari remains unverified.
+
+Deploy `dist/index.html`, `dist/runtime.54d6c99e8b05.css` and `dist/runtime.39f5db10c63b.js` together (or upload all of dist). GitHub publication does not deploy external hosting.
+
+## Previous revision — clear interior passage and floor-aligned walk (5 October 2026)
 
 Added exactly one second of fully revealed interior decor before the photo scene begins dissolving in. Arrival is now eight seconds and the complete opt-in timeline is 64 seconds. The exterior reveal, decor dimensions, remaining scene durations and twenty-second partner interval are unchanged. Manual scrolling uses the later dissolve boundary too, while its duration remains controlled by the visitor.
 

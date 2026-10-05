@@ -1,0 +1,32 @@
+/* Native iOS gestures still drive the existing scroll-position animation. */
+.ios-native-scroll.cinematic .journey-stage {
+  touch-action: auto;
+  height: var(--ios-stage-height, 100vh);
+  height: var(--ios-stage-height, 100svh);
+}
+.ios-native-scroll.cinematic .opening-scene .hamper-interior > img {
+  height: var(--ios-stage-height, 100vh);
+  height: var(--ios-stage-height, 100svh);
+}
+/* Keep decoded artwork for instant reverse scrolling; suspend invisible work. */
+.ios-native-scroll.cinematic .scene:not(.is-visible) *,
+.ios-native-scroll.cinematic .scene:not(.is-visible) *::before,
+.ios-native-scroll.cinematic .scene:not(.is-visible) *::after,
+.ios-native-scroll.safety-page-hidden *,
+.ios-native-scroll.safety-page-hidden *::before,
+.ios-native-scroll.safety-page-hidden *::after {
+  animation-play-state: paused !important;
+  will-change: auto !important;
+}
+/* Only after sustained slow rendering: retain art/motion, omit soft shadows. */
+.ios-native-scroll.safety-light-effects .together-art,
+.ios-native-scroll.safety-light-effects .story-person,
+.ios-native-scroll.safety-light-effects .guest-sprite,
+.ios-native-scroll.safety-light-effects .elephant-art,
+.ios-native-scroll.safety-light-effects .elephant-riders {
+  filter: none;
+}
+.ios-native-scroll.safety-light-effects dialog::backdrop {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}

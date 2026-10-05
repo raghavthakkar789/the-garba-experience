@@ -100,7 +100,7 @@
   }
   function resize() {
     if (!ready) return;
-    const dpr=Math.min(devicePixelRatio||1,2);
+    const dpr=Math.min(devicePixelRatio||1,root.classList.contains('safety-light-effects')?1:2);
     const width=Math.max(1,Math.round(canvas.clientWidth*dpr)),height=Math.max(1,Math.round(canvas.clientHeight*dpr));
     if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
     gl.viewport(0,0,width,height);paint();

@@ -8,7 +8,7 @@ A continuous, scroll-driven Gujarati invitation with the original illustrated fr
 python3 -m http.server 8765 --directory dist
 ```
 
-Open http://localhost:8765. The site is static: no build or production dependencies.
+Open http://localhost:8765. The site is static with committed runtime bundles and no production dependencies. After editing a source CSS or JavaScript file, run `node scripts/build-runtime.cjs` to refresh the bundles and HTML references before uploading `dist/`.
 
 ## Self-contained website folder
 
@@ -25,7 +25,7 @@ backend, database or build step is required. The booking and maps links use thei
 
 ## Current implementation
 
-The header's gold **Autoscroll** button starts a 63-second journey, including opening and closing. `dist/autoscroll-timeline.js` owns the timing: opening 3.5s, first chat 5s, invitation 11s, boarding 2.5s, drive 1.5s, entrance 7s, photo 4.5s, devotion 1.5s, stage 3.5s, Garba 1.5s, partners 20s, closing 1.5s. Individual dialogue knots give longer lines more time. The gate stays unobstructed for about 1.8s after the elephant exits while the friends keep walking. Their path continues through the passage reveal without a frozen interval or backward movement. Active sprite poses remain intact; these animations do not use video-frame sequences.
+The header's gold **Autoscroll** button starts a 64-second journey, including opening and closing. `dist/autoscroll-timeline.js` owns the timing: opening 3.5s, first chat 5s, invitation 11s, boarding 2.5s, drive 1.5s, entrance 8s, photo 4.5s, devotion 1.5s, stage 3.5s, Garba 1.5s, partners 20s, closing 1.5s. Individual dialogue knots give longer lines more time. The gate stays unobstructed for about 1.8s after the elephant exits while the friends keep walking. Their path continues through the passage reveal without a frozen interval or backward movement. Active sprite poses remain intact; these animations do not use video-frame sequences.
 
 The clock uses elapsed time, so dropped rendering frames do not stretch the journey. Pause preserves the exact timeline position, manual seeking resumes from the matching position. Reading and reduced-motion layouts share the same total. Manual input, other actions, leaving the tab and reaching the bottom stop Autoscroll. Sound controls remain independent. The logo-only opening takes 6.7 seconds; the 3.5-second opening applies to Autoscroll.
 - `dist/index.html`: eleven ordered story scenes, original printed invitation, unchanged event details, background Garba music and local photo keepsake.
@@ -51,7 +51,9 @@ Photo keepsakes remain entirely in the visitor's browser, with no upload or pers
 
 ## Verification
 
-`BROWSER=webkit node tests/verify-ios-touch.cjs` (with Playwright and its WebKit browser installed) checks the post-opening swipe handoff using non-cancelable touch events, continuous dialogue slowdowns, bounded movement, pinch handling, native dialog scrolling, Autoscroll, and reading-mode gestures. Use `BROWSER=chromium CHROMIUM_EXECUTABLE_PATH=/path/to/chromium` for the Chromium run. These mobile-layout tests complement the real Chromium touch input in `verify-manual-scroll.cjs`; they do not replace physical iPhone/iPad testing.
+`node tests/verify-browser-safety.cjs` (Playwright, Chromium and `CHROMIUM_EXECUTABLE_PATH`) verifies native touch policy for iPhone and desktop-identifying iPadOS, real Chromium touch movement, unchanged desktop/Android input, stable iOS viewport calculations and the sustained-load fallback. This simulates iOS detection in Chromium; physical iPhone/iPad Safari verification is still required. `tests/verify-ios-touch.cjs` retains the legacy custom-touch regression for non-iOS browsers; it does not test the new native iOS path.
+
+`node tests/verify-runtime.cjs` verifies deterministic runtime bundles, their source order and matching content hashes. The build consolidates the existing nine CSS and ten JavaScript requests plus the new safety modules into one stylesheet and one deferred script. It preserves source content and CSS relative asset paths; no hosting configuration change is required. All source modules remain available for maintenance.
 
 `node --check dist/experience.js`
 
@@ -76,3 +78,9 @@ Home and View controls show only their logos, with click actions and accessible 
 `BROWSER=webkit node tests/verify-timeline.cjs` checks the 63-second clock, exact extra seconds for doors/descent/climbing, 20-second partner interval, continuously moving entrance, pause/resume, skipped-frame recovery, reading layouts and runtime asset loads. Set `BROWSER=chromium CHROMIUM_EXECUTABLE_PATH=/path/to/chromium` for Chromium. Playwright is a development-only dependency.
 
 The October 2026 cleanup removed 110 unreferenced runtime files (about 86 MiB), including retired site implementations, unused Three.js libraries, earlier artwork and five unused videos. Historical asset prompts and license/source notes remain as provenance; they may describe artwork now retained only in Git history. All current images are single-frame rasters or pose atlases. All three audio tracks, supplied logos, original invitation, fonts and static/mobile fallbacks are preserved.
+
+## iOS reliability fallback
+
+On iPhone/iPad, manual swipes use native browser scrolling, so they do not have the custom dialogue slowdowns used on desktop/Android. The same animations still follow scroll position, and opt-in Autoscroll retains the unchanged 64-second timeline. Toolbar and keyboard height changes retain the stage height and story position; width/orientation changes still reflow normally.
+
+Hidden iOS scenes and background tabs pause CSS animations and release layer hints. Existing scene-specific JavaScript loops already pause when inactive. Artwork stays decoded for reverse scrolling. After two consecutive 2.5-second sampling windows of sustained slow scrolling, iOS alone drops soft character shadows/dialog backdrop blur and lowers the elephant canvas pixel density. It keeps the same assets, paths and motion, and retains this lightweight mode until reload to avoid quality oscillation. Healthy devices keep the original effects.
